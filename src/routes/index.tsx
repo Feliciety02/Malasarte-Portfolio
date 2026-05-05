@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { projects } from "@/data/projects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,13 +17,10 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const featured = [
-  { title: "Lumen Banking App", tag: "UI/UX • Mobile", color: "from-violet-500/40 to-fuchsia-500/30" },
-  { title: "Aurora Brand System", tag: "Branding • Identity", color: "from-pink-500/40 to-rose-500/30" },
-  { title: "Wavefront Dashboard", tag: "UI/UX • Web", color: "from-blue-500/40 to-cyan-500/30" },
-  { title: "Echo Magazine", tag: "Editorial • Print", color: "from-amber-400/40 to-orange-500/30" },
-  { title: "Studio Folio Site", tag: "Web Design", color: "from-emerald-400/40 to-teal-500/30" },
-];
+const featuredSlugs = ["lumen-banking", "aurora-brand", "wavefront-dashboard", "echo-magazine", "studio-folio-site"];
+const featured = featuredSlugs
+  .map((s) => projects.find((p) => p.slug === s))
+  .filter((p): p is NonNullable<typeof p> => !!p);
 
 function Home() {
   const ref = useRef<HTMLDivElement>(null);

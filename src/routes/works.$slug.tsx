@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Sparkles, User, Wrench } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getProject, projects } from "@/data/projects";
+import type { Project } from "@/data/projects";
 
 export const Route = createFileRoute("/works/$slug")({
   loader: ({ params }) => {
@@ -53,7 +54,7 @@ function ratioClass(r: "square" | "wide" | "tall") {
 }
 
 function CaseStudy() {
-  const project = Route.useLoaderData();
+  const project = Route.useLoaderData() as Project;
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
