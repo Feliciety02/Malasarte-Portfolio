@@ -136,11 +136,11 @@ function Home() {
           <div className="grid gap-6 md:grid-cols-6">
             {featured.map((p, i) => (
               <Reveal
-                key={p.title}
+                key={p.slug}
                 delay={i * 0.08}
                 className={`${i === 0 ? "md:col-span-4" : i === 1 ? "md:col-span-2" : i === 2 ? "md:col-span-3" : i === 3 ? "md:col-span-3" : "md:col-span-6"}`}
               >
-                <ProjectCard {...p} />
+                <ProjectCard slug={p.slug} title={p.title} tag={p.tag} color={p.color} />
               </Reveal>
             ))}
           </div>
@@ -188,9 +188,9 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function ProjectCard({ title, tag, color }: { title: string; tag: string; color: string }) {
+function ProjectCard({ slug, title, tag, color }: { slug: string; title: string; tag: string; color: string }) {
   return (
-    <Link to="/works" className="group relative block aspect-[4/3] overflow-hidden rounded-3xl glass hover-lift">
+    <Link to="/works/$slug" params={{ slug }} className="group relative block aspect-[4/3] overflow-hidden rounded-3xl glass hover-lift">
       <div className={`absolute inset-0 bg-gradient-to-br ${color} transition-transform duration-700 group-hover:scale-110`} />
       <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
       <motion.div
