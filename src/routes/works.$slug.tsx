@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Sparkles, User, Wrench } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Calendar, Expand, Sparkles, User, Wrench } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getProject, projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
+import { Lightbox } from "@/components/site/Lightbox";
 
 export const Route = createFileRoute("/works/$slug")({
   loader: ({ params }) => {
@@ -59,6 +60,7 @@ function CaseStudy() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const idx = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(idx + 1) % projects.length];
@@ -173,20 +175,33 @@ function CaseStudy() {
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {project.gallery.map((g, i) => (
             <Reveal key={i} delay={i * 0.05}>
-              <motion.div
+              <motion.button
                 whileHover={{ y: -4 }}
-                className={`group relative ${ratioClass(g.ratio)} overflow-hidden rounded-3xl glass`}
+                onClick={() => setLightboxIndex(i)}
+                className={`group relative ${ratioClass(g.ratio)} w-full overflow-hidden rounded-3xl glass text-left`}
+                aria-label={`Open ${g.label} in fullscreen`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${g.color} transition-transform duration-700 group-hover:scale-110`} />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                <div className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full glass-strong opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110">
+                  <Expand size={14} />
+                </div>
                 <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
                   <span className="text-sm font-medium">{g.label}</span>
-                  <ArrowUpRight size={16} className="opacity-0 transition-opacity group-hover:opacity-100" />
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
+                    View
+                  </span>
                 </div>
-              </motion.div>
+              </motion.button>
             </Reveal>
           ))}
         </div>
+        <Lightbox
+          items={project.gallery}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onIndexChange={setLightboxIndex}
+        />
       </section>
 
       {/* NEXT + CTA */}
