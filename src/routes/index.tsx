@@ -357,9 +357,21 @@ function Home() {
           <Reveal delay={0.1}>
             <div className="flex flex-wrap justify-center gap-3">
               {tools.map((t) => (
-                <span key={t} className="rounded-full glass px-5 py-2 text-sm font-medium text-muted-foreground transition-all hover:scale-105 hover:bg-white/10 hover:text-foreground">
-                  {t}
-                </span>
+                <motion.span
+                  key={t.slug}
+                  whileHover={{ y: -3 }}
+                  className="group inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                >
+                  <img
+                    src={`https://cdn.simpleicons.org/${t.slug}/${t.color}`}
+                    alt={`${t.name} logo`}
+                    width={18}
+                    height={18}
+                    loading="lazy"
+                    className="h-[18px] w-[18px] shrink-0"
+                  />
+                  {t.name}
+                </motion.span>
               ))}
             </div>
           </Reveal>
