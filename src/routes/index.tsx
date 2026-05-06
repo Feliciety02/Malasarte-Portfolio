@@ -57,9 +57,17 @@ const processSteps = [
   { icon: Rocket, title: "Deliver" },
 ];
 
-const tools = [
-  "Figma", "Illustrator", "Photoshop", "InDesign", "After Effects",
-  "Framer", "Webflow", "Notion", "Whimsical", "FigJam",
+const tools: { name: string; slug: string; color: string }[] = [
+  { name: "Figma", slug: "figma", color: "F24E1E" },
+  { name: "Illustrator", slug: "adobeillustrator", color: "FF9A00" },
+  { name: "Photoshop", slug: "adobephotoshop", color: "31A8FF" },
+  { name: "InDesign", slug: "adobeindesign", color: "FF3366" },
+  { name: "After Effects", slug: "adobeaftereffects", color: "9999FF" },
+  { name: "Framer", slug: "framer", color: "0055FF" },
+  { name: "Webflow", slug: "webflow", color: "146EF5" },
+  { name: "Notion", slug: "notion", color: "FFFFFF" },
+  { name: "Miro", slug: "miro", color: "FFD02F" },
+  { name: "Canva", slug: "canva", color: "00C4CC" },
 ];
 
 const testimonials = [
@@ -90,11 +98,11 @@ function Home() {
   return (
     <div className="overflow-hidden">
       {/* HERO */}
-      <section ref={ref} className="relative min-h-[92vh] px-6">
+      <section ref={ref} className="relative px-6 pt-10 pb-20 md:pt-16 md:pb-28">
         <FloatingOrbs />
         <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-50" />
 
-        <motion.div style={{ y: y1, opacity }} className="relative mx-auto flex max-w-6xl flex-col items-center pt-16 text-center">
+        <motion.div style={{ y: y1, opacity }} className="relative mx-auto flex max-w-6xl flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -105,7 +113,7 @@ function Home() {
             Available for select projects · 2026
           </motion.div>
 
-          <h1 className="mt-8 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
             <SplitText text="Creative Designer" />
             <br />
             <span className="text-gradient"><SplitText text="& UI/UX Storyteller" delay={0.4} /></span>
@@ -115,7 +123,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.9 }}
-            className="mt-8 max-w-2xl text-base text-muted-foreground md:text-lg"
+            className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
           >
             I'm <span className="text-foreground font-medium">Fe Anne Malasarte</span> — a multidisciplinary designer blending
             UI/UX, branding, and visual storytelling into experiences that feel
@@ -126,7 +134,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.1 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4"
           >
             <Link
               to="/works"
@@ -147,7 +155,7 @@ function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.6, duration: 1 }}
-            className="mt-20 flex items-center gap-2 text-xs text-muted-foreground"
+            className="mt-12 flex items-center gap-2 text-xs text-muted-foreground"
           >
             <span className="h-px w-10 bg-border" />
             Scroll to explore
