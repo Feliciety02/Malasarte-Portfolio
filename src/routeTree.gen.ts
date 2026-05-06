@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorksRouteImport } from './routes/works'
 import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProcessRouteImport } from './routes/process'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -25,6 +26,11 @@ const WorksRoute = WorksRouteImport.update({
 const SkillsRoute = SkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProcessRoute = ProcessRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/process': typeof ProcessRoute
+  '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/process': typeof ProcessRoute
+  '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/process': typeof ProcessRoute
+  '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/process'
+    | '/services'
     | '/skills'
     | '/works'
     | '/works/$slug'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/process'
+    | '/services'
     | '/skills'
     | '/works'
     | '/works/$slug'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/process'
+    | '/services'
     | '/skills'
     | '/works'
     | '/works/$slug'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   ProcessRoute: typeof ProcessRoute
+  ServicesRoute: typeof ServicesRoute
   SkillsRoute: typeof SkillsRoute
   WorksRoute: typeof WorksRouteWithChildren
 }
@@ -134,6 +147,13 @@ declare module '@tanstack/react-router' {
       path: '/skills'
       fullPath: '/skills'
       preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/process': {
@@ -189,6 +209,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   ProcessRoute: ProcessRoute,
+  ServicesRoute: ServicesRoute,
   SkillsRoute: SkillsRoute,
   WorksRoute: WorksRouteWithChildren,
 }
