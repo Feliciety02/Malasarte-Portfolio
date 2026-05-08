@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useAnimationControls, useMotionValue, useSpring, useTransform } from "motion/react";
+import { animate, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 type Tool = { name: string; slug: string; color: string };
 
@@ -215,8 +215,9 @@ function ToolCapsule({
   index: number;
 }) {
   const [failed, setFailed] = useState(false);
-  const controls = useAnimationControls();
   const [dragging, setDragging] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
   return (
     <motion.button
@@ -230,20 +231,24 @@ function ToolCapsule({
       onDragStart={() => setDragging(true)}
       onDragEnd={() => {
         setDragging(false);
-        controls.start({ x: 0, y: 0, transition: { type: "spring", stiffness: 140, damping: 16, mass: 0.6 } });
+        const spring = { type: "spring" as const, stiffness: 140, damping: 16, mass: 0.6 };
+        animate(x, 0, spring);
+        animate(y, 0, spring);
       }}
-      animate={controls}
       whileHover={reducedMotion ? undefined : { scale: 1.08, y: -4 }}
       whileTap={{ scale: 0.96 }}
       initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay: 0.05 * index, ease: [0.2, 0.8, 0.2, 1] }}
       style={{
         position: "absolute",
         left: origin.x,
         top: origin.y,
-        translateX: "-50%",
-        translateY: "-50%",
+        x,
+        y,
         zIndex: dragging ? 50 : 10,
         touchAction: "none",
+        margin: "-28px 0 0 -28px",
       }}
     >
       <motion.div
