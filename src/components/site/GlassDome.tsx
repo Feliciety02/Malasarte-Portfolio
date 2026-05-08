@@ -46,7 +46,7 @@ const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
 
-export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMotion: boolean }) {
+export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; reducedMotion: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const bodiesRef = useRef<Body[]>([]);
   const dragRef = useRef<DragState | null>(null);

@@ -1,16 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/works", label: "Works" },
-  { to: "/services", label: "Services" },
-  { to: "/skills", label: "Skills" },
-  { to: "/process", label: "Process" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-] as const;
+import { navLinks } from "@/data/site";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +16,7 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
         scrolled ? "py-3" : "py-5"
       }`}
     >
@@ -42,53 +33,53 @@ export function Nav() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
+          {navLinks.map((link) => (
             <Link
-              key={l.to}
-              to={l.to}
+              key={link.to}
+              to={link.to}
               className="relative rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground bg-white/5" }}
-              activeOptions={{ exact: l.to === "/" }}
+              activeOptions={{ exact: link.to === "/" }}
             >
-              {l.label}
+              {link.label}
             </Link>
           ))}
         </nav>
 
         <Link
           to="/contact"
-          className="hidden md:inline-flex items-center rounded-full bg-gradient-hero px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+          className="hidden items-center rounded-full bg-gradient-hero px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105 md:inline-flex"
         >
           Let's talk
         </Link>
 
         <button
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden rounded-full glass p-2"
+          onClick={() => setOpen((value) => !value)}
+          className="rounded-full glass p-2 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
-      {open && (
+      {open ? (
         <div className="mx-4 mt-2 rounded-2xl glass-strong p-4 md:hidden">
           <div className="flex flex-col gap-1">
-            {links.map((l) => (
+            {navLinks.map((link) => (
               <Link
-                key={l.to}
-                to={l.to}
+                key={link.to}
+                to={link.to}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 activeProps={{ className: "text-foreground bg-white/5" }}
-                activeOptions={{ exact: l.to === "/" }}
+                activeOptions={{ exact: link.to === "/" }}
               >
-                {l.label}
+                {link.label}
               </Link>
             ))}
           </div>
         </div>
-      )}
+      ) : null}
     </header>
   );
 }
