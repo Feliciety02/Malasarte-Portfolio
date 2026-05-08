@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -16,6 +16,7 @@ import {
   Quote,
 } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { GlassDome } from "@/components/site/GlassDome";
 import { projects } from "@/data/projects";
 
 export const Route = createFileRoute("/")({
@@ -349,21 +350,33 @@ function Home() {
       </section>
 
       {/* TOOLS I USE */}
-      <section className="relative px-6 py-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative overflow-hidden px-6 py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 40%, color-mix(in oklab, var(--glow-purple) 18%, transparent), transparent 60%), linear-gradient(180deg, transparent, color-mix(in oklab, var(--glow-blue) 8%, transparent), transparent)",
+          }}
+        />
+        <div className="mx-auto max-w-6xl">
           <Reveal className="mb-10 text-center">
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Tools I use</span>
-            <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">My everyday <span className="text-gradient">stack</span></h2>
+            <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
+              My everyday <span className="text-gradient">stack</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
+              A living constellation of tools — drag the capsules around the dome, they drift and snap back like floating glass.
+            </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <ul role="list" aria-label="Design tools I use every day" className="flex flex-wrap justify-center gap-3">
-              {tools.map((t) => (
-                <li key={t.slug}>
-                  <ToolChip name={t.name} slug={t.slug} color={t.color} reducedMotion={!!prefersReducedMotion} />
-                </li>
-              ))}
-            </ul>
+            <GlassDome tools={tools} reducedMotion={!!prefersReducedMotion} />
           </Reveal>
+          <ul aria-label="Design tools I use every day" className="sr-only">
+            {tools.map((t) => (
+              <li key={t.slug}>{t.name}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -429,41 +442,6 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
         </span>
       ))}
     </span>
-  );
-}
-
-function ToolChip({ name, slug, color, reducedMotion }: { name: string; slug: string; color: string; reducedMotion: boolean }) {
-  const [failed, setFailed] = useState(false);
-  return (
-    <motion.span
-      whileHover={reducedMotion ? undefined : { y: -3 }}
-      tabIndex={0}
-      role="listitem"
-      aria-label={`${name} — design tool`}
-      title={name}
-      className="group inline-flex cursor-default items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-muted-foreground outline-none transition-colors hover:bg-white/10 hover:text-foreground focus-visible:bg-white/10 focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-    >
-      {failed ? (
-        <span
-          aria-hidden
-          className="grid h-[18px] w-[18px] shrink-0 place-items-center rounded-[4px] bg-gradient-hero text-[10px] font-bold text-primary-foreground"
-        >
-          {name.charAt(0)}
-        </span>
-      ) : (
-        <img
-          src={`https://cdn.simpleicons.org/${slug}/${color}`}
-          alt=""
-          aria-hidden="true"
-          width={18}
-          height={18}
-          loading="lazy"
-          onError={() => setFailed(true)}
-          className="h-[18px] w-[18px] shrink-0"
-        />
-      )}
-      {name}
-    </motion.span>
   );
 }
 
