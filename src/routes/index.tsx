@@ -432,6 +432,41 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
+function ToolChip({ name, slug, color, reducedMotion }: { name: string; slug: string; color: string; reducedMotion: boolean }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <motion.span
+      whileHover={reducedMotion ? undefined : { y: -3 }}
+      tabIndex={0}
+      role="listitem"
+      aria-label={`${name} — design tool`}
+      title={name}
+      className="group inline-flex cursor-default items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-muted-foreground outline-none transition-colors hover:bg-white/10 hover:text-foreground focus-visible:bg-white/10 focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
+      {failed ? (
+        <span
+          aria-hidden
+          className="grid h-[18px] w-[18px] shrink-0 place-items-center rounded-[4px] bg-gradient-hero text-[10px] font-bold text-primary-foreground"
+        >
+          {name.charAt(0)}
+        </span>
+      ) : (
+        <img
+          src={`https://cdn.simpleicons.org/${slug}/${color}`}
+          alt=""
+          aria-hidden="true"
+          width={18}
+          height={18}
+          loading="lazy"
+          onError={() => setFailed(true)}
+          className="h-[18px] w-[18px] shrink-0"
+        />
+      )}
+      {name}
+    </motion.span>
+  );
+}
+
 function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   return (
     <motion.article
