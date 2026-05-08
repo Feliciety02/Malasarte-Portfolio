@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { animate, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 type Tool = { name: string; slug: string; color: string };
 
@@ -231,13 +231,9 @@ function ToolCapsule({
       onDragStart={() => setDragging(true)}
       onDragEnd={() => {
         setDragging(false);
-        // Snap gently back to origin
         const spring = { type: "spring" as const, stiffness: 140, damping: 16, mass: 0.6 };
-        // Animate motion values back to 0 via Motion's animate API
-        import("motion/react").then(({ animate }) => {
-          animate(x, 0, spring);
-          animate(y, 0, spring);
-        });
+        animate(x, 0, spring);
+        animate(y, 0, spring);
       }}
       whileHover={reducedMotion ? undefined : { scale: 1.08, y: -4 }}
       whileTap={{ scale: 0.96 }}
