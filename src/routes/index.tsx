@@ -16,6 +16,7 @@ import {
   Quote,
 } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { GlassDome } from "@/components/site/GlassDome";
 import { projects } from "@/data/projects";
 
 export const Route = createFileRoute("/")({
@@ -349,21 +350,33 @@ function Home() {
       </section>
 
       {/* TOOLS I USE */}
-      <section className="relative px-6 py-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative overflow-hidden px-6 py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 40%, color-mix(in oklab, var(--glow-purple) 18%, transparent), transparent 60%), linear-gradient(180deg, transparent, color-mix(in oklab, var(--glow-blue) 8%, transparent), transparent)",
+          }}
+        />
+        <div className="mx-auto max-w-6xl">
           <Reveal className="mb-10 text-center">
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Tools I use</span>
-            <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">My everyday <span className="text-gradient">stack</span></h2>
+            <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
+              My everyday <span className="text-gradient">stack</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
+              A living constellation of tools — drag the capsules around the dome, they drift and snap back like floating glass.
+            </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <ul role="list" aria-label="Design tools I use every day" className="flex flex-wrap justify-center gap-3">
-              {tools.map((t) => (
-                <li key={t.slug}>
-                  <ToolChip name={t.name} slug={t.slug} color={t.color} reducedMotion={!!prefersReducedMotion} />
-                </li>
-              ))}
-            </ul>
+            <GlassDome tools={tools} reducedMotion={!!prefersReducedMotion} />
           </Reveal>
+          <ul aria-label="Design tools I use every day" className="sr-only">
+            {tools.map((t) => (
+              <li key={t.slug}>{t.name}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
