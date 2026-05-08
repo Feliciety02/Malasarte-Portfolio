@@ -154,3 +154,17 @@
     .cursor-none-all, .cursor-none-all * { cursor: auto !important; }
   }
 }
+
+/* Respect user's OS-level reduced motion preference (Windows + others) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-float, .animate-float-2, .animate-shimmer {
+    animation: none !important;
+  }
+  .hover-lift:hover { transform: none !important; }
+}

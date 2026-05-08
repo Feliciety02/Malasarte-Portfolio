@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -90,15 +90,16 @@ const testimonials = [
 
 function Home() {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -120]);
+  const y2 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], prefersReducedMotion ? [1, 1] : [1, 0]);
 
   return (
     <div className="overflow-hidden">
       {/* HERO */}
-      <section ref={ref} className="relative px-6 pt-10 pb-20 md:pt-16 md:pb-28">
+      <section ref={ref} className="relative px-6 py-16 md:py-20">
         <FloatingOrbs />
         <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-50" />
 
@@ -355,25 +356,13 @@ function Home() {
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">My everyday <span className="text-gradient">stack</span></h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="flex flex-wrap justify-center gap-3">
+            <ul role="list" aria-label="Design tools I use every day" className="flex flex-wrap justify-center gap-3">
               {tools.map((t) => (
-                <motion.span
-                  key={t.slug}
-                  whileHover={{ y: -3 }}
-                  className="group inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                >
-                  <img
-                    src={`https://cdn.simpleicons.org/${t.slug}/${t.color}`}
-                    alt={`${t.name} logo`}
-                    width={18}
-                    height={18}
-                    loading="lazy"
-                    className="h-[18px] w-[18px] shrink-0"
-                  />
-                  {t.name}
-                </motion.span>
+                <li key={t.slug}>
+                  <ToolChip name={t.name} slug={t.slug} color={t.color} reducedMotion={!!prefersReducedMotion} />
+                </li>
               ))}
-            </div>
+            </ul>
           </Reveal>
         </div>
       </section>
@@ -440,6 +429,41 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
         </span>
       ))}
     </span>
+  );
+}
+
+function ToolChip({ name, slug, color, reducedMotion }: { name: string; slug: string; color: string; reducedMotion: boolean }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <motion.span
+      whileHover={reducedMotion ? undefined : { y: -3 }}
+      tabIndex={0}
+      role="listitem"
+      aria-label={`${name} — design tool`}
+      title={name}
+      className="group inline-flex cursor-default items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-muted-foreground outline-none transition-colors hover:bg-white/10 hover:text-foreground focus-visible:bg-white/10 focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
+      {failed ? (
+        <span
+          aria-hidden
+          className="grid h-[18px] w-[18px] shrink-0 place-items-center rounded-[4px] bg-gradient-hero text-[10px] font-bold text-primary-foreground"
+        >
+          {name.charAt(0)}
+        </span>
+      ) : (
+        <img
+          src={`https://cdn.simpleicons.org/${slug}/${color}`}
+          alt=""
+          aria-hidden="true"
+          width={18}
+          height={18}
+          loading="lazy"
+          onError={() => setFailed(true)}
+          className="h-[18px] w-[18px] shrink-0"
+        />
+      )}
+      {name}
+    </motion.span>
   );
 }
 
