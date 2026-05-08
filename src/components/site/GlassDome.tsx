@@ -246,10 +246,9 @@ function ToolCapsule({
         top: origin.y,
         x,
         y,
-        translateX: "-50%",
-        translateY: "-50%",
         zIndex: dragging ? 50 : 10,
         touchAction: "none",
+        margin: "-28px 0 0 -28px",
       }}
     >
       <motion.div
