@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Calendar, Expand, Sparkles, User, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Expand, Star, User, Wrench } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getProject, projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
@@ -114,7 +114,7 @@ function CaseStudy() {
           <div className="grid gap-4 md:grid-cols-4">
             {[
               { Icon: User, k: "Role", v: project.role },
-              { Icon: Sparkles, k: "Client", v: project.client },
+              { Icon: Star, k: "Client", v: project.client },
               { Icon: Wrench, k: "Tools", v: project.tools },
               { Icon: Calendar, k: "Year", v: project.year },
             ].map(({ Icon, k, v }) => (

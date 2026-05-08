@@ -10,7 +10,8 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Quote, Sparkles } from "lucide-react";
+import { ArrowRight, Quote, Star } from "lucide-react";
+import aboutFeImage from "@/assets/about-fe.png";
 import { GalacticGrid } from "@/components/site/GalacticGrid";
 import { GlassDome } from "@/components/site/GlassDome";
 import { LinkButton } from "@/components/site/LinkButton";
@@ -67,7 +68,7 @@ function Home() {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-muted-foreground"
           >
-            <Sparkles size={14} className="text-primary" />
+            <Star size={14} className="fill-primary text-primary" />
             Available for select projects · 2026
           </motion.div>
 
@@ -230,10 +231,12 @@ function Home() {
           <div className="grid gap-10 md:grid-cols-5 md:items-center">
             <Reveal className="md:col-span-2">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] glass-strong">
-                <div className="absolute inset-0 bg-gradient-hero opacity-70" />
-                <div className="absolute inset-0 grid place-items-center">
-                  <span className="font-display text-[10rem] font-bold leading-none text-white/15">Fe</span>
-                </div>
+                <img
+                  src={aboutFeImage}
+                  alt="Fe Anne Malasarte portrait"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/28 via-transparent to-white/5" />
               </div>
             </Reveal>
             <Reveal delay={0.1} className="md:col-span-3">
@@ -422,7 +425,7 @@ function Marquee({
                 <span>{item}</span>
                 {itemIndex < items.length - 1 ? (
                   <span className="text-primary/90">
-                    <Sparkles size={16} strokeWidth={1.8} />
+                    <Star size={16} className="fill-primary/90 text-primary/90" strokeWidth={1.8} />
                   </span>
                 ) : null}
               </div>

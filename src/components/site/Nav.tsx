@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Brand } from "@/components/site/Brand";
 import { navLinks } from "@/data/site";
 
 export function Nav() {
@@ -25,12 +26,7 @@ export function Nav() {
           scrolled ? "glass-strong shadow-card mx-4 md:mx-auto" : "bg-transparent"
         }`}
       >
-        <Link to="/" className="group flex items-center gap-2">
-          <div className="relative h-8 w-8 rounded-lg bg-gradient-hero shadow-glow transition-transform group-hover:rotate-12" />
-          <span className="font-display text-lg font-bold tracking-tight">
-            Fe Anne<span className="text-gradient">.</span>
-          </span>
-        </Link>
+        <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
 
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (

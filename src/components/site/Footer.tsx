@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Brand } from "@/components/site/Brand";
 import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {
@@ -15,10 +16,7 @@ export function Footer() {
 
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-3">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-hero shadow-glow" />
-            <span className="font-display text-lg font-bold">Fe Anne Malasarte</span>
-          </div>
+          <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
           <p className="mt-4 max-w-sm text-sm text-muted-foreground">
             Creative designer and UI/UX storyteller crafting meaningful digital experiences.
           </p>

@@ -1,4 +1,4 @@
-import { Briefcase, Code2, Palette, Sparkles } from "lucide-react";
+import { Briefcase, Code2, Palette, Star } from "lucide-react";
 
 export const skillGroups = [
   {
@@ -26,7 +26,7 @@ export const skillGroups = [
     ],
   },
   {
-    icon: Sparkles,
+    icon: Star,
     title: "Creative",
     color: "from-violet-500/40 to-indigo-500/30",
     items: [

@@ -1,4 +1,4 @@
-import { FileText, Globe, Layers, Megaphone, PenTool, Sparkles } from "lucide-react";
+import { FileText, Globe, Layers, Megaphone, PenTool, Star } from "lucide-react";
 
 export const serviceCategories = [
   {
@@ -37,7 +37,7 @@ export const serviceCategories = [
     bullets: ["Long-form articles", "Caption frameworks", "Voice guides"],
   },
   {
-    icon: Sparkles,
+    icon: Star,
     title: "Virtual Assistance",
     color: "from-emerald-400/40 to-teal-500/30",
     desc: "Notion systems, file organization, and creator support that keeps the studio running.",
