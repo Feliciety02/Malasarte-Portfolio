@@ -17,9 +17,13 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   return (
-    <div className="relative px-6 pb-10">
+    <div className="relative overflow-hidden px-6 pb-10">
+      <FloatingOrbs />
+      <div
+        aria-hidden
+        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
+      />
       <section className="relative mx-auto max-w-6xl pt-12">
-        <FloatingOrbs />
         <div className="grid gap-12 md:grid-cols-5 md:items-center">
           <Reveal className="md:col-span-2">
             <motion.div

@@ -114,6 +114,20 @@
   .bg-gradient-hero { background: var(--gradient-hero); }
   .shadow-glow { box-shadow: var(--shadow-glow); }
   .shadow-card { box-shadow: var(--shadow-card); }
+  .page-midshade {
+    background:
+      radial-gradient(circle at 18% 0%, rgba(154, 92, 255, 0.28), transparent 38%),
+      radial-gradient(circle at 82% 12%, rgba(59, 130, 246, 0.14), transparent 28%),
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(18, 10, 48, 0.08) 14%,
+        rgba(18, 10, 48, 0.2) 48%,
+        rgba(18, 10, 48, 0.2) 58%,
+        rgba(18, 10, 48, 0.08) 86%,
+        transparent 100%
+      );
+  }
 
   .glow-orb {
     position: absolute;

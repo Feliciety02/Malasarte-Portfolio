@@ -1,296 +1,743 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { animate, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 type Tool = { name: string; slug: string; color: string };
 
+type Body = {
+  id: string;
+  name: string;
+  slug: string;
+  color: string;
+  width: number;
+  height: number;
+  capRadius: number;
+  halfLength: number;
+  mass: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  angle: number;
+  av: number;
+};
+
+type DragState = {
+  id: string;
+  offsetX: number;
+  offsetY: number;
+  lastX: number;
+  lastY: number;
+  lastTime: number;
+};
+
+const PILL_HEIGHT = 46;
+const GLOBE_PADDING = 14;
+const COLLISION_PADDING = 2;
+const POSITION_ITERATIONS = 12;
+const BOUNDARY_BOUNCE = 0.06;
+const BODY_BOUNCE = 0.03;
+const LINEAR_DAMPING = 0.965;
+const ANGULAR_DAMPING = 0.91;
+const CONTACT_FRICTION = 0.34;
+const WALL_FRICTION = 0.22;
+const GRAVITY = 2600;
+const SLEEP_SPEED = 6;
+const SLEEP_ANGULAR_SPEED = 0.012;
+
 export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMotion: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const bodiesRef = useRef<Body[]>([]);
+  const dragRef = useRef<DragState | null>(null);
+  const moveHistoryRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const lastFrameRef = useRef<number | null>(null);
   const [size, setSize] = useState(560);
+  const [bodies, setBodies] = useState<Body[]>([]);
+  const [failedIcons, setFailedIcons] = useState<Record<string, boolean>>({});
 
-  // Mouse parallax
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-1, 1], [6, -6]), { stiffness: 80, damping: 20 });
-  const ry = useSpring(useTransform(mx, [-1, 1], [-8, 8]), { stiffness: 80, damping: 20 });
-  const px = useSpring(useTransform(mx, [-1, 1], [-12, 12]), { stiffness: 60, damping: 20 });
-  const py = useSpring(useTransform(my, [-1, 1], [-12, 12]), { stiffness: 60, damping: 20 });
+  const rx = useSpring(useTransform(my, [-1, 1], [4, -4]), { stiffness: 90, damping: 22 });
+  const ry = useSpring(useTransform(mx, [-1, 1], [-5, 5]), { stiffness: 90, damping: 22 });
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+
     const ro = new ResizeObserver(() => {
-      const w = el.clientWidth;
-      setSize(Math.min(w, 720));
+      const nextWidth = el.clientWidth;
+      setSize(Math.min(nextWidth, 720));
     });
+
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  const onMove = (e: React.MouseEvent) => {
-    if (reducedMotion) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
-    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
-  };
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
+  const globeRadius = size * 0.41;
 
-  // Place tools around a circle inside the dome
-  const radius = size * 0.32;
-  const positions = useMemo(
+  const baseBodies = useMemo<Body[]>(
     () =>
-      tools.map((_, i) => {
-        const a = (i / tools.length) * Math.PI * 2 - Math.PI / 2;
-        return { x: Math.cos(a) * radius, y: Math.sin(a) * radius };
+      tools.map((tool, index) => {
+        const width = Math.max(96, Math.min(150, 78 + tool.name.length * 7));
+        const capRadius = PILL_HEIGHT * 0.5 - 1 + COLLISION_PADDING * 0.5;
+        const halfLength = Math.max(capRadius, width * 0.5 - PILL_HEIGHT * 0.5 + COLLISION_PADDING);
+        const itemsPerRow = 4;
+        const column = index % itemsPerRow;
+        const row = Math.floor(index / itemsPerRow);
+        const columnCenter = (itemsPerRow - 1) * 0.5;
+        const rowOffset = row % 2 === 0 ? 0 : 42;
+        const x = (column - columnCenter) * 104 + rowOffset * 0.7;
+        const y = -globeRadius * 0.7 - row * 58;
+
+        return {
+          id: tool.slug,
+          name: tool.name,
+          slug: tool.slug,
+          color: tool.color,
+          width,
+          height: PILL_HEIGHT,
+          capRadius,
+          halfLength,
+          mass: width * 0.12,
+          x,
+          y,
+          vx: 0,
+          vy: 0,
+          angle: 0,
+          av: 0,
+        };
       }),
-    [tools, radius],
+    [globeRadius, tools],
   );
 
-  // Ambient particles
   const particles = useMemo(
     () =>
-      Array.from({ length: 28 }).map((_, i) => ({
-        id: i,
-        size: 2 + Math.random() * 5,
-        // Within a unit circle
-        r: Math.sqrt(Math.random()) * 0.85,
-        a: Math.random() * Math.PI * 2,
-        delay: Math.random() * 6,
-        duration: 8 + Math.random() * 10,
-        hue: Math.random() < 0.5 ? "var(--glow-purple)" : Math.random() < 0.5 ? "var(--glow-blue)" : "var(--glow-pink)",
+      Array.from({ length: 18 }).map((_, index) => ({
+        id: index,
+        left: 16 + Math.random() * 68,
+        top: 12 + Math.random() * 70,
+        size: 2 + Math.random() * 4,
+        duration: 3.5 + Math.random() * 3.5,
+        delay: Math.random() * 2.5,
       })),
     [],
   );
 
+  useEffect(() => {
+    bodiesRef.current = baseBodies.map((body) => ({ ...body }));
+    setBodies(baseBodies.map((body) => ({ ...body })));
+    dragRef.current = null;
+  }, [baseBodies]);
+
+  useEffect(() => {
+    const simulate = (timestamp: number) => {
+      const previousTime = lastFrameRef.current ?? timestamp;
+      const dt = Math.min((timestamp - previousTime) / 1000, 1 / 30);
+      lastFrameRef.current = timestamp;
+
+      const snapshot = bodiesRef.current.map((body) => ({ ...body }));
+      stepPhysics(snapshot, dt, globeRadius, dragRef.current);
+      bodiesRef.current = snapshot;
+      setBodies(snapshot.map((body) => ({ ...body })));
+      frameRef.current = window.requestAnimationFrame(simulate);
+    };
+
+    frameRef.current = window.requestAnimationFrame(simulate);
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+      lastFrameRef.current = null;
+    };
+  }, [globeRadius]);
+
+  const setPointerTilt = (clientX: number, clientY: number) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect || reducedMotion) return;
+    mx.set(((clientX - rect.left) / rect.width) * 2 - 1);
+    my.set(((clientY - rect.top) / rect.height) * 2 - 1);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    setPointerTilt(event.clientX, event.clientY);
+
+    const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
+    if (!local) return;
+
+    const now = performance.now();
+    const previousMove = moveHistoryRef.current;
+    if (previousMove && !dragRef.current) {
+      const elapsed = Math.max((now - previousMove.time) / 1000, 0.001);
+      const dx = local.x - previousMove.x;
+      const dy = local.y - previousMove.y;
+      const speed = Math.hypot(dx, dy) / elapsed;
+
+      if (speed > 900) {
+        applyShakeImpulse(bodiesRef.current, local.x, local.y, dx / elapsed, dy / elapsed, globeRadius);
+      }
+    }
+    moveHistoryRef.current = { x: local.x, y: local.y, time: now };
+
+    const drag = dragRef.current;
+    if (!drag) return;
+
+    event.preventDefault();
+    const body = bodiesRef.current.find((item) => item.id === drag.id);
+    if (!body) return;
+
+    const targetX = local.x - drag.offsetX;
+    const targetY = local.y - drag.offsetY;
+    const clamped = clampBodyToGlobe(body, targetX, targetY, globeRadius);
+    const dt = Math.max((now - drag.lastTime) / 1000, 0.001);
+
+    body.vx = (clamped.x - drag.lastX) / dt;
+    body.vy = (clamped.y - drag.lastY) / dt;
+    body.x = clamped.x;
+    body.y = clamped.y;
+    body.av = clamp(body.vx * 0.014, -1.8, 1.8);
+    body.angle = clamp(body.angle + body.av * dt, -0.28, 0.28);
+
+    dragRef.current = {
+      ...drag,
+      lastX: clamped.x,
+      lastY: clamped.y,
+      lastTime: now,
+    };
+  };
+
+  const handlePointerLeave = () => {
+    mx.set(0);
+    my.set(0);
+    moveHistoryRef.current = null;
+  };
+
+  const handlePointerUp = () => {
+    dragRef.current = null;
+  };
+
+  useEffect(() => {
+    window.addEventListener("pointerup", handlePointerUp);
+    return () => window.removeEventListener("pointerup", handlePointerUp);
+  }, []);
+
   return (
     <div
       ref={containerRef}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className="relative mx-auto aspect-square w-full max-w-[640px]"
-      style={{ perspective: 1200 }}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      className="relative mx-auto aspect-square w-full max-w-[680px]"
+      style={{ perspective: 1400 }}
     >
-      {/* Dome */}
+      <div
+        aria-hidden
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 35%, rgba(78,53,140,0.3), transparent 44%), radial-gradient(circle at 70% 72%, rgba(72,138,255,0.18), transparent 32%), linear-gradient(180deg, rgba(17,10,43,0.95), rgba(8,13,40,0.98) 68%, rgba(3,8,27,1))",
+          boxShadow: "0 40px 120px rgba(4, 8, 28, 0.6)",
+        }}
+      />
+
       <motion.div
         style={{ rotateX: reducedMotion ? 0 : rx, rotateY: reducedMotion ? 0 : ry, transformStyle: "preserve-3d" }}
         className="relative h-full w-full"
       >
-        {/* Outer glow */}
         <div
           aria-hidden
-          className="absolute inset-0 rounded-full blur-3xl opacity-60"
+          className="absolute inset-[5%] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(closest-side, color-mix(in oklab, var(--glow-purple) 35%, transparent), transparent 70%)",
+              "radial-gradient(circle at 50% 50%, rgba(132,94,247,0.42), rgba(53,33,112,0.12) 42%, transparent 70%)",
           }}
         />
 
-        {/* Glass sphere */}
         <div
           aria-hidden
-          className="absolute inset-[6%] overflow-hidden rounded-full border border-white/15"
+          className="absolute inset-[7%] overflow-hidden rounded-full border border-white/18"
           style={{
             background:
-              "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.18), rgba(255,255,255,0.04) 35%, rgba(0,0,0,0.25) 70%), radial-gradient(circle at 70% 80%, color-mix(in oklab, var(--glow-blue) 25%, transparent), transparent 55%), radial-gradient(circle at 30% 80%, color-mix(in oklab, var(--glow-pink) 22%, transparent), transparent 55%)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
+              "radial-gradient(circle at 28% 18%, rgba(255,255,255,0.28), rgba(255,255,255,0.06) 24%, rgba(24,18,66,0.3) 54%, rgba(4,8,20,0.54) 82%), radial-gradient(circle at 70% 80%, rgba(72,138,255,0.16), transparent 26%), radial-gradient(circle at 24% 72%, rgba(171,98,255,0.12), transparent 28%)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             boxShadow:
-              "inset 0 0 80px rgba(255,255,255,0.08), inset 0 0 200px rgba(0,0,0,0.45), 0 30px 80px -20px rgba(0,0,0,0.6)",
+              "inset 0 0 80px rgba(255,255,255,0.1), inset 0 -42px 90px rgba(8,10,24,0.55), 0 32px 80px rgba(0,0,0,0.45)",
           }}
         >
-          {/* Inner refraction rings */}
           <div
+            aria-hidden
             className="absolute inset-0 rounded-full"
             style={{
               background:
-                "conic-gradient(from 120deg, transparent, rgba(255,255,255,0.05), transparent 30%, rgba(255,255,255,0.04), transparent 60%)",
+                "conic-gradient(from 110deg, transparent 0deg, rgba(255,255,255,0.08) 42deg, transparent 110deg, rgba(255,255,255,0.06) 180deg, transparent 240deg, rgba(140,186,255,0.08) 310deg, transparent 360deg)",
               mixBlendMode: "screen",
             }}
           />
 
-          {/* Ambient particles */}
-          {particles.map((p) => {
-            const cx = 50 + Math.cos(p.a) * p.r * 50;
-            const cy = 50 + Math.sin(p.a) * p.r * 50;
-            return (
-              <motion.span
-                key={p.id}
-                aria-hidden
-                className="absolute rounded-full"
-                style={{
-                  left: `${cx}%`,
-                  top: `${cy}%`,
-                  width: p.size,
-                  height: p.size,
-                  background: p.hue,
-                  boxShadow: `0 0 ${p.size * 4}px ${p.hue}`,
-                  filter: "blur(0.4px)",
-                  opacity: 0.7,
-                }}
-                animate={
-                  reducedMotion
-                    ? undefined
-                    : {
-                        x: [0, 14, -10, 0],
-                        y: [0, -12, 8, 0],
-                        opacity: [0.35, 0.9, 0.5, 0.35],
-                      }
-                }
-                transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-              />
-            );
-          })}
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 84%, rgba(255,255,255,0.16), transparent 30%), radial-gradient(circle at 50% 94%, rgba(255,255,255,0.06), transparent 20%)",
+            }}
+          />
 
-          {/* Light streak */}
+          {particles.map((particle) => (
+            <motion.span
+              key={particle.id}
+              aria-hidden
+              className="absolute rounded-full bg-white/65"
+              style={{
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                width: particle.size,
+                height: particle.size,
+                boxShadow: `0 0 ${particle.size * 6}px rgba(170, 191, 255, 0.4)`,
+                filter: "blur(0.4px)",
+              }}
+              animate={reducedMotion ? undefined : { opacity: [0.12, 0.4, 0.18] }}
+              transition={{ duration: particle.duration, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
+            />
+          ))}
+
+          <div
+            aria-hidden
+            className="absolute left-[10%] top-[7%] h-[18%] w-[48%] rounded-full"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 72%)",
+              filter: "blur(5px)",
+            }}
+          />
+
           <motion.div
             aria-hidden
-            className="absolute -inset-[20%] opacity-40"
+            className="absolute inset-y-[-16%] left-[22%] w-[24%]"
             style={{
-              background:
-                "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%)",
-              mixBlendMode: "screen",
-            }}
-            animate={reducedMotion ? undefined : { x: ["-30%", "30%"] }}
-            transition={{ duration: 9, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-          />
-
-          {/* Top specular highlight */}
-          <div
-            aria-hidden
-            className="absolute left-[12%] right-[35%] top-[8%] h-[18%] rounded-full opacity-70"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(255,255,255,0.55), rgba(255,255,255,0) 70%)",
+              background: "linear-gradient(110deg, transparent, rgba(255,255,255,0.14), transparent)",
               filter: "blur(2px)",
             }}
-          />
-          {/* Bottom soft reflection */}
-          <div
-            aria-hidden
-            className="absolute bottom-[6%] left-[22%] right-[22%] h-[10%] rounded-full opacity-30"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(255,255,255,0.35), rgba(255,255,255,0) 70%)",
-              filter: "blur(3px)",
-            }}
+            animate={reducedMotion ? undefined : { x: ["-8%", "8%", "-6%"] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
 
-        {/* Tool capsules layer (above glass) */}
-        <motion.div
-          style={{ x: reducedMotion ? 0 : px, y: reducedMotion ? 0 : py }}
-          className="absolute inset-0"
-        >
-          <div className="absolute left-1/2 top-1/2 h-0 w-0">
-            {tools.map((t, i) => (
-              <ToolCapsule
-                key={t.slug}
-                tool={t}
-                origin={positions[i]}
-                bounds={containerRef}
-                reducedMotion={reducedMotion}
-                index={i}
-              />
-            ))}
-          </div>
-        </motion.div>
+        <div className="absolute inset-[7%] overflow-hidden rounded-full">
+          {bodies.map((body) => {
+            const isDragging = dragRef.current?.id === body.id;
+            const iconFailed = failedIcons[body.id];
+
+            return (
+              <button
+                key={body.id}
+                type="button"
+                aria-label={`${body.name} tool`}
+                onPointerDown={(event) => {
+                  const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
+                  if (!local) return;
+
+                  event.currentTarget.setPointerCapture(event.pointerId);
+                  dragRef.current = {
+                    id: body.id,
+                    offsetX: local.x - body.x,
+                    offsetY: local.y - body.y,
+                    lastX: body.x,
+                    lastY: body.y,
+                    lastTime: performance.now(),
+                  };
+                }}
+                className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
+                style={{
+                  width: body.width,
+                  height: body.height,
+                  transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad)`,
+                  transition: isDragging ? "none" : "box-shadow 180ms ease, filter 180ms ease",
+                  zIndex: isDragging ? 30 : 10,
+                  touchAction: "none",
+                }}
+              >
+                <div
+                  className="relative flex h-full w-full items-center gap-2 rounded-full border border-white/20 px-4 text-left"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(18,22,52,0.86), rgba(45,27,84,0.64))",
+                    boxShadow: isDragging
+                      ? "0 22px 34px rgba(0,0,0,0.28), 0 0 28px rgba(143,105,255,0.18)"
+                      : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
+                    backdropFilter: "blur(14px)",
+                    WebkitBackdropFilter: "blur(14px)",
+                    filter: isDragging ? "brightness(1.06)" : "none",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.14), transparent 34%, transparent 62%, rgba(255,255,255,0.06))",
+                    }}
+                  />
+                  <span
+                    className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/14"
+                    style={{
+                      background:
+                        body.color === "FFFFFF"
+                          ? "linear-gradient(180deg, rgba(255,255,255,0.92), rgba(231,235,255,0.74))"
+                          : `linear-gradient(180deg, #${body.color}, color-mix(in srgb, #${body.color} 55%, black))`,
+                      boxShadow: `0 0 16px color-mix(in srgb, #${body.color} 40%, transparent)`,
+                    }}
+                  >
+                    {iconFailed ? (
+                      <span className="text-[11px] font-semibold text-slate-950">{body.name.charAt(0)}</span>
+                    ) : (
+                      <img
+                        src={`https://cdn.simpleicons.org/${body.slug}/${body.color}`}
+                        alt=""
+                        aria-hidden
+                        width={18}
+                        height={18}
+                        draggable={false}
+                        onError={() => setFailedIcons((current) => ({ ...current, [body.id]: true }))}
+                        className="h-[18px] w-[18px] select-none"
+                      />
+                    )}
+                  </span>
+                  <span
+                    className="relative truncate text-[13px] font-medium tracking-[0.01em] text-white"
+                    style={{
+                      textShadow: "0 1px 10px rgba(8,10,24,0.55)",
+                    }}
+                  >
+                    {body.name}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </motion.div>
     </div>
   );
 }
 
-function ToolCapsule({
-  tool,
-  origin,
-  bounds,
-  reducedMotion,
-  index,
-}: {
-  tool: Tool;
-  origin: { x: number; y: number };
-  bounds: React.RefObject<HTMLDivElement | null>;
-  reducedMotion: boolean;
-  index: number;
-}) {
-  const [failed, setFailed] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+function stepPhysics(bodies: Body[], dt: number, globeRadius: number, dragState: DragState | null) {
+  const dragId = dragState?.id ?? null;
+  const damping = Math.pow(LINEAR_DAMPING, dt * 60);
+  const angularDamping = Math.pow(ANGULAR_DAMPING, dt * 60);
 
-  return (
-    <motion.button
-      type="button"
-      aria-label={`${tool.name} — drag me`}
-      title={tool.name}
-      drag
-      dragConstraints={bounds}
-      dragElastic={0.6}
-      dragTransition={{ bounceStiffness: 220, bounceDamping: 14, power: 0.4, timeConstant: 280 }}
-      onDragStart={() => setDragging(true)}
-      onDragEnd={() => {
-        setDragging(false);
-        const spring = { type: "spring" as const, stiffness: 140, damping: 16, mass: 0.6 };
-        animate(x, 0, spring);
-        animate(y, 0, spring);
-      }}
-      whileHover={reducedMotion ? undefined : { scale: 1.08, y: -4 }}
-      whileTap={{ scale: 0.96 }}
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, delay: 0.05 * index, ease: [0.2, 0.8, 0.2, 1] }}
-      style={{
-        position: "absolute",
-        left: origin.x,
-        top: origin.y,
-        x,
-        y,
-        zIndex: dragging ? 50 : 10,
-        touchAction: "none",
-        margin: "-28px 0 0 -28px",
-      }}
-    >
-      <motion.div
-        animate={
-          reducedMotion || dragging
-            ? undefined
-            : { y: [0, -6, 0, 5, 0], rotate: [0, 1.5, 0, -1.5, 0] }
+  for (const body of bodies) {
+    if (body.id === dragId) continue;
+
+    body.vy += GRAVITY * dt;
+    body.vx *= damping;
+    body.vy *= damping;
+    body.av *= angularDamping;
+    body.x += body.vx * dt;
+    body.y += body.vy * dt;
+    body.angle = clamp(body.angle + body.av * dt, -0.34, 0.34);
+  }
+
+  for (let iteration = 0; iteration < POSITION_ITERATIONS; iteration += 1) {
+    resolveBodyCollisions(bodies, dragId);
+    resolveBoundaryCollisions(bodies, globeRadius, dragId);
+  }
+
+  for (const body of bodies) {
+    if (body.id === dragId) continue;
+
+    const speed = Math.hypot(body.vx, body.vy);
+    const nearRest = speed < 18 && Math.abs(body.av) < 0.08;
+    if (nearRest) {
+      body.vx *= 0.62;
+      body.vy *= 0.62;
+      body.av *= 0.44;
+      body.angle *= 0.95;
+
+      if (speed < SLEEP_SPEED) {
+        body.vx = 0;
+        body.vy = 0;
+      }
+      if (Math.abs(body.av) < SLEEP_ANGULAR_SPEED) {
+        body.av = 0;
+      }
+      if (Math.abs(body.angle) < 0.008) {
+        body.angle = 0;
+      }
+    }
+  }
+}
+
+function resolveBoundaryCollisions(bodies: Body[], globeRadius: number, dragId: string | null) {
+  for (const body of bodies) {
+    const limit = globeRadius - getBoundaryExtent(body) - GLOBE_PADDING;
+    const distance = Math.hypot(body.x, body.y);
+    if (distance <= limit) continue;
+
+    const nx = distance === 0 ? 0 : body.x / distance;
+    const ny = distance === 0 ? 1 : body.y / distance;
+    body.x = nx * limit;
+    body.y = ny * limit;
+
+    if (body.id === dragId) continue;
+
+    const normalVelocity = body.vx * nx + body.vy * ny;
+    if (normalVelocity > 0) {
+      body.vx -= (1 + BOUNDARY_BOUNCE) * normalVelocity * nx;
+      body.vy -= (1 + BOUNDARY_BOUNCE) * normalVelocity * ny;
+    }
+
+    const tangentX = -ny;
+    const tangentY = nx;
+    const tangentVelocity = body.vx * tangentX + body.vy * tangentY;
+
+    body.vx -= tangentX * tangentVelocity * WALL_FRICTION;
+    body.vy -= tangentY * tangentVelocity * WALL_FRICTION;
+    body.vx *= 0.992;
+    body.vy *= 0.992;
+    body.av += clamp((body.vx * ny - body.vy * nx) * 0.00035, -0.035, 0.035);
+  }
+}
+
+function resolveBodyCollisions(bodies: Body[], dragId: string | null) {
+  for (let index = 0; index < bodies.length; index += 1) {
+    const first = bodies[index];
+    for (let inner = index + 1; inner < bodies.length; inner += 1) {
+      const second = bodies[inner];
+      const collision = getCapsuleCollision(first, second);
+
+      if (!collision) continue;
+
+      const { nx, ny, overlap } = collision;
+      const firstLocked = first.id === dragId;
+      const secondLocked = second.id === dragId;
+      const separation = overlap + 0.02;
+
+      if (firstLocked && !secondLocked) {
+        second.x += nx * separation;
+        second.y += ny * separation;
+      } else if (!firstLocked && secondLocked) {
+        first.x -= nx * separation;
+        first.y -= ny * separation;
+      } else {
+        first.x -= nx * separation * 0.5;
+        first.y -= ny * separation * 0.5;
+        second.x += nx * separation * 0.5;
+        second.y += ny * separation * 0.5;
+      }
+
+      const rvx = second.vx - first.vx;
+      const rvy = second.vy - first.vy;
+      const separatingVelocity = rvx * nx + rvy * ny;
+      const firstInvMass = firstLocked ? 0 : 1 / first.mass;
+      const secondInvMass = secondLocked ? 0 : 1 / second.mass;
+      const invMassSum = firstInvMass + secondInvMass;
+
+      if (separatingVelocity < 0 && invMassSum > 0) {
+        const impulse = (-(1 + BODY_BOUNCE) * separatingVelocity) / invMassSum;
+        const impulseX = impulse * nx;
+        const impulseY = impulse * ny;
+
+        if (!firstLocked) {
+          first.vx -= impulseX * firstInvMass;
+          first.vy -= impulseY * firstInvMass;
         }
-        transition={{ duration: 6 + (index % 4), repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-        className="group relative grid h-14 w-14 cursor-grab place-items-center rounded-2xl border border-white/15 bg-white/5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)] backdrop-blur-md outline-none transition-colors hover:bg-white/10 active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-primary"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), rgba(255,255,255,0) 60%)",
-        }}
-      >
-        {/* Hover glow */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-70"
-          style={{ background: `#${tool.color}33` }}
-        />
-        {failed ? (
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-gradient-hero text-[11px] font-bold text-primary-foreground">
-            {tool.name.charAt(0)}
-          </span>
-        ) : (
-          <img
-            src={`https://cdn.simpleicons.org/${tool.slug}/${tool.color}`}
-            alt=""
-            aria-hidden
-            width={26}
-            height={26}
-            draggable={false}
-            onError={() => setFailed(true)}
-            className="h-[26px] w-[26px] select-none"
-          />
-        )}
-        {/* Label */}
-        <span className="pointer-events-none absolute -bottom-7 whitespace-nowrap rounded-full glass px-2.5 py-0.5 text-[10px] font-medium text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          {tool.name}
-        </span>
-      </motion.div>
-    </motion.button>
-  );
+        if (!secondLocked) {
+          second.vx += impulseX * secondInvMass;
+          second.vy += impulseY * secondInvMass;
+        }
+
+        const tx = -ny;
+        const ty = nx;
+        const tangentVelocity = rvx * tx + rvy * ty;
+        const frictionImpulse = clamp((-tangentVelocity * CONTACT_FRICTION) / invMassSum, -14, 14);
+
+        if (!firstLocked) {
+          first.vx -= tx * frictionImpulse * firstInvMass;
+          first.vy -= ty * frictionImpulse * firstInvMass;
+          first.av -= clamp(frictionImpulse * 0.0035, -0.032, 0.032);
+        }
+        if (!secondLocked) {
+          second.vx += tx * frictionImpulse * secondInvMass;
+          second.vy += ty * frictionImpulse * secondInvMass;
+          second.av += clamp(frictionImpulse * 0.0035, -0.032, 0.032);
+        }
+      }
+    }
+  }
+}
+
+function applyShakeImpulse(
+  bodies: Body[],
+  originX: number,
+  originY: number,
+  velocityX: number,
+  velocityY: number,
+  globeRadius: number,
+) {
+  for (const body of bodies) {
+    const dx = body.x - originX;
+    const dy = body.y - originY;
+    const distance = Math.hypot(dx, dy);
+    const falloff = Math.max(0.2, 1 - distance / (globeRadius * 1.15));
+    body.vx += velocityX * 0.0075 * falloff;
+    body.vy += velocityY * 0.0075 * falloff;
+    body.av += clamp((velocityX - velocityY) * 0.00008 * falloff, -0.22, 0.22);
+  }
+}
+
+function clampToCircle(x: number, y: number, limit: number) {
+  const distance = Math.hypot(x, y);
+  if (distance <= limit) return { x, y };
+  const scale = limit / distance;
+  return { x: x * scale, y: y * scale };
+}
+
+function clampBodyToGlobe(body: Body, x: number, y: number, globeRadius: number) {
+  const limit = globeRadius - getBoundaryExtent(body) - GLOBE_PADDING;
+  return clampToCircle(x, y, limit);
+}
+
+function getBoundaryExtent(body: Body) {
+  const axis = getAxis(body.angle);
+  const radial = normalize(body.x, body.y, 0, 1);
+  const axialProjection = Math.abs(axis.x * radial.x + axis.y * radial.y);
+  return body.capRadius + body.halfLength * axialProjection;
+}
+
+function getCapsuleCollision(first: Body, second: Body) {
+  const firstAxis = getAxis(first.angle);
+  const secondAxis = getAxis(second.angle);
+  const firstStart = {
+    x: first.x - firstAxis.x * first.halfLength,
+    y: first.y - firstAxis.y * first.halfLength,
+  };
+  const firstEnd = {
+    x: first.x + firstAxis.x * first.halfLength,
+    y: first.y + firstAxis.y * first.halfLength,
+  };
+  const secondStart = {
+    x: second.x - secondAxis.x * second.halfLength,
+    y: second.y - secondAxis.y * second.halfLength,
+  };
+  const secondEnd = {
+    x: second.x + secondAxis.x * second.halfLength,
+    y: second.y + secondAxis.y * second.halfLength,
+  };
+
+  const closest = closestPointsBetweenSegments(firstStart, firstEnd, secondStart, secondEnd);
+  const dx = closest.bx - closest.ax;
+  const dy = closest.by - closest.ay;
+  const distance = Math.hypot(dx, dy);
+  const minDistance = first.capRadius + second.capRadius;
+
+  if (distance >= minDistance) return null;
+
+  const normal = distance > 0.0001 ? { x: dx / distance, y: dy / distance } : normalize(second.x - first.x, second.y - first.y, 1, 0);
+
+  return {
+    nx: normal.x,
+    ny: normal.y,
+    overlap: minDistance - Math.max(distance, 0.0001),
+  };
+}
+
+function closestPointsBetweenSegments(
+  a0: { x: number; y: number },
+  a1: { x: number; y: number },
+  b0: { x: number; y: number },
+  b1: { x: number; y: number },
+) {
+  const ux = a1.x - a0.x;
+  const uy = a1.y - a0.y;
+  const vx = b1.x - b0.x;
+  const vy = b1.y - b0.y;
+  const wx = a0.x - b0.x;
+  const wy = a0.y - b0.y;
+
+  const a = ux * ux + uy * uy;
+  const b = ux * vx + uy * vy;
+  const c = vx * vx + vy * vy;
+  const d = ux * wx + uy * wy;
+  const e = vx * wx + vy * wy;
+  const epsilon = 0.000001;
+  const denominator = a * c - b * b;
+
+  let sN: number;
+  let sD = denominator;
+  let tN: number;
+  let tD = denominator;
+
+  if (denominator < epsilon) {
+    sN = 0;
+    sD = 1;
+    tN = e;
+    tD = c;
+  } else {
+    sN = b * e - c * d;
+    tN = a * e - b * d;
+
+    if (sN < 0) {
+      sN = 0;
+      tN = e;
+      tD = c;
+    } else if (sN > sD) {
+      sN = sD;
+      tN = e + b;
+      tD = c;
+    }
+  }
+
+  if (tN < 0) {
+    tN = 0;
+    if (-d < 0) {
+      sN = 0;
+    } else if (-d > a) {
+      sN = sD;
+    } else {
+      sN = -d;
+      sD = a;
+    }
+  } else if (tN > tD) {
+    tN = tD;
+    if (-d + b < 0) {
+      sN = 0;
+    } else if (-d + b > a) {
+      sN = sD;
+    } else {
+      sN = -d + b;
+      sD = a;
+    }
+  }
+
+  const sc = Math.abs(sN) < epsilon ? 0 : sN / sD;
+  const tc = Math.abs(tN) < epsilon ? 0 : tN / tD;
+
+  return {
+    ax: a0.x + sc * ux,
+    ay: a0.y + sc * uy,
+    bx: b0.x + tc * vx,
+    by: b0.y + tc * vy,
+  };
+}
+
+function getAxis(angle: number) {
+  return { x: Math.cos(angle), y: Math.sin(angle) };
+}
+
+function normalize(x: number, y: number, fallbackX: number, fallbackY: number) {
+  const length = Math.hypot(x, y);
+  if (length < 0.0001) return { x: fallbackX, y: fallbackY };
+  return { x: x / length, y: y / length };
+}
+
+function getLocalPoint(clientX: number, clientY: number, element: HTMLDivElement | null) {
+  if (!element) return null;
+  const rect = element.getBoundingClientRect();
+  return {
+    x: clientX - rect.left - rect.width / 2,
+    y: clientY - rect.top - rect.height / 2,
+  };
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
 }

@@ -8,11 +8,9 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-8xl font-display font-bold text-gradient">404</h1>
+        <h1 className="font-display text-8xl font-bold text-gradient">404</h1>
         <h2 className="mt-4 text-xl font-semibold">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Looks like this page wandered off the canvas.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Looks like this page wandered off the canvas.</p>
         <div className="mt-6">
           <Link to="/" className="inline-flex rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow">
             Back home
@@ -51,7 +49,9 @@ export const Route = createRootRoute({
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+      </head>
       <body>
         {children}
         <Scripts />
@@ -65,7 +65,7 @@ function RootComponent() {
     <>
       <CustomCursor />
       <Nav />
-      <main className="min-h-screen pt-24">
+      <main className="min-h-[calc(100svh-6rem)] pt-24">
         <Outlet />
       </main>
       <Footer />

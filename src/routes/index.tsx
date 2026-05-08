@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { useRef } from "react";
+import {
+  motion,
+  useAnimationFrame,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import { useEffect, useRef } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -33,8 +42,8 @@ export const Route = createFileRoute("/")({
 
 const featuredSlugs = ["lumen-banking", "aurora-brand", "wavefront-dashboard", "echo-magazine"];
 const featured = featuredSlugs
-  .map((s) => projects.find((p) => p.slug === s))
-  .filter((p): p is NonNullable<typeof p> => !!p);
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter((project): project is NonNullable<typeof project> => !!project);
 
 const skillHighlights = [
   { name: "UI/UX Design", level: 95 },
@@ -56,6 +65,14 @@ const processSteps = [
   { icon: Lightbulb, title: "Concept" },
   { icon: Pencil, title: "Design" },
   { icon: Rocket, title: "Deliver" },
+];
+
+const marqueeItems = [
+  "UI/UX Design",
+  "Branding",
+  "Visual Storytelling",
+  "Publication",
+  "Web Design",
 ];
 
 const tools: { name: string; slug: string; color: string }[] = [
@@ -118,7 +135,9 @@ function Home() {
           <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
             <SplitText text="Creative Designer" />
             <br />
-            <span className="text-gradient"><SplitText text="& UI/UX Storyteller" delay={0.4} /></span>
+            <span className="text-gradient">
+              <SplitText text="& UI/UX Storyteller" delay={0.4} />
+            </span>
           </h1>
 
           <motion.p
@@ -127,9 +146,9 @@ function Home() {
             transition={{ duration: 0.7, delay: 0.9 }}
             className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
           >
-            I'm <span className="text-foreground font-medium">Fe Anne Malasarte</span> — a multidisciplinary designer blending
-            UI/UX, branding, and visual storytelling into experiences that feel
-            human, intentional, and quietly magical.
+            I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> — a multidisciplinary designer
+            blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
+            magical.
           </motion.p>
 
           <motion.div
@@ -165,25 +184,22 @@ function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Floating decorative shapes */}
         <motion.div aria-hidden style={{ y: y2 }} className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block" />
-        <motion.div aria-hidden style={{ y: y1 }} className="absolute right-12 top-40 hidden h-14 w-14 rotate-12 rounded-2xl bg-gradient-hero shadow-glow md:block" />
-        <motion.div aria-hidden style={{ y: y2 }} className="absolute right-1/4 bottom-20 hidden h-10 w-10 rounded-full bg-accent/40 blur-xl md:block" />
+        <motion.div
+          aria-hidden
+          style={{ y: y1 }}
+          className="absolute right-12 top-40 hidden h-14 w-14 rotate-12 rounded-2xl bg-gradient-hero shadow-glow md:block"
+        />
+        <motion.div
+          aria-hidden
+          style={{ y: y2 }}
+          className="absolute bottom-20 right-1/4 hidden h-10 w-10 rounded-full bg-accent/40 blur-xl md:block"
+        />
       </section>
 
       {/* MARQUEE */}
       <section className="relative overflow-hidden border-y border-border/50 py-6">
-        <div className="flex animate-[shimmer_30s_linear_infinite] gap-12 whitespace-nowrap text-2xl font-display font-semibold text-muted-foreground/50 md:text-4xl">
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-12">
-              <span>UI/UX Design</span><span className="text-primary">✦</span>
-              <span>Branding</span><span className="text-primary">✦</span>
-              <span>Visual Storytelling</span><span className="text-primary">✦</span>
-              <span>Publication</span><span className="text-primary">✦</span>
-              <span>Web Design</span><span className="text-primary">✦</span>
-            </div>
-          ))}
-        </div>
+        <Marquee items={marqueeItems} reducedMotion={!!prefersReducedMotion} />
       </section>
 
       {/* FEATURED WORKS — preview cards */}
@@ -193,7 +209,9 @@ function Home() {
             <div>
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Selected Work</span>
               <h2 className="mt-3 font-display text-4xl font-bold md:text-6xl">Featured projects</h2>
-              <p className="mt-4 max-w-xl text-muted-foreground">A small slice of recent case studies — tap into any project to read the full story.</p>
+              <p className="mt-4 max-w-xl text-muted-foreground">
+                A small slice of recent case studies — tap into any project to read the full story.
+              </p>
             </div>
             <Link to="/works" className="hidden items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground md:inline-flex">
               View all works <ArrowRight size={14} />
@@ -201,9 +219,9 @@ function Home() {
           </Reveal>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {featured.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 0.08}>
-                <ProjectCard project={p} />
+            {featured.map((project, index) => (
+              <Reveal key={project.slug} delay={index * 0.08}>
+                <ProjectCard project={project} />
               </Reveal>
             ))}
           </div>
@@ -229,21 +247,26 @@ function Home() {
             </Link>
           </Reveal>
           <div className="grid gap-4 md:grid-cols-2">
-            {skillHighlights.map((s, i) => (
-              <Reveal key={s.name} delay={i * 0.06}>
+            {skillHighlights.map((skill, index) => (
+              <Reveal key={skill.name} delay={index * 0.06}>
                 <div className="rounded-2xl glass p-5 hover-lift">
                   <div className="flex items-baseline justify-between text-sm">
-                    <span className="font-medium">{s.name}</span>
-                    <span className="text-xs text-muted-foreground">{s.level}%</span>
+                    <span className="font-medium">{skill.name}</span>
+                    <span className="text-xs text-muted-foreground">{skill.level}%</span>
                   </div>
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/5">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${s.level}%` }}
-                      viewport={{ once: true, margin: "-80px" }}
-                      transition={{ duration: 1.1, delay: 0.2 + i * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
-                      className="h-full rounded-full bg-gradient-hero shadow-glow"
-                    />
+                  <div className="mt-3 h-2.5 rounded-full bg-white/6 p-[2px]">
+                    <div className="h-full overflow-hidden rounded-full bg-background/60">
+                      <motion.div
+                        style={{ width: `${skill.level}%`, transformOrigin: "left center" }}
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 1.1, delay: 0.2 + index * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
+                        className="relative h-full rounded-full bg-gradient-hero"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,rgba(255,255,255,0.24),transparent_48%)]" />
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
               </Reveal>
@@ -265,14 +288,14 @@ function Home() {
             </Link>
           </Reveal>
           <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-5">
-            {servicePreviews.map((s, i) => (
-              <Reveal key={s.title} delay={i * 0.05}>
+            {servicePreviews.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.05}>
                 <Link to="/services" className="group block h-full rounded-3xl glass-strong p-6 hover-lift">
                   <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
-                    <s.icon size={16} className="text-primary-foreground" />
+                    <service.icon size={16} className="text-primary-foreground" />
                   </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold">{s.title}</h3>
-                  <p className="mt-2 text-xs text-muted-foreground">{s.desc}</p>
+                  <h3 className="mt-4 font-display text-lg font-semibold">{service.title}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground">{service.desc}</p>
                 </Link>
               </Reveal>
             ))}
@@ -293,14 +316,14 @@ function Home() {
             </Link>
           </Reveal>
           <div className="grid gap-5 md:grid-cols-4">
-            {processSteps.map((s, i) => (
-              <Reveal key={s.title} delay={i * 0.07}>
+            {processSteps.map((step, index) => (
+              <Reveal key={step.title} delay={index * 0.07}>
                 <div className="group relative h-full overflow-hidden rounded-3xl glass p-6 hover-lift">
-                  <div className="font-display text-5xl font-bold text-white/10">0{i + 1}</div>
+                  <div className="font-display text-5xl font-bold text-white/10">0{index + 1}</div>
                   <div className="mt-2 grid h-11 w-11 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
-                    <s.icon size={16} className="text-primary-foreground" />
+                    <step.icon size={16} className="text-primary-foreground" />
                   </div>
-                  <h3 className="mt-4 font-display text-xl font-semibold">{s.title}</h3>
+                  <h3 className="mt-4 font-display text-xl font-semibold">{step.title}</h3>
                 </div>
               </Reveal>
             ))}
@@ -324,17 +347,18 @@ function Home() {
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">About</span>
               <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">Designer with a soft spot for quiet details.</h2>
               <p className="mt-5 text-muted-foreground">
-                I'm a multidisciplinary designer working across UI/UX, branding, publication, and content. I love building things that feel intentional, human, and a little bit magical.
+                I&apos;m a multidisciplinary designer working across UI/UX, branding, publication, and content. I love building
+                things that feel intentional, human, and a little bit magical.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
                 {[
                   { k: "5+", v: "Years" },
                   { k: "40+", v: "Projects" },
                   { k: "10+", v: "Clients" },
-                ].map((s) => (
-                  <div key={s.v} className="rounded-2xl glass p-4 text-center">
-                    <div className="font-display text-2xl font-bold text-gradient">{s.k}</div>
-                    <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
+                ].map((stat) => (
+                  <div key={stat.v} className="rounded-2xl glass p-4 text-center">
+                    <div className="font-display text-2xl font-bold text-gradient">{stat.k}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{stat.v}</div>
                   </div>
                 ))}
               </div>
@@ -366,15 +390,16 @@ function Home() {
               My everyday <span className="text-gradient">stack</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
-              A living constellation of tools — drag the capsules around the dome, they drift and snap back like floating glass.
+              Drag the tools inside the glass globe and they respond with real weight, soft collisions, and a natural settle
+              at rest.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
             <GlassDome tools={tools} reducedMotion={!!prefersReducedMotion} />
           </Reveal>
           <ul aria-label="Design tools I use every day" className="sr-only">
-            {tools.map((t) => (
-              <li key={t.slug}>{t.name}</li>
+            {tools.map((tool) => (
+              <li key={tool.slug}>{tool.name}</li>
             ))}
           </ul>
         </div>
@@ -388,14 +413,14 @@ function Home() {
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">Collaboration highlights</h2>
           </Reveal>
           <div className="grid gap-5 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.08}>
+            {testimonials.map((testimonial, index) => (
+              <Reveal key={testimonial.name} delay={index * 0.08}>
                 <motion.div whileHover={{ y: -4 }} className="relative h-full rounded-3xl glass-strong p-7 hover-lift">
                   <Quote size={20} className="text-primary" />
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">"{t.quote}"</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">&quot;{testimonial.quote}&quot;</p>
                   <div className="mt-6 border-t border-border/60 pt-4">
-                    <div className="font-display text-base font-semibold">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.role}</div>
+                    <div className="font-display text-base font-semibold">{testimonial.name}</div>
+                    <div className="text-xs text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </motion.div>
               </Reveal>
@@ -409,11 +434,9 @@ function Home() {
         <Reveal className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] glass-strong p-12 text-center md:p-20">
           <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-20" />
           <h2 className="font-display text-4xl font-bold md:text-6xl">
-            Let's create something <span className="text-gradient">meaningful</span> together.
+            Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Have a project in mind? I'd love to hear your story.
-          </p>
+          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">Have a project in mind? I&apos;d love to hear your story.</p>
           <Link
             to="/contact"
             className="mt-10 inline-flex items-center gap-2 rounded-full bg-gradient-hero px-8 py-4 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
@@ -429,12 +452,12 @@ function Home() {
 function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   return (
     <span className="inline-block">
-      {text.split(" ").map((word, wi) => (
-        <span key={wi} className="inline-block overflow-hidden pr-[0.25em] align-bottom">
+      {text.split(" ").map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block overflow-hidden pr-[0.25em] align-bottom">
           <motion.span
             initial={{ y: "110%" }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: delay + wi * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
+            transition={{ duration: 0.8, delay: delay + wordIndex * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
             className="inline-block"
           >
             {word}
@@ -445,13 +468,83 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
+function Marquee({
+  items,
+  reducedMotion,
+}: {
+  items: string[];
+  reducedMotion: boolean;
+}) {
+  const loopX = useMotionValue(reducedMotion ? 0 : -50);
+  const boost = useSpring(1, { stiffness: 180, damping: 24, mass: 0.8 });
+  const x = useMotionTemplate`${loopX}%`;
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useAnimationFrame((_, delta) => {
+    if (reducedMotion) return;
+
+    const speed = 2.8 * boost.get();
+    let next = loopX.get() + (speed * delta) / 1000;
+
+    if (next >= 0) next -= 50;
+
+    loopX.set(next);
+  });
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    };
+  }, []);
+
+  const handleWheel = (delta: number) => {
+    if (reducedMotion) return;
+
+    boost.set(Math.min(4.2, 1 + Math.abs(delta) / 120));
+
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = setTimeout(() => {
+      boost.set(1);
+    }, 1000);
+  };
+
+  return (
+    <div className="group relative overflow-hidden" onWheel={(event) => handleWheel(event.deltaY || event.deltaX)}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent"
+      />
+
+      <motion.div
+        style={reducedMotion ? undefined : { x }}
+        className="flex w-max gap-12 whitespace-nowrap text-2xl font-display font-semibold text-muted-foreground/55 md:text-4xl"
+      >
+        {Array.from({ length: 2 }).map((_, loopIndex) => (
+          <div key={loopIndex} className="flex items-center gap-12 pr-12">
+            {items.map((item, itemIndex) => (
+              <div key={`${loopIndex}-${item}`} className="flex items-center gap-12">
+                <span>{item}</span>
+                {itemIndex < items.length - 1 ? (
+                  <span className="text-primary/90">
+                    <Sparkles size={16} strokeWidth={1.8} />
+                  </span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   return (
-    <motion.article
-      whileHover={{ y: -6 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-strong hover-lift"
-    >
-      {/* Image area */}
+    <motion.article whileHover={{ y: -6 }} className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-strong hover-lift">
       <div className="relative aspect-[16/10] overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br ${project.color} transition-transform duration-700 group-hover:scale-110`} />
         <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
@@ -460,15 +553,14 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
         </span>
       </div>
 
-      {/* Body */}
       <div className="flex flex-1 flex-col p-7">
         <h3 className="font-display text-2xl font-bold md:text-3xl">{project.title}</h3>
         <p className="mt-3 text-sm text-muted-foreground">{project.desc}</p>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          {project.tools.split("·").map((t) => (
-            <span key={t} className="rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground">
-              {t.trim()}
+          {project.tools.split("·").map((tool) => (
+            <span key={tool} className="rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground">
+              {tool.trim()}
             </span>
           ))}
         </div>

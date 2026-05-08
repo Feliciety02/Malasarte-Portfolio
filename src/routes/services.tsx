@@ -62,9 +62,13 @@ const services = [
 
 function Services() {
   return (
-    <div className="relative px-6 pb-20">
+    <div className="relative overflow-hidden px-6 pb-20">
+      <FloatingOrbs />
+      <div
+        aria-hidden
+        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
+      />
       <section className="relative mx-auto max-w-7xl pt-12">
-        <FloatingOrbs />
         <Reveal>
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Services</span>
           <h1 className="mt-3 font-display text-5xl font-bold md:text-7xl">

@@ -20,27 +20,28 @@ function Contact() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="relative px-6 pb-10">
+    <div className="relative overflow-hidden px-6 pb-16 md:pb-20">
+      <FloatingOrbs />
+      <div aria-hidden className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]" />
       <section className="relative mx-auto max-w-6xl pt-12">
-        <FloatingOrbs />
         <Reveal className="text-center">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Contact</span>
           <h1 className="mx-auto mt-3 max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
-            Let's create something <span className="text-gradient">meaningful</span> together.
+            Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
             Have a project, idea, or collaboration in mind? Drop a note — I read every message.
           </p>
         </Reveal>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-5">
+        <div className="mt-14 grid gap-8 md:grid-cols-5">
           <Reveal delay={0.1} className="md:col-span-3">
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
+              onSubmit={(event) => {
+                event.preventDefault();
                 setSent(true);
                 setTimeout(() => setSent(false), 4000);
-                (e.currentTarget as HTMLFormElement).reset();
+                (event.currentTarget as HTMLFormElement).reset();
               }}
               className="space-y-5 rounded-3xl glass-strong p-8 md:p-10"
             >
@@ -67,12 +68,8 @@ function Contact() {
                 <Send size={14} className="transition-transform group-hover:translate-x-0.5" />
               </button>
               {sent && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 text-sm text-emerald-300"
-                >
-                  <CheckCircle2 size={16} /> Message sent — I'll get back to you shortly.
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 text-sm text-emerald-300">
+                  <CheckCircle2 size={16} /> Message sent — I&apos;ll get back to you shortly.
                 </motion.div>
               )}
             </form>
@@ -80,10 +77,7 @@ function Contact() {
 
           <Reveal delay={0.2} className="md:col-span-2">
             <div className="space-y-4">
-              <a
-                href="mailto:hello@feanne.design"
-                className="group flex items-start gap-4 rounded-3xl glass p-6 hover-lift"
-              >
+              <a href="mailto:hello@feanne.design" className="group flex items-start gap-4 rounded-3xl glass p-6 hover-lift">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
                   <Mail size={18} className="text-primary-foreground" />
                 </div>
@@ -148,7 +142,9 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</label>
+      <label htmlFor={name} className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        {label}
+      </label>
       <input
         id={name}
         name={name}

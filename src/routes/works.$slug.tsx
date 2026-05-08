@@ -67,10 +67,13 @@ function CaseStudy() {
 
   return (
     <div className="relative overflow-hidden px-6 pb-10">
+      <FloatingOrbs />
+      <div
+        aria-hidden
+        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
+      />
       {/* HERO */}
       <section ref={heroRef} className="relative mx-auto max-w-6xl pt-6">
-        <FloatingOrbs />
-
         <Link
           to="/works"
           className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground"
