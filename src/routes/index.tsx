@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -90,15 +90,16 @@ const testimonials = [
 
 function Home() {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -120]);
+  const y2 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], prefersReducedMotion ? [1, 1] : [1, 0]);
 
   return (
     <div className="overflow-hidden">
       {/* HERO */}
-      <section ref={ref} className="relative px-6 pt-10 pb-20 md:pt-16 md:pb-28">
+      <section ref={ref} className="relative px-6 py-16 md:py-20">
         <FloatingOrbs />
         <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-50" />
 
