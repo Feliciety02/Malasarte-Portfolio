@@ -115,7 +115,7 @@ function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], prefersReducedMotion ? [1, 1] : [1, 0]);
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden">
       {/* HERO */}
       <section ref={ref} className="relative px-6 py-16 md:py-20">
         <FloatingOrbs />
@@ -235,7 +235,7 @@ function Home() {
       </section>
 
       {/* SKILL HIGHLIGHTS */}
-      <section className="relative px-6 py-24">
+      <section className="relative px-6 pb-24 pt-8 md:pb-24 md:pt-10">
         <div className="mx-auto max-w-7xl">
           <Reveal className="mb-12 flex items-end justify-between gap-6">
             <div>
@@ -275,33 +275,7 @@ function Home() {
         </div>
       </section>
 
-      {/* SERVICES PREVIEW */}
-      <section className="relative px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="mb-12 flex items-end justify-between gap-6">
-            <div>
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">What I do</span>
-              <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">Services preview</h2>
-            </div>
-            <Link to="/services" className="hidden items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground md:inline-flex">
-              All services <ArrowRight size={14} />
-            </Link>
-          </Reveal>
-          <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-5">
-            {servicePreviews.map((service, index) => (
-              <Reveal key={service.title} delay={index * 0.05}>
-                <Link to="/services" className="group block h-full rounded-3xl glass-strong p-6 hover-lift">
-                  <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
-                    <service.icon size={16} className="text-primary-foreground" />
-                  </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold">{service.title}</h3>
-                  <p className="mt-2 text-xs text-muted-foreground">{service.desc}</p>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServicesScroller services={servicePreviews} reducedMotion={!!prefersReducedMotion} />
 
       {/* PROCESS PREVIEW */}
       <section className="relative px-6 py-24">
@@ -542,14 +516,164 @@ function Marquee({
   );
 }
 
+function ServicesScroller({
+  services,
+  reducedMotion,
+}: {
+  services: typeof servicePreviews;
+  reducedMotion: boolean;
+}) {
+  const featuredServices = services.slice(0, 3);
+
+  return (
+    <section className="relative overflow-hidden px-6 py-24">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(10,8,27,0.12) 0%, rgba(8,10,24,0.3) 100%), radial-gradient(circle at 18% 16%, rgba(162, 92, 255, 0.24), transparent 28%), radial-gradient(circle at 82% 18%, rgba(74, 168, 255, 0.18), transparent 24%), radial-gradient(circle at 50% 100%, rgba(255, 78, 187, 0.12), transparent 32%)",
+        }}
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(7,10,28,0.24)_28%,rgba(6,8,22,0.62)_100%)]" />
+      <GalacticGrid reducedMotion={reducedMotion} />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <Reveal className="mb-12 flex items-end justify-between gap-6">
+          <div className="max-w-xl">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">What I do</span>
+            <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">Services preview</h2>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Scroll through a dreamy galactic grove to explore the services I design, build, and shape.
+            </p>
+          </div>
+          <Link
+            to="/services"
+            className="hidden items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground md:inline-flex"
+          >
+            All services <ArrowRight size={14} />
+          </Link>
+        </Reveal>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {featuredServices.map((service, index) => (
+            <Reveal key={service.title} delay={index * 0.07}>
+              <motion.div
+                style={reducedMotion ? undefined : { y: index % 3 === 1 ? -12 : 0 }}
+                className="h-full"
+              >
+                <Link
+                  to="/services"
+                  className="group relative block h-full overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(26,20,55,0.74),rgba(10,18,45,0.7))] p-7 shadow-[0_18px_50px_rgba(7,10,28,0.35)] backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute -right-10 -top-8 h-40 w-40 rounded-full bg-gradient-to-br ${index % 2 === 0 ? "from-violet-500/28 to-cyan-400/10" : "from-pink-400/24 to-violet-500/10"} blur-3xl transition-opacity duration-500 group-hover:opacity-100`}
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.08), transparent 34%, transparent 66%, rgba(154,92,255,0.12))",
+                    }}
+                  />
+                  <div className="relative z-10">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
+                      <service.icon size={18} className="text-primary-foreground" />
+                    </div>
+                    <h3 className="mt-5 font-display text-2xl font-bold">{service.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+                    <div className="mt-8 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-primary/90">
+                      Explore service <ArrowRight size={12} />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GalacticGrid({
+  reducedMotion,
+}: {
+  reducedMotion: boolean;
+}) {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#090814_0%,#0b1027_38%,#091320_68%,#071018_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(131,95,255,0.18),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(84,197,255,0.12),transparent_20%)]" />
+      <div className="absolute inset-x-[-8%] top-[56%] h-px bg-[linear-gradient(90deg,transparent,rgba(121,210,255,0.65),rgba(199,132,255,0.88),rgba(121,210,255,0.65),transparent)] shadow-[0_0_28px_rgba(138,155,255,0.42)]" />
+      <div className="absolute inset-x-[5%] top-[53%] h-28 bg-[radial-gradient(ellipse_at_center,rgba(102,171,255,0.14),transparent_68%)] blur-2xl" />
+      <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,transparent,rgba(7,12,24,0.12)_24%,rgba(6,10,20,0.68)_100%)]" />
+
+      <motion.div
+        animate={reducedMotion ? undefined : { x: [0, -10, 0], y: [0, -2, 0] }}
+        transition={reducedMotion ? undefined : { duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        className="absolute inset-0 opacity-55"
+      >
+        <svg className="h-full w-full" viewBox="0 0 1200 700" preserveAspectRatio="none">
+          <g stroke="rgba(128,212,255,0.1)" strokeWidth="1">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <line
+                key={index}
+                x1={60 + index * 120}
+                y1="0"
+                x2={60 + index * 120}
+                y2="700"
+              />
+            ))}
+            {Array.from({ length: 8 }).map((_, index) => (
+              <line
+                key={`h-${index}`}
+                x1="0"
+                y1={120 + index * 70}
+                x2="1200"
+                y2={120 + index * 70}
+              />
+            ))}
+          </g>
+          <g stroke="rgba(195,140,255,0.12)" strokeWidth="1">
+            <path d="M0 520 L180 486 L360 500 L540 470 L720 492 L900 462 L1200 492" fill="none" />
+            <path d="M0 566 L200 536 L410 552 L620 524 L830 546 L1040 516 L1200 534" fill="none" />
+          </g>
+        </svg>
+      </motion.div>
+    </div>
+  );
+}
+
 function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   return (
     <motion.article whileHover={{ y: -6 }} className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-strong hover-lift">
       <div className="relative aspect-[16/10] overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br ${project.color} transition-transform duration-700 group-hover:scale-110`} />
         <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-        <span className="absolute left-5 top-5 rounded-full glass px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-primary">
-          {project.cat}
+        <span
+          className="absolute left-5 top-5 rounded-full px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_8px_24px_rgba(5,8,20,0.35)]"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,14,30,0.82), rgba(8,12,24,0.72))",
+            border: "1px solid rgba(255,255,255,0.16)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px rgba(106,208,255,0.08), 0 10px 30px rgba(6,10,24,0.32)",
+            textShadow: "0 1px 8px rgba(10,14,30,0.28)",
+          }}
+        >
+          <span
+            aria-hidden
+            className="absolute inset-0 rounded-full opacity-70"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(97,228,255,0.08), transparent 30%, transparent 70%, rgba(236,126,255,0.08))",
+            }}
+          />
+          <span className="relative z-10">{project.cat}</span>
         </span>
       </div>
 

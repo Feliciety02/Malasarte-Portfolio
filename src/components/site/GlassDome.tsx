@@ -19,6 +19,7 @@ type Body = {
   vy: number;
   angle: number;
   av: number;
+  asleep: boolean;
 };
 
 type DragState = {
@@ -43,6 +44,7 @@ const WALL_FRICTION = 0.22;
 const GRAVITY = 2600;
 const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
+const WAKE_SPEED = 14;
 
 export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMotion: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -78,7 +80,7 @@ export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMoti
   const baseBodies = useMemo<Body[]>(
     () =>
       tools.map((tool, index) => {
-        const width = Math.max(96, Math.min(150, 78 + tool.name.length * 7));
+        const width = Math.max(112, Math.min(188, 96 + tool.name.length * 8));
         const capRadius = PILL_HEIGHT * 0.5 - 1 + COLLISION_PADDING * 0.5;
         const halfLength = Math.max(capRadius, width * 0.5 - PILL_HEIGHT * 0.5 + COLLISION_PADDING);
         const itemsPerRow = 4;
@@ -105,6 +107,7 @@ export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMoti
           vy: 0,
           angle: 0,
           av: 0,
+          asleep: false,
         };
       }),
     [globeRadius, tools],
@@ -344,6 +347,7 @@ export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMoti
                     lastY: body.y,
                     lastTime: performance.now(),
                   };
+                  body.asleep = false;
                 }}
                 className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
                 style={{
@@ -402,7 +406,7 @@ export function GlassDome({ tools, reducedMotion }: { tools: Tool[]; reducedMoti
                     )}
                   </span>
                   <span
-                    className="relative truncate text-[13px] font-medium tracking-[0.01em] text-white"
+                    className="relative whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
                     style={{
                       textShadow: "0 1px 10px rgba(8,10,24,0.55)",
                     }}
@@ -426,6 +430,7 @@ function stepPhysics(bodies: Body[], dt: number, globeRadius: number, dragState:
 
   for (const body of bodies) {
     if (body.id === dragId) continue;
+    if (body.asleep) continue;
 
     body.vy += GRAVITY * dt;
     body.vx *= damping;
@@ -462,6 +467,11 @@ function stepPhysics(bodies: Body[], dt: number, globeRadius: number, dragState:
       if (Math.abs(body.angle) < 0.008) {
         body.angle = 0;
       }
+      if (body.vx === 0 && body.vy === 0 && body.av === 0) {
+        body.asleep = true;
+      }
+    } else {
+      body.asleep = false;
     }
   }
 }
@@ -478,6 +488,7 @@ function resolveBoundaryCollisions(bodies: Body[], globeRadius: number, dragId: 
     body.y = ny * limit;
 
     if (body.id === dragId) continue;
+    body.asleep = false;
 
     const normalVelocity = body.vx * nx + body.vy * ny;
     if (normalVelocity > 0) {
@@ -510,6 +521,9 @@ function resolveBodyCollisions(bodies: Body[], dragId: string | null) {
       const firstLocked = first.id === dragId;
       const secondLocked = second.id === dragId;
       const separation = overlap + 0.02;
+
+      first.asleep = false;
+      second.asleep = false;
 
       if (firstLocked && !secondLocked) {
         second.x += nx * separation;
@@ -581,6 +595,9 @@ function applyShakeImpulse(
     body.vx += velocityX * 0.0075 * falloff;
     body.vy += velocityY * 0.0075 * falloff;
     body.av += clamp((velocityX - velocityY) * 0.00008 * falloff, -0.22, 0.22);
+    if (Math.hypot(body.vx, body.vy) > WAKE_SPEED || Math.abs(body.av) > SLEEP_ANGULAR_SPEED) {
+      body.asleep = false;
+    }
   }
 }
 
