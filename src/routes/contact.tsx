@@ -1,18 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Mail, Send, Instagram, Linkedin, Dribbble, CheckCircle2 } from "lucide-react";
+import {
+  CheckCircle2,
+  Dribbble,
+  Instagram,
+  Linkedin,
+  Mail,
+  Send,
+} from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Fe Anne Malasarte" },
+      { title: "Contact - Fe Anne Malasarte" },
       {
         name: "description",
-        content: "Let's create something meaningful together — start a project with Fe Anne.",
+        content: "Let's create something meaningful together - start a project with Fe Anne.",
       },
-      { property: "og:title", content: "Contact — Fe Anne Malasarte" },
+      { property: "og:title", content: "Contact - Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "Reach out for design, branding, and creative collaborations.",
@@ -37,11 +44,11 @@ function Contact() {
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
             Contact
           </span>
-          <h1 className="mx-auto mt-3 max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
+          <h1 className="mx-auto mt-3 max-w-3xl font-display text-4xl font-bold leading-[1.05] sm:text-5xl md:text-7xl">
             Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Have a project, idea, or collaboration in mind? Drop a note — I read every message.
+          <p className="mx-auto mt-6 max-w-xl text-sm text-muted-foreground md:text-base">
+            Have a project, idea, or collaboration in mind? Drop a note - I read every message.
           </p>
         </Reveal>
 
@@ -54,7 +61,7 @@ function Contact() {
                 setTimeout(() => setSent(false), 4000);
                 (event.currentTarget as HTMLFormElement).reset();
               }}
-              className="space-y-5 rounded-3xl glass-strong p-8 md:p-10"
+              className="space-y-5 rounded-3xl glass-strong p-6 md:p-10"
             >
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label="Your name" name="name" placeholder="Jane Doe" required />
@@ -66,7 +73,7 @@ function Contact() {
                   required
                 />
               </div>
-              <Field label="Subject" name="subject" placeholder="Brand identity for…" />
+              <Field label="Subject" name="subject" placeholder="Brand identity for..." />
               <div>
                 <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Message
@@ -75,13 +82,13 @@ function Contact() {
                   name="message"
                   required
                   rows={6}
-                  placeholder="Tell me about your project…"
+                  placeholder="Tell me about your project..."
                   className="mt-2 w-full resize-none rounded-2xl border border-border bg-background/40 px-4 py-3 text-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
                 />
               </div>
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-hero px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02]"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02] md:px-7 md:py-3.5"
               >
                 Send message
                 <Send size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -92,7 +99,7 @@ function Contact() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-center gap-2 text-sm text-emerald-300"
                 >
-                  <CheckCircle2 size={16} /> Message sent — I&apos;ll get back to you shortly.
+                  <CheckCircle2 size={16} /> Message sent - I&apos;ll get back to you shortly.
                 </motion.div>
               )}
             </form>

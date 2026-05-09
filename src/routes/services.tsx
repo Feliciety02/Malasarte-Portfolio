@@ -43,7 +43,7 @@ function Services() {
             }
             description="A focused set of services for founders, studios, and creators - combining design craft, brand thinking, and reliable execution."
             contentClassName="max-w-2xl"
-            titleClassName="text-5xl md:text-7xl"
+            titleClassName="text-4xl sm:text-5xl md:text-7xl"
             titleTag="h1"
           />
         </Reveal>
@@ -57,9 +57,11 @@ function Services() {
         </div>
 
         <Reveal className="mt-20">
-          <div className="relative overflow-hidden rounded-[2rem] glass-strong p-10 text-center md:p-16">
+          <div className="relative overflow-hidden rounded-[2rem] glass-strong p-8 text-center md:p-16">
             <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-20" />
-            <h2 className="font-display text-3xl font-bold md:text-5xl">Have a brief in mind?</h2>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-5xl">
+              Have a brief in mind?
+            </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
               Tell me about the project and I'll come back with scope, timeline, and a friendly
               hello.

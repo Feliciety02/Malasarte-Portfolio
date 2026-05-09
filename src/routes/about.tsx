@@ -1,18 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { ArrowRight } from "lucide-react";
+import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Fe Anne Malasarte" },
+      { title: "About - Fe Anne Malasarte" },
       {
         name: "description",
         content:
-          "Meet Fe Anne — a creative designer with roots in tech orgs, branding, and storytelling.",
+          "Meet Fe Anne - a creative designer with roots in tech orgs, branding, and storytelling.",
       },
-      { property: "og:title", content: "About — Fe Anne Malasarte" },
+      { property: "og:title", content: "About - Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "A short, honest introduction to a designer who loves quiet details.",
@@ -39,7 +39,7 @@ function About() {
             >
               <div className="absolute inset-0 bg-gradient-hero opacity-70" />
               <div className="absolute inset-0 grid place-items-center">
-                <span className="font-display text-[14rem] font-bold leading-none text-white/15">
+                <span className="font-display text-[9rem] font-bold leading-none text-white/15 sm:text-[11rem] md:text-[14rem]">
                   Fe
                 </span>
               </div>
@@ -56,35 +56,37 @@ function About() {
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               About
             </span>
-            <h1 className="mt-3 font-display text-5xl font-bold md:text-6xl">
-              Hi, I'm <span className="text-gradient">Fe Anne</span>.
+            <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl md:text-6xl">
+              Hi, I&apos;m <span className="text-gradient">Fe Anne</span>.
             </h1>
-            <div className="mt-6 space-y-4 text-muted-foreground">
+            <div className="mt-6 space-y-4 text-sm text-muted-foreground md:text-base">
               <p>
-                I'm a creative designer who fell in love with the quiet details — the kerning of a
-                headline, the curve of an icon, the way a color palette can feel like a breath of
-                air.
+                I&apos;m a creative designer who fell in love with the quiet details - the kerning
+                of a headline, the curve of an icon, the way a color palette can feel like a breath
+                of air.
               </p>
               <p>
                 My journey started in tech and design organizations, where I learned to build
                 pubmats, brand identities, and digital products that actually serve people. Today, I
-                work across UI/UX, branding, publication design, and a bit of writing — bridging
+                work across UI/UX, branding, publication design, and a bit of writing - bridging
                 strategy and aesthetic.
               </p>
               <p>
-                Outside of pixels, I love reading, journaling, and helping creators bring their
-                ideas to life — whether through design or virtual support.
+                Outside of pixels, I love reading, journaling, and helping creators bring their ideas
+                to life - whether through design or virtual support.
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {[
                 { k: "5+", v: "Years designing" },
                 { k: "40+", v: "Projects shipped" },
                 { k: "10+", v: "Happy clients" },
               ].map((s) => (
                 <div key={s.v} className="rounded-2xl glass p-4 text-center">
-                  <div className="font-display text-3xl font-bold text-gradient">{s.k}</div>
+                  <div className="font-display text-2xl font-bold text-gradient md:text-3xl">
+                    {s.k}
+                  </div>
                   <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
                 </div>
               ))}
@@ -108,12 +110,12 @@ function About() {
         </div>
 
         <Reveal className="mt-24">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">Experience</h2>
+          <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-4xl">Experience</h2>
           <div className="mt-8 space-y-4">
             {[
-              { year: "2024 — Now", role: "Freelance Designer & VA", place: "Remote" },
-              { year: "2022 — 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
-              { year: "2020 — 2022", role: "Junior Designer", place: "Creative Collective" },
+              { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
+              { year: "2022 - 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
+              { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
             ].map((e) => (
               <div
                 key={e.role}

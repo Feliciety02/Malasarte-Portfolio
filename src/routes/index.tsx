@@ -81,7 +81,7 @@ function Home() {
             Available for select projects · 2026
           </motion.div>
 
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
+          <h1 className="mt-6 font-display text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl md:text-7xl lg:text-[7.5rem]">
             <SplitText text="Creative Designer" />
             <br />
             <span className="text-gradient">
@@ -93,7 +93,7 @@ function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.9 }}
-            className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
+            className="mt-6 max-w-2xl text-sm text-muted-foreground sm:text-base md:text-lg"
           >
             I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a
             multidisciplinary designer blending UI/UX, branding, and visual storytelling into
@@ -148,7 +148,7 @@ function Home() {
         <Marquee items={marqueeItems} reducedMotion={!!prefersReducedMotion} />
       </section>
 
-      <section className="relative px-6 py-32">
+      <section className="relative px-6 py-24 md:py-32">
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeader
@@ -220,7 +220,7 @@ function Home() {
 
       <ServicesScroller services={servicePreviews} reducedMotion={!!prefersReducedMotion} />
 
-      <section className="relative px-6 py-24">
+      <section className="relative px-6 py-20 md:py-24">
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeader
@@ -247,7 +247,9 @@ function Home() {
                   <div className="mt-2 grid h-11 w-11 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
                     <step.icon size={16} className="text-primary-foreground" />
                   </div>
-                  <h3 className="mt-4 font-display text-xl font-semibold">{step.title}</h3>
+                  <h3 className="mt-4 font-display text-lg font-semibold md:text-xl">
+                    {step.title}
+                  </h3>
                 </div>
               </Reveal>
             ))}
@@ -272,7 +274,7 @@ function Home() {
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
                 About
               </span>
-              <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
+              <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl md:text-5xl">
                 Designer with a soft spot for quiet details.
               </h2>
               <p className="mt-5 text-muted-foreground">
@@ -280,14 +282,16 @@ function Home() {
                 and content. I love building things that feel intentional, human, and a little bit
                 magical.
               </p>
-              <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {[
                   { k: "5+", v: "Years" },
                   { k: "40+", v: "Projects" },
                   { k: "10+", v: "Clients" },
                 ].map((stat) => (
                   <div key={stat.v} className="rounded-2xl glass p-4 text-center">
-                    <div className="font-display text-2xl font-bold text-gradient">{stat.k}</div>
+                    <div className="font-display text-xl font-bold text-gradient sm:text-2xl">
+                      {stat.k}
+                    </div>
                     <div className="mt-1 text-xs text-muted-foreground">{stat.v}</div>
                   </div>
                 ))}
@@ -300,7 +304,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden px-6 py-28">
+      <section className="relative overflow-hidden px-6 py-20 md:py-28">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10"
@@ -335,7 +339,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="relative px-6 py-24">
+      <section className="relative px-6 py-20 md:py-24">
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeader
@@ -350,7 +354,7 @@ function Home() {
               <Reveal key={testimonial.name} delay={index * 0.08}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="relative h-full rounded-3xl glass-strong p-7 hover-lift"
+                  className="relative h-full rounded-3xl glass-strong p-6 hover-lift md:p-7"
                 >
                   <Quote size={20} className="text-primary" />
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -367,10 +371,10 @@ function Home() {
         </div>
       </section>
 
-      <section className="relative px-6 py-24">
-        <Reveal className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] glass-strong p-12 text-center md:p-20">
+      <section className="relative px-6 py-20 md:py-24">
+        <Reveal className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] glass-strong p-8 text-center md:p-20">
           <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-20" />
-          <h2 className="font-display text-4xl font-bold md:text-6xl">
+          <h2 className="font-display text-3xl font-bold sm:text-4xl md:text-6xl">
             Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
@@ -458,12 +462,12 @@ function Marquee({ items, reducedMotion }: { items: string[]; reducedMotion: boo
 
       <motion.div
         style={reducedMotion ? undefined : { x }}
-        className="flex w-max gap-12 whitespace-nowrap text-2xl font-display font-semibold text-muted-foreground/55 md:text-4xl"
+        className="flex w-max gap-8 whitespace-nowrap text-lg font-display font-semibold text-muted-foreground/55 sm:text-2xl md:gap-12 md:text-4xl"
       >
         {Array.from({ length: 2 }).map((_, loopIndex) => (
-          <div key={loopIndex} className="flex items-center gap-12 pr-12">
+          <div key={loopIndex} className="flex items-center gap-8 pr-8 md:gap-12 md:pr-12">
             {items.map((item, itemIndex) => (
-              <div key={`${loopIndex}-${item}`} className="flex items-center gap-12">
+              <div key={`${loopIndex}-${item}`} className="flex items-center gap-8 md:gap-12">
                 <span>{item}</span>
                 {itemIndex < items.length - 1 ? (
                   <span className="text-primary/90">
@@ -489,7 +493,7 @@ function ServicesScroller({
   const featuredServices = services.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden px-6 py-24">
+    <section className="relative overflow-hidden px-6 py-20 md:py-24">
       <div
         aria-hidden
         className="absolute inset-0"

@@ -32,6 +32,7 @@ type DragState = {
 };
 
 const PILL_HEIGHT = 46;
+const MOBILE_TOKEN_SIZE = 54;
 const GLOBE_PADDING = 14;
 const COLLISION_PADDING = 2;
 const POSITION_ITERATIONS = 12;
@@ -82,20 +83,26 @@ export function GlassDome({
   }, []);
 
   const globeRadius = size * 0.41;
+  const isCompact = size < 640;
 
   const baseBodies = useMemo<Body[]>(
     () =>
       tools.map((tool, index) => {
-        const width = Math.max(112, Math.min(188, 96 + tool.name.length * 8));
-        const capRadius = PILL_HEIGHT * 0.5 - 1 + COLLISION_PADDING * 0.5;
-        const halfLength = Math.max(capRadius, width * 0.5 - PILL_HEIGHT * 0.5 + COLLISION_PADDING);
-        const itemsPerRow = 4;
+        const width = isCompact
+          ? MOBILE_TOKEN_SIZE
+          : Math.max(112, Math.min(188, 96 + tool.name.length * 8));
+        const height = isCompact ? MOBILE_TOKEN_SIZE : PILL_HEIGHT;
+        const capRadius = height * 0.5 - 1 + COLLISION_PADDING * 0.5;
+        const halfLength = isCompact
+          ? 0
+          : Math.max(capRadius, width * 0.5 - height * 0.5 + COLLISION_PADDING);
+        const itemsPerRow = isCompact ? 4 : 4;
         const column = index % itemsPerRow;
         const row = Math.floor(index / itemsPerRow);
         const columnCenter = (itemsPerRow - 1) * 0.5;
-        const rowOffset = row % 2 === 0 ? 0 : 42;
-        const x = (column - columnCenter) * 104 + rowOffset * 0.7;
-        const y = -globeRadius * 0.7 - row * 58;
+        const rowOffset = row % 2 === 0 ? 0 : isCompact ? 18 : 42;
+        const x = (column - columnCenter) * (isCompact ? 74 : 104) + rowOffset * 0.7;
+        const y = -globeRadius * 0.7 - row * (isCompact ? 68 : 58);
 
         return {
           id: tool.slug,
@@ -103,7 +110,7 @@ export function GlassDome({
           slug: tool.slug,
           color: tool.color,
           width,
-          height: PILL_HEIGHT,
+          height,
           capRadius,
           halfLength,
           mass: width * 0.12,
@@ -116,7 +123,7 @@ export function GlassDome({
           asleep: false,
         };
       }),
-    [globeRadius, tools],
+    [globeRadius, isCompact, tools],
   );
 
   const particles = useMemo(
@@ -384,7 +391,7 @@ export function GlassDome({
                 }}
               >
                 <div
-                  className="relative flex h-full w-full items-center gap-2 rounded-full border border-white/20 px-4 text-left"
+                  className="relative flex h-full w-full items-center rounded-full border border-white/20 text-left"
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(18,22,52,0.86), rgba(45,27,84,0.64))",
@@ -394,6 +401,9 @@ export function GlassDome({
                     backdropFilter: "blur(14px)",
                     WebkitBackdropFilter: "blur(14px)",
                     filter: isDragging ? "brightness(1.06)" : "none",
+                    justifyContent: isCompact ? "center" : "flex-start",
+                    gap: isCompact ? 0 : 8,
+                    paddingInline: isCompact ? 0 : 16,
                   }}
                 >
                   <span
@@ -405,8 +415,10 @@ export function GlassDome({
                     }}
                   />
                   <span
-                    className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/14"
+                    className="relative grid shrink-0 place-items-center rounded-full border border-white/14"
                     style={{
+                      width: isCompact ? 34 : 32,
+                      height: isCompact ? 34 : 32,
                       background:
                         body.color === "FFFFFF"
                           ? "linear-gradient(180deg, rgba(255,255,255,0.92), rgba(231,235,255,0.74))"
@@ -434,7 +446,7 @@ export function GlassDome({
                     )}
                   </span>
                   <span
-                    className="relative whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
+                    className="relative hidden whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
                     style={{
                       textShadow: "0 1px 10px rgba(8,10,24,0.55)",
                     }}

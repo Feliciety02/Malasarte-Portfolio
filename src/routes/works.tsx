@@ -57,28 +57,30 @@ function Works() {
             }
             description="A growing collection of design explorations across product, brand, publication, and writing. Click any project to read the case study."
             contentClassName="max-w-2xl"
-            titleClassName="text-5xl md:text-7xl"
+            titleClassName="text-4xl sm:text-5xl md:text-7xl"
             titleTag="h1"
           />
         </Reveal>
 
-        <div className="mt-12 flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActive(category)}
-              className={`relative rounded-full border px-5 py-2 text-sm font-medium transition-all ${
-                active === category
-                  ? "border-transparent bg-gradient-hero text-primary-foreground shadow-glow"
-                  : "border-border/60 text-muted-foreground hover:bg-white/5 hover:text-foreground"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="mt-10 -mx-1 overflow-x-auto pb-2">
+          <div className="flex w-max min-w-full gap-2 px-1">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActive(category)}
+                className={`relative whitespace-nowrap rounded-full border px-4 py-2 text-xs font-medium transition-all sm:px-5 sm:text-sm ${
+                  active === category
+                    ? "border-transparent bg-gradient-hero text-primary-foreground shadow-glow"
+                    : "border-border/60 text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <motion.div layout className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div layout className="mt-10 grid gap-5 md:mt-12 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, index) => (
               <motion.div

@@ -19,7 +19,7 @@ export function SkillGroupCard({
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden rounded-3xl glass-strong p-8 hover-lift"
+      className="group relative overflow-hidden rounded-3xl glass-strong p-6 hover-lift md:p-8"
     >
       <div
         className={`pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`}
@@ -28,10 +28,10 @@ export function SkillGroupCard({
         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
           <Icon size={20} className="text-primary-foreground" />
         </div>
-        <h3 className="font-display text-2xl font-bold">{title}</h3>
+        <h3 className="font-display text-xl font-bold md:text-2xl">{title}</h3>
       </div>
 
-      <ul className="mt-8 space-y-5">
+      <ul className="mt-6 space-y-4 md:mt-8 md:space-y-5">
         {items.map((item, index) => (
           <li key={item.name}>
             <div className="flex items-baseline justify-between text-sm">

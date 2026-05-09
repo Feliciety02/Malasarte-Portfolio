@@ -27,7 +27,7 @@ export function ServiceCard({
     return (
       <motion.div
         whileHover={{ y: -6 }}
-        className="group relative h-full overflow-hidden rounded-3xl glass-strong p-7 hover-lift"
+        className="group relative h-full overflow-hidden rounded-3xl glass-strong p-6 hover-lift md:p-7"
       >
         <div
           className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`}
@@ -35,7 +35,7 @@ export function ServiceCard({
         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
           <Icon size={18} className="text-primary-foreground" />
         </div>
-        <h3 className="mt-5 font-display text-2xl font-bold">{title}</h3>
+        <h3 className="mt-5 font-display text-xl font-bold md:text-2xl">{title}</h3>
         <p className="mt-3 text-sm text-muted-foreground">{desc}</p>
         {bullets ? (
           <ul className="mt-5 space-y-2">
@@ -57,7 +57,7 @@ export function ServiceCard({
     >
       <Link
         to="/services"
-        className="group relative block h-full overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(26,20,55,0.74),rgba(10,18,45,0.7))] p-7 shadow-[0_18px_50px_rgba(7,10,28,0.35)] backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2"
+        className="group relative block h-full overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(26,20,55,0.74),rgba(10,18,45,0.7))] p-6 shadow-[0_18px_50px_rgba(7,10,28,0.35)] backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2 md:p-7"
         style={{ transformStyle: "preserve-3d" }}
       >
         <div
@@ -76,7 +76,7 @@ export function ServiceCard({
           <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
             <Icon size={18} className="text-primary-foreground" />
           </div>
-          <h3 className="mt-5 font-display text-2xl font-bold">{title}</h3>
+          <h3 className="mt-5 font-display text-xl font-bold md:text-2xl">{title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{desc}</p>
           <div className="mt-8 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-primary/90">
             Explore service <ArrowRight size={12} />

@@ -31,8 +31,10 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "flex gap-6",
-        centered ? "flex-col items-center text-center" : "items-end justify-between",
+        "flex gap-4 md:gap-6",
+        centered
+          ? "flex-col items-center text-center"
+          : "flex-col items-start justify-between md:flex-row md:items-end",
         className,
       )}
     >
@@ -41,12 +43,19 @@ export function SectionHeader({
           {eyebrow}
         </span>
         <TitleTag
-          className={cn("mt-3 font-display text-4xl font-bold md:text-5xl", titleClassName)}
+          className={cn(
+            "mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl md:text-5xl",
+            titleClassName,
+          )}
         >
           {title}
         </TitleTag>
         {description ? (
-          <p className={cn("mt-4 text-muted-foreground", descriptionClassName)}>{description}</p>
+          <p
+            className={cn("mt-4 text-sm text-muted-foreground md:text-base", descriptionClassName)}
+          >
+            {description}
+          </p>
         ) : null}
       </div>
       {action}

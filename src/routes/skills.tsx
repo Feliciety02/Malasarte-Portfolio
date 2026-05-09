@@ -41,7 +41,7 @@ function Skills() {
             }
             description="A blend of design intuition, technical fluency, and creative discipline - refined across years of real client work."
             contentClassName="max-w-2xl"
-            titleClassName="text-5xl md:text-7xl"
+            titleClassName="text-4xl sm:text-5xl md:text-7xl"
             titleTag="h1"
           />
         </Reveal>
