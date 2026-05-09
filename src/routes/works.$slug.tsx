@@ -184,11 +184,13 @@ function CaseStudy() {
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">The full story</h2>
           <p className="mt-6 text-muted-foreground">{project.overview}</p>
         </Reveal>
-        <Reveal delay={0.1} className="md:col-span-2" id="outcome">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Final outcome</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What it delivered</h2>
-          <p className="mt-6 text-muted-foreground">{project.outcome}</p>
-        </Reveal>
+        <div id="outcome" className="md:col-span-2 scroll-mt-32">
+          <Reveal delay={0.1}>
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Final outcome</span>
+            <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What it delivered</h2>
+            <p className="mt-6 text-muted-foreground">{project.outcome}</p>
+          </Reveal>
+        </div>
       </section>
 
       <section id="goals" className="mx-auto mt-24 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5">
