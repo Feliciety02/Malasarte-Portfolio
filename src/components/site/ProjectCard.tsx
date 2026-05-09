@@ -32,36 +32,38 @@ export function ProjectCard({ project, variant = "feature" }: ProjectCardProps) 
   }
 
   return (
-    <motion.article whileHover={{ y: -6 }} className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-strong hover-lift">
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} transition-transform duration-700 group-hover:scale-110`} />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-        <TagPill>{project.cat}</TagPill>
-      </div>
-
-      <div className="flex flex-1 flex-col p-7">
-        <h3 className="font-display text-2xl font-bold md:text-3xl">{project.title}</h3>
-        <p className="mt-3 text-sm text-muted-foreground">{project.desc}</p>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tools.split("·").map((tool) => (
-            <span key={tool} className="rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground">
-              {tool.trim()}
-            </span>
-          ))}
+    <motion.div whileHover={{ y: -6 }}>
+      <Link
+        to="/works/$slug"
+        params={{ slug: project.slug }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-strong hover-lift"
+      >
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <div className={`absolute inset-0 bg-gradient-to-br ${project.color} transition-transform duration-700 group-hover:scale-110`} />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+          <TagPill>{project.cat}</TagPill>
         </div>
 
-        <div className="mt-6 flex items-center justify-between gap-4 pt-2">
-          <Link
-            to="/works/$slug"
-            params={{ slug: project.slug }}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
-          >
-            View Case Study <ArrowRight size={12} />
-          </Link>
-          <span className="text-xs uppercase tracking-wider text-muted-foreground">{project.year}</span>
+        <div className="flex flex-1 flex-col p-7">
+          <h3 className="font-display text-2xl font-bold md:text-3xl">{project.title}</h3>
+          <p className="mt-3 text-sm text-muted-foreground">{project.desc}</p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.tools.map((tool) => (
+              <span key={tool} className="rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground">
+                {tool}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center justify-between gap-4 pt-2">
+            <div className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow transition-transform group-hover:scale-105">
+              View Case Study <ArrowRight size={12} />
+            </div>
+            <span className="text-xs uppercase tracking-wider text-muted-foreground">{project.year}</span>
+          </div>
         </div>
-      </div>
-    </motion.article>
+      </Link>
+    </motion.div>
   );
 }
