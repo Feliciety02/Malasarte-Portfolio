@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { ProjectCard } from "@/components/site/ProjectCard";
@@ -35,9 +35,14 @@ const categories = [
 type Cat = (typeof categories)[number];
 
 function Works() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [active, setActive] = useState<Cat>("All");
   const filtered =
     active === "All" ? projects : projects.filter((project) => project.cat === active);
+
+  if (pathname !== "/works") {
+    return <Outlet />;
+  }
 
   return (
     <div className="relative overflow-hidden px-6 pb-20">
@@ -62,8 +67,8 @@ function Works() {
           />
         </Reveal>
 
-        <div className="mt-10 -mx-1 overflow-x-auto pb-2">
-          <div className="flex w-max min-w-full gap-2 px-1">
+        <div className="thin-x-scrollbar mt-10 -mx-1 overflow-x-auto pb-2 pt-1">
+          <div className="mb-2 flex w-max min-w-full gap-2 px-1">
             {categories.map((category) => (
               <button
                 key={category}

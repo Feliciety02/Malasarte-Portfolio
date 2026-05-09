@@ -1,5 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { siFramer, siMiro, siNotion, siWebflow, type SimpleIcon } from "simple-icons";
+import afterEffectsLogo from "@/assets/tool-logos/after-effects.svg";
+import canvaLogo from "@/assets/tool-logos/canva.svg";
+import figmaLogo from "@/assets/tool-logos/figma.svg";
+import illustratorLogo from "@/assets/tool-logos/illustrator.svg";
+import indesignLogo from "@/assets/tool-logos/indesign.svg";
+import photoshopLogo from "@/assets/tool-logos/photoshop.svg";
 
 type Tool = { name: string; slug: string; color: string };
 
@@ -47,6 +54,52 @@ const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
 
+type ToolIcon =
+  | {
+      kind: "asset";
+      src: string;
+      surface?: string;
+    }
+  | {
+      kind: "simple";
+      icon: SimpleIcon;
+      foreground: string;
+      surface?: string;
+    };
+
+const TOOL_ICONS: Record<string, ToolIcon> = {
+  figma: { kind: "asset", src: figmaLogo },
+  adobeillustrator: { kind: "asset", src: illustratorLogo },
+  adobephotoshop: { kind: "asset", src: photoshopLogo },
+  adobeindesign: { kind: "asset", src: indesignLogo },
+  adobeaftereffects: { kind: "asset", src: afterEffectsLogo },
+  framer: {
+    kind: "simple",
+    icon: siFramer,
+    foreground: "#111111",
+    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,246,255,0.92))",
+  },
+  webflow: {
+    kind: "simple",
+    icon: siWebflow,
+    foreground: "#146EF5",
+    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,248,255,0.92))",
+  },
+  notion: {
+    kind: "simple",
+    icon: siNotion,
+    foreground: "#111111",
+    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,246,255,0.92))",
+  },
+  miro: {
+    kind: "simple",
+    icon: siMiro,
+    foreground: "#111111",
+    surface: "linear-gradient(180deg, #FFD02F, #F4BC1C)",
+  },
+  canva: { kind: "asset", src: canvaLogo },
+};
+
 export function GlassDome({
   tools,
   reducedMotion,
@@ -62,7 +115,6 @@ export function GlassDome({
   const lastFrameRef = useRef<number | null>(null);
   const [size, setSize] = useState(560);
   const [bodies, setBodies] = useState<Body[]>([]);
-  const [failedIcons, setFailedIcons] = useState<Record<string, boolean>>({});
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -130,11 +182,11 @@ export function GlassDome({
     () =>
       Array.from({ length: 18 }).map((_, index) => ({
         id: index,
-        left: 16 + Math.random() * 68,
-        top: 12 + Math.random() * 70,
-        size: 2 + Math.random() * 4,
-        duration: 3.5 + Math.random() * 3.5,
-        delay: Math.random() * 2.5,
+        left: 16 + ((index * 17) % 68),
+        top: 12 + ((index * 23) % 70),
+        size: 2 + ((index * 7) % 4),
+        duration: 3.5 + ((index * 5) % 7) * 0.5,
+        delay: ((index * 3) % 5) * 0.35,
       })),
     [],
   );
@@ -358,7 +410,6 @@ export function GlassDome({
         <div className="absolute inset-[7%] overflow-hidden rounded-full">
           {bodies.map((body) => {
             const isDragging = dragRef.current?.id === body.id;
-            const iconFailed = failedIcons[body.id];
 
             return (
               <button
@@ -415,44 +466,26 @@ export function GlassDome({
                     }}
                   />
                   <span
-                    className="relative grid shrink-0 place-items-center rounded-full border border-white/14"
+                    className="relative grid shrink-0 place-items-center overflow-hidden rounded-[0.95rem] border border-white/14"
                     style={{
                       width: isCompact ? 34 : 32,
                       height: isCompact ? 34 : 32,
-                      background:
-                        body.color === "FFFFFF"
-                          ? "linear-gradient(180deg, rgba(255,255,255,0.92), rgba(231,235,255,0.74))"
-                          : `linear-gradient(180deg, #${body.color}, color-mix(in srgb, #${body.color} 55%, black))`,
-                      boxShadow: `0 0 16px color-mix(in srgb, #${body.color} 40%, transparent)`,
+                      background: "linear-gradient(180deg, rgba(7,10,28,0.78), rgba(26,30,60,0.54))",
+                      boxShadow: `0 0 18px color-mix(in srgb, #${body.color} 28%, transparent)`,
                     }}
                   >
-                    {iconFailed ? (
-                      <span className="text-[11px] font-semibold text-slate-950">
-                        {body.name.charAt(0)}
-                      </span>
-                    ) : (
-                      <img
-                        src={`https://cdn.simpleicons.org/${body.slug}/${body.color}`}
-                        alt=""
-                        aria-hidden
-                        width={18}
-                        height={18}
-                        draggable={false}
-                        onError={() =>
-                          setFailedIcons((current) => ({ ...current, [body.id]: true }))
-                        }
-                        className="h-[18px] w-[18px] select-none"
-                      />
-                    )}
+                    <ToolLogo slug={body.slug} name={body.name} />
                   </span>
-                  <span
-                    className="relative hidden whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
-                    style={{
-                      textShadow: "0 1px 10px rgba(8,10,24,0.55)",
-                    }}
-                  >
-                    {body.name}
-                  </span>
+                  {!isCompact ? (
+                    <span
+                      className="relative whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
+                      style={{
+                        textShadow: "0 1px 10px rgba(8,10,24,0.55)",
+                      }}
+                    >
+                      {body.name}
+                    </span>
+                  ) : null}
                 </div>
               </button>
             );
@@ -460,6 +493,50 @@ export function GlassDome({
         </div>
       </motion.div>
     </div>
+  );
+}
+
+function ToolLogo({ slug, name }: { slug: string; name: string }) {
+  const icon = TOOL_ICONS[slug];
+
+  if (!icon) {
+    return (
+      <span aria-hidden className="select-none text-[10px] font-semibold uppercase tracking-[-0.01em] text-white">
+        {name.slice(0, 2)}
+      </span>
+    );
+  }
+
+  if (icon.kind === "asset") {
+    return (
+      <span
+        aria-hidden
+        className="grid h-full w-full place-items-center"
+        style={{
+          background: icon.surface ?? "transparent",
+        }}
+      >
+        <img src={icon.src} alt="" aria-hidden className="h-[70%] w-[70%] object-contain" />
+      </span>
+    );
+  }
+
+  return (
+    <span
+      aria-hidden
+      className="grid h-full w-full place-items-center"
+      style={{
+        background: icon.surface ?? "transparent",
+      }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        className="h-[68%] w-[68%] object-contain"
+        style={{ color: icon.foreground }}
+      >
+        <path d={icon.icon.path} fill="currentColor" />
+      </svg>
+    </span>
   );
 }
 

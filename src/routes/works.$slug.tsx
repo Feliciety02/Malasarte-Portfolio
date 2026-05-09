@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-rout
 import { motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Calendar, Expand, Star, Target, User, Wrench } from "lucide-react";
+import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { Lightbox } from "@/components/site/Lightbox";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getNextProject, getProject } from "@/data/projects";
@@ -61,10 +62,10 @@ export const Route = createFileRoute("/works/$slug")({
 
 function ratioClass(ratio: "square" | "wide" | "tall") {
   return ratio === "wide"
-    ? "aspect-[16/9] md:col-span-2"
+    ? "aspect-[16/9] md:col-span-2 xl:col-span-7"
     : ratio === "tall"
-      ? "aspect-[3/4]"
-      : "aspect-square";
+      ? "aspect-[3/4] xl:col-span-5"
+      : "aspect-square xl:col-span-5";
 }
 
 function CaseStudy() {
@@ -77,7 +78,20 @@ function CaseStudy() {
   const nextProject = getNextProject(project.slug);
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    const resetToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetToTop();
+    const frame = window.requestAnimationFrame(resetToTop);
+    const timeout = window.setTimeout(resetToTop, 0);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
   }, [project.slug]);
 
   const sections = [
@@ -98,10 +112,12 @@ function CaseStudy() {
       },
       { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
     );
-    sections.forEach((s) => {
-      const el = document.getElementById(s.id);
+
+    sections.forEach((section) => {
+      const el = document.getElementById(section.id);
       if (el) observer.observe(el);
     });
+
     return () => observer.disconnect();
   }, []);
 
@@ -119,41 +135,71 @@ function CaseStudy() {
       />
 
       <section ref={heroRef} className="relative mx-auto max-w-6xl pt-6">
-      <Link
-        to="/works"
-        resetScroll
-        className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground"
-      >
+        <Link
+          to="/works"
+          resetScroll
+          className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground"
+        >
           <ArrowLeft size={14} /> All works
         </Link>
 
-        <motion.div style={{ y: y1 }} className="mt-10">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-            {project.cat}
-          </span>
-          <h1 className="mt-3 font-display text-4xl font-bold leading-[0.95] sm:text-5xl md:text-7xl lg:text-8xl">
-            {project.title}
-          </h1>
-          <p className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">{project.desc}</p>
-        </motion.div>
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_20rem] lg:items-end">
+          <motion.div style={{ y: y1 }}>
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+              {project.cat}
+            </span>
+            <h1 className="mt-3 font-display text-4xl font-bold leading-[0.95] sm:text-5xl md:text-7xl lg:text-8xl">
+              {project.title}
+            </h1>
+            <p className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">{project.desc}</p>
+          </motion.div>
+
+          <motion.div
+            style={{ y: y2 }}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+            className="grid gap-3 rounded-[1.75rem] glass-strong p-5 shadow-card"
+          >
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-primary">
+              Case study summary
+            </div>
+            <div className="rounded-2xl bg-white/4 px-4 py-3">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Role</div>
+              <div className="mt-1 text-sm font-medium">{project.role}</div>
+            </div>
+            <div className="rounded-2xl bg-white/4 px-4 py-3">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Tools</div>
+              <div className="mt-1 text-sm font-medium">{project.tools.join(" · ")}</div>
+            </div>
+            <div className="rounded-2xl bg-white/4 px-4 py-3">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Year</div>
+              <div className="mt-1 text-sm font-medium">{project.year}</div>
+            </div>
+          </motion.div>
+        </div>
 
         <motion.div
           style={{ y: y2 }}
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="relative mt-12 aspect-[16/9] overflow-hidden rounded-[2rem] glass-strong shadow-card"
+          className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem] glass-strong shadow-card"
         >
           <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-          <div className="absolute bottom-5 left-5 right-5 flex flex-wrap items-end justify-between gap-4 md:bottom-8 md:left-8 md:right-8">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                Featured case study
-              </div>
-              <div className="mt-1 font-display text-xl font-semibold md:text-2xl">{project.tag}</div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
+          <div className="absolute inset-x-5 top-5 flex items-start justify-between gap-4 md:inset-x-8 md:top-8">
+            <div className="rounded-full glass px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+              Featured case study
             </div>
             <div className="rounded-full glass px-4 py-1.5 text-xs font-medium">{project.year}</div>
+          </div>
+          <div className="absolute bottom-5 left-5 right-5 md:bottom-8 md:left-8 md:right-8">
+            <div className="max-w-xl rounded-[1.5rem] glass-strong px-5 py-4 md:px-6">
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">Project focus</div>
+              <div className="mt-1 font-display text-xl font-semibold md:text-2xl">{project.tag}</div>
+              <p className="mt-2 line-clamp-4 text-sm text-muted-foreground">{project.overview}</p>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -181,17 +227,17 @@ function CaseStudy() {
       <nav aria-label="Case study sections" className="sticky top-20 z-30 mx-auto mt-12 max-w-6xl">
         <div className="overflow-x-auto rounded-full glass-strong p-2 backdrop-blur-xl">
           <div className="flex w-max min-w-full gap-2">
-            {sections.map((s) => (
+            {sections.map((section) => (
               <button
-                key={s.id}
-                onClick={() => scrollTo(s.id)}
+                key={section.id}
+                onClick={() => scrollTo(section.id)}
                 className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-medium transition-all ${
-                  activeSection === s.id
+                  activeSection === section.id
                     ? "bg-gradient-hero text-primary-foreground shadow-glow"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {s.label}
+                {section.label}
               </button>
             ))}
           </div>
@@ -200,22 +246,27 @@ function CaseStudy() {
 
       <section
         id="overview"
-        className="mx-auto mt-16 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5"
+        className="mx-auto mt-16 grid max-w-6xl gap-8 scroll-mt-32 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]"
       >
-        <Reveal className="md:col-span-3">
+        <Reveal>
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
             Project overview
           </span>
           <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">The full story</h2>
-          <p className="mt-6 text-muted-foreground">{project.overview}</p>
+          <div className="mt-6 rounded-[1.75rem] glass-strong p-6 md:p-8">
+            <p className="text-muted-foreground">{project.overview}</p>
+          </div>
         </Reveal>
-        <div id="outcome" className="md:col-span-2 scroll-mt-32">
+
+        <div id="outcome" className="scroll-mt-32">
           <Reveal delay={0.1}>
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Final outcome
             </span>
             <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">What it delivered</h2>
-            <p className="mt-6 text-muted-foreground">{project.outcome}</p>
+            <div className="mt-6 rounded-[1.75rem] glass-strong p-6 md:p-8">
+              <p className="text-muted-foreground">{project.outcome}</p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -240,6 +291,7 @@ function CaseStudy() {
             ))}
           </div>
         </Reveal>
+
         <Reveal delay={0.1} className="md:col-span-2">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
             Highlights
@@ -252,9 +304,7 @@ function CaseStudy() {
                 className="flex items-baseline justify-between rounded-2xl glass p-4"
               >
                 <span className="text-sm text-muted-foreground">{metric.label}</span>
-                <span className="font-display text-2xl font-bold text-gradient">
-                  {metric.value}
-                </span>
+                <span className="font-display text-2xl font-bold text-gradient">{metric.value}</span>
               </div>
             ))}
           </div>
@@ -327,7 +377,7 @@ function CaseStudy() {
             captures later.
           </p>
         </Reveal>
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-12">
           {project.gallery.map((item, index) => (
             <Reveal key={item.label} delay={index * 0.05}>
               <motion.button
@@ -367,10 +417,9 @@ function CaseStudy() {
       {nextProject ? (
         <section className="mx-auto mt-24 max-w-6xl">
           <Reveal>
-            <Link
-              to="/works/$slug"
-              params={{ slug: nextProject.slug }}
-              resetScroll
+            <CaseStudyLink
+              slug={nextProject.slug}
+              aria-label={`Open next case study: ${nextProject.title}`}
               className="group relative block overflow-hidden rounded-[2rem] glass-strong p-10 hover-lift md:p-14"
             >
               <div
@@ -394,7 +443,7 @@ function CaseStudy() {
                   />
                 </div>
               </div>
-            </Link>
+            </CaseStudyLink>
           </Reveal>
         </section>
       ) : null}
