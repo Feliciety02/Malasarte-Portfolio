@@ -10,9 +10,15 @@ export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services - Fe Anne Malasarte" },
-      { name: "description", content: "Design services: UI/UX, branding, publication, web design, content & VA support." },
+      {
+        name: "description",
+        content: "Design services: UI/UX, branding, publication, web design, content & VA support.",
+      },
       { property: "og:title", content: "Services - Fe Anne Malasarte" },
-      { property: "og:description", content: "How I can help - from product design to brand systems and content." },
+      {
+        property: "og:description",
+        content: "How I can help - from product design to brand systems and content.",
+      },
     ],
   }),
   component: Services,
@@ -55,7 +61,8 @@ function Services() {
             <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-20" />
             <h2 className="font-display text-3xl font-bold md:text-5xl">Have a brief in mind?</h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Tell me about the project and I'll come back with scope, timeline, and a friendly hello.
+              Tell me about the project and I'll come back with scope, timeline, and a friendly
+              hello.
             </p>
             <LinkButton to="/contact" className="mt-8">
               Start a project <ArrowRight size={14} />

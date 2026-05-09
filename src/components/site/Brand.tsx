@@ -9,12 +9,7 @@ type BrandProps = {
   showName?: boolean;
 };
 
-export function Brand({
-  className,
-  imageClassName,
-  textClassName,
-  showName = true,
-}: BrandProps) {
+export function Brand({ className, imageClassName, textClassName, showName = true }: BrandProps) {
   return (
     <Link to="/" className={cn("group flex items-center gap-3", className)}>
       <img

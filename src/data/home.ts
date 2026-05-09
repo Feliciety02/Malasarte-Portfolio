@@ -1,4 +1,14 @@
-import { FileText, Globe, Layers, Lightbulb, Megaphone, PenTool, Pencil, Rocket, Search } from "lucide-react";
+import {
+  FileText,
+  Globe,
+  Layers,
+  Lightbulb,
+  Megaphone,
+  PenTool,
+  Pencil,
+  Rocket,
+  Search,
+} from "lucide-react";
 
 export const featuredSlugs = [
   "lumen-banking",
@@ -23,7 +33,11 @@ export const skillHighlights = [
 ];
 
 export const servicePreviews = [
-  { icon: Layers, title: "UI/UX Design", desc: "Mobile and web product design from research to handoff." },
+  {
+    icon: Layers,
+    title: "UI/UX Design",
+    desc: "Mobile and web product design from research to handoff.",
+  },
   { icon: PenTool, title: "Branding", desc: "Identity systems with personality and clarity." },
   { icon: Megaphone, title: "Publication", desc: "Editorial layouts and pubmat campaigns." },
   { icon: Globe, title: "Web Design", desc: "Responsive marketing sites with motion." },

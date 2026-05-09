@@ -7,7 +7,10 @@ export const Route = createFileRoute("/process")({
   head: () => ({
     meta: [
       { title: "Process — Fe Anne Malasarte" },
-      { name: "description", content: "How I approach every project: research, concept, design, deliver." },
+      {
+        name: "description",
+        content: "How I approach every project: research, concept, design, deliver.",
+      },
       { property: "og:title", content: "Process — Fe Anne Malasarte" },
       { property: "og:description", content: "A simple, intentional design workflow." },
     ],
@@ -16,10 +19,30 @@ export const Route = createFileRoute("/process")({
 });
 
 const steps = [
-  { icon: Search, title: "Research", text: "I dive into your audience, goals, and competitors — listening before designing.", color: "from-violet-500/40 to-fuchsia-500/30" },
-  { icon: Lightbulb, title: "Concept", text: "Sketches, moodboards, and direction. We align on the story before pixels.", color: "from-blue-500/40 to-cyan-500/30" },
-  { icon: Pencil, title: "Design", text: "High-fidelity UI, branding, and prototypes — refined through honest feedback loops.", color: "from-pink-500/40 to-rose-500/30" },
-  { icon: Rocket, title: "Deliver", text: "Polished assets, dev-ready files, and clear handoff. Built to scale beautifully.", color: "from-amber-400/40 to-emerald-400/30" },
+  {
+    icon: Search,
+    title: "Research",
+    text: "I dive into your audience, goals, and competitors — listening before designing.",
+    color: "from-violet-500/40 to-fuchsia-500/30",
+  },
+  {
+    icon: Lightbulb,
+    title: "Concept",
+    text: "Sketches, moodboards, and direction. We align on the story before pixels.",
+    color: "from-blue-500/40 to-cyan-500/30",
+  },
+  {
+    icon: Pencil,
+    title: "Design",
+    text: "High-fidelity UI, branding, and prototypes — refined through honest feedback loops.",
+    color: "from-pink-500/40 to-rose-500/30",
+  },
+  {
+    icon: Rocket,
+    title: "Deliver",
+    text: "Polished assets, dev-ready files, and clear handoff. Built to scale beautifully.",
+    color: "from-amber-400/40 to-emerald-400/30",
+  },
 ];
 
 function Process() {
@@ -32,7 +55,9 @@ function Process() {
       />
       <section className="relative mx-auto max-w-7xl pt-12">
         <Reveal>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Workflow</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Workflow
+          </span>
           <h1 className="mt-3 font-display text-5xl font-bold md:text-7xl">
             My <span className="text-gradient">process</span>
           </h1>
@@ -43,12 +68,17 @@ function Process() {
 
         <div className="relative mt-20">
           {/* Connector line */}
-          <div aria-hidden className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/40 to-transparent md:block" />
+          <div
+            aria-hidden
+            className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/40 to-transparent md:block"
+          />
 
           <ol className="space-y-12 md:space-y-24">
             {steps.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.1}>
-                <li className={`relative grid items-center gap-6 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
+                <li
+                  className={`relative grid items-center gap-6 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
+                >
                   <motion.div
                     whileHover={{ rotate: -2, scale: 1.02 }}
                     className={`relative aspect-[5/4] overflow-hidden rounded-3xl glass-strong p-10`}
@@ -65,7 +95,9 @@ function Process() {
                   </motion.div>
 
                   <div>
-                    <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Step 0{i + 1}</span>
+                    <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                      Step 0{i + 1}
+                    </span>
                     <h3 className="mt-3 font-display text-4xl font-bold md:text-5xl">{s.title}</h3>
                     <p className="mt-4 max-w-md text-muted-foreground">{s.text}</p>
                   </div>

@@ -25,8 +25,13 @@ export function ServiceCard({
 }: ServiceCardProps) {
   if (variant === "full") {
     return (
-      <motion.div whileHover={{ y: -6 }} className="group relative h-full overflow-hidden rounded-3xl glass-strong p-7 hover-lift">
-        <div className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`} />
+      <motion.div
+        whileHover={{ y: -6 }}
+        className="group relative h-full overflow-hidden rounded-3xl glass-strong p-7 hover-lift"
+      >
+        <div
+          className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`}
+        />
         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
           <Icon size={18} className="text-primary-foreground" />
         </div>
@@ -46,7 +51,10 @@ export function ServiceCard({
   }
 
   return (
-    <motion.div style={reducedMotion ? undefined : { y: index % 3 === 1 ? -12 : 0 }} className="h-full">
+    <motion.div
+      style={reducedMotion ? undefined : { y: index % 3 === 1 ? -12 : 0 }}
+      className="h-full"
+    >
       <Link
         to="/services"
         className="group relative block h-full overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(26,20,55,0.74),rgba(10,18,45,0.7))] p-7 shadow-[0_18px_50px_rgba(7,10,28,0.35)] backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2"

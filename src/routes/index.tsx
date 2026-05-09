@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   motion,
   useAnimationFrame,
@@ -35,9 +35,15 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Fe Anne Malasarte - Creative Designer & UI/UX Storyteller" },
-      { name: "description", content: "Portfolio home of Fe Anne Malasarte - UI/UX, branding, and creative design." },
+      {
+        name: "description",
+        content: "Portfolio home of Fe Anne Malasarte - UI/UX, branding, and creative design.",
+      },
       { property: "og:title", content: "Fe Anne Malasarte - Creative Designer" },
-      { property: "og:description", content: "Crafting meaningful, beautifully animated digital experiences." },
+      {
+        property: "og:description",
+        content: "Crafting meaningful, beautifully animated digital experiences.",
+      },
     ],
   }),
   component: Home,
@@ -61,7 +67,10 @@ function Home() {
         <FloatingOrbs />
         <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-50" />
 
-        <motion.div style={{ y: y1, opacity }} className="relative mx-auto flex max-w-6xl flex-col items-center text-center">
+        <motion.div
+          style={{ y: y1, opacity }}
+          className="relative mx-auto flex max-w-6xl flex-col items-center text-center"
+        >
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -86,9 +95,9 @@ function Home() {
             transition={{ duration: 0.7, delay: 0.9 }}
             className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
           >
-            I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a multidisciplinary designer
-            blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
-            magical.
+            I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a
+            multidisciplinary designer blending UI/UX, branding, and visual storytelling into
+            experiences that feel human, intentional, and quietly magical.
           </motion.p>
 
           <motion.div
@@ -118,7 +127,11 @@ function Home() {
           </motion.div>
         </motion.div>
 
-        <motion.div aria-hidden style={{ y: y2 }} className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block" />
+        <motion.div
+          aria-hidden
+          style={{ y: y2 }}
+          className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block"
+        />
         <motion.div
           aria-hidden
           style={{ y: y1 }}
@@ -143,7 +156,11 @@ function Home() {
               title="Featured projects"
               description="A small slice of recent case studies - tap into any project to read the full story."
               action={
-                <LinkButton to="/works" variant="text" className="hidden items-center md:inline-flex">
+                <LinkButton
+                  to="/works"
+                  variant="text"
+                  className="hidden items-center md:inline-flex"
+                >
                   View all works <ArrowRight size={14} />
                 </LinkButton>
               }
@@ -175,7 +192,11 @@ function Home() {
               eyebrow="Toolkit"
               title="Skill highlights"
               action={
-                <LinkButton to="/skills" variant="text" className="hidden items-center md:inline-flex">
+                <LinkButton
+                  to="/skills"
+                  variant="text"
+                  className="hidden items-center md:inline-flex"
+                >
                   All skills <ArrowRight size={14} />
                 </LinkButton>
               }
@@ -186,7 +207,11 @@ function Home() {
           <div className="grid gap-4 md:grid-cols-2">
             {skillHighlights.map((skill, index) => (
               <Reveal key={skill.name} delay={index * 0.06}>
-                <SkillHighlightCard name={skill.name} level={skill.level} delay={0.2 + index * 0.06} />
+                <SkillHighlightCard
+                  name={skill.name}
+                  level={skill.level}
+                  delay={0.2 + index * 0.06}
+                />
               </Reveal>
             ))}
           </div>
@@ -202,7 +227,11 @@ function Home() {
               eyebrow="Workflow"
               title="A glimpse of my process"
               action={
-                <LinkButton to="/process" variant="text" className="hidden items-center md:inline-flex">
+                <LinkButton
+                  to="/process"
+                  variant="text"
+                  className="hidden items-center md:inline-flex"
+                >
                   Full process <ArrowRight size={14} />
                 </LinkButton>
               }
@@ -240,11 +269,16 @@ function Home() {
               </div>
             </Reveal>
             <Reveal delay={0.1} className="md:col-span-3">
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">About</span>
-              <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">Designer with a soft spot for quiet details.</h2>
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                About
+              </span>
+              <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
+                Designer with a soft spot for quiet details.
+              </h2>
               <p className="mt-5 text-muted-foreground">
-                I&apos;m a multidisciplinary designer working across UI/UX, branding, publication, and content. I love building
-                things that feel intentional, human, and a little bit magical.
+                I&apos;m a multidisciplinary designer working across UI/UX, branding, publication,
+                and content. I love building things that feel intentional, human, and a little bit
+                magical.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
                 {[
@@ -314,9 +348,14 @@ function Home() {
           <div className="grid gap-5 md:grid-cols-3">
             {testimonials.map((testimonial, index) => (
               <Reveal key={testimonial.name} delay={index * 0.08}>
-                <motion.div whileHover={{ y: -4 }} className="relative h-full rounded-3xl glass-strong p-7 hover-lift">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="relative h-full rounded-3xl glass-strong p-7 hover-lift"
+                >
                   <Quote size={20} className="text-primary" />
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">&quot;{testimonial.quote}&quot;</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                    &quot;{testimonial.quote}&quot;
+                  </p>
                   <div className="mt-6 border-t border-border/60 pt-4">
                     <div className="font-display text-base font-semibold">{testimonial.name}</div>
                     <div className="text-xs text-muted-foreground">{testimonial.role}</div>
@@ -334,7 +373,9 @@ function Home() {
           <h2 className="font-display text-4xl font-bold md:text-6xl">
             Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">Have a project in mind? I&apos;d love to hear your story.</p>
+          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
+            Have a project in mind? I&apos;d love to hear your story.
+          </p>
           <LinkButton to="/contact" className="mt-10">
             Start a project <ArrowRight size={16} />
           </LinkButton>
@@ -352,7 +393,11 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
           <motion.span
             initial={{ y: "110%" }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: delay + wordIndex * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
+            transition={{
+              duration: 0.8,
+              delay: delay + wordIndex * 0.08,
+              ease: [0.2, 0.8, 0.2, 1],
+            }}
             className="inline-block"
           >
             {word}
@@ -363,13 +408,7 @@ function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-function Marquee({
-  items,
-  reducedMotion,
-}: {
-  items: string[];
-  reducedMotion: boolean;
-}) {
+function Marquee({ items, reducedMotion }: { items: string[]; reducedMotion: boolean }) {
   const loopX = useMotionValue(reducedMotion ? 0 : -50);
   const boost = useSpring(1, { stiffness: 180, damping: 24, mass: 0.8 });
   const x = useMotionTemplate`${loopX}%`;
@@ -404,7 +443,10 @@ function Marquee({
   };
 
   return (
-    <div className="group relative overflow-hidden" onWheel={(event) => handleWheel(event.deltaY || event.deltaX)}>
+    <div
+      className="group relative overflow-hidden"
+      onWheel={(event) => handleWheel(event.deltaY || event.deltaX)}
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent"
@@ -466,7 +508,11 @@ function ServicesScroller({
             title="Services preview"
             description="Scroll through a clean galactic grid to explore the services I design, build, and shape."
             action={
-              <LinkButton to="/services" variant="text" className="hidden items-center md:inline-flex">
+              <LinkButton
+                to="/services"
+                variant="text"
+                className="hidden items-center md:inline-flex"
+              >
                 All services <ArrowRight size={14} />
               </LinkButton>
             }

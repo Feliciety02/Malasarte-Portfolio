@@ -46,7 +46,13 @@ const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
 
-export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; reducedMotion: boolean }) {
+export function GlassDome({
+  tools,
+  reducedMotion,
+}: {
+  tools: readonly Tool[];
+  reducedMotion: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const bodiesRef = useRef<Body[]>([]);
   const dragRef = useRef<DragState | null>(null);
@@ -176,7 +182,14 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
       const speed = Math.hypot(dx, dy) / elapsed;
 
       if (speed > 900) {
-        applyShakeImpulse(bodiesRef.current, local.x, local.y, dx / elapsed, dy / elapsed, globeRadius);
+        applyShakeImpulse(
+          bodiesRef.current,
+          local.x,
+          local.y,
+          dx / elapsed,
+          dy / elapsed,
+          globeRadius,
+        );
       }
     }
     moveHistoryRef.current = { x: local.x, y: local.y, time: now };
@@ -242,7 +255,11 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
       />
 
       <motion.div
-        style={{ rotateX: reducedMotion ? 0 : rx, rotateY: reducedMotion ? 0 : ry, transformStyle: "preserve-3d" }}
+        style={{
+          rotateX: reducedMotion ? 0 : rx,
+          rotateY: reducedMotion ? 0 : ry,
+          transformStyle: "preserve-3d",
+        }}
         className="relative h-full w-full"
       >
         <div
@@ -299,7 +316,12 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
                 filter: "blur(0.4px)",
               }}
               animate={reducedMotion ? undefined : { opacity: [0.12, 0.4, 0.18] }}
-              transition={{ duration: particle.duration, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: particle.duration,
+                delay: particle.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
           ))}
 
@@ -307,7 +329,8 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
             aria-hidden
             className="absolute left-[10%] top-[7%] h-[18%] w-[48%] rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 72%)",
+              background:
+                "radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 72%)",
               filter: "blur(5px)",
             }}
           />
@@ -316,7 +339,8 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
             aria-hidden
             className="absolute inset-y-[-16%] left-[22%] w-[24%]"
             style={{
-              background: "linear-gradient(110deg, transparent, rgba(255,255,255,0.14), transparent)",
+              background:
+                "linear-gradient(110deg, transparent, rgba(255,255,255,0.14), transparent)",
               filter: "blur(2px)",
             }}
             animate={reducedMotion ? undefined : { x: ["-8%", "8%", "-6%"] }}
@@ -391,7 +415,9 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
                     }}
                   >
                     {iconFailed ? (
-                      <span className="text-[11px] font-semibold text-slate-950">{body.name.charAt(0)}</span>
+                      <span className="text-[11px] font-semibold text-slate-950">
+                        {body.name.charAt(0)}
+                      </span>
                     ) : (
                       <img
                         src={`https://cdn.simpleicons.org/${body.slug}/${body.color}`}
@@ -400,7 +426,9 @@ export function GlassDome({ tools, reducedMotion }: { tools: readonly Tool[]; re
                         width={18}
                         height={18}
                         draggable={false}
-                        onError={() => setFailedIcons((current) => ({ ...current, [body.id]: true }))}
+                        onError={() =>
+                          setFailedIcons((current) => ({ ...current, [body.id]: true }))
+                        }
                         className="h-[18px] w-[18px] select-none"
                       />
                     )}
@@ -648,7 +676,10 @@ function getCapsuleCollision(first: Body, second: Body) {
 
   if (distance >= minDistance) return null;
 
-  const normal = distance > 0.0001 ? { x: dx / distance, y: dy / distance } : normalize(second.x - first.x, second.y - first.y, 1, 0);
+  const normal =
+    distance > 0.0001
+      ? { x: dx / distance, y: dy / distance }
+      : normalize(second.x - first.x, second.y - first.y, 1, 0);
 
   return {
     nx: normal.x,

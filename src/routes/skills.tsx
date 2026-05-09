@@ -8,9 +8,15 @@ export const Route = createFileRoute("/skills")({
   head: () => ({
     meta: [
       { title: "Skills - Fe Anne Malasarte" },
-      { name: "description", content: "Design, tech, creative and work skills of Fe Anne Malasarte." },
+      {
+        name: "description",
+        content: "Design, tech, creative and work skills of Fe Anne Malasarte.",
+      },
       { property: "og:title", content: "Skills - Fe Anne Malasarte" },
-      { property: "og:description", content: "An interactive overview of design, tech and creative skills." },
+      {
+        property: "og:description",
+        content: "An interactive overview of design, tech and creative skills.",
+      },
     ],
   }),
   component: Skills,

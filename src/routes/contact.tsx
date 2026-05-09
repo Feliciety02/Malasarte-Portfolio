@@ -8,9 +8,15 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Fe Anne Malasarte" },
-      { name: "description", content: "Let's create something meaningful together — start a project with Fe Anne." },
+      {
+        name: "description",
+        content: "Let's create something meaningful together — start a project with Fe Anne.",
+      },
       { property: "og:title", content: "Contact — Fe Anne Malasarte" },
-      { property: "og:description", content: "Reach out for design, branding, and creative collaborations." },
+      {
+        property: "og:description",
+        content: "Reach out for design, branding, and creative collaborations.",
+      },
     ],
   }),
   component: Contact,
@@ -22,10 +28,15 @@ function Contact() {
   return (
     <div className="relative overflow-hidden px-6 pb-16 md:pb-20">
       <FloatingOrbs />
-      <div aria-hidden className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]" />
+      <div
+        aria-hidden
+        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
+      />
       <section className="relative mx-auto max-w-6xl pt-12">
         <Reveal className="text-center">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Contact</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Contact
+          </span>
           <h1 className="mx-auto mt-3 max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
             Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h1>
@@ -47,11 +58,19 @@ function Contact() {
             >
               <div className="grid gap-5 md:grid-cols-2">
                 <Field label="Your name" name="name" placeholder="Jane Doe" required />
-                <Field label="Email" name="email" type="email" placeholder="jane@studio.com" required />
+                <Field
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="jane@studio.com"
+                  required
+                />
               </div>
               <Field label="Subject" name="subject" placeholder="Brand identity for…" />
               <div>
-                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Message</label>
+                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Message
+                </label>
                 <textarea
                   name="message"
                   required
@@ -68,7 +87,11 @@ function Contact() {
                 <Send size={14} className="transition-transform group-hover:translate-x-0.5" />
               </button>
               {sent && (
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 text-sm text-emerald-300">
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 text-sm text-emerald-300"
+                >
                   <CheckCircle2 size={16} /> Message sent — I&apos;ll get back to you shortly.
                 </motion.div>
               )}
@@ -77,18 +100,27 @@ function Contact() {
 
           <Reveal delay={0.2} className="md:col-span-2">
             <div className="space-y-4">
-              <a href="mailto:hello@feanne.design" className="group flex items-start gap-4 rounded-3xl glass p-6 hover-lift">
+              <a
+                href="mailto:hello@feanne.design"
+                className="group flex items-start gap-4 rounded-3xl glass p-6 hover-lift"
+              >
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
                   <Mail size={18} className="text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Email</div>
-                  <div className="mt-0.5 font-display text-lg font-semibold">hello@feanne.design</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Email
+                  </div>
+                  <div className="mt-0.5 font-display text-lg font-semibold">
+                    hello@feanne.design
+                  </div>
                 </div>
               </a>
 
               <div className="rounded-3xl glass p-6">
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">Find me on</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Find me on
+                </div>
                 <div className="mt-4 flex gap-3">
                   {[
                     { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
@@ -110,7 +142,9 @@ function Contact() {
               </div>
 
               <div className="rounded-3xl glass p-6">
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">Currently</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Currently
+                </div>
                 <div className="mt-2 flex items-center gap-2">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -142,7 +176,10 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <label
+        htmlFor={name}
+        className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+      >
         {label}
       </label>
       <input

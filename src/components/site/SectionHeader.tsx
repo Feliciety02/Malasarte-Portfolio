@@ -37,9 +37,17 @@ export function SectionHeader({
       )}
     >
       <div className={cn(centered ? "max-w-2xl" : undefined, contentClassName)}>
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">{eyebrow}</span>
-        <TitleTag className={cn("mt-3 font-display text-4xl font-bold md:text-5xl", titleClassName)}>{title}</TitleTag>
-        {description ? <p className={cn("mt-4 text-muted-foreground", descriptionClassName)}>{description}</p> : null}
+        <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+          {eyebrow}
+        </span>
+        <TitleTag
+          className={cn("mt-3 font-display text-4xl font-bold md:text-5xl", titleClassName)}
+        >
+          {title}
+        </TitleTag>
+        {description ? (
+          <p className={cn("mt-4 text-muted-foreground", descriptionClassName)}>{description}</p>
+        ) : null}
       </div>
       {action}
     </div>

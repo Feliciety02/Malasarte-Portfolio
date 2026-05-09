@@ -11,7 +11,11 @@ export function GalacticGrid({ reducedMotion }: { reducedMotion: boolean }) {
 
       <motion.div
         animate={reducedMotion ? undefined : { x: [0, -10, 0], y: [0, -2, 0] }}
-        transition={reducedMotion ? undefined : { duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+        transition={
+          reducedMotion
+            ? undefined
+            : { duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }
+        }
         className="absolute inset-0 opacity-55"
       >
         <svg className="h-full w-full" viewBox="0 0 1200 700" preserveAspectRatio="none">
@@ -20,7 +24,13 @@ export function GalacticGrid({ reducedMotion }: { reducedMotion: boolean }) {
               <line key={index} x1={60 + index * 120} y1="0" x2={60 + index * 120} y2="700" />
             ))}
             {Array.from({ length: 8 }).map((_, index) => (
-              <line key={`h-${index}`} x1="0" y1={120 + index * 70} x2="1200" y2={120 + index * 70} />
+              <line
+                key={`h-${index}`}
+                x1="0"
+                y1={120 + index * 70}
+                x2="1200"
+                y2={120 + index * 70}
+              />
             ))}
           </g>
           <g stroke="rgba(195,140,255,0.12)" strokeWidth="1">

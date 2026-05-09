@@ -17,8 +17,13 @@ export function SkillGroupCard({
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <div ref={ref} className="group relative overflow-hidden rounded-3xl glass-strong p-8 hover-lift">
-      <div className={`pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`} />
+    <div
+      ref={ref}
+      className="group relative overflow-hidden rounded-3xl glass-strong p-8 hover-lift"
+    >
+      <div
+        className={`pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`}
+      />
       <div className="flex items-center gap-3">
         <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
           <Icon size={20} className="text-primary-foreground" />

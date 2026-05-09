@@ -12,7 +12,10 @@ export function CustomCursor() {
 
   useEffect(() => {
     document.documentElement.classList.add("cursor-none-all");
-    const move = (e: MouseEvent) => { x.set(e.clientX); y.set(e.clientY); };
+    const move = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    };
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
       setHover(!!t.closest("a, button, [data-cursor='hover']"));
@@ -36,7 +39,13 @@ export function CustomCursor() {
       <motion.div
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[9998] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/60 hidden md:block"
-        style={{ x: rx, y: ry, width: hover ? 56 : 32, height: hover ? 56 : 32, backgroundColor: hover ? "oklch(0.65 0.25 295 / 0.15)" : "transparent" }}
+        style={{
+          x: rx,
+          y: ry,
+          width: hover ? 56 : 32,
+          height: hover ? 56 : 32,
+          backgroundColor: hover ? "oklch(0.65 0.25 295 / 0.15)" : "transparent",
+        }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
       />
     </>

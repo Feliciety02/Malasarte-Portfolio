@@ -1,10 +1,4 @@
-import {
-  Dribbble,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { Dribbble, Github, Instagram, Linkedin, Mail } from "lucide-react";
 
 export const navLinks = [
   { to: "/", label: "Home" },

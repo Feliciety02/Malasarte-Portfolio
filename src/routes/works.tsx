@@ -10,20 +10,34 @@ export const Route = createFileRoute("/works")({
   head: () => ({
     meta: [
       { title: "Works - Fe Anne Malasarte" },
-      { name: "description", content: "Selected works across UI/UX, branding, publication, web design and writing." },
+      {
+        name: "description",
+        content: "Selected works across UI/UX, branding, publication, web design and writing.",
+      },
       { property: "og:title", content: "Works - Fe Anne Malasarte" },
-      { property: "og:description", content: "A curated portfolio of designs, brand systems, and creative work." },
+      {
+        property: "og:description",
+        content: "A curated portfolio of designs, brand systems, and creative work.",
+      },
     ],
   }),
   component: Works,
 });
 
-const categories = ["All", "UI/UX Design", "Publication", "Logo & Branding", "Web Design", "Writing / VA"] as const;
+const categories = [
+  "All",
+  "UI/UX Design",
+  "Publication",
+  "Logo & Branding",
+  "Web Design",
+  "Writing / VA",
+] as const;
 type Cat = (typeof categories)[number];
 
 function Works() {
   const [active, setActive] = useState<Cat>("All");
-  const filtered = active === "All" ? projects : projects.filter((project) => project.cat === active);
+  const filtered =
+    active === "All" ? projects : projects.filter((project) => project.cat === active);
 
   return (
     <div className="relative overflow-hidden px-6 pb-20">

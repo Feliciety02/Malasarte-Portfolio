@@ -7,6 +7,26 @@ import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getNextProject, getProject } from "@/data/projects";
 import type { Project } from "@/data/projects";
 
+function CaseStudyError({ error, reset }: { error: Error; reset: () => void }) {
+  const router = useRouter();
+
+  return (
+    <div className="mx-auto max-w-xl px-6 py-32 text-center">
+      <h1 className="font-display text-3xl font-bold">Something went wrong</h1>
+      <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
+      <button
+        onClick={() => {
+          router.invalidate();
+          reset();
+        }}
+        className="mt-6 rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow"
+      >
+        Retry
+      </button>
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/works/$slug")({
   loader: ({ params }) => {
     const project = getProject(params.slug);
@@ -24,24 +44,7 @@ export const Route = createFileRoute("/works/$slug")({
       : [{ title: "Case Study · Fe Anne Malasarte" }],
   }),
   component: CaseStudy,
-  errorComponent: ({ error, reset }) => {
-    const router = useRouter();
-    return (
-      <div className="mx-auto max-w-xl px-6 py-32 text-center">
-        <h1 className="font-display text-3xl font-bold">Something went wrong</h1>
-        <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
-        <button
-          onClick={() => {
-            router.invalidate();
-            reset();
-          }}
-          className="mt-6 rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  },
+  errorComponent: CaseStudyError,
   notFoundComponent: () => (
     <div className="mx-auto max-w-xl px-6 py-32 text-center">
       <h1 className="font-display text-5xl font-bold text-gradient">404</h1>
@@ -57,7 +60,11 @@ export const Route = createFileRoute("/works/$slug")({
 });
 
 function ratioClass(ratio: "square" | "wide" | "tall") {
-  return ratio === "wide" ? "aspect-[16/9] md:col-span-2" : ratio === "tall" ? "aspect-[3/4]" : "aspect-square";
+  return ratio === "wide"
+    ? "aspect-[16/9] md:col-span-2"
+    : ratio === "tall"
+      ? "aspect-[3/4]"
+      : "aspect-square";
 }
 
 function CaseStudy() {
@@ -72,7 +79,10 @@ function CaseStudy() {
   return (
     <div className="relative overflow-hidden px-6 pb-10">
       <FloatingOrbs />
-      <div aria-hidden className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]" />
+      <div
+        aria-hidden
+        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
+      />
 
       <section ref={heroRef} className="relative mx-auto max-w-6xl pt-6">
         <Link
@@ -83,8 +93,12 @@ function CaseStudy() {
         </Link>
 
         <motion.div style={{ y: y1 }} className="mt-10">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">{project.cat}</span>
-          <h1 className="mt-3 font-display text-5xl font-bold leading-[0.95] md:text-7xl lg:text-8xl">{project.title}</h1>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            {project.cat}
+          </span>
+          <h1 className="mt-3 font-display text-5xl font-bold leading-[0.95] md:text-7xl lg:text-8xl">
+            {project.title}
+          </h1>
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">{project.desc}</p>
         </motion.div>
 
@@ -99,7 +113,9 @@ function CaseStudy() {
           <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
           <div className="absolute bottom-8 left-8 right-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">Featured case study</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                Featured case study
+              </div>
               <div className="mt-1 font-display text-2xl font-semibold">{project.tag}</div>
             </div>
             <div className="rounded-full glass px-4 py-1.5 text-xs font-medium">{project.year}</div>
@@ -129,12 +145,16 @@ function CaseStudy() {
 
       <section className="mx-auto mt-24 grid max-w-6xl gap-12 md:grid-cols-5">
         <Reveal className="md:col-span-3">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Project overview</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Project overview
+          </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">The full story</h2>
           <p className="mt-6 text-muted-foreground">{project.overview}</p>
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-2">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Final outcome</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Final outcome
+          </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What it delivered</h2>
           <p className="mt-6 text-muted-foreground">{project.outcome}</p>
         </Reveal>
@@ -143,7 +163,9 @@ function CaseStudy() {
       <section className="mx-auto mt-24 grid max-w-6xl gap-12 md:grid-cols-5">
         <Reveal className="md:col-span-3">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Goals</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What this project needed to do</h2>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+            What this project needed to do
+          </h2>
           <div className="mt-8 space-y-3">
             {project.goals.map((goal) => (
               <div key={goal} className="flex gap-3 rounded-2xl glass p-4">
@@ -156,13 +178,20 @@ function CaseStudy() {
           </div>
         </Reveal>
         <Reveal delay={0.1} className="md:col-span-2">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Highlights</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Highlights
+          </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Key outcomes</h2>
           <div className="mt-6 space-y-3">
             {project.impact.map((metric) => (
-              <div key={metric.label} className="flex items-baseline justify-between rounded-2xl glass p-4">
+              <div
+                key={metric.label}
+                className="flex items-baseline justify-between rounded-2xl glass p-4"
+              >
                 <span className="text-sm text-muted-foreground">{metric.label}</span>
-                <span className="font-display text-2xl font-bold text-gradient">{metric.value}</span>
+                <span className="font-display text-2xl font-bold text-gradient">
+                  {metric.value}
+                </span>
               </div>
             ))}
           </div>
@@ -171,7 +200,9 @@ function CaseStudy() {
 
       <section className="mx-auto mt-24 max-w-6xl">
         <Reveal>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Process</span>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Process
+          </span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">How it came together</h2>
         </Reveal>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -189,8 +220,12 @@ function CaseStudy() {
 
       <section className="mx-auto mt-24 max-w-6xl">
         <Reveal>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Challenges and solutions</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What had to be solved</h2>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Challenges and solutions
+          </span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+            What had to be solved
+          </h2>
         </Reveal>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {project.challenges.map((item, index) => (
@@ -198,11 +233,15 @@ function CaseStudy() {
               <div className="rounded-3xl glass-strong p-7 hover-lift">
                 <h3 className="font-display text-xl font-semibold">{item.title}</h3>
                 <div className="mt-4">
-                  <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Challenge</div>
+                  <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
+                    Challenge
+                  </div>
                   <p className="mt-2 text-sm text-muted-foreground">{item.challenge}</p>
                 </div>
                 <div className="mt-5 border-t border-border/60 pt-5">
-                  <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Solution</div>
+                  <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
+                    Solution
+                  </div>
                   <p className="mt-2 text-sm text-muted-foreground">{item.solution}</p>
                 </div>
               </div>
@@ -213,11 +252,16 @@ function CaseStudy() {
 
       <section className="mx-auto mt-24 max-w-6xl">
         <Reveal>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Gallery and mockups</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Reusable placeholders for visuals</h2>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Gallery and mockups
+          </span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+            Reusable placeholders for visuals
+          </h2>
           <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-            Every project can use this same gallery layout. These cards are placeholder slots that can be replaced with final screens,
-            brand applications, publication spreads, or workflow captures later.
+            Every project can use this same gallery layout. These cards are placeholder slots that
+            can be replaced with final screens, brand applications, publication spreads, or workflow
+            captures later.
           </p>
         </Reveal>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -229,7 +273,9 @@ function CaseStudy() {
                 className={`group relative ${ratioClass(item.ratio)} w-full overflow-hidden rounded-3xl glass text-left`}
                 aria-label={`Open ${item.label} in fullscreen`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} transition-transform duration-700 group-hover:scale-110`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${item.color} transition-transform duration-700 group-hover:scale-110`}
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                 <div className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full glass-strong opacity-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100">
                   <Expand size={14} />
@@ -247,7 +293,12 @@ function CaseStudy() {
             </Reveal>
           ))}
         </div>
-        <Lightbox items={project.gallery} index={lightboxIndex} onClose={() => setLightboxIndex(null)} onIndexChange={setLightboxIndex} />
+        <Lightbox
+          items={project.gallery}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onIndexChange={setLightboxIndex}
+        />
       </section>
 
       {nextProject ? (
@@ -258,15 +309,25 @@ function CaseStudy() {
               params={{ slug: nextProject.slug }}
               className="group relative block overflow-hidden rounded-[2rem] glass-strong p-10 hover-lift md:p-14"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${nextProject.color} opacity-30 transition-opacity group-hover:opacity-50`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${nextProject.color} opacity-30 transition-opacity group-hover:opacity-50`}
+              />
               <div className="relative flex flex-wrap items-end justify-between gap-6">
                 <div>
-                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Next case study</span>
-                  <h3 className="mt-2 font-display text-3xl font-bold md:text-5xl">{nextProject.title}</h3>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                    Next case study
+                  </span>
+                  <h3 className="mt-2 font-display text-3xl font-bold md:text-5xl">
+                    {nextProject.title}
+                  </h3>
                   <p className="mt-2 text-sm text-muted-foreground">{nextProject.tag}</p>
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow">
-                  View next <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  View next{" "}
+                  <ArrowRight
+                    size={14}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
                 </div>
               </div>
             </Link>

@@ -9,12 +9,7 @@ type LinkButtonProps = {
   variant?: "primary" | "glass" | "text";
 };
 
-export function LinkButton({
-  to,
-  children,
-  className,
-  variant = "primary",
-}: LinkButtonProps) {
+export function LinkButton({ to, children, className, variant = "primary" }: LinkButtonProps) {
   return (
     <Link
       to={to as never}
@@ -22,10 +17,8 @@ export function LinkButton({
         "inline-flex items-center gap-2 text-sm font-semibold transition-transform",
         variant === "primary" &&
           "rounded-full bg-gradient-hero px-7 py-3.5 text-primary-foreground shadow-glow hover:scale-105",
-        variant === "glass" &&
-          "rounded-full glass px-7 py-3.5 hover:bg-white/10",
-        variant === "text" &&
-          "font-medium text-muted-foreground hover:text-foreground",
+        variant === "glass" && "rounded-full glass px-7 py-3.5 hover:bg-white/10",
+        variant === "text" && "font-medium text-muted-foreground hover:text-foreground",
         className,
       )}
     >
