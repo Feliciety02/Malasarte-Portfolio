@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Calendar, Expand, Star, User, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Expand, Lightbulb, Sparkles, Star, Target, User, Wrench } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getProject, projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
@@ -167,6 +167,65 @@ function CaseStudy() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      {/* GOALS */}
+      <section className="mx-auto mt-24 max-w-6xl">
+        <Reveal>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Goals</span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What we set out to do</h2>
+        </Reveal>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {project.goals.map((goal, i) => (
+            <Reveal key={goal} delay={i * 0.06}>
+              <div className="flex h-full items-start gap-3 rounded-2xl glass p-5 hover-lift">
+                <Target size={18} className="mt-0.5 shrink-0 text-primary" />
+                <p className="text-sm text-muted-foreground">{goal}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* CHALLENGES & SOLUTIONS */}
+      <section className="mx-auto mt-24 max-w-6xl">
+        <Reveal>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Challenges & solutions</span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What got in the way</h2>
+        </Reveal>
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {project.challenges.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06}>
+              <div className="h-full rounded-3xl glass-strong p-7 hover-lift">
+                <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+                  <Lightbulb size={14} className="text-primary" /> Challenge
+                </div>
+                <h3 className="mt-2 font-display text-xl font-semibold">{c.title}</h3>
+                <div className="mt-5 flex items-start gap-3 rounded-2xl bg-background/40 p-4">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-primary" />
+                  <p className="text-sm text-muted-foreground">{c.solution}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* FINAL OUTCOME */}
+      <section className="mx-auto mt-24 max-w-6xl">
+        <Reveal>
+          <div className="relative overflow-hidden rounded-[2rem] glass-strong p-10 md:p-14">
+            <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${project.color} opacity-20`} />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                <Sparkles size={12} /> Final outcome
+              </div>
+              <p className="mt-6 max-w-3xl font-display text-2xl font-semibold leading-snug md:text-3xl">
+                {project.outcome}
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* GALLERY */}
