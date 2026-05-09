@@ -19,6 +19,9 @@ export type Project = {
   client: string;
   impact: { k: string; v: string }[];
   process: { title: string; text: string }[];
+  goals: string[];
+  challenges: { title: string; solution: string }[];
+  outcome: string;
   gallery: { color: string; label: string; ratio: "square" | "wide" | "tall" }[];
 };
 
@@ -47,6 +50,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Built a 60-screen Figma library with auto-layout, semantic tokens, and accessible color pairings (WCAG AA+)." },
       { title: "Deliver", text: "Handoff doc + animated prototype + dev-ready component specs. Shadowed first sprint to support implementation." },
     ],
+    goals: [
+      "Make first-time banking feel calm and trustworthy",
+      "Lift onboarding completion past 80%",
+      "Build a scalable, accessible component library",
+    ],
+    challenges: [
+      { title: "Trust on first launch", solution: "Replaced corporate language with plain-spoken copy and a soft, low-contrast palette validated through 12 user interviews." },
+      { title: "Dense data on small screens", solution: "Designed a modular card system with progressive disclosure so dashboards stay readable without losing depth." },
+    ],
+    outcome: "Shipped a 60-screen prototype that lifted onboarding completion by 38% in usability tests and now serves as the foundation of Lumen's design system.",
     gallery: [
       { color: "from-violet-500/50 to-fuchsia-500/30", label: "Onboarding", ratio: "tall" },
       { color: "from-indigo-500/50 to-violet-500/30", label: "Dashboard", ratio: "wide" },
@@ -79,6 +92,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Built a token-driven design system with semantic colors and 24 chart variants." },
       { title: "Deliver", text: "Storybook handoff with usage docs and motion specs." },
     ],
+    goals: [
+      "Unify 14 data products under one interface",
+      "Cut time-to-insight in half",
+      "Ship light + dark themes from day one",
+    ],
+    challenges: [
+      { title: "Conflicting product needs", solution: "Ran cross-team JTBD workshops and built a modular widget grid that each PM could compose without breaking consistency." },
+      { title: "Chart sprawl", solution: "Defined a 24-variant chart taxonomy with shared tokens so new data products plug in without bespoke design." },
+    ],
+    outcome: "Reduced time-to-insight by 42% and gave engineering a Storybook-ready system that scaled to every Wavefront product.",
     gallery: [
       { color: "from-blue-500/50 to-cyan-500/30", label: "Overview", ratio: "wide" },
       { color: "from-sky-500/50 to-blue-500/30", label: "Charts", ratio: "square" },
@@ -110,6 +133,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Iterated low-fi screens through 3 critique rounds, validated with click-tests." },
       { title: "Deliver", text: "Annotated wireframe doc + flow map shipped as the brief for hi-fi." },
     ],
+    goals: [
+      "Map every core flow before pixels",
+      "Validate the IA with real creators",
+      "Hand off a production-ready brief",
+    ],
+    challenges: [
+      { title: "Vague product vision", solution: "Co-designed flows in FigJam with the founders to lock scope before investing in hi-fi." },
+      { title: "Creators with very different rituals", solution: "Synthesised diary studies into 5 archetypes and tested click-prototypes against each." },
+    ],
+    outcome: "Delivered 60+ annotated wireframes and an IA map that became the brief for the 3-month hi-fi phase.",
     gallery: [
       { color: "from-indigo-500/50 to-violet-500/30", label: "Flows", ratio: "wide" },
       { color: "from-violet-500/50 to-purple-500/30", label: "IA map", ratio: "square" },
@@ -140,6 +173,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Designed 10 pubmats + 6 animated story templates in shared components." },
       { title: "Deliver", text: "Handoff with editable templates so the team could continue posting." },
     ],
+    goals: [
+      "Tell a cohesive 7-day story on social",
+      "Lift engagement vs the previous year",
+      "Equip the team to keep posting after handoff",
+    ],
+    challenges: [
+      { title: "Daily turnaround pressure", solution: "Built a shared component kit so each pubmat reused type, gradients and grid \u2014 cutting per-asset time to under an hour." },
+      { title: "Brand drift across volunteers", solution: "Locked a rotating gradient + type system that stayed on-brand even when others picked it up." },
+    ],
+    outcome: "Campaign engagement grew 120% YoY and the team kept publishing weeks beyond the original brief using the shared templates.",
     gallery: [
       { color: "from-pink-500/50 to-rose-500/30", label: "Day 1", ratio: "tall" },
       { color: "from-rose-500/50 to-orange-400/30", label: "Day 2", ratio: "tall" },
@@ -171,6 +214,16 @@ export const projects: Project[] = [
       { title: "Design", text: "12 spreads, custom drop caps, and a flexible quote system." },
       { title: "Deliver", text: "Print-ready PDF + a dieline doc for cover finishing." },
     ],
+    goals: [
+      "Explore grid tension and typographic rhythm",
+      "Design a print-ready 32-page layout",
+      "Push image-led storytelling",
+    ],
+    challenges: [
+      { title: "Keeping rhythm across 12 spreads", solution: "Anchored every spread to a 12-column grid with intentional white-space breaks to give the reader breathing room." },
+      { title: "Type pairings that don't fight imagery", solution: "Settled on three pairings tested against the strongest photography in the issue." },
+    ],
+    outcome: "A print-ready 32-page issue with a flexible quote system and dieline-ready cover art.",
     gallery: [
       { color: "from-amber-400/50 to-orange-500/30", label: "Cover", ratio: "tall" },
       { color: "from-orange-400/50 to-rose-500/30", label: "Spread A", ratio: "wide" },
@@ -201,6 +254,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Logo, color, typography, brand board + voice guidelines." },
       { title: "Deliver", text: "Brand book PDF + asset library + applied mockups." },
     ],
+    goals: [
+      "Define a calm, slow-living identity",
+      "Ship a complete brand book",
+      "Show the system across real touchpoints",
+    ],
+    challenges: [
+      { title: "Soft without being forgettable", solution: "Paired breath-like monogram curves with a confident serif so the mark stays distinctive at any size." },
+      { title: "Stretching one identity across print + digital", solution: "Built semantic color + spacing tokens so web, print and merch share the same DNA." },
+    ],
+    outcome: "A full brand book, asset library and 20+ applied mockups now used across Aurora's launch campaign.",
     gallery: [
       { color: "from-fuchsia-500/50 to-pink-500/30", label: "Logo", ratio: "square" },
       { color: "from-pink-500/40 to-rose-500/40", label: "Palette", ratio: "wide" },
@@ -232,6 +295,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Final mark, lockup variants, and color exploration." },
       { title: "Deliver", text: "Logo kit + signage and packaging mockups." },
     ],
+    goals: [
+      "Design a distinctive botanical wordmark",
+      "Provide a flexible monogram lockup",
+      "Show the mark on real packaging",
+    ],
+    challenges: [
+      { title: "Botanical clich\u00e9s", solution: "Sketched 30+ marks before refining to a structural form that hints at growth without literal leaves." },
+      { title: "Legibility on packaging", solution: "Tested vector versions on small labels and signage before locking the final lockup." },
+    ],
+    outcome: "Delivered a logo kit, monogram variants and 6 packaging mockups ready for production.",
     gallery: [
       { color: "from-emerald-400/50 to-teal-500/30", label: "Mark", ratio: "square" },
       { color: "from-teal-500/40 to-green-500/30", label: "Packaging", ratio: "tall" },
@@ -262,6 +335,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Hi-fi mockups + Framer prototype with parallax + cursor states." },
       { title: "Deliver", text: "Responsive specs, motion notes, and asset library." },
     ],
+    goals: [
+      "Tell the studio's story through scroll",
+      "Hit a 1.0s LCP target",
+      "Deliver a fully responsive system",
+    ],
+    challenges: [
+      { title: "Heavy visuals vs performance", solution: "Specced lazy-loaded media, image budgets and a parallax pattern that degrades gracefully on mobile." },
+      { title: "Custom cursor across devices", solution: "Designed motion + cursor states with reduced-motion fallbacks built in from the start." },
+    ],
+    outcome: "Average time on page rose 64% post-launch and the prototype shipped with motion and responsive specs ready for dev.",
     gallery: [
       { color: "from-cyan-400/50 to-blue-500/30", label: "Hero", ratio: "wide" },
       { color: "from-blue-500/40 to-indigo-500/30", label: "Section A", ratio: "square" },
@@ -293,6 +376,16 @@ export const projects: Project[] = [
       { title: "Design", text: "12 templates, menu CMS structure, and a location finder pattern." },
       { title: "Deliver", text: "Webflow-ready specs and CMS schema." },
     ],
+    goals: [
+      "Translate the cafe's warmth to the web",
+      "Make the menu easy to maintain",
+      "Drive more reservations",
+    ],
+    challenges: [
+      { title: "A menu that changes weekly", solution: "Designed a CMS schema so staff can edit items without touching layout." },
+      { title: "Multiple locations", solution: "Built a reusable location finder pattern that scales as the cafe expands." },
+    ],
+    outcome: "Reservation clicks grew 28% and the team can now ship menu updates in minutes.",
     gallery: [
       { color: "from-rose-400/50 to-amber-400/30", label: "Home", ratio: "wide" },
       { color: "from-amber-400/40 to-orange-500/30", label: "Menu", ratio: "tall" },
@@ -323,6 +416,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Drafted long-form articles + 60 captions across 3 themes." },
       { title: "Deliver", text: "Notion content hub + voice guide PDF." },
     ],
+    goals: [
+      "Define a repeatable tone of voice",
+      "Stock a 3-month content runway",
+      "Make publishing low-effort for a solo founder",
+    ],
+    challenges: [
+      { title: "Voice drift across channels", solution: "Codified 5 tone pillars and example phrases the founder could lift directly into posts." },
+      { title: "Caption fatigue", solution: "Built a framework of 3 caption shapes the founder rotates through, removing decision overhead." },
+    ],
+    outcome: "12 long-form drafts, 60 captions and a voice guide that the founder still uses as their north star.",
     gallery: [
       { color: "from-purple-500/50 to-indigo-500/30", label: "Voice guide", ratio: "wide" },
       { color: "from-indigo-500/40 to-blue-500/30", label: "Captions", ratio: "square" },
@@ -353,6 +456,16 @@ export const projects: Project[] = [
       { title: "Design", text: "Built 5 Notion templates + naming conventions." },
       { title: "Deliver", text: "Rolled out with a 1-hour training session." },
     ],
+    goals: [
+      "Cut time spent hunting for files",
+      "Standardise client onboarding",
+      "Make the team self-sufficient",
+    ],
+    challenges: [
+      { title: "Inconsistent file names", solution: "Introduced a naming convention + Notion index so anything is findable in under 30 seconds." },
+      { title: "Onboarding tribal knowledge", solution: "Documented every recurring task in a single onboarding doc paired with a 1-hour training." },
+    ],
+    outcome: "File-lookup time dropped 50% and the studio now onboards new VAs in a single session.",
     gallery: [
       { color: "from-slate-500/40 to-violet-500/30", label: "Notion hub", ratio: "wide" },
       { color: "from-violet-400/40 to-purple-500/30", label: "Templates", ratio: "square" },
