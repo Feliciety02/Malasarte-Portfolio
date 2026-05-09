@@ -109,6 +109,13 @@ export function Lightbox({
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
               onClick={(event) => event.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.25}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -80 || info.velocity.x < -500) next();
+                else if (info.offset.x > 80 || info.velocity.x > 500) prev();
+              }}
               className="relative w-full max-w-5xl overflow-hidden rounded-3xl glass-strong shadow-card"
             >
               <div className="aspect-[16/10]">
