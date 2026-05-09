@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Calendar, Expand, Star, Target, User, Wrench } from "lucide-react";
 import { Lightbox } from "@/components/site/Lightbox";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
@@ -69,6 +69,36 @@ function CaseStudy() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const nextProject = getNextProject(project.slug);
 
+  const sections = [
+    { id: "overview", label: "Overview" },
+    { id: "goals", label: "Goals" },
+    { id: "challenges", label: "Challenges" },
+    { id: "outcome", label: "Outcome" },
+    { id: "gallery", label: "Gallery" },
+  ];
+  const [activeSection, setActiveSection] = useState("overview");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
+    );
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="relative overflow-hidden px-6 pb-10">
       <FloatingOrbs />
@@ -127,20 +157,43 @@ function CaseStudy() {
         </Reveal>
       </section>
 
-      <section className="mx-auto mt-24 grid max-w-6xl gap-12 md:grid-cols-5">
+      <nav
+        aria-label="Case study sections"
+        className="sticky top-20 z-30 mx-auto mt-12 max-w-6xl"
+      >
+        <div className="flex flex-wrap gap-2 rounded-full glass-strong p-2 backdrop-blur-xl">
+          {sections.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => scrollTo(s.id)}
+              className={`rounded-full px-4 py-2 text-xs font-medium transition-all ${
+                activeSection === s.id
+                  ? "bg-gradient-hero text-primary-foreground shadow-glow"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <section id="overview" className="mx-auto mt-16 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5">
         <Reveal className="md:col-span-3">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Project overview</span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">The full story</h2>
           <p className="mt-6 text-muted-foreground">{project.overview}</p>
         </Reveal>
-        <Reveal delay={0.1} className="md:col-span-2">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Final outcome</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What it delivered</h2>
-          <p className="mt-6 text-muted-foreground">{project.outcome}</p>
-        </Reveal>
+        <div id="outcome" className="md:col-span-2 scroll-mt-32">
+          <Reveal delay={0.1}>
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Final outcome</span>
+            <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What it delivered</h2>
+            <p className="mt-6 text-muted-foreground">{project.outcome}</p>
+          </Reveal>
+        </div>
       </section>
 
-      <section className="mx-auto mt-24 grid max-w-6xl gap-12 md:grid-cols-5">
+      <section id="goals" className="mx-auto mt-24 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5">
         <Reveal className="md:col-span-3">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Goals</span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What this project needed to do</h2>
@@ -187,7 +240,7 @@ function CaseStudy() {
         </div>
       </section>
 
-      <section className="mx-auto mt-24 max-w-6xl">
+      <section id="challenges" className="mx-auto mt-24 max-w-6xl scroll-mt-32">
         <Reveal>
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Challenges and solutions</span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">What had to be solved</h2>
@@ -211,7 +264,7 @@ function CaseStudy() {
         </div>
       </section>
 
-      <section className="mx-auto mt-24 max-w-6xl">
+      <section id="gallery" className="mx-auto mt-24 max-w-6xl scroll-mt-32">
         <Reveal>
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Gallery and mockups</span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Reusable placeholders for visuals</h2>
