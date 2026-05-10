@@ -24,10 +24,10 @@ export const serviceCategories = [
   },
   {
     icon: Globe,
-    title: "Web Design",
+    title: "Front End Development",
     color: "from-cyan-400/40 to-blue-500/30",
-    desc: "Responsive marketing sites and landing pages with motion, narrative, and crisp handoff.",
-    bullets: ["Landing pages", "Marketing sites", "Framer / dev specs"],
+    desc: "Responsive front-end builds that turn polished UI into structured, maintainable screens.",
+    bullets: ["Responsive interfaces", "Component-based builds", "Design-to-code execution"],
   },
   {
     icon: FileText,

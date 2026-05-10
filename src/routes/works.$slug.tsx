@@ -6,7 +6,7 @@ import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { Lightbox } from "@/components/site/Lightbox";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getNextProject, getProject } from "@/data/projects";
-import type { Project } from "@/data/projects";
+import type { Project, ProjectKind } from "@/data/projects";
 
 function CaseStudyError({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
@@ -28,6 +28,39 @@ function CaseStudyError({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const focusSectionMeta: Record<ProjectKind, { eyebrow: string; title: string; description: string }> = {
+  uiux: {
+    eyebrow: "Inside the product",
+    title: "Research to final interface",
+    description:
+      "This section focuses on how the product was structured, tested, refined, and turned into a usable interface system.",
+  },
+  publication: {
+    eyebrow: "Inside the campaign",
+    title: "Direction, type, and visual system",
+    description:
+      "This section highlights the campaign goal, visual direction, layout rhythm, and the final publication assets.",
+  },
+  branding: {
+    eyebrow: "Inside the identity",
+    title: "Concept to brand system",
+    description:
+      "This section covers the brand overview, concept development, typography, palette, and real-world applications.",
+  },
+  frontend: {
+    eyebrow: "Inside the build",
+    title: "Layout strategy to working interface",
+    description:
+      "This section focuses on interface structure, responsive behavior, implementation logic, and the final built screens.",
+  },
+  writing: {
+    eyebrow: "Inside the workflow",
+    title: "Tasks, structure, and deliverables",
+    description:
+      "This section outlines the content or support workflow, how work was organized, and what was delivered at the end.",
+  },
+};
+
 export const Route = createFileRoute("/works/$slug")({
   loader: ({ params }) => {
     const project = getProject(params.slug);
@@ -37,12 +70,12 @@ export const Route = createFileRoute("/works/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.title} - Case Study Â· Fe Anne Malasarte` },
+          { title: `${loaderData.title} - Case Study · Fe Anne Malasarte` },
           { name: "description", content: loaderData.overview },
           { property: "og:title", content: `${loaderData.title} - Case Study` },
           { property: "og:description", content: loaderData.desc },
         ]
-      : [{ title: "Case Study Â· Fe Anne Malasarte" }],
+      : [{ title: "Case Study · Fe Anne Malasarte" }],
   }),
   component: CaseStudy,
   errorComponent: CaseStudyError,
@@ -60,22 +93,15 @@ export const Route = createFileRoute("/works/$slug")({
   ),
 });
 
-function ratioClass(ratio: "square" | "wide" | "tall") {
-  return ratio === "wide"
-    ? "aspect-[16/9] md:col-span-2 xl:col-span-7"
-    : ratio === "tall"
-      ? "aspect-[3/4] xl:col-span-5"
-      : "aspect-square xl:col-span-5";
-}
-
 function CaseStudy() {
   const project = Route.useLoaderData() as Project;
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const nextProject = getNextProject(project.slug);
+  const focusMeta = focusSectionMeta[project.kind];
 
   useLayoutEffect(() => {
     const resetToTop = () => {
@@ -96,9 +122,9 @@ function CaseStudy() {
 
   const sections = [
     { id: "overview", label: "Overview" },
+    { id: "focus", label: "Focus" },
     { id: "goals", label: "Goals" },
     { id: "challenges", label: "Challenges" },
-    { id: "outcome", label: "Outcome" },
     { id: "gallery", label: "Gallery" },
   ];
   const [activeSection, setActiveSection] = useState("overview");
@@ -143,51 +169,25 @@ function CaseStudy() {
           <ArrowLeft size={14} /> All works
         </Link>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_20rem] lg:items-end">
-          <motion.div style={{ y: y1 }}>
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              {project.cat}
-            </span>
-            <h1 className="mt-3 font-display text-4xl font-bold leading-[0.95] sm:text-5xl md:text-7xl lg:text-8xl">
-              {project.title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">{project.desc}</p>
-          </motion.div>
-
-          <motion.div
-            style={{ y: y2 }}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-            className="grid gap-3 rounded-[1.75rem] glass-strong p-5 shadow-card"
-          >
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-primary">
-              Case study summary
-            </div>
-            <div className="rounded-2xl bg-white/4 px-4 py-3">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Role</div>
-              <div className="mt-1 text-sm font-medium">{project.role}</div>
-            </div>
-            <div className="rounded-2xl bg-white/4 px-4 py-3">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Tools</div>
-              <div className="mt-1 text-sm font-medium">{project.tools.join(" Â· ")}</div>
-            </div>
-            <div className="rounded-2xl bg-white/4 px-4 py-3">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Year</div>
-              <div className="mt-1 text-sm font-medium">{project.year}</div>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div style={{ y: y1 }} className="mt-10">
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            {project.cat}
+          </span>
+          <h1 className="mt-3 font-display text-4xl font-bold leading-[0.95] sm:text-5xl md:text-7xl lg:text-8xl">
+            {project.title}
+          </h1>
+          <p className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">{project.desc}</p>
+        </motion.div>
 
         <motion.div
           style={{ y: y2 }}
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
           className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem] glass-strong shadow-card"
         >
           <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
           <div className="absolute inset-x-5 top-5 flex items-start justify-between gap-4 md:inset-x-8 md:top-8">
             <div className="rounded-full glass px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
               Featured case study
@@ -195,25 +195,24 @@ function CaseStudy() {
             <div className="rounded-full glass px-4 py-1.5 text-xs font-medium">{project.year}</div>
           </div>
           <div className="absolute bottom-5 left-5 right-5 md:bottom-8 md:left-8 md:right-8">
-            <div className="max-w-xl rounded-[1.5rem] glass-strong px-5 py-4 md:px-6">
+            <div className="max-w-lg rounded-[1.5rem] glass-strong px-5 py-4 md:px-6">
               <div className="text-xs uppercase tracking-wider text-muted-foreground">Project focus</div>
               <div className="mt-1 font-display text-xl font-semibold md:text-2xl">{project.tag}</div>
-              <p className="mt-2 line-clamp-4 text-sm text-muted-foreground">{project.overview}</p>
             </div>
           </div>
         </motion.div>
       </section>
 
-      <section className="mx-auto mt-16 max-w-6xl">
+      <section className="mx-auto mt-12 max-w-6xl">
         <Reveal>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
               { Icon: User, label: "Role", value: project.role },
               { Icon: Star, label: "Category", value: project.cat },
-              { Icon: Wrench, label: "Tools", value: project.tools.join(" Â· ") },
+              { Icon: Wrench, label: "Tools", value: project.tools.join(" · ") },
               { Icon: Calendar, label: "Year", value: project.year },
             ].map(({ Icon, label, value }) => (
-              <div key={label} className="rounded-2xl glass p-5 hover-lift">
+              <div key={label} className="rounded-2xl glass p-5">
                 <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
                   <Icon size={12} /> {label}
                 </div>
@@ -244,37 +243,49 @@ function CaseStudy() {
         </div>
       </nav>
 
-      <section
-        id="overview"
-        className="mx-auto mt-16 grid max-w-6xl gap-8 scroll-mt-32 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]"
-      >
+      <section id="overview" className="mx-auto mt-16 grid max-w-6xl gap-6 scroll-mt-32 lg:grid-cols-2">
         <Reveal>
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
             Project overview
           </span>
           <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">The full story</h2>
-          <div className="mt-6 rounded-[1.75rem] glass-strong p-6 md:p-8">
+          <div className="mt-6 rounded-[1.5rem] glass-strong p-6 md:p-8">
             <p className="text-muted-foreground">{project.overview}</p>
           </div>
         </Reveal>
 
-        <div id="outcome" className="scroll-mt-32">
-          <Reveal delay={0.1}>
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Final outcome
-            </span>
-            <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">What it delivered</h2>
-            <div className="mt-6 rounded-[1.75rem] glass-strong p-6 md:p-8">
-              <p className="text-muted-foreground">{project.outcome}</p>
-            </div>
-          </Reveal>
+        <Reveal delay={0.1}>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            Final outcome
+          </span>
+          <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">What it delivered</h2>
+          <div className="mt-6 rounded-[1.5rem] glass-strong p-6 md:p-8">
+            <p className="text-muted-foreground">{project.outcome}</p>
+          </div>
+        </Reveal>
+      </section>
+
+      <section id="focus" className="mx-auto mt-24 max-w-6xl scroll-mt-32">
+        <Reveal>
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            {focusMeta.eyebrow}
+          </span>
+          <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">{focusMeta.title}</h2>
+          <p className="mt-4 max-w-2xl text-sm text-muted-foreground">{focusMeta.description}</p>
+        </Reveal>
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {project.focusAreas.map((area, index) => (
+            <Reveal key={area.title} delay={index * 0.05}>
+              <div className="rounded-3xl glass-strong p-6">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">{area.title}</div>
+                <p className="mt-3 text-sm text-muted-foreground">{area.text}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      <section
-        id="goals"
-        className="mx-auto mt-24 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5"
-      >
+      <section id="goals" className="mx-auto mt-24 grid max-w-6xl gap-12 scroll-mt-32 md:grid-cols-5">
         <Reveal className="md:col-span-3">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">Goals</span>
           <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">
@@ -321,7 +332,7 @@ function CaseStudy() {
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {project.process.map((step, index) => (
             <Reveal key={step.title} delay={index * 0.06}>
-              <div className="group relative h-full overflow-hidden rounded-3xl glass-strong p-7 hover-lift">
+              <div className="rounded-3xl glass-strong p-7">
                 <div className="font-display text-6xl font-bold text-white/10">0{index + 1}</div>
                 <h3 className="mt-2 font-display text-lg font-semibold md:text-xl">{step.title}</h3>
                 <p className="mt-3 text-sm text-muted-foreground">{step.text}</p>
@@ -343,7 +354,7 @@ function CaseStudy() {
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {project.challenges.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.06}>
-              <div className="rounded-3xl glass-strong p-7 hover-lift">
+              <div className="rounded-3xl glass-strong p-7">
                 <h3 className="font-display text-xl font-semibold">{item.title}</h3>
                 <div className="mt-4">
                   <div className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
@@ -369,27 +380,27 @@ function CaseStudy() {
             Gallery and mockups
           </span>
           <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl md:text-4xl">
-            Reusable placeholders for visuals
+            Consistent placeholder previews
           </h2>
           <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-            Every project can use this same gallery layout. These cards are placeholder slots that
-            can be replaced with final screens, brand applications, publication spreads, or workflow
-            captures later.
+            Every project uses the same reusable gallery treatment so placeholder screens, brand applications,
+            layouts, or workflow visuals still feel cohesive before final images are added.
           </p>
         </Reveal>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-12">
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
           {project.gallery.map((item, index) => (
             <Reveal key={item.label} delay={index * 0.05}>
               <motion.button
                 whileHover={{ y: -4 }}
                 onClick={() => setLightboxIndex(index)}
-                className={`group relative ${ratioClass(item.ratio)} w-full overflow-hidden rounded-3xl glass text-left`}
+                className="group relative aspect-[16/10] w-full overflow-hidden rounded-3xl glass text-left"
                 aria-label={`Open ${item.label} in fullscreen`}
               >
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${item.color} transition-transform duration-700 group-hover:scale-110`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                <div className="absolute inset-[10%] rounded-[1.35rem] border border-white/10 bg-black/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" />
                 <div className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full glass-strong opacity-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100">
                   <Expand size={14} />
                 </div>
@@ -450,3 +461,5 @@ function CaseStudy() {
     </div>
   );
 }
+
+

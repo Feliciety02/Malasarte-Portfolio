@@ -11,10 +11,10 @@ import {
 } from "lucide-react";
 
 export const featuredSlugs = [
-  "lumen-banking",
-  "aurora-brand",
-  "wavefront-dashboard",
-  "echo-magazine",
+  "adoptify",
+  "odara-management-group",
+  "cosmic-remedies-by-sia",
+  "umsdc-publication-materials-and-assets",
 ] as const;
 
 export const marqueeItems = [
@@ -22,14 +22,14 @@ export const marqueeItems = [
   "Branding",
   "Visual Storytelling",
   "Publication",
-  "Web Design",
+  "Front End Development",
 ];
 
 export const skillHighlights = [
   { name: "UI/UX Design", level: 95 },
   { name: "Branding", level: 88 },
   { name: "Publication", level: 90 },
-  { name: "Web Design", level: 86 },
+  { name: "Front End Development", level: 86 },
 ];
 
 export const servicePreviews = [
@@ -40,7 +40,7 @@ export const servicePreviews = [
   },
   { icon: PenTool, title: "Branding", desc: "Identity systems with personality and clarity." },
   { icon: Megaphone, title: "Publication", desc: "Editorial layouts and pubmat campaigns." },
-  { icon: Globe, title: "Web Design", desc: "Responsive marketing sites with motion." },
+  { icon: Globe, title: "Front End Development", desc: "Responsive interfaces translated from design into polished builds." },
   { icon: FileText, title: "Content & VA", desc: "Captions, blogs, and creator support." },
 ] as const;
 

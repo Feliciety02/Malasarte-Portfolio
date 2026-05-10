@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { SectionHeader } from "@/components/site/SectionHeader";
-import { projects } from "@/data/projects";
+import { categoryDescriptions, getProjectsByCategory } from "@/data/projects";
 
 export const Route = createFileRoute("/works")({
   head: () => ({
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/works")({
       { title: "Works - Fe Anne Malasarte" },
       {
         name: "description",
-        content: "Selected works across UI/UX, branding, publication, web design and writing.",
+        content: "Selected works across UI/UX, branding, publication, front end development, and writing.",
       },
       { property: "og:title", content: "Works - Fe Anne Malasarte" },
       {
@@ -29,7 +29,7 @@ const categories = [
   "UI/UX Design",
   "Publication",
   "Logo & Branding",
-  "Web Design",
+  "Front End Development",
   "Writing / VA",
 ] as const;
 type Cat = (typeof categories)[number];
@@ -37,8 +37,7 @@ type Cat = (typeof categories)[number];
 function Works() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [active, setActive] = useState<Cat>("All");
-  const filtered =
-    active === "All" ? projects : projects.filter((project) => project.cat === active);
+  const filtered = getProjectsByCategory(active);
 
   if (pathname !== "/works") {
     return <Outlet />;
@@ -60,7 +59,7 @@ function Works() {
                 Selected <span className="text-gradient">Works</span>
               </>
             }
-            description="A growing collection of design explorations across product, brand, publication, and writing. Click any project to read the case study."
+            description="A growing collection of work across product design, branding, publication, front-end development, and writing. Click any project to read the case study."
             contentClassName="max-w-2xl"
             titleClassName="text-4xl sm:text-5xl md:text-7xl"
             titleTag="h1"
@@ -84,6 +83,16 @@ function Works() {
             ))}
           </div>
         </div>
+
+        <motion.p
+          key={active}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="mt-4 max-w-3xl text-sm text-muted-foreground"
+        >
+          {categoryDescriptions[active]}
+        </motion.p>
 
         <motion.div layout className="mt-10 grid gap-5 md:mt-12 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">

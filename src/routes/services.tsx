@@ -12,7 +12,7 @@ export const Route = createFileRoute("/services")({
       { title: "Services - Fe Anne Malasarte" },
       {
         name: "description",
-        content: "Design services: UI/UX, branding, publication, web design, content & VA support.",
+        content: "Design services: UI/UX, branding, publication, front end development, content, and VA support.",
       },
       { property: "og:title", content: "Services - Fe Anne Malasarte" },
       {

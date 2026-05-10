@@ -12,7 +12,7 @@ type ProjectCardProps = {
 export function ProjectCard({ project, variant = "feature" }: ProjectCardProps) {
   if (variant === "grid") {
     return (
-      <motion.div whileHover={{ y: -4 }} className="h-full">
+      <motion.div whileHover={{ y: -4 }} whileTap={{ scale: 0.99 }} className="h-full">
         <CaseStudyLink
           slug={project.slug}
           aria-label={`Open ${project.title} case study`}
@@ -40,7 +40,7 @@ export function ProjectCard({ project, variant = "feature" }: ProjectCardProps) 
   }
 
   return (
-    <motion.div whileHover={{ y: -6 }} className="h-full">
+      <motion.div whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} className="h-full">
       <CaseStudyLink
         slug={project.slug}
         aria-label={`Open ${project.title} case study`}
@@ -64,7 +64,7 @@ export function ProjectCard({ project, variant = "feature" }: ProjectCardProps) 
             {project.tools.map((tool) => (
               <span
                 key={tool}
-                className="rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground"
+                className="pointer-events-none rounded-full border border-border/60 px-3 py-1 text-[11px] text-muted-foreground"
               >
                 {tool}
               </span>
@@ -72,7 +72,7 @@ export function ProjectCard({ project, variant = "feature" }: ProjectCardProps) 
           </div>
 
           <div className="mt-6 flex flex-col items-start gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-            <div className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow transition-transform group-hover:scale-105">
+            <div className="pointer-events-none inline-flex items-center gap-2 rounded-full bg-gradient-hero px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow transition-transform group-hover:scale-105">
               View Case Study <ArrowRight size={12} />
             </div>
             <span className="text-xs uppercase tracking-wider text-muted-foreground">

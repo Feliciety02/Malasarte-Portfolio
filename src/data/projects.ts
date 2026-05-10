@@ -2,8 +2,15 @@ export type ProjectCategory =
   | "UI/UX Design"
   | "Publication"
   | "Logo & Branding"
-  | "Web Design"
+  | "Front End Development"
   | "Writing / VA";
+
+export type ProjectKind =
+  | "uiux"
+  | "publication"
+  | "branding"
+  | "frontend"
+  | "writing";
 
 export type ProjectMetric = {
   value: string;
@@ -28,10 +35,17 @@ export type ProjectGalleryItem = {
   note: string;
 };
 
+export type ProjectFocusArea = {
+  title: string;
+  text: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
   cat: ProjectCategory;
+  kind: ProjectKind;
+  categories?: ProjectCategory[];
   tag: string;
   color: string;
   desc: string;
@@ -42,6 +56,7 @@ export type Project = {
   overview: string;
   goals: string[];
   impact: ProjectMetric[];
+  focusAreas: ProjectFocusArea[];
   process: ProjectProcessStep[];
   challenges: ProjectChallenge[];
   outcome: string;
@@ -49,926 +64,856 @@ export type Project = {
   nextProjectSlug?: string;
 };
 
+export const categoryDescriptions: Record<"All" | ProjectCategory, string> = {
+  All: "A curated mix of interfaces, identity systems, publication assets, front-end builds, and writing support work.",
+  "UI/UX Design": "Apps, dashboards, wireframes, flows, prototypes, and systems shaped around usability and clarity.",
+  Publication: "Pubmats, campaign assets, eBook layouts, social graphics, and publication systems with strong visual direction.",
+  "Logo & Branding": "Logos, brand boards, identity systems, mockups, palettes, and typography-led brand work.",
+  "Front End Development": "Responsive page builds, interface implementation, and front-end systems translated from design into working screens.",
+  "Writing / VA": "Writing systems, content deliverables, support workflows, organization processes, and virtual assistant tasks.",
+};
+
 export const projects: Project[] = [
   {
-    slug: "lumen-banking",
-    title: "Lumen Banking",
-    cat: "UI/UX Design",
-    tag: "Mobile App · Figma",
-    color: "from-violet-500/50 to-fuchsia-500/30",
-    desc: "A calm, trustworthy mobile banking experience.",
-    role: "Lead Product Designer",
-    tools: ["Figma", "Principle", "Notion"],
-    year: "2025",
-    client: "Lumen Financial (Concept)",
-    overview:
-      "Lumen reimagines daily banking as a calm and intentional digital space. The case study follows the product from onboarding to dashboard, transactions, and budgeting, with a strong focus on trust, clarity, and polished motion.",
-    goals: [
-      "Make first-time banking flows feel simple and reassuring.",
-      "Reduce visual noise without making the interface feel empty.",
-      "Create a scalable UI language that can support future financial features.",
-    ],
-    impact: [
-      { value: "+38%", label: "Onboarding completion" },
-      { value: "4.8/5", label: "Usability test rating" },
-      { value: "60+", label: "Screens designed" },
-    ],
-    process: [
-      {
-        title: "Research",
-        text: "Interviewed 12 first-time banking users and reviewed competing finance apps to understand hesitation points around trust, security, and mental overload.",
-      },
-      {
-        title: "Concept",
-        text: "Explored three visual directions before landing on a softer interface system with high hierarchy and restrained motion to feel premium but approachable.",
-      },
-      {
-        title: "Design",
-        text: "Built the end-to-end mobile flow, reusable UI patterns, accessibility-conscious color pairings, and a prototype that demonstrated key interactions.",
-      },
-      {
-        title: "Deliver",
-        text: "Prepared component specs, handoff notes, annotated prototypes, and placeholder mockup slots that can later be swapped with production screens.",
-      },
-    ],
-    challenges: [
-      {
-        title: "Trust Without Clutter",
-        challenge:
-          "Finance apps often overuse dense data and alerts, which makes onboarding feel heavy.",
-        solution:
-          "Used progressive disclosure, clear card groupings, and calmer default states so users only see what matters first.",
-      },
-      {
-        title: "Balancing Calm and Utility",
-        challenge: "A quiet visual direction risked feeling too minimal for a banking product.",
-        solution:
-          "Introduced stronger hierarchy, richer status states, and subtle motion feedback to keep the product informative and alive.",
-      },
-    ],
-    outcome:
-      "The resulting concept demonstrates a reusable mobile banking system that feels elegant, easy to follow, and ready for deeper product expansion. Gallery areas below are placeholders for onboarding, dashboard, and budgeting mockups.",
-    gallery: [
-      {
-        color: "from-violet-500/50 to-fuchsia-500/30",
-        label: "Onboarding Flow",
-        ratio: "tall",
-        note: "Placeholder for welcome, verification, and first-deposit mockups.",
-      },
-      {
-        color: "from-indigo-500/50 to-violet-500/30",
-        label: "Dashboard",
-        ratio: "wide",
-        note: "Placeholder for account overview, balances, and spending cards.",
-      },
-      {
-        color: "from-fuchsia-500/40 to-pink-500/30",
-        label: "Transactions",
-        ratio: "square",
-        note: "Placeholder for list states, filtering, and transaction detail screens.",
-      },
-      {
-        color: "from-purple-500/50 to-blue-500/30",
-        label: "Budgeting",
-        ratio: "square",
-        note: "Placeholder for goals, savings buckets, and monthly progress visuals.",
-      },
-      {
-        color: "from-violet-600/50 to-indigo-500/30",
-        label: "Card Details",
-        ratio: "wide",
-        note: "Placeholder for card controls, freeze states, and spending insights.",
-      },
-    ],
-    nextProjectSlug: "aurora-brand",
-  },
-  {
-    slug: "wavefront-dashboard",
-    title: "Wavefront Dashboard",
-    cat: "UI/UX Design",
-    tag: "SaaS · Web",
-    color: "from-blue-500/50 to-cyan-500/30",
-    desc: "Analytics dashboard for a marketing platform.",
-    role: "Senior UI Designer",
-    tools: ["Figma", "FigJam"],
-    year: "2025",
-    client: "Wavefront Analytics",
-    overview:
-      "Wavefront needed a dashboard system that could scale across multiple analytics products without losing clarity. This reusable case study documents the structure, decision-making, and UI patterns behind the system.",
-    goals: [
-      "Unify 14 data products under one dashboard experience.",
-      "Shorten the time it takes users to surface meaningful insights.",
-      "Support both light and dark themes with consistent chart behavior.",
-    ],
-    impact: [
-      { value: "-42%", label: "Time-to-insight" },
-      { value: "14", label: "Products unified" },
-      { value: "2", label: "Supported themes" },
-    ],
-    process: [
-      {
-        title: "Research",
-        text: "Mapped jobs-to-be-done across analysts, managers, and marketers to understand which metrics required immediate visibility and which could sit deeper in the product.",
-      },
-      {
-        title: "Concept",
-        text: "Defined a widget grid and chart taxonomy that could grow with the platform rather than forcing every product into one rigid screen pattern.",
-      },
-      {
-        title: "Design",
-        text: "Created a token-driven dashboard language with reusable charts, filter modules, comparison panels, and layout variants.",
-      },
-      {
-        title: "Deliver",
-        text: "Packaged the work as a reusable system with placeholder gallery areas for overview, data visualization, settings, and team workflows.",
-      },
-    ],
-    challenges: [
-      {
-        title: "Complex Data Density",
-        challenge:
-          "The product needed to show a large volume of information without overwhelming first-time users.",
-        solution:
-          "Used modular cards, cleaner visual rhythm, and meaningful defaults to keep the first view digestible.",
-      },
-      {
-        title: "System Flexibility",
-        challenge:
-          "The dashboard had to serve multiple product teams with different metrics and visualization needs.",
-        solution:
-          "Built extensible chart patterns and container rules that could be remixed without redesigning the entire experience.",
-      },
-    ],
-    outcome:
-      "The final system gives Wavefront a reusable dashboard foundation that is easier to scale and easier to read. The gallery below uses placeholders that can later be replaced with final screens or mockups.",
-    gallery: [
-      {
-        color: "from-blue-500/50 to-cyan-500/30",
-        label: "Overview Screen",
-        ratio: "wide",
-        note: "Placeholder for primary metrics, summary cards, and account health.",
-      },
-      {
-        color: "from-sky-500/50 to-blue-500/30",
-        label: "Chart Library",
-        ratio: "square",
-        note: "Placeholder for bar, line, area, and mixed chart states.",
-      },
-      {
-        color: "from-cyan-500/50 to-teal-500/30",
-        label: "Filters",
-        ratio: "square",
-        note: "Placeholder for advanced filters, date ranges, and saved views.",
-      },
-      {
-        color: "from-indigo-500/40 to-blue-500/40",
-        label: "Settings",
-        ratio: "wide",
-        note: "Placeholder for permissions, theme settings, and team preferences.",
-      },
-    ],
-    nextProjectSlug: "orgweek-pubmats",
-  },
-  {
-    slug: "nimbus-wireframes",
-    title: "Nimbus Wireframes",
-    cat: "UI/UX Design",
-    tag: "Wireframes",
-    color: "from-indigo-500/50 to-violet-500/30",
-    desc: "Low-fi exploration for a productivity app.",
-    role: "UX Designer",
-    tools: ["Figma", "Whimsical"],
-    year: "2024",
-    client: "Nimbus Studio",
-    overview:
-      "Nimbus is a focus and planning app for creatives. This case study captures the discovery sprint, information architecture work, and early wireframe direction that shaped the later high-fidelity phase.",
-    goals: [
-      "Clarify the core user flows before visual design started.",
-      "Translate open-ended product ideas into concrete user journeys.",
-      "Create a wireframe base that the team could iterate on quickly.",
-    ],
-    impact: [
-      { value: "60+", label: "Wireframe screens" },
-      { value: "5", label: "Flows mapped" },
-      { value: "3wk", label: "Discovery sprint" },
-    ],
-    process: [
-      {
-        title: "Research",
-        text: "Ran diary studies and interviews to understand how creatives structure focus, planning, and task switching.",
-      },
-      {
-        title: "Concept",
-        text: "Mapped task flows and information hierarchy with the founding team before introducing interface structure.",
-      },
-      {
-        title: "Design",
-        text: "Built low-fidelity wireframes, iterated on navigation patterns, and validated interactions through click tests.",
-      },
-      {
-        title: "Deliver",
-        text: "Packaged the wireframes as a reusable foundation with placeholder screens for future high-fidelity exploration.",
-      },
-    ],
-    challenges: [
-      {
-        title: "Ambiguous Feature Scope",
-        challenge: "Early product ideas were broad and often overlapped with one another.",
-        solution:
-          "Converted concepts into flow-first exercises so the team could align on behavior before visuals.",
-      },
-      {
-        title: "Maintaining Momentum",
-        challenge:
-          "Low-fi work can stall if the team treats it as disposable instead of foundational.",
-        solution:
-          "Added annotations and reusable structural patterns so the wireframes remained useful during later phases.",
-      },
-    ],
-    outcome:
-      "Nimbus left the discovery phase with a cleaner structure, stronger product alignment, and a reusable wireframe system that could scale into high-fidelity design. The gallery uses placeholders for flows, maps, and screens.",
-    gallery: [
-      {
-        color: "from-indigo-500/50 to-violet-500/30",
-        label: "Primary Flows",
-        ratio: "wide",
-        note: "Placeholder for onboarding, planning, and review-flow wireframes.",
-      },
-      {
-        color: "from-violet-500/50 to-purple-500/30",
-        label: "IA Map",
-        ratio: "square",
-        note: "Placeholder for sitemap and navigation architecture.",
-      },
-      {
-        color: "from-blue-500/40 to-indigo-500/40",
-        label: "Key Screens",
-        ratio: "square",
-        note: "Placeholder for daily planner and focus mode wireframes.",
-      },
-    ],
-    nextProjectSlug: "lumen-banking",
-  },
-  {
-    slug: "orgweek-pubmats",
-    title: "OrgWeek Pubmats",
-    cat: "Publication",
-    tag: "Social Posters",
-    color: "from-pink-500/50 to-rose-500/30",
-    desc: "Series of pubmats for an organization week.",
-    role: "Publication Designer",
-    tools: ["Figma", "Photoshop", "After Effects"],
-    year: "2024",
-    client: "Tech Org Council",
-    overview:
-      "OrgWeek Pubmats is a campaign system built for a student organization celebration week. The work focused on visual consistency, fast iteration, and a flexible template approach for multiple daily announcements.",
-    goals: [
-      "Create a cohesive visual campaign across multiple event announcements.",
-      "Keep the system flexible enough for quick daily updates.",
-      "Increase engagement compared with the previous year's materials.",
-    ],
-    impact: [
-      { value: "10", label: "Pubmats produced" },
-      { value: "+120%", label: "Engagement uplift" },
-      { value: "1wk", label: "Average turnaround" },
-    ],
-    process: [
-      {
-        title: "Research",
-        text: "Reviewed prior campaigns, audience behavior, and existing brand materials to identify what needed more energy and clarity.",
-      },
-      {
-        title: "Concept",
-        text: "Built a type-led system with gradient variations so each post could feel fresh while remaining recognizably part of one campaign.",
-      },
-      {
-        title: "Design",
-        text: "Created static posts, story variants, and reusable composition rules that could scale across multiple event days.",
-      },
-      {
-        title: "Deliver",
-        text: "Prepared editable placeholder mockups for social, story, and countdown formats so future updates could happen faster.",
-      },
-    ],
-    challenges: [
-      {
-        title: "Fast Turnarounds",
-        challenge: "Campaign materials needed to be released quickly while still feeling polished.",
-        solution:
-          "Designed a reusable set of layout rules and interchangeable assets to reduce redesign work.",
-      },
-      {
-        title: "Consistency Across Formats",
-        challenge: "Square posts, stories, and animated graphics needed to feel like one system.",
-        solution:
-          "Locked in recurring type scales, alignment principles, and gradient families across every asset.",
-      },
-    ],
-    outcome:
-      "The campaign delivered a clearer and more memorable visual identity for the event week. The gallery below intentionally uses placeholders for final poster, story, and animated asset mockups.",
-    gallery: [
-      {
-        color: "from-pink-500/50 to-rose-500/30",
-        label: "Day 1 Poster",
-        ratio: "tall",
-        note: "Placeholder for launch-day poster mockup.",
-      },
-      {
-        color: "from-rose-500/50 to-orange-400/30",
-        label: "Day 2 Poster",
-        ratio: "tall",
-        note: "Placeholder for speaker or activity announcement.",
-      },
-      {
-        color: "from-fuchsia-500/40 to-pink-500/40",
-        label: "Day 3 Poster",
-        ratio: "tall",
-        note: "Placeholder for event recap or challenge post.",
-      },
-      {
-        color: "from-pink-400/40 to-amber-400/30",
-        label: "Story Set",
-        ratio: "wide",
-        note: "Placeholder for animated story and countdown assets.",
-      },
-    ],
-    nextProjectSlug: "echo-magazine",
-  },
-  {
-    slug: "echo-magazine",
-    title: "Echo Magazine",
-    cat: "Publication",
-    tag: "Editorial Layout",
-    color: "from-amber-400/50 to-orange-500/30",
-    desc: "Editorial layout exploration.",
-    role: "Editorial Designer",
-    tools: ["InDesign", "Illustrator"],
-    year: "2024",
-    client: "Self-initiated",
-    overview:
-      "Echo Magazine is a self-initiated editorial layout exploration focused on typographic rhythm, pacing, and image-led storytelling across a multi-page publication system.",
-    goals: [
-      "Develop a polished editorial language with clear rhythm and hierarchy.",
-      "Explore how grid tension can support narrative pacing.",
-      "Create spreads that feel modern but tactile and human.",
-    ],
-    impact: [
-      { value: "32pg", label: "Editorial layout" },
-      { value: "3", label: "Type pairings tested" },
-      { value: "12", label: "Spreads designed" },
-    ],
-    process: [
-      {
-        title: "Research",
-        text: "Studied contemporary indie magazines to understand pacing, white-space usage, and editorial tone.",
-      },
-      {
-        title: "Concept",
-        text: "Defined a 12-column grid system with deliberate moments of compression and release across spreads.",
-      },
-      {
-        title: "Design",
-        text: "Built title systems, pull-quote structures, and image-first compositions that could flex across features.",
-      },
-      {
-        title: "Deliver",
-        text: "Prepared print-ready layouts and placeholder spread mockups for cover, features, and article openers.",
-      },
-    ],
-    challenges: [
-      {
-        title: "Visual Rhythm",
-        challenge:
-          "Editorial pieces can feel repetitive if every spread follows the same structure.",
-        solution:
-          "Varied scale, whitespace, and composition while keeping the underlying grid consistent.",
-      },
-      {
-        title: "Balancing Type and Image",
-        challenge:
-          "The layout needed to feel expressive without letting images overpower the content.",
-        solution:
-          "Created a modular text system that could hold strong images while maintaining readability.",
-      },
-    ],
-    outcome:
-      "Echo Magazine became a strong editorial study with reusable layout principles that can support future long-form publication work. The gallery shows placeholders for cover and spread mockups.",
-    gallery: [
-      {
-        color: "from-amber-400/50 to-orange-500/30",
-        label: "Cover",
-        ratio: "tall",
-        note: "Placeholder for cover composition and masthead treatment.",
-      },
-      {
-        color: "from-orange-400/50 to-rose-500/30",
-        label: "Feature Spread A",
-        ratio: "wide",
-        note: "Placeholder for opening spread and image-led article design.",
-      },
-      {
-        color: "from-yellow-400/40 to-amber-500/30",
-        label: "Feature Spread B",
-        ratio: "wide",
-        note: "Placeholder for quote system and secondary article layout.",
-      },
-    ],
-    nextProjectSlug: "wavefront-dashboard",
-  },
-  {
-    slug: "aurora-brand",
-    title: "Aurora Brand",
+    slug: "odara-management-group",
+    title: "Odara Management Group",
     cat: "Logo & Branding",
-    tag: "Identity System",
-    color: "from-fuchsia-500/50 to-pink-500/30",
-    desc: "Brand identity for a wellness studio.",
+    kind: "branding",
+    tag: "Brand Identity",
+    color: "from-fuchsia-500/50 to-violet-500/30",
+    desc: "Corporate identity system for a management group.",
     role: "Brand Designer",
     tools: ["Illustrator", "Figma", "Photoshop"],
     year: "2025",
-    client: "Aurora Studio",
+    client: "Odara Management Group",
     overview:
-      "Aurora Brand is a full identity system for a wellness studio centered on calm, softness, and emotional clarity. The system includes logo work, typography, palette direction, and real-world applications.",
+      "Odara Management Group required a more polished and trustworthy identity system that could support presentations, digital communications, and formal business collateral.",
     goals: [
-      "Create a distinctive identity rooted in softness and ritual.",
-      "Build a cohesive system that works across print, digital, and merchandise.",
-      "Give the client a brand foundation that feels premium and memorable.",
+      "Build a corporate identity that feels credible and modern.",
+      "Create a logo system that works across print and digital touchpoints.",
+      "Establish a color and typography direction that feels premium but practical.",
     ],
     impact: [
-      { value: "1", label: "Cohesive identity" },
-      { value: "8", label: "Core applications" },
-      { value: "20+", label: "Mockups delivered" },
+      { value: "1", label: "Primary identity" },
+      { value: "6", label: "Core applications" },
+      { value: "3", label: "Logo lockups" },
+    ],
+    focusAreas: [
+      { title: "Brand Overview", text: "Clarified the group's positioning around professionalism, structure, and long-term trust." },
+      { title: "Design Direction", text: "Developed a cleaner corporate direction with sharper type, disciplined spacing, and restrained color use." },
+      { title: "Concept Development", text: "Explored multiple mark structures before refining the strongest symbol and wordmark relationship." },
+      { title: "Logo Meaning", text: "Shaped the final identity to communicate steadiness, leadership, and professional clarity." },
+      { title: "Color Palette", text: "Defined a palette that balances authority with approachability for both screen and print use." },
+      { title: "Typography", text: "Used a firm typographic system to support corporate communications and brand consistency." },
+      { title: "Brand Applications", text: "Extended the identity into stationery, presentation covers, and executive-facing mockups." },
     ],
     process: [
-      {
-        title: "Research",
-        text: "Ran a brand workshop to define the studio's values, visual references, and emotional positioning.",
-      },
-      {
-        title: "Concept",
-        text: "Explored three identity directions before selecting a softer monogram and supporting visual language.",
-      },
-      {
-        title: "Design",
-        text: "Developed the logo system, palette, typography, and application mockups across multiple touchpoints.",
-      },
-      {
-        title: "Deliver",
-        text: "Compiled the work into a reusable brand package with placeholders for stationery, signage, and social applications.",
-      },
+      { title: "Research", text: "Reviewed competitor identities and collected references for more credible corporate visual language." },
+      { title: "Concept", text: "Built several logo directions and tested how each would behave in formal communication materials." },
+      { title: "Design", text: "Refined the symbol, typography system, and supporting brand assets into one cohesive system." },
+      { title: "Deliver", text: "Prepared a reusable identity package with placeholder applications for print and digital outputs." },
     ],
     challenges: [
       {
-        title: "Soft But Distinctive",
-        challenge:
-          "Wellness branding can easily become generic if it leans too heavily on familiar visual cues.",
-        solution:
-          "Built a custom mark and more controlled art direction so the system felt calm without becoming anonymous.",
+        title: "Professional Without Feeling Cold",
+        challenge: "The brand needed authority without becoming visually stiff or dated.",
+        solution: "Used a sharper system with controlled contrast and cleaner spacing instead of relying on overly conservative visual tropes.",
       },
       {
-        title: "Multi-surface Consistency",
-        challenge:
-          "The identity needed to work equally well on digital screens, print collateral, and merchandise.",
-        solution:
-          "Defined clear logo lockups, spacing rules, and palette behaviors across all application contexts.",
+        title: "Versatility",
+        challenge: "The logo had to work across presentations, documents, and digital channels.",
+        solution: "Built multiple lockups and spacing rules to keep the system usable in different contexts.",
       },
     ],
     outcome:
-      "Aurora emerged with a more mature and cohesive visual identity that can scale across customer touchpoints. The gallery below contains reusable placeholders for logo, palette, and brand application mockups.",
+      "The final identity gives Odara Management Group a clearer and more professional visual foundation that can scale across core business touchpoints.",
     gallery: [
-      {
-        color: "from-fuchsia-500/50 to-pink-500/30",
-        label: "Logo System",
-        ratio: "square",
-        note: "Placeholder for primary mark, alternate lockups, and spacing rules.",
-      },
-      {
-        color: "from-pink-500/40 to-rose-500/40",
-        label: "Palette",
-        ratio: "wide",
-        note: "Placeholder for brand colors, type pairings, and moodboard visuals.",
-      },
-      {
-        color: "from-rose-400/40 to-fuchsia-500/30",
-        label: "Packaging Mockup",
-        ratio: "tall",
-        note: "Placeholder for packaging and product application render.",
-      },
-      {
-        color: "from-pink-400/40 to-purple-400/30",
-        label: "Stationery",
-        ratio: "wide",
-        note: "Placeholder for cards, forms, and printed collateral.",
-      },
+      { color: "from-fuchsia-500/50 to-violet-500/30", label: "Primary Mark", ratio: "square", note: "Placeholder for the final logo and alternate lockups." },
+      { color: "from-violet-500/40 to-indigo-500/30", label: "Brand Board", ratio: "wide", note: "Placeholder for palette, typography, and visual rules." },
+      { color: "from-pink-500/40 to-purple-500/30", label: "Stationery", ratio: "tall", note: "Placeholder for business card and document applications." },
     ],
-    nextProjectSlug: "studio-folio-site",
+    nextProjectSlug: "lian-monley",
   },
   {
-    slug: "verdant-mark",
-    title: "Verdant Mark",
+    slug: "lian-monley",
+    title: "Lian Monley",
     cat: "Logo & Branding",
-    tag: "Logo & Mockups",
-    color: "from-emerald-400/50 to-teal-500/30",
-    desc: "Botanical brand mark.",
+    kind: "branding",
+    tag: "Personal Brand",
+    color: "from-rose-500/50 to-pink-500/30",
+    desc: "Personal branding system with a polished editorial feel.",
+    role: "Brand Designer",
+    tools: ["Illustrator", "Figma"],
+    year: "2025",
+    client: "Lian Monley",
+    overview:
+      "Lian Monley needed a more refined personal identity that could support social presence, presentation materials, and professional self-branding across digital touchpoints.",
+    goals: [
+      "Create a memorable personal identity with elegant positioning.",
+      "Build a logo and visual language suited for online visibility.",
+      "Support multiple applications from profile graphics to documents.",
+    ],
+    impact: [
+      { value: "1", label: "Identity system" },
+      { value: "5", label: "Brand assets" },
+      { value: "4", label: "Mockup studies" },
+    ],
+    focusAreas: [
+      { title: "Brand Overview", text: "Positioned the brand around confidence, polish, and an editorial sense of self-presentation." },
+      { title: "Design Direction", text: "Used a softer luxury direction with deliberate spacing, elegant type, and clean contrast." },
+      { title: "Concept Development", text: "Explored monograms, initials, and signature-based directions before refining the strongest route." },
+      { title: "Logo Meaning", text: "Built a mark that feels personal, polished, and easy to use across digital formats." },
+      { title: "Color Palette", text: "Selected a palette that feels sophisticated without being overly rigid." },
+      { title: "Typography", text: "Paired display and supporting type to keep the brand expressive but controlled." },
+      { title: "Brand Applications", text: "Applied the system to profile visuals, covers, and self-promotional assets." },
+    ],
+    process: [
+      { title: "Research", text: "Collected references from editorial and personal branding spaces to define a stronger visual tone." },
+      { title: "Concept", text: "Tested initials, wordmarks, and signature-inspired forms before narrowing the identity route." },
+      { title: "Design", text: "Built the logo, typography pairings, and digital-ready brand applications." },
+      { title: "Deliver", text: "Prepared a mini brand kit with placeholder social and presentation mockups." },
+    ],
+    challenges: [
+      {
+        title: "Personal But Polished",
+        challenge: "The identity needed to feel individual without looking informal.",
+        solution: "Used stronger typographic control and a more restrained system rather than decorative branding tricks.",
+      },
+      {
+        title: "Digital Adaptability",
+        challenge: "The brand would live mostly across small digital touchpoints.",
+        solution: "Prioritized clarity, clean spacing, and simplified applications for better consistency online.",
+      },
+    ],
+    outcome:
+      "The final system gives Lian Monley a cleaner and more intentional personal brand that can scale across public-facing materials.",
+    gallery: [
+      { color: "from-rose-500/50 to-pink-500/30", label: "Identity Mark", ratio: "square", note: "Placeholder for primary logo and personal monogram." },
+      { color: "from-pink-500/40 to-fuchsia-500/30", label: "Profile System", ratio: "wide", note: "Placeholder for social headers and branded profile assets." },
+      { color: "from-amber-300/30 to-rose-400/30", label: "Presentation Cover", ratio: "tall", note: "Placeholder for deck and personal introduction layouts." },
+    ],
+    nextProjectSlug: "pietyl-lpg",
+  },
+  {
+    slug: "pietyl-lpg",
+    title: "Pietyl LPG",
+    cat: "Logo & Branding",
+    kind: "branding",
+    tag: "Business Branding",
+    color: "from-sky-500/50 to-blue-500/30",
+    desc: "Brand identity for an LPG business.",
+    role: "Brand Designer",
+    tools: ["Illustrator", "Photoshop"],
+    year: "2024",
+    client: "Pietyl LPG",
+    overview:
+      "Pietyl LPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.",
+    goals: [
+      "Create a recognizable visual identity for a utility-focused business.",
+      "Make the brand feel dependable and practical.",
+      "Prepare a system that works well across physical applications.",
+    ],
+    impact: [
+      { value: "1", label: "Business identity" },
+      { value: "4", label: "Application mockups" },
+      { value: "2", label: "Logo variations" },
+    ],
+    focusAreas: [
+      { title: "Brand Overview", text: "Positioned the business around reliability, service trust, and local recognizability." },
+      { title: "Design Direction", text: "Built a stronger and more direct visual system suited to service branding and physical visibility." },
+      { title: "Concept Development", text: "Explored icon and wordmark combinations that could feel clear even at signage scale." },
+      { title: "Logo Meaning", text: "Used a more practical mark structure to support fast recognition and brand memorability." },
+      { title: "Color Palette", text: "Chose high-visibility colors suited to real-world application use." },
+      { title: "Brand Applications", text: "Extended the identity into vehicle, uniform, and signage mockups." },
+    ],
+    process: [
+      { title: "Research", text: "Reviewed category competitors and studied practical constraints of service-based branding." },
+      { title: "Concept", text: "Developed mark directions that prioritized clarity and direct recognition." },
+      { title: "Design", text: "Refined the final logo, palette, and utility-focused application set." },
+      { title: "Deliver", text: "Prepared a practical brand package with placeholder field-use mockups." },
+    ],
+    challenges: [
+      {
+        title: "Utility Brand Perception",
+        challenge: "The business needed to feel professional without overcomplicating the identity.",
+        solution: "Focused on clarity, visibility, and simpler geometry instead of decorative branding language.",
+      },
+      {
+        title: "Real-world Use",
+        challenge: "The identity needed to survive physical applications and quick recognition.",
+        solution: "Tested the logo against signage, uniforms, and branded operational materials early.",
+      },
+    ],
+    outcome:
+      "Pietyl LPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.",
+    gallery: [
+      { color: "from-sky-500/50 to-blue-500/30", label: "Primary Identity", ratio: "square", note: "Placeholder for core logo and service lockups." },
+      { color: "from-blue-500/40 to-cyan-500/30", label: "Vehicle Mockup", ratio: "wide", note: "Placeholder for transport and field-use branding." },
+      { color: "from-cyan-400/40 to-sky-400/30", label: "Uniform Application", ratio: "tall", note: "Placeholder for apparel and service personnel mockups." },
+    ],
+    nextProjectSlug: "blue-collar-builders",
+  },
+  {
+    slug: "blue-collar-builders",
+    title: "Blue Collar Builders",
+    cat: "Logo & Branding",
+    kind: "branding",
+    tag: "Construction Identity",
+    color: "from-indigo-500/50 to-sky-500/30",
+    desc: "Brand identity for a builders and construction business.",
     role: "Brand Designer",
     tools: ["Illustrator", "Figma"],
     year: "2024",
-    client: "Verdant Co.",
+    client: "Blue Collar Builders",
     overview:
-      "Verdant Mark is a botanical identity exercise built around a custom wordmark, monogram, and packaging studies. The focus was on crafting an identity that felt grounded, fresh, and tactile.",
+      "Blue Collar Builders needed a visual identity that looked durable, professional, and trustworthy across contracts, uniforms, and construction-site branding.",
     goals: [
-      "Design a custom wordmark with a strong sense of character.",
-      "Create a monogram that can scale to small brand touchpoints.",
-      "Test how the identity performs on packaging and signage.",
+      "Create a strong and durable-looking brand mark.",
+      "Support clear recognition across uniforms and equipment.",
+      "Balance professionalism with a more grounded working-class tone.",
     ],
     impact: [
-      { value: "1", label: "Custom wordmark" },
-      { value: "1", label: "Monogram lockup" },
-      { value: "6", label: "Packaging mockups" },
+      { value: "1", label: "Identity system" },
+      { value: "5", label: "Brand mockups" },
+      { value: "3", label: "Logo explorations" },
+    ],
+    focusAreas: [
+      { title: "Brand Overview", text: "Clarified the brand around trust, labor, and dependable construction service." },
+      { title: "Design Direction", text: "Built a more solid and industrial direction with stronger weight and direct visual language." },
+      { title: "Concept Development", text: "Explored builder-related geometry and structural mark ideas before refining the final route." },
+      { title: "Logo Meaning", text: "Used a mark that feels sturdy and practical while remaining easy to reproduce." },
+      { title: "Color Palette", text: "Defined a more grounded, professional palette suited to real-world site applications." },
+      { title: "Brand Applications", text: "Extended the identity into uniforms, equipment, and site-visible branding contexts." },
     ],
     process: [
-      {
-        title: "Research",
-        text: "Collected botanical references and reviewed competitor identities to map visual cliches to avoid.",
-      },
-      {
-        title: "Concept",
-        text: "Sketched a wide range of mark directions before narrowing into the strongest vector candidates.",
-      },
-      {
-        title: "Design",
-        text: "Refined the selected wordmark, created the monogram, and tested the system on physical applications.",
-      },
-      {
-        title: "Deliver",
-        text: "Prepared a brand mini-kit with placeholder applications for packaging, signage, and product labels.",
-      },
+      { title: "Research", text: "Reviewed construction identities and mapped what signals credibility in the category." },
+      { title: "Concept", text: "Created heavier, more structural identity directions suited to construction branding." },
+      { title: "Design", text: "Refined the final mark, palette, and supporting business applications." },
+      { title: "Deliver", text: "Packaged the brand as a practical system with reusable mockup slots." },
     ],
     challenges: [
       {
-        title: "Avoiding Overused Visual Cues",
-        challenge:
-          "Botanical branding often defaults to the same leaf motifs and serif combinations.",
-        solution:
-          "Focused on typographic personality and structure first, then used supporting visuals more selectively.",
+        title: "Strong Without Feeling Generic",
+        challenge: "Construction branding can quickly collapse into predictable icon choices.",
+        solution: "Pushed for more ownable structure and typographic control instead of relying on cliché symbols alone.",
       },
       {
-        title: "Mark Versatility",
-        challenge: "The identity needed to work at both packaging scale and small digital sizes.",
-        solution:
-          "Built a simplified monogram system alongside the fuller wordmark to preserve clarity.",
+        title: "Field Use",
+        challenge: "The brand needed to remain readable in rugged, practical contexts.",
+        solution: "Tested simplified forms and stronger contrast across physical use cases.",
       },
     ],
     outcome:
-      "Verdant Mark became a compact but flexible identity system with enough range to extend into packaging and environmental branding. The mockup gallery below is intentionally placeholder-based for future asset updates.",
+      "The identity now feels more established and durable, with clearer real-world applications across construction-related touchpoints.",
     gallery: [
-      {
-        color: "from-emerald-400/50 to-teal-500/30",
-        label: "Primary Mark",
-        ratio: "square",
-        note: "Placeholder for the main wordmark presentation.",
-      },
-      {
-        color: "from-teal-500/40 to-green-500/30",
-        label: "Packaging",
-        ratio: "tall",
-        note: "Placeholder for label and box mockups.",
-      },
-      {
-        color: "from-green-400/40 to-emerald-500/30",
-        label: "Signage",
-        ratio: "wide",
-        note: "Placeholder for storefront or wayfinding application.",
-      },
+      { color: "from-indigo-500/50 to-sky-500/30", label: "Brand Mark", ratio: "square", note: "Placeholder for primary builder identity and supporting lockups." },
+      { color: "from-sky-500/40 to-slate-500/30", label: "Equipment Branding", ratio: "wide", note: "Placeholder for on-site and vehicle branding." },
+      { color: "from-slate-400/40 to-indigo-500/30", label: "Uniform System", ratio: "tall", note: "Placeholder for apparel and contractor-facing brand use." },
     ],
-    nextProjectSlug: "cafe-lumen-web",
+    nextProjectSlug: "trichomend-plus",
   },
   {
-    slug: "studio-folio-site",
-    title: "Studio Folio Site",
-    cat: "Web Design",
-    tag: "Landing Page",
-    color: "from-cyan-400/50 to-blue-500/30",
-    desc: "Premium landing page for a design studio.",
-    role: "Web Designer",
-    tools: ["Figma", "Framer"],
+    slug: "trichomend-plus",
+    title: "Trichomend+",
+    cat: "Logo & Branding",
+    kind: "branding",
+    tag: "Product Identity",
+    color: "from-emerald-500/50 to-teal-500/30",
+    desc: "Brand identity direction for a treatment-focused product.",
+    role: "Brand Designer",
+    tools: ["Illustrator", "Figma", "Photoshop"],
     year: "2025",
-    client: "Folio Studio",
+    client: "Trichomend+",
     overview:
-      "Studio Folio Site is a premium landing page concept designed to help a studio present work, process, and personality through a more editorial web experience.",
+      "Trichomend+ needed a cleaner and more credible product-facing identity that could feel science-led, professional, and consumer-friendly at the same time.",
     goals: [
-      "Create a narrative-driven landing page with strong visual pacing.",
-      "Design a system that remains responsive without losing its atmosphere.",
-      "Blend web performance goals with a more premium motion language.",
+      "Create a product identity that feels credible and clear.",
+      "Support packaging and digital marketing applications.",
+      "Balance wellness cues with a more science-forward presentation.",
     ],
     impact: [
-      { value: "+64%", label: "Avg. time on page" },
-      { value: "1.0s", label: "LCP target" },
+      { value: "1", label: "Product identity" },
+      { value: "4", label: "Application studies" },
+      { value: "2", label: "Lockup formats" },
+    ],
+    focusAreas: [
+      { title: "Brand Overview", text: "Defined a stronger health-product position built around trust, efficacy, and polish." },
+      { title: "Design Direction", text: "Used a cleaner, more clinical-leaning system balanced with enough softness to stay approachable." },
+      { title: "Concept Development", text: "Explored logotype and symbol routes that would feel product-ready across packaging and campaigns." },
+      { title: "Logo Meaning", text: "Built a mark that communicates progress, care, and treatment structure." },
+      { title: "Color Palette", text: "Chose fresher but controlled tones to support product messaging and shelf clarity." },
+      { title: "Brand Applications", text: "Extended the system into packaging and branded marketing visuals to prove usability." },
+    ],
+    process: [
+      { title: "Research", text: "Reviewed adjacent health and treatment product brands to find the right balance between science and accessibility." },
+      { title: "Concept", text: "Developed typographic and icon-led routes aimed at stronger credibility and cleaner packaging use." },
+      { title: "Design", text: "Refined the final mark, palette, and applications into a concise product identity system." },
+      { title: "Deliver", text: "Prepared presentation-ready placeholders for packaging, promo visuals, and product-facing materials." },
+    ],
+    challenges: [
+      {
+        title: "Science and Warmth",
+        challenge: "The product needed to feel credible without becoming visually cold or overly clinical.",
+        solution: "Built a more controlled system that used cleaner geometry with approachable color and spacing.",
+      },
+      {
+        title: "Packaging Readiness",
+        challenge: "The identity needed to hold up well on packaging and marketing visuals.",
+        solution: "Tested the mark and system against product-oriented layouts early in the process.",
+      },
+    ],
+    outcome:
+      "Trichomend+ now has a more polished product identity direction that can scale into packaging and campaign assets.",
+    gallery: [
+      { color: "from-emerald-500/50 to-teal-500/30", label: "Product Mark", ratio: "square", note: "Placeholder for core product mark and supporting lockups." },
+      { color: "from-teal-500/40 to-cyan-500/30", label: "Packaging Concept", ratio: "tall", note: "Placeholder for bottle, box, or treatment packaging visuals." },
+      { color: "from-green-400/40 to-emerald-500/30", label: "Promo Layout", ratio: "wide", note: "Placeholder for digital campaign or product promo mockups." },
+    ],
+    nextProjectSlug: "adoptify",
+  },
+  {
+    slug: "adoptify",
+    title: "Adoptify",
+    cat: "UI/UX Design",
+    kind: "uiux",
+    tag: "App Design",
+    color: "from-violet-500/50 to-indigo-500/30",
+    desc: "UI/UX concept for an adoption-focused digital platform.",
+    role: "UI/UX Designer",
+    tools: ["Figma", "FigJam", "Notion"],
+    year: "2025",
+    client: "Concept Project",
+    overview:
+      "Adoptify is a product design concept centered on making adoption journeys clearer, friendlier, and easier to trust across mobile and web touchpoints.",
+    goals: [
+      "Design a friendlier adoption experience that feels safe and organized.",
+      "Simplify the path from browsing to inquiry and follow-through.",
+      "Create a reusable interface language for listings, profiles, and communication flows.",
+    ],
+    impact: [
+      { value: "45+", label: "Screens designed" },
+      { value: "5", label: "Core flows" },
+      { value: "1", label: "Reusable system" },
+    ],
+    focusAreas: [
+      { title: "Research", text: "Mapped emotional and practical pain points in adoption journeys to inform tone and interface decisions." },
+      { title: "User Flow", text: "Connected browse, filter, profile review, inquiry, and status-tracking flows into one clearer system." },
+      { title: "Wireframes", text: "Validated the listing and profile structure before introducing polished UI treatments." },
+      { title: "Final UI", text: "Built a softer and more human interface system focused on trust, readability, and supportive pacing." },
+      { title: "Prototype", text: "Linked the critical adoption steps into a realistic experience for review and testing." },
+      { title: "Components", text: "Created reusable cards, status indicators, and messaging patterns for future growth." },
+    ],
+    process: [
+      { title: "Research", text: "Reviewed adoption platform patterns and user frustrations to identify trust gaps and navigation pain points." },
+      { title: "Concept", text: "Built a simpler content hierarchy around listings, eligibility cues, and action steps." },
+      { title: "Design", text: "Developed the end-to-end interface flow, reusable UI patterns, and polished screen designs." },
+      { title: "Deliver", text: "Prepared a structured case study and placeholder gallery areas for future production visuals." },
+    ],
+    challenges: [
+      {
+        title: "Emotional Clarity",
+        challenge: "Adoption platforms need to feel supportive without overwhelming users with dense information.",
+        solution: "Structured content around progressive disclosure and made critical actions more visible and reassuring.",
+      },
+      {
+        title: "Trust in a Digital Flow",
+        challenge: "Users needed clearer signals around process legitimacy and next steps.",
+        solution: "Used profile clarity, status structure, and guided inquiry flows to reduce uncertainty.",
+      },
+    ],
+    outcome:
+      "Adoptify demonstrates a more compassionate and more organized product direction for adoption-centered digital experiences.",
+    gallery: [
+      { color: "from-violet-500/50 to-indigo-500/30", label: "Listing Flow", ratio: "wide", note: "Placeholder for browse, filter, and profile overview screens." },
+      { color: "from-indigo-500/40 to-purple-500/30", label: "Profile Detail", ratio: "square", note: "Placeholder for animal or applicant profile layouts." },
+      { color: "from-purple-500/40 to-pink-500/30", label: "Inquiry Journey", ratio: "square", note: "Placeholder for application and follow-up interface states." },
+    ],
+    nextProjectSlug: "pietyl-management-system",
+  },
+  {
+    slug: "pietyl-management-system",
+    title: "Pietyl Management System",
+    cat: "UI/UX Design",
+    kind: "uiux",
+    tag: "Management System",
+    color: "from-sky-500/50 to-indigo-500/30",
+    desc: "System design for a business management platform.",
+    role: "Product Designer",
+    tools: ["Figma", "FigJam"],
+    year: "2025",
+    client: "Pietyl",
+    overview:
+      "Pietyl Management System is a structured interface system designed to support internal operations, records, workflow management, and monitoring inside a business environment.",
+    goals: [
+      "Organize complex operations into a clearer dashboard experience.",
+      "Make monitoring, records, and workflow tracking easier to manage.",
+      "Build a system that can scale with added modules over time.",
+    ],
+    impact: [
+      { value: "8", label: "Modules planned" },
+      { value: "50+", label: "Interface screens" },
+      { value: "1", label: "System foundation" },
+    ],
+    focusAreas: [
+      { title: "Research", text: "Mapped operational tasks and user roles to decide what information mattered most in the core system view." },
+      { title: "User Flow", text: "Structured movement between dashboard, records, workflows, and monitoring sections." },
+      { title: "Wireframes", text: "Explored low-fidelity structures to reduce complexity before visual refinement." },
+      { title: "Final UI", text: "Created a cleaner management environment with stronger hierarchy and reusable modules." },
+      { title: "Prototype", text: "Connected the core flows to demonstrate navigation logic and task-based transitions." },
+      { title: "Components", text: "Built reusable tables, form patterns, cards, and status modules for scale." },
+    ],
+    process: [
+      { title: "Research", text: "Observed system needs and grouped them into clearer operational categories." },
+      { title: "Concept", text: "Defined a management structure that reduced menu friction and improved task visibility." },
+      { title: "Design", text: "Built dashboards, monitoring views, record systems, and reusable operational UI patterns." },
+      { title: "Deliver", text: "Prepared a modular case study with placeholder screens for future system expansion." },
+    ],
+    challenges: [
+      {
+        title: "Dense Operational Content",
+        challenge: "The system needed to support many functions without becoming visually heavy.",
+        solution: "Used modular grouping and clearer hierarchy to separate tasks and reduce cognitive load.",
+      },
+      {
+        title: "Scalable Structure",
+        challenge: "The system needed to remain flexible as more business modules were added.",
+        solution: "Designed reusable layouts and navigation patterns instead of solving each view separately.",
+      },
+    ],
+    outcome:
+      "The resulting concept gives Pietyl a more scalable management-system direction built around clarity and long-term usability.",
+    gallery: [
+      { color: "from-sky-500/50 to-indigo-500/30", label: "Dashboard", ratio: "wide", note: "Placeholder for overview metrics and key actions." },
+      { color: "from-indigo-500/40 to-blue-500/30", label: "Records Module", ratio: "square", note: "Placeholder for lists, forms, and record-detail screens." },
+      { color: "from-cyan-500/40 to-sky-500/30", label: "Workflow Tracking", ratio: "square", note: "Placeholder for operational status and monitoring views." },
+    ],
+    nextProjectSlug: "dost-laon",
+  },
+  {
+    slug: "dost-laon",
+    title: "DOST Laon",
+    cat: "UI/UX Design",
+    kind: "uiux",
+    tag: "Platform Design",
+    color: "from-blue-500/50 to-cyan-500/30",
+    desc: "UI/UX work for a DOST-centered digital platform concept.",
+    role: "UI/UX Designer",
+    tools: ["Figma", "FigJam", "Miro"],
+    year: "2025",
+    client: "DOST Laon",
+    overview:
+      "DOST Laon focuses on building a more structured and accessible digital experience around information, programs, or public-facing services tied to the DOST context.",
+    goals: [
+      "Improve clarity and usability of service-related information.",
+      "Create a more accessible interface for diverse users.",
+      "Organize content and flows in a more scalable system.",
+    ],
+    impact: [
+      { value: "1", label: "Core platform concept" },
+      { value: "40+", label: "Interface layouts" },
+      { value: "3", label: "Primary user flows" },
+    ],
+    focusAreas: [
+      { title: "Research", text: "Reviewed public-sector information patterns and usability issues around clarity, access, and structure." },
+      { title: "User Flow", text: "Mapped key navigation and service flows to reduce confusion and dead-end states." },
+      { title: "Wireframes", text: "Organized large content structures into clearer low-fidelity page systems." },
+      { title: "Final UI", text: "Built a cleaner and more accessible interface language with stronger hierarchy and structure." },
+      { title: "Prototype", text: "Connected service pages and informational flows to validate user understanding." },
+      { title: "Components", text: "Created reusable interface sections for content blocks, navigation, and service actions." },
+    ],
+    process: [
+      { title: "Research", text: "Analyzed public information flows and user pain points around finding relevant content quickly." },
+      { title: "Concept", text: "Defined a cleaner information architecture focused on better service discoverability." },
+      { title: "Design", text: "Built interface layouts, content structures, and reusable page sections for core flows." },
+      { title: "Deliver", text: "Prepared structured screens and placeholder gallery areas for future refinement." },
+    ],
+    challenges: [
+      {
+        title: "Information Overload",
+        challenge: "Public-facing systems can become dense and difficult to scan.",
+        solution: "Used stronger hierarchy, chunked content, and clearer pathing between sections.",
+      },
+      {
+        title: "Accessibility and Structure",
+        challenge: "The experience needed to support clarity for a broad audience base.",
+        solution: "Focused on readable UI patterns and more predictable information flow.",
+      },
+    ],
+    outcome:
+      "DOST Laon shows a more accessible and more structured direction for an information-heavy digital platform.",
+    gallery: [
+      { color: "from-blue-500/50 to-cyan-500/30", label: "Landing View", ratio: "wide", note: "Placeholder for homepage and access-entry layout." },
+      { color: "from-cyan-500/40 to-sky-500/30", label: "Service Pages", ratio: "square", note: "Placeholder for service and program detail screens." },
+      { color: "from-indigo-500/40 to-cyan-500/30", label: "Navigation System", ratio: "square", note: "Placeholder for menus, page structure, and content modules." },
+    ],
+    nextProjectSlug: "cosmic-remedies-by-sia",
+  },
+  {
+    slug: "cosmic-remedies-by-sia",
+    title: "Cosmic Remedies by Sia",
+    cat: "UI/UX Design",
+    categories: ["Front End Development"],
+    kind: "frontend",
+    tag: "UI + Front End",
+    color: "from-violet-500/50 to-cyan-500/30",
+    desc: "A digital product and front-end experience for Cosmic Remedies by Sia.",
+    role: "UI/UX Designer and Front-End Developer",
+    tools: ["Figma", "React", "Tailwind CSS"],
+    year: "2025",
+    client: "Cosmic Remedies by Sia",
+    overview:
+      "Cosmic Remedies by Sia combines interface direction and front-end implementation for a more immersive digital experience rooted in storytelling, product presentation, and responsive build quality.",
+    goals: [
+      "Design a cohesive digital experience that matches the brand's unique personality.",
+      "Translate the interface into a working responsive front-end build.",
+      "Keep the experience polished across both design and implementation layers.",
+    ],
+    impact: [
+      { value: "1", label: "Design-to-build flow" },
+      { value: "100%", label: "Responsive coverage" },
+      { value: "20+", label: "Implemented sections" },
+    ],
+    focusAreas: [
+      { title: "Layout Strategy", text: "Defined the page rhythm, content structure, and sequencing before development started." },
+      { title: "Page Sections", text: "Built a flexible composition for hero, product, story, and CTA sections." },
+      { title: "Responsive Design", text: "Adjusted spacing, hierarchy, and visual treatment across desktop and mobile breakpoints." },
+      { title: "Animation Ideas", text: "Added controlled motion and transitions to preserve personality without hurting readability." },
+      { title: "Final Screens", text: "Created high-fidelity UI before translating the work into a front-end build." },
+      { title: "Front-End Build", text: "Implemented the interface using reusable components and responsive front-end structure." },
+    ],
+    process: [
+      { title: "Research", text: "Reviewed the brand direction and audience mood to shape both interface and implementation decisions." },
+      { title: "Concept", text: "Defined the visual narrative and translated it into a buildable page system." },
+      { title: "Design", text: "Created the final screens, motion direction, and reusable design patterns." },
+      { title: "Deliver", text: "Implemented the front end with placeholder assets and reusable sections ready for iteration." },
+    ],
+    challenges: [
+      {
+        title: "Design to Development Consistency",
+        challenge: "Maintaining the intended mood while translating the interface into code required careful simplification.",
+        solution: "Used reusable section logic and controlled motion so the build preserved the design language.",
+      },
+      {
+        title: "Atmosphere Across Breakpoints",
+        challenge: "The experience needed to remain expressive on smaller screens without becoming cluttered.",
+        solution: "Restructured sections responsively and simplified visual density for mobile states.",
+      },
+    ],
+    outcome:
+      "Cosmic Remedies by Sia stands as both a UI/UX project and a front-end implementation case, showing continuity from concept to working experience.",
+    gallery: [
+      { color: "from-violet-500/50 to-cyan-500/30", label: "Hero Section", ratio: "wide", note: "Placeholder for landing hero design and implementation state." },
+      { color: "from-cyan-500/40 to-indigo-500/30", label: "Product Layout", ratio: "square", note: "Placeholder for product or content section screens." },
+      { color: "from-indigo-500/40 to-purple-500/30", label: "Responsive Build", ratio: "square", note: "Placeholder for mobile and desktop implementation comparisons." },
+    ],
+    nextProjectSlug: "umunity",
+  },
+  {
+    slug: "umunity",
+    title: "UMunity",
+    cat: "UI/UX Design",
+    kind: "uiux",
+    tag: "School Org UX System",
+    color: "from-cyan-500/50 to-blue-500/30",
+    desc: "A school organization management system designed for clearer student workflows and easier coordination.",
+    role: "UI/UX Designer",
+    tools: ["Figma", "Miro", "Notion"],
+    year: "2025",
+    client: "UMunity",
+    overview:
+      "UMunity is a school organization management system focused on events, communication, records, and coordination. This case study centers on the UX structure, interface logic, and product flow for student members and organization officers.",
+    goals: [
+      "Simplify school organization workflows for members and officers.",
+      "Create a system that feels organized and easy to navigate.",
+      "Design a dashboard and module system that supports faster task completion.",
+    ],
+    impact: [
+      { value: "6", label: "Core modules" },
+      { value: "30+", label: "UI screens" },
+      { value: "3", label: "Main user flows" },
+    ],
+    focusAreas: [
+      { title: "Research", text: "Mapped common student-organization pain points around announcements, records, and task coordination." },
+      { title: "User Flow", text: "Connected login, dashboard, event, records, and communication flows into one structured system." },
+      { title: "Wireframes", text: "Used early structural layouts to align modules before moving into polished UI and code." },
+      { title: "Final UI", text: "Created a more organized dashboard environment for student and officer tasks." },
+      { title: "Prototype", text: "Defined clearer transitions between dashboard, events, announcements, and records states." },
+      { title: "Components", text: "Built repeatable panels, cards, tables, and navigation modules to support future scale." },
+    ],
+    process: [
+      { title: "Research", text: "Observed school organization workflows and identified repeated friction in coordination tasks." },
+      { title: "Concept", text: "Defined a system structure that made officer and member actions easier to find and complete." },
+      { title: "Design", text: "Built the dashboard, module layouts, and reusable interface system." },
+      { title: "Deliver", text: "Prepared the case study and interface system for future implementation and testing." },
+    ],
+    challenges: [
+      {
+        title: "Multi-role Complexity",
+        challenge: "The system had to support both student members and organization officers with different needs.",
+        solution: "Built a clearer dashboard and module structure with more readable role-oriented actions.",
+      },
+      {
+        title: "Information Density",
+        challenge: "Announcements, records, and event tools could quickly become overwhelming in one dashboard.",
+        solution: "Grouped actions into clearer modules and used stronger visual hierarchy to reduce scanning effort.",
+      },
+    ],
+    outcome:
+      "UMunity shows a clearer UX direction for a school organization system, with structured flows and a more manageable dashboard experience for student-led operations.",
+    gallery: [
+      { color: "from-cyan-500/50 to-blue-500/30", label: "Dashboard", ratio: "wide", note: "Placeholder for main dashboard and overview state." },
+      { color: "from-blue-500/40 to-indigo-500/30", label: "Module Screens", ratio: "square", note: "Placeholder for records, events, or announcement modules." },
+      { color: "from-indigo-500/40 to-cyan-500/30", label: "Wireframes and Flow", ratio: "square", note: "Placeholder for wireframes, navigation map, and core UX paths." },
+    ],
+    nextProjectSlug: "umunity-school-org-management-system",
+  },
+  {
+    slug: "umunity-school-org-management-system",
+    title: "UMunity School Org Management System",
+    cat: "Front End Development",
+    kind: "frontend",
+    tag: "Front-End System Build",
+    color: "from-blue-500/50 to-cyan-500/30",
+    desc: "A responsive front-end implementation for the UMunity school organization management system.",
+    role: "Front-End Developer",
+    tools: ["React", "Tailwind CSS", "TypeScript", "Figma"],
+    year: "2025",
+    client: "UMunity",
+    overview:
+      "This case study focuses on translating the UMunity product design into a working front-end system with reusable components, responsive layouts, and clearer student-facing interactions.",
+    goals: [
+      "Turn the designed interface into a working front-end experience.",
+      "Keep the dashboard and modules responsive across devices.",
+      "Build reusable UI patterns that support future iteration.",
+    ],
+    impact: [
+      { value: "1", label: "Working build" },
+      { value: "50+", label: "Implemented states" },
       { value: "100%", label: "Responsive coverage" },
     ],
+    focusAreas: [
+      { title: "Layout Strategy", text: "Mapped the dashboard, module pages, and action areas into reusable layout patterns." },
+      { title: "Page Sections", text: "Implemented distinct views for announcements, events, records, and overview modules." },
+      { title: "Responsive Design", text: "Adjusted navigation, spacing, and card density to preserve usability on smaller screens." },
+      { title: "Animation Ideas", text: "Used controlled transitions and hover states to make the interface feel more polished without adding noise." },
+      { title: "Final Screens", text: "Aligned the built interface closely with the design while keeping the implementation maintainable." },
+      { title: "Front-End Build", text: "Created reusable components and responsive screen logic to support a scalable student system." },
+    ],
     process: [
-      {
-        title: "Research",
-        text: "Reviewed best-in-class studio sites to identify pacing, hierarchy, and storytelling patterns worth adapting.",
-      },
-      {
-        title: "Concept",
-        text: "Created a multi-section narrative with five distinct visual moments to carry users through the site.",
-      },
-      {
-        title: "Design",
-        text: "Built high-fidelity layouts and motion cues for hero sections, portfolio reveals, and calls to action.",
-      },
-      {
-        title: "Deliver",
-        text: "Documented responsive behavior and created placeholder website mockup zones that can later hold final screens.",
-      },
+      { title: "Plan", text: "Reviewed the approved UI and broke the system into reusable layouts, cards, and navigation patterns." },
+      { title: "Structure", text: "Built the dashboard shell, module views, and page relationships before refining detail states." },
+      { title: "Implement", text: "Translated the visual system into code with consistent spacing, components, and interaction states." },
+      { title: "Refine", text: "Adjusted responsiveness and component behavior to keep the system usable across breakpoints." },
     ],
     challenges: [
       {
-        title: "Balancing Atmosphere and Clarity",
-        challenge: "A cinematic landing page can easily sacrifice usability for style.",
-        solution:
-          "Maintained strong type hierarchy and predictable navigation anchors beneath the expressive visuals.",
+        title: "Complex Module Coverage",
+        challenge: "The system included multiple page types and student tasks that could become inconsistent during implementation.",
+        solution: "Relied on repeatable layout patterns and reusable UI pieces instead of one-off page structures.",
       },
       {
-        title: "Responsive Storytelling",
-        challenge: "Large hero moments needed to remain effective on smaller screens.",
-        solution:
-          "Designed content blocks that could stack cleanly while preserving the rhythm of the scroll narrative.",
+        title: "Responsive Density",
+        challenge: "Dashboards can become cramped quickly on tablet and mobile widths.",
+        solution: "Reduced density, reflowed content blocks, and simplified action grouping at smaller breakpoints.",
       },
     ],
     outcome:
-      "The final concept shows how a studio landing page can feel immersive without losing structure. The gallery includes placeholders for hero, content sections, and footer mockups.",
+      "The front-end build gives UMunity a more complete and scalable implementation layer, preserving the product direction while making the system usable in code.",
     gallery: [
-      {
-        color: "from-cyan-400/50 to-blue-500/30",
-        label: "Hero",
-        ratio: "wide",
-        note: "Placeholder for landing hero, navigation, and headline system.",
-      },
-      {
-        color: "from-blue-500/40 to-indigo-500/30",
-        label: "Section A",
-        ratio: "square",
-        note: "Placeholder for studio story and featured-work block.",
-      },
-      {
-        color: "from-sky-400/40 to-cyan-500/30",
-        label: "Section B",
-        ratio: "square",
-        note: "Placeholder for service or case study teaser section.",
-      },
-      {
-        color: "from-blue-400/40 to-violet-500/30",
-        label: "Footer",
-        ratio: "wide",
-        note: "Placeholder for CTA and final navigation footer.",
-      },
+      { color: "from-blue-500/50 to-cyan-500/30", label: "Built Dashboard", ratio: "wide", note: "Placeholder for the implemented dashboard and summary modules." },
+      { color: "from-cyan-500/40 to-sky-500/30", label: "Responsive Screens", ratio: "square", note: "Placeholder for mobile and desktop front-end comparisons." },
+      { color: "from-indigo-500/40 to-blue-500/30", label: "Component Set", ratio: "square", note: "Placeholder for tables, cards, forms, and navigation patterns in code." },
     ],
-    nextProjectSlug: "va-toolkit",
+    nextProjectSlug: "umsdc-publication-materials-and-assets",
   },
   {
-    slug: "cafe-lumen-web",
-    title: "Cafe Lumen Web",
-    cat: "Web Design",
-    tag: "Web UI",
-    color: "from-rose-400/50 to-amber-400/30",
-    desc: "Marketing site for a specialty cafe.",
-    role: "Web Designer",
-    tools: ["Figma", "Webflow"],
+    slug: "umsdc-publication-materials-and-assets",
+    title: "UMSDC Publication Materials and Assets",
+    cat: "Publication",
+    kind: "publication",
+    tag: "Org Publication System",
+    color: "from-pink-500/50 to-orange-400/30",
+    desc: "Publication materials and visual assets for UMSDC.",
+    role: "Publication Designer",
+    tools: ["Figma", "Photoshop", "Canva"],
     year: "2024",
-    client: "Cafe Lumen",
+    client: "UMSDC",
     overview:
-      "Cafe Lumen Web is a marketing site concept designed around warmth, editorial storytelling, and a more tactile presentation of menu and location content.",
+      "UMSDC Publication Materials and Assets gathers social posts, organization graphics, event visuals, and campaign-ready publication outputs under one reusable visual system.",
     goals: [
-      "Translate the cafe's in-person atmosphere into a digital experience.",
-      "Make menu and location details easier to find.",
-      "Support future content updates through a CMS-ready structure.",
+      "Support organization communication with clear and cohesive publication materials.",
+      "Create reusable assets for recurring announcements and campaigns.",
+      "Keep the materials flexible enough for fast student-organization workflows.",
     ],
     impact: [
-      { value: "12", label: "Page templates" },
-      { value: "1", label: "CMS-ready menu" },
-      { value: "+28%", label: "Reservation clicks" },
+      { value: "15+", label: "Assets produced" },
+      { value: "1", label: "Visual system" },
+      { value: "5", label: "Recurring formats" },
+    ],
+    focusAreas: [
+      { title: "Campaign Goal", text: "Defined how the publication assets should support visibility, announcement clarity, and event participation." },
+      { title: "Visual Direction", text: "Built a graphic language that could work across org posts, event graphics, and digital campaigns." },
+      { title: "Typography", text: "Used headline-led hierarchy to improve quick reading and visual consistency." },
+      { title: "Layout System", text: "Prepared repeatable templates for announcements, recaps, and static campaign assets." },
+      { title: "Final Pubmats", text: "Delivered a stronger and more reusable publication system for organization use." },
     ],
     process: [
-      {
-        title: "Research",
-        text: "Visited the cafe and gathered references from both the space and its regular customers.",
-      },
-      {
-        title: "Concept",
-        text: "Shaped a warmer editorial direction with imagery, softer serif accents, and storytelling-led sections.",
-      },
-      {
-        title: "Design",
-        text: "Built responsive page templates for home, menu, location, and supporting brand storytelling sections.",
-      },
-      {
-        title: "Deliver",
-        text: "Defined CMS placeholders and reusable page mockups so the site can expand with future campaigns.",
-      },
+      { title: "Research", text: "Reviewed the organization's communication needs and previous asset inconsistencies." },
+      { title: "Concept", text: "Defined a more flexible visual direction that could scale across multiple post formats." },
+      { title: "Design", text: "Created reusable publication assets, event graphics, and announcement compositions." },
+      { title: "Deliver", text: "Packaged the system with placeholder examples for future org campaigns and updates." },
     ],
     challenges: [
       {
-        title: "Atmosphere Online",
-        challenge:
-          "The cafe's strongest qualities were sensory and spatial, which are difficult to express on a flat screen.",
-        solution:
-          "Used imagery, pacing, and editorial sections to make the site feel more immersive and memorable.",
+        title: "Fast Content Turnaround",
+        challenge: "Student organization timelines often required quick asset creation with limited revision windows.",
+        solution: "Built more reusable structures so new outputs could be produced faster without losing consistency.",
       },
       {
-        title: "Practical Information Flow",
-        challenge:
-          "Marketing pages still needed to support functional tasks like finding the menu or a branch location quickly.",
-        solution:
-          "Kept key actions visible and used content grouping to balance storytelling with direct utility.",
+        title: "Cross-format Consistency",
+        challenge: "The materials needed to remain cohesive across posts, story sizes, and campaign assets.",
+        solution: "Used a defined visual system and recurring type behavior across all formats.",
       },
     ],
     outcome:
-      "Cafe Lumen Web establishes a warmer digital identity while keeping practical content accessible. The gallery below contains placeholders for homepage, menu, and location screens.",
+      "UMSDC now has a cleaner, more reusable publication system for organization materials and digital assets.",
     gallery: [
-      {
-        color: "from-rose-400/50 to-amber-400/30",
-        label: "Home",
-        ratio: "wide",
-        note: "Placeholder for homepage hero and brand storytelling sections.",
-      },
-      {
-        color: "from-amber-400/40 to-orange-500/30",
-        label: "Menu",
-        ratio: "tall",
-        note: "Placeholder for menu listing and category navigation.",
-      },
-      {
-        color: "from-rose-300/40 to-pink-400/30",
-        label: "Locations",
-        ratio: "square",
-        note: "Placeholder for branch finder and map module.",
-      },
+      { color: "from-pink-500/50 to-orange-400/30", label: "Announcement Asset", ratio: "tall", note: "Placeholder for publication post and key announcement layout." },
+      { color: "from-rose-500/40 to-pink-500/30", label: "Campaign Set", ratio: "wide", note: "Placeholder for event or campaign visual system." },
+      { color: "from-orange-400/40 to-amber-400/30", label: "Org Graphics", ratio: "wide", note: "Placeholder for recurring organization assets and social support materials." },
     ],
-    nextProjectSlug: "nimbus-wireframes",
+    nextProjectSlug: "eat-well-live-well-nutrition-ebook",
   },
   {
-    slug: "voice-and-captions",
-    title: "Voice & Captions",
+    slug: "eat-well-live-well-nutrition-ebook",
+    title: "Eat Well, Live Well Nutrition eBook Writing and Cover Design",
     cat: "Writing / VA",
-    tag: "Content Writing",
-    color: "from-purple-500/50 to-indigo-500/30",
-    desc: "Captions and blog content for creators.",
-    role: "Content Writer",
-    tools: ["Notion", "Grammarly"],
+    kind: "writing",
+    tag: "eBook Writing",
+    color: "from-emerald-400/50 to-lime-500/30",
+    desc: "Writing and cover design for a nutrition-focused eBook.",
+    role: "Content Writer and Layout Designer",
+    tools: ["Google Docs", "Canva", "Figma"],
     year: "2024",
-    client: "Indie Founder",
+    client: "Nutrition eBook Project",
     overview:
-      "Voice & Captions focuses on messaging systems for an indie founder building in public. The project blends tone-of-voice strategy with a repeatable workflow for blog and social content.",
+      "This project combined eBook writing and cover design for a wellness-focused digital publication centered on nutrition, healthier habits, and accessible educational content.",
     goals: [
-      "Define a consistent writing voice across platforms.",
-      "Make content production easier to sustain week after week.",
-      "Support both long-form and short-form writing with one system.",
+      "Write content that feels useful, clear, and approachable for readers.",
+      "Create a cover design that supports the topic with stronger visual appeal.",
+      "Organize the eBook into a readable and well-paced format.",
     ],
     impact: [
-      { value: "12", label: "Blog drafts" },
-      { value: "60+", label: "Captions written" },
-      { value: "1", label: "Voice guide" },
+      { value: "1", label: "Completed eBook" },
+      { value: "1", label: "Cover design" },
+      { value: "8+", label: "Structured sections" },
+    ],
+    focusAreas: [
+      { title: "Task Overview", text: "Combined educational writing with a simple but polished publication cover direction." },
+      { title: "Workflow", text: "Planned the chapter structure, key topics, drafting sequence, and cover-design process together." },
+      { title: "Content Samples", text: "Developed clear sections, summaries, and practical nutrition guidance for readers." },
+      { title: "Organization Process", text: "Structured the content to keep the eBook readable and balanced from start to finish." },
+      { title: "Final Deliverables", text: "Delivered both the written content and a supporting cover design as one complete package." },
     ],
     process: [
-      {
-        title: "Research",
-        text: "Audited existing writing, comments, and audience responses to identify what language patterns felt most authentic.",
-      },
-      {
-        title: "Concept",
-        text: "Defined a tone framework and repeatable caption formula that could scale across different kinds of posts.",
-      },
-      {
-        title: "Design",
-        text: "Drafted blog structures, social caption systems, and reusable writing prompts for ongoing use.",
-      },
-      {
-        title: "Deliver",
-        text: "Organized everything into a shared content hub with placeholders for future campaign content and article expansions.",
-      },
+      { title: "Research", text: "Reviewed reliable nutrition references and benchmarked how similar eBooks structure educational content." },
+      { title: "Concept", text: "Mapped the writing flow, section order, and visual tone of the cover before production." },
+      { title: "Design", text: "Drafted the content and created the eBook cover with a clearer reader-facing presentation." },
+      { title: "Deliver", text: "Organized the work into a polished eBook structure with placeholder visuals for internal pages and cover use." },
     ],
     challenges: [
       {
-        title: "Consistency Across Formats",
-        challenge: "The founder's blog voice and social voice were drifting apart over time.",
-        solution:
-          "Defined tone pillars and example phrasing so both long and short content stayed aligned.",
+        title: "Educational Clarity",
+        challenge: "The information needed to stay accurate while still being approachable and easy to read.",
+        solution: "Used simpler phrasing, tighter section flow, and more practical organization throughout the writing.",
       },
       {
-        title: "Sustainable Production",
-        challenge:
-          "Content creation slowed whenever the workflow depended on starting from a blank page.",
-        solution: "Built templates and prompts that reduced friction while preserving personality.",
+        title: "Writing and Design Alignment",
+        challenge: "The cover needed to feel connected to the tone of the written content.",
+        solution: "Treated the visual direction as part of the same communication system rather than a separate task.",
       },
     ],
     outcome:
-      "The final system made content creation more repeatable and helped the founder sound more consistent across channels. Gallery slots below act as placeholders for guide pages, sample captions, and blog layouts.",
+      "The final output delivered a clearer educational eBook experience with both content and cover design working together cohesively.",
     gallery: [
-      {
-        color: "from-purple-500/50 to-indigo-500/30",
-        label: "Voice Guide",
-        ratio: "wide",
-        note: "Placeholder for tone pillars, sample phrasing, and content rules.",
-      },
-      {
-        color: "from-indigo-500/40 to-blue-500/30",
-        label: "Captions",
-        ratio: "square",
-        note: "Placeholder for sample caption sets and content themes.",
-      },
-      {
-        color: "from-violet-500/40 to-fuchsia-500/30",
-        label: "Blog Drafts",
-        ratio: "square",
-        note: "Placeholder for article structure and draft excerpts.",
-      },
+      { color: "from-emerald-400/50 to-lime-500/30", label: "Cover Design", ratio: "tall", note: "Placeholder for the final eBook cover design." },
+      { color: "from-lime-400/40 to-green-500/30", label: "Chapter Layout", ratio: "wide", note: "Placeholder for internal content and chapter structure." },
+      { color: "from-green-400/40 to-emerald-500/30", label: "Content Sample", ratio: "wide", note: "Placeholder for writing samples or page spreads." },
     ],
-    nextProjectSlug: "verdant-mark",
+    nextProjectSlug: "thriving-mind-mental-wellness-ebook",
   },
   {
-    slug: "va-toolkit",
-    title: "VA Toolkit",
+    slug: "thriving-mind-mental-wellness-ebook",
+    title: "Thriving Mind Mental Wellness eBook Writing and Cover Design",
     cat: "Writing / VA",
-    tag: "Client Support",
-    color: "from-slate-500/40 to-violet-500/30",
-    desc: "File systems and client support workflows.",
-    role: "Virtual Assistant",
-    tools: ["Notion", "Google Workspace"],
+    kind: "writing",
+    tag: "eBook Writing",
+    color: "from-violet-500/50 to-pink-500/30",
+    desc: "Writing and cover design for a mental wellness eBook.",
+    role: "Content Writer and Layout Designer",
+    tools: ["Google Docs", "Canva", "Figma"],
     year: "2024",
-    client: "Small Studio",
+    client: "Mental Wellness eBook Project",
     overview:
-      "VA Toolkit is an operations-focused project centered on clearer file systems, faster onboarding, and easier day-to-day client support. The work is documented here using the same reusable case study structure as the visual projects.",
+      "Thriving Mind is a mental wellness eBook project that combined written educational content and cover design into one calm, reader-friendly digital publication.",
     goals: [
-      "Reduce time wasted on file lookup and inconsistent naming.",
-      "Create a more durable onboarding system for new collaborators.",
-      "Turn scattered operational habits into reusable workflows.",
+      "Write clearer and more supportive content around mental wellness topics.",
+      "Create a cover design that feels calm, professional, and accessible.",
+      "Organize the eBook into a structure that supports sustained reading.",
     ],
     impact: [
-      { value: "-50%", label: "File lookup time" },
-      { value: "1", label: "Onboarding doc" },
-      { value: "5", label: "Templates shipped" },
+      { value: "1", label: "Completed eBook" },
+      { value: "1", label: "Cover design" },
+      { value: "7+", label: "Key sections" },
+    ],
+    focusAreas: [
+      { title: "Task Overview", text: "Combined writing and cover design around a more supportive and accessible mental wellness resource." },
+      { title: "Workflow", text: "Planned the topics, section order, writing tone, and visual identity as one unified process." },
+      { title: "Content Samples", text: "Prepared reader-friendly sections designed to feel clear, calm, and useful." },
+      { title: "Organization Process", text: "Structured the eBook for better pacing, readability, and consistent tone." },
+      { title: "Final Deliverables", text: "Delivered the completed written content and an aligned eBook cover design." },
     ],
     process: [
-      {
-        title: "Research",
-        text: "Mapped the studio's current operations and identified repeated friction around files, tasks, and handoffs.",
-      },
-      {
-        title: "Concept",
-        text: "Designed a single source of truth that combined structure, naming conventions, and reusable support templates.",
-      },
-      {
-        title: "Design",
-        text: "Built Notion templates, file organization rules, and simple documentation that the team could actually maintain.",
-      },
-      {
-        title: "Deliver",
-        text: "Rolled out the toolkit with placeholder workflow visuals that can later be replaced with real dashboards and docs.",
-      },
+      { title: "Research", text: "Reviewed mental wellness content approaches and organized the material into more supportive sections." },
+      { title: "Concept", text: "Defined tone, pacing, and visual direction before final drafting and cover design work." },
+      { title: "Design", text: "Wrote the content and created the supporting eBook cover as one communication package." },
+      { title: "Deliver", text: "Prepared the final structure with placeholder visuals for cover and interior content previews." },
     ],
     challenges: [
       {
-        title: "Scattered Operational Knowledge",
-        challenge: "Too much of the workflow lived in memory or disconnected files.",
-        solution:
-          "Centralized documentation and built templates that reduced dependence on ad hoc knowledge transfer.",
+        title: "Tone Sensitivity",
+        challenge: "Mental wellness content needs care in both wording and presentation.",
+        solution: "Used calmer language, gentler pacing, and more measured visual direction throughout the project.",
       },
       {
-        title: "Team Adoption",
-        challenge: "Even a cleaner system can fail if it asks the team to change too much at once.",
-        solution:
-          "Kept the toolkit lightweight, familiar, and directly tied to the team's existing tasks.",
+        title: "Maintaining Reader Flow",
+        challenge: "Longer educational content can lose attention if the structure is too dense.",
+        solution: "Broke ideas into clearer sections and supported the reading experience with cleaner formatting logic.",
       },
     ],
     outcome:
-      "VA Toolkit created a more consistent support foundation for the studio and showed that operational projects can live inside the same reusable case study format. The gallery placeholders can later be replaced with workflow screenshots and onboarding visuals.",
+      "Thriving Mind became a more cohesive eBook project where tone, structure, and design all support the same calm reading experience.",
     gallery: [
-      {
-        color: "from-slate-500/40 to-violet-500/30",
-        label: "Notion Hub",
-        ratio: "wide",
-        note: "Placeholder for central dashboard and operating home.",
-      },
-      {
-        color: "from-violet-400/40 to-purple-500/30",
-        label: "Templates",
-        ratio: "square",
-        note: "Placeholder for request, tracking, and checklist templates.",
-      },
-      {
-        color: "from-slate-400/40 to-blue-500/30",
-        label: "Onboarding",
-        ratio: "square",
-        note: "Placeholder for onboarding guide and process documents.",
-      },
+      { color: "from-violet-500/50 to-pink-500/30", label: "Cover Design", ratio: "tall", note: "Placeholder for the final mental wellness eBook cover." },
+      { color: "from-pink-500/40 to-purple-500/30", label: "Interior Structure", ratio: "wide", note: "Placeholder for section layouts and chapter organization." },
+      { color: "from-indigo-500/40 to-violet-500/30", label: "Writing Sample", ratio: "wide", note: "Placeholder for sample pages and content excerpts." },
     ],
-    nextProjectSlug: "voice-and-captions",
+    nextProjectSlug: "odara-management-group",
   },
 ];
 
 export const getProject = (slug: string) => projects.find((project) => project.slug === slug);
+
+export const matchesProjectCategory = (
+  project: Project,
+  category: "All" | ProjectCategory,
+) => {
+  if (category === "All") return true;
+  return project.cat === category || project.categories?.includes(category) === true;
+};
+
+export const getProjectsByCategory = (category: "All" | ProjectCategory) =>
+  projects.filter((project) => matchesProjectCategory(project, category));
 
 export const getNextProject = (slug: string) => {
   const current = getProject(slug);

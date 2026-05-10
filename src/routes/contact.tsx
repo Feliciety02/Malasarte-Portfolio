@@ -1,15 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
-import {
-  CheckCircle2,
-  Dribbble,
-  Instagram,
-  Linkedin,
-  Mail,
-  Send,
-} from "lucide-react";
+import { CheckCircle2, Mail, Send } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { socialLinks } from "@/data/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -31,6 +25,9 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const emailLink = socialLinks.find((link) => link.href.startsWith("mailto:"));
+  const socialProfiles = socialLinks.filter((link) => !link.href.startsWith("mailto:"));
+  const emailAddress = emailLink?.href.replace("mailto:", "") ?? "hello@feanne.design";
 
   return (
     <div className="relative overflow-hidden px-6 pb-16 md:pb-20">
@@ -48,7 +45,7 @@ function Contact() {
             Let&apos;s create something <span className="text-gradient">meaningful</span> together.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-sm text-muted-foreground md:text-base">
-            Have a project, idea, or collaboration in mind? Drop a note - I read every message.
+            Have a project, idea, or collaboration in mind? Drop a note and I&apos;ll read it carefully.
           </p>
         </Reveal>
 
@@ -64,21 +61,26 @@ function Contact() {
               className="space-y-5 rounded-3xl glass-strong p-6 md:p-10"
             >
               <div className="grid gap-5 md:grid-cols-2">
-                <Field label="Your name" name="name" placeholder="Jane Doe" required />
+                <Field label="Your name" name="name" placeholder="Jane Doe" autoComplete="name" required />
                 <Field
                   label="Email"
                   name="email"
                   type="email"
                   placeholder="jane@studio.com"
+                  autoComplete="email"
                   required
                 />
               </div>
-              <Field label="Subject" name="subject" placeholder="Brand identity for..." />
+              <Field label="Subject" name="subject" placeholder="Brand identity for..." autoComplete="off" />
               <div>
-                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                <label
+                  htmlFor="message"
+                  className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
+                >
                   Message
                 </label>
                 <textarea
+                  id="message"
                   name="message"
                   required
                   rows={6}
@@ -108,7 +110,7 @@ function Contact() {
           <Reveal delay={0.2} className="md:col-span-2">
             <div className="space-y-4">
               <a
-                href="mailto:hello@feanne.design"
+                href={emailLink?.href ?? "mailto:hello@feanne.design"}
                 className="group flex items-start gap-4 rounded-3xl glass p-6 hover-lift"
               >
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
@@ -119,7 +121,7 @@ function Contact() {
                     Email
                   </div>
                   <div className="mt-0.5 font-display text-lg font-semibold">
-                    hello@feanne.design
+                    {emailAddress}
                   </div>
                 </div>
               </a>
@@ -129,11 +131,7 @@ function Contact() {
                   Find me on
                 </div>
                 <div className="mt-4 flex gap-3">
-                  {[
-                    { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-                    { Icon: Dribbble, href: "https://dribbble.com", label: "Dribbble" },
-                    { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-                  ].map(({ Icon, href, label }) => (
+                  {socialProfiles.map(({ icon: Icon, href, label }) => (
                     <a
                       key={label}
                       href={href}
@@ -173,12 +171,14 @@ function Field({
   name,
   type = "text",
   placeholder,
+  autoComplete,
   required,
 }: {
   label: string;
   name: string;
   type?: string;
   placeholder?: string;
+  autoComplete?: string;
   required?: boolean;
 }) {
   return (
@@ -195,6 +195,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
+        autoComplete={autoComplete}
         className="mt-2 w-full rounded-2xl border border-border bg-background/40 px-4 py-3 text-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
       />
     </div>
