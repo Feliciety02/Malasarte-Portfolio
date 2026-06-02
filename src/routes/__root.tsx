@@ -3,7 +3,7 @@ import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { CustomCursor } from "@/components/site/CustomCursor";
-import { WebGLBackground } from "@/components/site/WebGLBackground";
+// WebGL background removed in favour of a clean monochrome canvas.
 
 function NotFoundComponent() {
   return (
@@ -59,7 +59,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap",
       },
     ],
   }),
@@ -85,7 +85,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <>
-      <WebGLBackground />
       <CustomCursor />
       <Nav />
       <main className="min-h-[calc(100svh-6rem)] pt-24">
