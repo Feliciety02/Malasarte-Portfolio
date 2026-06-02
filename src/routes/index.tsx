@@ -5,9 +5,7 @@ import {
   useMotionTemplate,
   useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
-  useTransform,
 } from "motion/react";
 import { useEffect, useRef } from "react";
 import { ArrowRight, Quote, Star } from "lucide-react";
@@ -16,7 +14,6 @@ import { GalacticGrid } from "@/components/site/GalacticGrid";
 import { GlassDome } from "@/components/site/GlassDome";
 import { LinkButton } from "@/components/site/LinkButton";
 import { ProjectCard } from "@/components/site/ProjectCard";
-import { Hero3DCanvas } from "@/components/site/Hero3DCanvas";
 import { Reveal } from "@/components/site/Reveal";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -50,43 +47,26 @@ const featured = featuredSlugs
   .filter((project): project is NonNullable<typeof project> => !!project);
 
 function Home() {
-  const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  // Track scroll across the full 220vh sticky wrapper (pin range = 120vh)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -140]);
-  const y2 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 180]);
-  const opacity = useTransform(scrollYProgress, [0, 0.65], prefersReducedMotion ? [1, 1] : [1, 0]);
 
   return (
     <div className="overflow-x-hidden">
-      {/* 220vh wrapper — inner section pins for 120vh of scroll */}
-      <div ref={ref} style={{ height: "220vh" }}>
-        <section className="sticky top-0 h-screen overflow-hidden relative">
-          {/* 3D canvas — transparent, WebGL shader background shows through */}
-          <Hero3DCanvas wrapperRef={ref} />
-
-          <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-40" />
-
-          {/* Hero content — fades + lifts as user scrolls */}
-          <motion.div
-            style={{ y: y1, opacity }}
-            className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center"
-          >
+      <section className="relative overflow-hidden px-6 pt-20 pb-28 md:pt-28 md:pb-36">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-muted-foreground"
+              className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-4 py-1.5 text-xs font-medium text-muted-foreground"
             >
-              <Star size={14} className="fill-primary text-primary" />
+              <Star size={12} className="fill-foreground text-foreground" />
               Available for select projects · 2026
             </motion.div>
 
-            <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
+            <h1 className="mt-8 font-display text-5xl font-light leading-[1.02] tracking-[-0.03em] md:text-7xl lg:text-[6.5rem]">
               <SplitText text="Creative Designer" />
               <br />
-              <span className="text-gradient">
+              <span className="italic font-extralight text-muted-foreground">
                 <SplitText text="& UI/UX Storyteller" delay={0.4} />
               </span>
             </h1>
@@ -95,9 +75,9 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.9 }}
-              className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
+              className="mt-8 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
             >
-              I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a multidisciplinary designer
+              I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> — a multidisciplinary designer
               blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
               magical.
             </motion.p>
@@ -106,7 +86,7 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.1 }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-4"
+              className="mt-10 flex flex-wrap items-center justify-center gap-3"
             >
               <LinkButton to="/works">
                 View Portfolio
@@ -121,29 +101,14 @@ function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6, duration: 1 }}
-              className="mt-12 flex items-center gap-2 text-xs text-muted-foreground"
+              className="mt-16 flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground"
             >
               <span className="h-px w-10 bg-border" />
               Scroll to explore
               <span className="h-px w-10 bg-border" />
             </motion.div>
-          </motion.div>
-
-          {/* Floating glass decorations */}
-          <motion.div
-            aria-hidden style={{ y: y2 }}
-            className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block"
-          />
-          <motion.div
-            aria-hidden style={{ y: y1 }}
-            className="absolute right-12 top-40 hidden h-14 w-14 rotate-12 rounded-2xl bg-gradient-hero shadow-glow md:block"
-          />
-          <motion.div
-            aria-hidden style={{ y: y2 }}
-            className="absolute bottom-20 right-1/4 hidden h-10 w-10 rounded-full bg-accent/40 blur-xl md:block"
-          />
-        </section>
-      </div>
+        </div>
+      </section>
 
       <section className="relative overflow-hidden border-y border-border/50 py-6">
         <Marquee items={marqueeItems} reducedMotion={!!prefersReducedMotion} />
