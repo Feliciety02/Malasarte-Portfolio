@@ -121,6 +121,22 @@
     background: linear-gradient(oklch(0.65 0.25 295), oklch(0.7 0.2 240));
     border-radius: 10px;
   }
+
+  /* Thin horizontal scrollbar for contribution grid */
+  .scrollbar-contrib {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.65 0.25 295 / 45%) transparent;
+  }
+  .scrollbar-contrib::-webkit-scrollbar {
+    height: 3px;
+  }
+  .scrollbar-contrib::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-contrib::-webkit-scrollbar-thumb {
+    background: oklch(0.65 0.25 295 / 45%);
+    border-radius: 10px;
+  }
 }
 
 @layer utilities {

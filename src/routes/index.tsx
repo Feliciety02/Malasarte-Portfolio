@@ -16,7 +16,9 @@ import { GalacticGrid } from "@/components/site/GalacticGrid";
 import { GlassDome } from "@/components/site/GlassDome";
 import { LinkButton } from "@/components/site/LinkButton";
 import { ProjectCard } from "@/components/site/ProjectCard";
-import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { Hero3DCanvas } from "@/components/site/Hero3DCanvas";
+import { Reveal } from "@/components/site/Reveal";
+import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { SkillHighlightCard } from "@/components/site/SkillHighlightCard";
@@ -50,86 +52,98 @@ const featured = featuredSlugs
 function Home() {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -120]);
-  const y2 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], prefersReducedMotion ? [1, 1] : [1, 0]);
+  // Track scroll across the full 220vh sticky wrapper (pin range = 120vh)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const y1 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -140]);
+  const y2 = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 180]);
+  const opacity = useTransform(scrollYProgress, [0, 0.65], prefersReducedMotion ? [1, 1] : [1, 0]);
 
   return (
     <div className="overflow-x-hidden">
-      <section ref={ref} className="relative px-6 py-16 md:py-20">
-        <FloatingOrbs />
-        <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-50" />
+      {/* 220vh wrapper — inner section pins for 120vh of scroll */}
+      <div ref={ref} style={{ height: "220vh" }}>
+        <section className="sticky top-0 h-screen overflow-hidden relative">
+          {/* 3D canvas — transparent, WebGL shader background shows through */}
+          <Hero3DCanvas wrapperRef={ref} />
 
-        <motion.div style={{ y: y1, opacity }} className="relative mx-auto flex max-w-6xl flex-col items-center text-center">
+          <motion.div style={{ y: y2 }} aria-hidden className="absolute inset-0 -z-10 opacity-40" />
+
+          {/* Hero content — fades + lifts as user scrolls */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-muted-foreground"
+            style={{ y: y1, opacity }}
+            className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center"
           >
-            <Star size={14} className="fill-primary text-primary" />
-            Available for select projects · 2026
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-muted-foreground"
+            >
+              <Star size={14} className="fill-primary text-primary" />
+              Available for select projects · 2026
+            </motion.div>
+
+            <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
+              <SplitText text="Creative Designer" />
+              <br />
+              <span className="text-gradient">
+                <SplitText text="& UI/UX Storyteller" delay={0.4} />
+              </span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9 }}
+              className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
+            >
+              I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a multidisciplinary designer
+              blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
+              magical.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.1 }}
+              className="mt-8 flex flex-wrap items-center justify-center gap-4"
+            >
+              <LinkButton to="/works">
+                View Portfolio
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </LinkButton>
+              <LinkButton to="/about" variant="glass">
+                About me
+              </LinkButton>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.6, duration: 1 }}
+              className="mt-12 flex items-center gap-2 text-xs text-muted-foreground"
+            >
+              <span className="h-px w-10 bg-border" />
+              Scroll to explore
+              <span className="h-px w-10 bg-border" />
+            </motion.div>
           </motion.div>
 
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight md:text-7xl lg:text-[7.5rem]">
-            <SplitText text="Creative Designer" />
-            <br />
-            <span className="text-gradient">
-              <SplitText text="& UI/UX Storyteller" delay={0.4} />
-            </span>
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.9 }}
-            className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
-          >
-            I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> - a multidisciplinary designer
-            blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
-            magical.
-          </motion.p>
-
+          {/* Floating glass decorations */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.1 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4"
-          >
-            <LinkButton to="/works">
-              View Portfolio
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </LinkButton>
-            <LinkButton to="/about" variant="glass">
-              About me
-            </LinkButton>
-          </motion.div>
-
+            aria-hidden style={{ y: y2 }}
+            className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block"
+          />
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.6, duration: 1 }}
-            className="mt-12 flex items-center gap-2 text-xs text-muted-foreground"
-          >
-            <span className="h-px w-10 bg-border" />
-            Scroll to explore
-            <span className="h-px w-10 bg-border" />
-          </motion.div>
-        </motion.div>
-
-        <motion.div aria-hidden style={{ y: y2 }} className="absolute left-8 top-1/3 hidden h-20 w-20 rounded-3xl glass md:block" />
-        <motion.div
-          aria-hidden
-          style={{ y: y1 }}
-          className="absolute right-12 top-40 hidden h-14 w-14 rotate-12 rounded-2xl bg-gradient-hero shadow-glow md:block"
-        />
-        <motion.div
-          aria-hidden
-          style={{ y: y2 }}
-          className="absolute bottom-20 right-1/4 hidden h-10 w-10 rounded-full bg-accent/40 blur-xl md:block"
-        />
-      </section>
+            aria-hidden style={{ y: y1 }}
+            className="absolute right-12 top-40 hidden h-14 w-14 rotate-12 rounded-2xl bg-gradient-hero shadow-glow md:block"
+          />
+          <motion.div
+            aria-hidden style={{ y: y2 }}
+            className="absolute bottom-20 right-1/4 hidden h-10 w-10 rounded-full bg-accent/40 blur-xl md:block"
+          />
+        </section>
+      </div>
 
       <section className="relative overflow-hidden border-y border-border/50 py-6">
         <Marquee items={marqueeItems} reducedMotion={!!prefersReducedMotion} />
@@ -263,6 +277,17 @@ function Home() {
               </LinkButton>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      <section className="relative px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <SectionHeader eyebrow="GitHub" title="Code Activity" className="mb-8" />
+          </Reveal>
+          <Reveal delay={0.1}>
+            <GitHubContributions username="Feliciety02" />
+          </Reveal>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { CustomCursor } from "@/components/site/CustomCursor";
+import { WebGLBackground } from "@/components/site/WebGLBackground";
 
 function NotFoundComponent() {
   return (
@@ -78,6 +79,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <>
+      <WebGLBackground />
       <CustomCursor />
       <Nav />
       <main className="min-h-[calc(100svh-6rem)] pt-24">

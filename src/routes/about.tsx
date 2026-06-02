@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import { GitHubContributions } from "@/components/site/GitHubContributions";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -128,6 +129,13 @@ function About() {
                 <span className="text-xs uppercase tracking-wider text-primary">{e.year}</span>
               </div>
             ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-24 pb-10">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-4xl">Code Activity</h2>
+          <div className="mt-8">
+            <GitHubContributions username="Feliciety02" />
           </div>
         </Reveal>
       </section>
