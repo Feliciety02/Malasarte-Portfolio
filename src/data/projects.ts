@@ -40,6 +40,12 @@ export type ProjectFocusArea = {
   text: string;
 };
 
+export type ProjectFigmaEmbed = {
+  shareUrl: string;
+  title?: string;
+  note?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -61,6 +67,7 @@ export type Project = {
   challenges: ProjectChallenge[];
   outcome: string;
   gallery: ProjectGalleryItem[];
+  figmaEmbed?: ProjectFigmaEmbed;
   nextProjectSlug?: string;
 };
 

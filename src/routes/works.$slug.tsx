@@ -8,6 +8,10 @@ import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
 import { getNextProject, getProject } from "@/data/projects";
 import type { Project, ProjectKind } from "@/data/projects";
 
+function getFigmaEmbedUrl(shareUrl: string) {
+  return `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(shareUrl)}`;
+}
+
 function CaseStudyError({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
 
@@ -70,12 +74,12 @@ export const Route = createFileRoute("/works/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.title} - Case Study · Fe Anne Malasarte` },
+          { title: `${loaderData.title} - Case Study Â· Fe Anne Malasarte` },
           { name: "description", content: loaderData.overview },
           { property: "og:title", content: `${loaderData.title} - Case Study` },
           { property: "og:description", content: loaderData.desc },
         ]
-      : [{ title: "Case Study · Fe Anne Malasarte" }],
+      : [{ title: "Case Study Â· Fe Anne Malasarte" }],
   }),
   component: CaseStudy,
   errorComponent: CaseStudyError,
@@ -102,6 +106,7 @@ function CaseStudy() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const nextProject = getNextProject(project.slug);
   const focusMeta = focusSectionMeta[project.kind];
+  const figmaEmbedUrl = project.figmaEmbed ? getFigmaEmbedUrl(project.figmaEmbed.shareUrl) : null;
 
   useLayoutEffect(() => {
     const resetToTop = () => {
@@ -187,13 +192,49 @@ function CaseStudy() {
           className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[2rem] glass-strong shadow-card"
         >
           <div className={`absolute inset-0 bg-gradient-to-br ${project.color}`} />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          {figmaEmbedUrl ? (
+            <>
+              <iframe
+                src={figmaEmbedUrl}
+                title={project.figmaEmbed?.title ?? `${project.title} Figma preview`}
+                className="absolute inset-[4.75rem_1rem_7.5rem] h-auto w-auto rounded-[1.5rem] border border-white/10 bg-slate-950/70 md:inset-[5.5rem_1.5rem_8rem]"
+                allowFullScreen
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background via-background/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          )}
           <div className="absolute inset-x-5 top-5 flex items-start justify-between gap-4 md:inset-x-8 md:top-8">
             <div className="rounded-full glass px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
               Featured case study
             </div>
             <div className="rounded-full glass px-4 py-1.5 text-xs font-medium">{project.year}</div>
           </div>
+          {figmaEmbedUrl ? (
+            <div className="absolute left-5 right-5 top-20 md:left-8 md:right-8 md:top-24">
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-[1.25rem] glass-strong px-4 py-3">
+                <div>
+                  <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+                    Live Figma preview
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {project.figmaEmbed?.note ??
+                      "Visitors can inspect the file here, then open Figma separately only when they need the full workspace."}
+                  </p>
+                </div>
+                <a
+                  href={project.figmaEmbed?.shareUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full bg-gradient-hero px-4 py-2 text-xs font-semibold text-primary-foreground shadow-glow"
+                >
+                  Open in Figma
+                </a>
+              </div>
+            </div>
+          ) : null}
           <div className="absolute bottom-5 left-5 right-5 md:bottom-8 md:left-8 md:right-8">
             <div className="max-w-lg rounded-[1.5rem] glass-strong px-5 py-4 md:px-6">
               <div className="text-xs uppercase tracking-wider text-muted-foreground">Project focus</div>
@@ -209,7 +250,7 @@ function CaseStudy() {
             {[
               { Icon: User, label: "Role", value: project.role },
               { Icon: Star, label: "Category", value: project.cat },
-              { Icon: Wrench, label: "Tools", value: project.tools.join(" · ") },
+              { Icon: Wrench, label: "Tools", value: project.tools.join(" Â· ") },
               { Icon: Calendar, label: "Year", value: project.year },
             ].map(({ Icon, label, value }) => (
               <div key={label} className="rounded-2xl glass p-5">
@@ -461,5 +502,3 @@ function CaseStudy() {
     </div>
   );
 }
-
-
