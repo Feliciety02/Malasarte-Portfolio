@@ -278,6 +278,159 @@ function Home() {
   );
 }
 
+function HeroBanner() {
+  return (
+    <section className="relative -mt-24 overflow-hidden pt-24">
+      {/* Top brand bars */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-24 z-20 flex items-center">
+        <span className="h-2 w-1/4 bg-[var(--yellow)]" />
+        <span className="h-px flex-1 bg-border" />
+        <span className="h-2 w-16 bg-muted/60" />
+      </div>
+
+      {/* Background texture */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${heroBgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div aria-hidden className="absolute inset-0 z-0 bg-gradient-to-b from-background/40 via-background/10 to-background/80" />
+
+      <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-7xl flex-col px-6 pt-16 pb-40 md:pt-20">
+        {/* Work with me + arrow */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="ml-auto flex items-center gap-4"
+        >
+          <Link
+            to="/contact"
+            className="group inline-flex items-center gap-2 rounded-full border border-border/70 bg-black/40 px-5 py-2.5 text-sm font-medium text-foreground backdrop-blur-md transition-all hover:border-[var(--yellow)]/60 hover:bg-black/60 hover:text-[var(--yellow)]"
+          >
+            Work with me
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+          </Link>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/60 text-muted-foreground md:flex"
+          >
+            <ArrowDown size={14} />
+          </motion.div>
+        </motion.div>
+
+        {/* Headline + portrait layered */}
+        <div className="relative mt-10 flex-1">
+          {/* CREATIVE small label */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="font-display text-3xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl"
+          >
+            CREATIVE
+          </motion.div>
+
+          {/* Curved tagline */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="pointer-events-none absolute left-1/2 top-2 z-20 w-[320px] -translate-x-1/2 md:top-6 md:w-[420px]"
+          >
+            <CurvedTagline />
+          </motion.div>
+
+          {/* Big PORTFOLIO behind portrait */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+            aria-label="Portfolio"
+            className="font-display select-none text-center font-black uppercase leading-[0.85] tracking-[-0.04em] text-foreground"
+            style={{
+              fontSize: "clamp(5rem, 18vw, 18rem)",
+              textShadow: "0 8px 60px rgba(0,0,0,0.35)",
+            }}
+          >
+            PORTFOLIO
+          </motion.div>
+
+          {/* Portrait — sits on top center */}
+          <motion.img
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+            src={heroPortraitAsset.url}
+            alt="Fe Anne Malasarte portrait with the word Portfolio behind her"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[58%] max-w-[640px] -translate-x-1/2 -translate-y-[42%] select-none object-contain md:w-[48%]"
+            draggable={false}
+          />
+
+          {/* Sparkle accent */}
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="absolute right-[12%] top-2 text-[var(--yellow)]"
+          >
+            <Sparkles size={20} />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Bottom service pills bar — yellow strip */}
+      <div className="relative z-20">
+        <div
+          aria-hidden
+          className="absolute inset-x-0 -top-10 h-10 bg-[linear-gradient(180deg,transparent,var(--background))]"
+        />
+        <div className="bg-[var(--yellow)] text-[oklch(0.12_0.01_90)]">
+          <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 text-sm font-semibold uppercase tracking-wide">
+            {[
+              "Branding & Identity Design",
+              "Social Media Graphics",
+              "Marketing & Print Materials",
+              "Event & Merchandise Design",
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-3">
+                <span aria-hidden className="grid h-7 w-7 place-items-center rounded-md bg-black/10">
+                  <Sparkles size={14} />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CurvedTagline() {
+  return (
+    <svg viewBox="0 0 400 110" className="w-full">
+      <defs>
+        <path id="curve" d="M 20 95 Q 200 -10 380 95" fill="transparent" />
+      </defs>
+      <text className="font-sans" fontSize="16" fill="oklch(0.97 0.01 280)" letterSpacing="0.5">
+        <textPath href="#curve" startOffset="50%" textAnchor="middle">
+          designing ideas that speak{" "}
+          <tspan fill="oklch(0.88 0.17 95)" fontStyle="italic" fontWeight="700">
+            volumes
+          </tspan>
+        </textPath>
+      </text>
+    </svg>
+  );
+}
+
 function SplitText({ text, delay = 0 }: { text: string; delay?: number }) {
   return (
     <span className="inline-block">
