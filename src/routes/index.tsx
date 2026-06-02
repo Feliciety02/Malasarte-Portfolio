@@ -8,9 +8,10 @@ import {
   useSpring,
 } from "motion/react";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Quote, Star } from "lucide-react";
+import { ArrowDown, ArrowRight, Quote, Sparkles, Star } from "lucide-react";
 import aboutFeImage from "@/assets/about-fe.png";
-import { GalacticGrid } from "@/components/site/GalacticGrid";
+import heroBgAsset from "@/assets/hero-bg.png.asset.json";
+import heroPortraitAsset from "@/assets/hero-portrait.png.asset.json";
 import { GlassDome } from "@/components/site/GlassDome";
 import { LinkButton } from "@/components/site/LinkButton";
 import { ProjectCard } from "@/components/site/ProjectCard";
@@ -51,64 +52,7 @@ function Home() {
 
   return (
     <div className="overflow-x-hidden">
-      <section className="relative overflow-hidden px-6 pt-20 pb-28 md:pt-28 md:pb-36">
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-4 py-1.5 text-xs font-medium text-muted-foreground"
-            >
-              <Star size={12} className="fill-foreground text-foreground" />
-              Available for select projects · 2026
-            </motion.div>
-
-            <h1 className="mt-8 font-display text-5xl font-light leading-[1.02] tracking-[-0.03em] md:text-7xl lg:text-[6.5rem]">
-              <SplitText text="Creative Designer" />
-              <br />
-              <span className="italic font-extralight text-muted-foreground">
-                <SplitText text="& UI/UX Storyteller" delay={0.4} />
-              </span>
-            </h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.9 }}
-              className="mt-8 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
-            >
-              I&apos;m <span className="font-medium text-foreground">Fe Anne Malasarte</span> — a multidisciplinary designer
-              blending UI/UX, branding, and visual storytelling into experiences that feel human, intentional, and quietly
-              magical.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 1.1 }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-3"
-            >
-              <LinkButton to="/works">
-                View Portfolio
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </LinkButton>
-              <LinkButton to="/about" variant="glass">
-                About me
-              </LinkButton>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6, duration: 1 }}
-              className="mt-16 flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground"
-            >
-              <span className="h-px w-10 bg-border" />
-              Scroll to explore
-              <span className="h-px w-10 bg-border" />
-            </motion.div>
-        </div>
-      </section>
+      <HeroBanner />
 
       <section className="relative overflow-hidden border-y border-border/50 py-6">
         <Marquee items={marqueeItems} reducedMotion={!!prefersReducedMotion} />
