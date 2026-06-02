@@ -544,7 +544,6 @@ function ServicesScroller({
         }}
       />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(7,10,28,0.24)_28%,rgba(6,8,22,0.62)_100%)]" />
-      <GalacticGrid reducedMotion={reducedMotion} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
