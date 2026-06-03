@@ -19,7 +19,7 @@ type MetallicPageProps = {
 
 export function MetallicPage({ children, variant, className }: MetallicPageProps) {
   return (
-    <div className={cn("metal-page", `metal-page--${variant}`, className)}>
+    <div className={cn("metal-page", variant !== "home" && "pt-24", `metal-page--${variant}`, className)}>
       {children}
     </div>
   );

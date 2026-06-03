@@ -50,11 +50,7 @@ function Works() {
         <Reveal>
           <SectionHeader
             eyebrow="Portfolio"
-            title={
-              <>
-                Selected <span className="text-gradient">Works</span>
-              </>
-            }
+            title="Selected Works"
             description="A growing collection of work across product design, branding, publication, front-end development, and writing. Click any project to read the case study."
             contentClassName="max-w-2xl"
             titleClassName="text-4xl sm:text-5xl md:text-7xl"

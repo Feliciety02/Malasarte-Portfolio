@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { cn } from "@/lib/utils";
 
 type SectionHeaderProps = {
@@ -27,6 +28,7 @@ export function SectionHeader({
   titleTag = "h2",
 }: SectionHeaderProps) {
   const TitleTag = titleTag;
+  const renderedTitle = typeof title === "string" ? accentLastWord(title) : title;
 
   return (
     <div
@@ -46,7 +48,7 @@ export function SectionHeader({
             titleClassName,
           )}
         >
-          {title}
+          {renderedTitle}
         </TitleTag>
         {description ? (
           <p

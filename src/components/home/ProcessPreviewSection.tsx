@@ -140,11 +140,7 @@ export function ProcessPreviewSection() {
           <div className="relative z-10 mx-auto max-w-2xl">
             <SectionHeader
               eyebrow="Workflow"
-              title={
-                <>
-                  A focused process that keeps work <span className="text-gradient">moving</span>.
-                </>
-              }
+              title="A focused process that keeps work moving."
               description="Research, concept, design, deliver — swipe through how each phase lands."
               className="mb-10"
             />
@@ -218,12 +214,7 @@ export function ProcessPreviewSection() {
               <div className="flex items-end justify-between gap-8">
                 <SectionHeader
                   eyebrow="Workflow"
-                  title={
-                    <>
-                      A focused process that keeps work{" "}
-                      <span className="text-gradient">moving</span>.
-                    </>
-                  }
+                  title="A focused process that keeps work moving."
                   description="Scroll to travel through every phase — research, concept, design, deliver."
                   className="mb-0"
                   contentClassName="max-w-xl"

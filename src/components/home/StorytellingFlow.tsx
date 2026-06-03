@@ -287,7 +287,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           <div className="absolute inset-0 z-0 bg-[#141516]" />
           <div className="absolute inset-0 z-0 opacity-60"><BrushedMetalBackground interactiveTargetRef={containerRef} /></div>
           <div className="relative z-10 mx-auto max-w-2xl">
-            <SectionHeader eyebrow="Workflow" title={<>A focused process that keeps work <span className="text-gradient">moving</span>.</>}
+            <SectionHeader eyebrow="Workflow" title="A focused process that keeps work moving."
               description="Research, concept, design, deliver — swipe through how each phase lands." className="mb-10" />
           </div>
           <div className="mobile-thin-x-scrollbar relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
@@ -360,7 +360,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           <div className="relative z-10 flex h-full flex-col">
             <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(3rem,7vh,5rem)]">
               <div className="flex items-end justify-between gap-8">
-                <SectionHeader eyebrow="Workflow" title={<>A focused process that keeps work <span className="text-gradient">moving</span>.</>}
+                <SectionHeader eyebrow="Workflow" title="A focused process that keeps work moving."
                   description="Scroll to travel through every phase — research, concept, design, deliver."
                   className="mb-0" contentClassName="max-w-2xl" titleClassName="md:text-4xl lg:text-5xl" />
                 <LinkButton to="/process" variant="text" className="hidden shrink-0 items-center pb-2 lg:inline-flex">
@@ -411,7 +411,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           <div className="relative z-10 flex h-full flex-col">
             <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(3rem,7vh,5rem)]">
               <div className="flex items-end justify-between gap-8">
-                <SectionHeader eyebrow="What I Do" title={<>Services designed to <span className="text-gradient">elevate</span> your brand.</>}
+                <SectionHeader eyebrow="What I Do" title="Services designed to elevate your brand."
                   description="Scroll through each capability — UI/UX, branding, publication, development, and content."
                   className="mb-0" contentClassName="max-w-2xl" titleClassName="md:text-4xl lg:text-5xl" />
                 <LinkButton to="/services" variant="text" className="hidden shrink-0 items-center pb-2 lg:inline-flex">

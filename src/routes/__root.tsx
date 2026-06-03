@@ -4,7 +4,6 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
-  useLocation,
 } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
@@ -117,14 +116,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  const location = useLocation();
-  const isHome = location.pathname === "/";
-
   return (
     <>
       <LoadingScreen />
       <Nav />
-      <main className={`min-h-[calc(100svh-6rem)] ${isHome ? "" : "pt-24"}`}>
+      <main className="min-h-[calc(100svh-6rem)]">
         <Outlet />
       </main>
       <Footer />

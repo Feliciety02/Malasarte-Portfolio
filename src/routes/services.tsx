@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/site/LinkButton";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { Reveal } from "@/components/site/Reveal";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { serviceCategories } from "@/data/services";
@@ -32,11 +33,7 @@ function Services() {
         <Reveal>
           <SectionHeader
             eyebrow="Services"
-            title={
-              <>
-                How I can <span className="text-gradient">help</span>
-              </>
-            }
+            title="How I can help"
             description="A focused set of services for founders, studios, and creators - combining design craft, brand thinking, and reliable execution."
             contentClassName="max-w-2xl"
             titleClassName="text-4xl sm:text-5xl md:text-7xl"
@@ -58,7 +55,7 @@ function Services() {
         <Reveal className="mt-20">
           <div className="blueprint-surface metal-panel p-8 text-center md:p-16">
             <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-5xl">
-              Have a brief in mind?
+              {accentLastWord("Have a brief in mind?")}
             </h2>
             <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground">
               Tell me about the project and I'll come back with scope, timeline, and a friendly

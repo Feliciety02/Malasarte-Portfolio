@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import aboutFeImage from "@/assets/about-fe.png";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { LinkButton } from "@/components/site/LinkButton";
 import { Reveal } from "@/components/site/Reveal";
 
@@ -23,7 +24,7 @@ export function AboutPreviewSection() {
               About
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
-              Designer with a soft spot for quiet details.
+              {accentLastWord("Designer with a soft spot for quiet details.")}
             </h2>
             <p className="mt-5 text-muted-foreground">
               I&apos;m a multidisciplinary designer working across UI/UX, branding, publication, and

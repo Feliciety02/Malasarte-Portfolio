@@ -30,11 +30,7 @@ function Skills() {
         <Reveal>
           <SectionHeader
             eyebrow="Core strengths"
-            title={
-              <>
-                Skills & <span className="text-gradient">craft</span>
-              </>
-            }
+            title="Skills & craft"
             description="A blend of design intuition, technical fluency, and creative discipline - refined across years of real client work."
             contentClassName="max-w-2xl"
             titleClassName="text-4xl sm:text-5xl md:text-7xl"

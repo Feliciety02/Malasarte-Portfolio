@@ -6,11 +6,7 @@ export function ContactHeader() {
     <Reveal>
       <SectionHeader
         eyebrow="Contact"
-        title={
-          <>
-            A clean channel for focused project conversations.
-          </>
-        }
+        title="A clean channel for focused project conversations."
         description="Have a project, idea, or collaboration in mind? Send the essentials and I will reply with scope, timing, and next steps."
         centered
         titleTag="h1"

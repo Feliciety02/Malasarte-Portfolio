@@ -22,11 +22,7 @@ export function ToolsStackSection({ reducedMotion }: ToolsStackSectionProps) {
         <Reveal>
           <SectionHeader
             eyebrow="Tools I use"
-            title={
-              <>
-                My everyday <span className="text-gradient">stack</span>
-              </>
-            }
+            title="My everyday stack"
             description="Drag the tools inside the metal dome and they respond with real weight, soft collisions, and a natural settle at rest."
             centered
             className="mb-10"
