@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import aboutFeImage from "@/assets/about-fe.png";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { Reveal } from "@/components/site/Reveal";
 
@@ -47,7 +48,7 @@ function About() {
           <Reveal delay={0.12} className="md:col-span-3">
             <span className="metal-kicker">About</span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
-              Who is Fe Anne?
+              {accentLastWord("Who is Fe Anne?")}
             </h1>
             <div className="mt-7 space-y-5 text-sm leading-7 text-muted-foreground md:text-base">
               <p>
@@ -102,7 +103,9 @@ function About() {
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="metal-kicker">Experience</span>
-              <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">Recent roles</h2>
+              <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">
+                {accentLastWord("Recent roles")}
+              </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-muted-foreground">
               A concise timeline of the roles and environments that shaped the portfolio work.
@@ -130,7 +133,9 @@ function About() {
 
         <Reveal className="mt-24 pb-10">
           <span className="metal-kicker">Code Activity</span>
-          <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">GitHub signal</h2>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">
+            {accentLastWord("GitHub signal")}
+          </h2>
           <div className="mt-8">
             <GitHubContributions username="Feliciety02" />
           </div>

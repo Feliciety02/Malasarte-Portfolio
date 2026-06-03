@@ -290,6 +290,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    -webkit-text-fill-color: transparent;
   }
   .bg-gradient-hero {
     background: var(--gradient-hero);
@@ -746,7 +747,7 @@
   }
 
   .satin-photo {
-    filter: grayscale(0.82) contrast(1.04) brightness(0.82);
+    filter: none;
   }
 
   .glow-orb {

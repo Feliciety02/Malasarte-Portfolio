@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowLeft, ArrowRight, Calendar, Star, User, Wrench } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { getNextProject, getProject } from "@/data/projects";
 import type { Project } from "@/data/projects";
@@ -175,7 +176,9 @@ function CaseStudy() {
       <section className="mx-auto mt-24 grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
         <article>
           <span className="metal-kicker">Overview</span>
-          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Project summary</h2>
+          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
+            {accentLastWord("Project summary")}
+          </h2>
           <div className="mt-7 space-y-5 text-sm leading-8 text-muted-foreground md:text-base">
             <p>{project.overview}</p>
             <p>{project.outcome}</p>
@@ -184,7 +187,9 @@ function CaseStudy() {
 
         <aside className="metal-panel p-6 md:p-8">
           <span className="metal-kicker">Goals</span>
-          <h2 className="mt-3 font-display text-2xl font-bold md:text-3xl">What mattered</h2>
+          <h2 className="mt-3 font-display text-2xl font-bold md:text-3xl">
+            {accentLastWord("What mattered")}
+          </h2>
           <ul className="mt-6 space-y-4">
             {goals.map((goal, index) => (
               <li key={goal} className="border-t border-white/10 pt-4 text-sm leading-6 text-muted-foreground">
@@ -199,7 +204,9 @@ function CaseStudy() {
       {focusAreas.length > 0 ? (
         <section className="mx-auto mt-20 max-w-6xl">
           <span className="metal-kicker">Focus</span>
-          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">Key direction</h2>
+          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
+            {accentLastWord("Key direction")}
+          </h2>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {focusAreas.map((area, index) => (
               <div key={area.title} className="metal-card p-5">
