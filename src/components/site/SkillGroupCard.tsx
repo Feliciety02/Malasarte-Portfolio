@@ -5,7 +5,6 @@ import { useRef } from "react";
 export function SkillGroupCard({
   icon: Icon,
   title,
-  color,
   items,
 }: {
   icon: LucideIcon;
@@ -17,33 +16,30 @@ export function SkillGroupCard({
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <div
-      ref={ref}
-      className="group relative overflow-hidden rounded-3xl glass-strong p-6 hover-lift md:p-8"
-    >
-      <div
-        className={`pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${color} blur-3xl opacity-50 transition-opacity group-hover:opacity-80`}
-      />
-      <div className="flex items-center gap-3">
-        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
-          <Icon size={20} className="text-primary-foreground" />
+    <div ref={ref} className="mesh-surface metal-card group p-6 md:p-8">
+      <div className="relative z-10 flex items-center gap-4">
+        <div className="metal-icon h-12 w-12 text-primary">
+          <Icon size={20} />
         </div>
-        <h3 className="font-display text-xl font-bold md:text-2xl">{title}</h3>
+        <div>
+          <span className="metal-microcopy">Signal group</span>
+          <h3 className="mt-2 font-display text-xl font-semibold md:text-2xl">{title}</h3>
+        </div>
       </div>
 
-      <ul className="mt-6 space-y-4 md:mt-8 md:space-y-5">
+      <ul className="relative z-10 mt-7 space-y-5 md:mt-8">
         {items.map((item, index) => (
           <li key={item.name}>
-            <div className="flex items-baseline justify-between text-sm">
-              <span className="font-medium">{item.name}</span>
-              <span className="text-xs text-muted-foreground">{item.level}%</span>
+            <div className="flex items-baseline justify-between gap-4 text-sm">
+              <span className="font-medium text-white/88">{item.name}</span>
+              <span className="font-mono text-xs text-muted-foreground">{item.level}%</span>
             </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/5">
+            <div className="metal-progress-track mt-2 h-2">
               <motion.div
                 initial={{ width: 0 }}
                 animate={inView ? { width: `${item.level}%` } : {}}
-                transition={{ duration: 1.1, delay: 0.2 + index * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
-                className="h-full rounded-full bg-gradient-hero shadow-glow"
+                transition={{ duration: 1.1, delay: 0.18 + index * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
+                className="metal-progress-fill h-full rounded-full"
               />
             </div>
           </li>

@@ -13,23 +13,24 @@ export function ServicesPreviewSection({ reducedMotion }: ServicesPreviewSection
   const featuredServices = servicePreviews.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden px-6 py-24">
+    <section className="relative overflow-hidden bg-[#0c0d0e] px-6 py-24">
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,8,27,0.12) 0%, rgba(8,10,24,0.3) 100%), radial-gradient(circle at 18% 16%, rgba(162, 92, 255, 0.24), transparent 28%), radial-gradient(circle at 82% 18%, rgba(74, 168, 255, 0.18), transparent 24%), radial-gradient(circle at 50% 100%, rgba(255, 78, 187, 0.12), transparent 32%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.22)), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.024) 1px, transparent 1px)",
+          backgroundSize: "auto, 5rem 5rem, 5rem 5rem",
         }}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(7,10,28,0.24)_28%,rgba(6,8,22,0.62)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24)_28%,rgba(0,0,0,0.62)_100%)]" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <SectionHeader
             eyebrow="What I do"
             title="Services preview"
-            description="Scroll through a clean galactic grid to explore the services I design, build, and shape."
+            description="A compact technical grid of the services I design, build, and shape."
             action={
               <LinkButton
                 to="/services"

@@ -10,12 +10,12 @@ export function Footer() {
         <Link
           to="/"
           aria-label="Fe Anne Malasarte home"
-          className="absolute left-1/2 top-0 z-10 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/12 bg-background/90 p-3 shadow-glow backdrop-blur-xl transition-transform hover:-translate-y-[54%]"
+          className="metal-ghost absolute left-1/2 top-0 z-10 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full p-3 backdrop-blur-xl transition-transform hover:-translate-y-[54%]"
         >
           <img
             src={logoFe}
             alt="Fe Anne logo"
-            className="h-20 w-20 object-contain drop-shadow-[0_16px_34px_rgba(168,85,247,0.42)] sm:h-24 sm:w-24"
+            className="h-20 w-20 object-contain drop-shadow-[0_16px_34px_rgba(255,255,255,0.16)] sm:h-24 sm:w-24"
           />
         </Link>
 
@@ -46,7 +46,7 @@ export function Footer() {
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
               <Link
                 to="/works"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] hover:bg-primary/90"
+                className="metal-cta inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
               >
                 View works <ArrowRight size={15} />
               </Link>
@@ -60,7 +60,7 @@ export function Footer() {
 
             <a
               href="mailto:feannemlsrte@gmail.com"
-              className="mt-5 flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:bg-white/8"
+              className="mt-5 flex min-w-0 items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:bg-white/8"
             >
               <span className="min-w-0">
                 <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -73,7 +73,7 @@ export function Footer() {
               <ArrowRight size={16} className="shrink-0 text-accent" />
             </a>
 
-            <div className="mt-7 grid gap-6 rounded-[1.75rem] border border-white/8 bg-white/[0.03] p-4 sm:grid-cols-2">
+            <div className="mt-7 grid gap-6 rounded-lg border border-white/8 bg-white/[0.03] p-4 sm:grid-cols-2">
               <div>
                 <h4 className="text-sm font-semibold text-foreground">Explore</h4>
                 <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground">
@@ -146,7 +146,7 @@ export function Footer() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:justify-center">
                 <Link
                   to="/works"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] hover:bg-primary/90"
+                  className="metal-cta inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
                 >
                   View works <ArrowRight size={15} />
                 </Link>
@@ -186,8 +186,8 @@ export function Footer() {
                       href={social.href}
                       aria-label={social.label}
                       target="_blank"
-                      rel="noreferrer"
-                      className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/6 text-muted-foreground transition-all hover:scale-110 hover:bg-primary/20 hover:text-foreground hover:shadow-glow"
+                    rel="noreferrer"
+                      className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/6 text-muted-foreground transition-all hover:scale-105 hover:bg-primary/16 hover:text-foreground"
                     >
                       <social.icon size={16} />
                     </a>

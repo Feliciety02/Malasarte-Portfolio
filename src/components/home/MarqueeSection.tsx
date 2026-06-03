@@ -15,7 +15,7 @@ type ReducedMotionProps = {
 
 export function MarqueeSection({ reducedMotion }: ReducedMotionProps) {
   return (
-    <section className="relative overflow-hidden border-b border-border/50 py-6">
+    <section className="relative overflow-hidden border-b border-white/10 py-6">
       <Marquee items={marqueeItems} reducedMotion={reducedMotion} />
     </section>
   );
@@ -78,8 +78,8 @@ function Marquee({ items, reducedMotion }: { items: string[]; reducedMotion: boo
             {items.map((item) => (
               <div key={`${loopIndex}-${item}`} className="flex items-center gap-12">
                 <span>{item}</span>
-                <span className="text-yellow-400">
-                  <Star size={16} className="fill-yellow-400 text-yellow-400" strokeWidth={1.8} />
+                <span className="text-primary">
+                  <Star size={16} className="fill-primary/70 text-primary" strokeWidth={1.8} />
                 </span>
               </div>
             ))}

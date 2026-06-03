@@ -23,11 +23,11 @@ export function ExperienceSnapshotSection() {
           />
         </Reveal>
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal>
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid border-y border-white/10 py-6 sm:grid-cols-3">
               {experienceStats.map((stat) => (
-                <div key={stat.label} className="rounded-[1.75rem] glass-strong p-6 text-center">
+                <div key={stat.label} className="py-4 text-center sm:border-r sm:border-white/10 sm:px-6 sm:last:border-r-0">
                   <div className="font-display text-3xl font-bold text-gradient md:text-4xl">
                     {stat.value}
                   </div>
@@ -40,7 +40,7 @@ export function ExperienceSnapshotSection() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="rounded-[1.75rem] glass p-6 md:p-7">
+            <div className="metal-panel p-6 md:p-7">
               <div className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
                 Recent roles
               </div>
@@ -48,7 +48,7 @@ export function ExperienceSnapshotSection() {
                 {experienceTimeline.map((entry) => (
                   <div
                     key={`${entry.year}-${entry.role}`}
-                    className="flex flex-col gap-2 rounded-2xl border border-border/60 bg-background/20 p-4 md:flex-row md:items-center md:justify-between"
+                    className="flex flex-col gap-2 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between"
                   >
                     <div>
                       <div className="font-display text-lg font-semibold">{entry.role}</div>

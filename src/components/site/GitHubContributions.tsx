@@ -13,11 +13,11 @@ interface ApiResponse {
 }
 
 const LEVEL_COLORS: Record<number, string> = {
-  0: "oklch(0.26 0.06 285 / 40%)",
-  1: "oklch(0.36 0.16 308)",
-  2: "oklch(0.49 0.22 302)",
-  3: "oklch(0.62 0.26 296)",
-  4: "oklch(0.73 0.22 328)",
+  0: "oklch(0.24 0 0 / 46%)",
+  1: "oklch(0.38 0.04 296)",
+  2: "oklch(0.48 0.08 296)",
+  3: "oklch(0.6 0.13 298)",
+  4: "oklch(0.76 0.04 298)",
 };
 
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
@@ -109,11 +109,11 @@ export function GitHubContributions({ username }: { username: string }) {
   const step = cell + GAP;
 
   return (
-    <div className="rounded-2xl glass p-6">
+    <div className="metal-panel p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-1">
         <p className="text-sm text-foreground/80">
-          <span className="font-display font-bold text-gradient text-lg">{total.toLocaleString()}</span>{" "}
+          <span className="font-display text-lg font-bold text-gradient">{total.toLocaleString()}</span>{" "}
           contributions in the last year
         </p>
         <a
@@ -223,12 +223,12 @@ export function GitHubContributions({ username }: { username: string }) {
 
 function Skeleton() {
   return (
-    <div className="rounded-2xl glass p-6 animate-pulse">
+    <div className="metal-panel animate-pulse p-6">
       <div className="flex justify-between mb-1">
         <div className="h-5 w-56 rounded-md bg-muted" />
         <div className="h-4 w-24 rounded-md bg-muted" />
       </div>
-      <div className="mt-4 h-[130px] rounded-xl bg-muted" />
+      <div className="mt-4 h-[130px] rounded-lg bg-muted" />
       <div className="flex justify-end gap-1.5 mt-4 items-center">
         <div className="h-2.5 w-5 rounded bg-muted" />
         {[...Array(5)].map((_, i) => (

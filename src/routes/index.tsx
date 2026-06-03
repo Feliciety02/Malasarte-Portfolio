@@ -12,6 +12,7 @@ import { ServicesPreviewSection } from "@/components/home/ServicesPreviewSection
 import { SkillHighlightsSection } from "@/components/home/SkillHighlightsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { ToolsStackSection } from "@/components/home/ToolsStackSection";
+import { MetallicPage } from "@/components/site/MetallicPage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,7 +37,7 @@ function Home() {
   const reducedMotion = !!prefersReducedMotion;
 
   return (
-    <div className="overflow-x-hidden">
+    <MetallicPage variant="home" className="overflow-x-clip">
       <HeroBanner />
       <MarqueeSection reducedMotion={reducedMotion} />
       <SkillHighlightsSection />
@@ -49,6 +50,6 @@ function Home() {
       <AboutPreviewSection />
       <GitHubActivitySection />
       <ContactCtaSection />
-    </div>
+    </MetallicPage>
   );
 }

@@ -15,7 +15,7 @@ export function ToolsStackSection({ reducedMotion }: ToolsStackSectionProps) {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 40%, color-mix(in oklab, var(--glow-purple) 18%, transparent), transparent 60%), linear-gradient(180deg, transparent, color-mix(in oklab, var(--glow-blue) 8%, transparent), transparent)",
+            "radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.08), transparent 60%), repeating-linear-gradient(45deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 12px)",
         }}
       />
       <div className="mx-auto max-w-6xl">
@@ -27,7 +27,7 @@ export function ToolsStackSection({ reducedMotion }: ToolsStackSectionProps) {
                 My everyday <span className="text-gradient">stack</span>
               </>
             }
-            description="Drag the tools inside the glass globe and they respond with real weight, soft collisions, and a natural settle at rest."
+            description="Drag the tools inside the metal dome and they respond with real weight, soft collisions, and a natural settle at rest."
             centered
             className="mb-10"
             contentClassName="max-w-xl"

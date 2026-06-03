@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { siFramer, siMiro, siNotion, siWebflow, type SimpleIcon } from "simple-icons";
 import afterEffectsLogo from "@/assets/tool-logos/after-effects.svg";
 import canvaLogo from "@/assets/tool-logos/canva.svg";
@@ -82,7 +81,7 @@ const TOOL_ICONS: Record<string, ToolIcon> = {
   webflow: {
     kind: "simple",
     icon: siWebflow,
-    foreground: "#146EF5",
+    foreground: "#111111",
     surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,248,255,0.92))",
   },
   notion: {
@@ -95,7 +94,7 @@ const TOOL_ICONS: Record<string, ToolIcon> = {
     kind: "simple",
     icon: siMiro,
     foreground: "#111111",
-    surface: "linear-gradient(180deg, #FFD02F, #F4BC1C)",
+    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(224,226,228,0.92))",
   },
   canva: { kind: "asset", src: canvaLogo },
 };
@@ -115,11 +114,6 @@ export function GlassDome({
   const lastFrameRef = useRef<number | null>(null);
   const [size, setSize] = useState(560);
   const [bodies, setBodies] = useState<Body[]>([]);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-1, 1], [4, -4]), { stiffness: 90, damping: 22 });
-  const ry = useSpring(useTransform(mx, [-1, 1], [-5, 5]), { stiffness: 90, damping: 22 });
 
   useEffect(() => {
     const el = containerRef.current;
@@ -219,15 +213,7 @@ export function GlassDome({
     };
   }, [globeRadius]);
 
-  const setPointerTilt = (clientX: number, clientY: number) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect || reducedMotion) return;
-    mx.set(((clientX - rect.left) / rect.width) * 2 - 1);
-    my.set(((clientY - rect.top) / rect.height) * 2 - 1);
-  };
-
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    setPointerTilt(event.clientX, event.clientY);
 
     const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
     if (!local) return;
@@ -281,8 +267,6 @@ export function GlassDome({
   };
 
   const handlePointerLeave = () => {
-    mx.set(0);
-    my.set(0);
     moveHistoryRef.current = null;
   };
 
@@ -308,17 +292,13 @@ export function GlassDome({
         className="absolute inset-0 rounded-full"
         style={{
           background:
-            "radial-gradient(circle at 50% 35%, rgba(78,53,140,0.3), transparent 44%), radial-gradient(circle at 70% 72%, rgba(72,138,255,0.18), transparent 32%), linear-gradient(180deg, rgba(17,10,43,0.95), rgba(8,13,40,0.98) 68%, rgba(3,8,27,1))",
-          boxShadow: "0 40px 120px rgba(4, 8, 28, 0.6)",
+            "radial-gradient(circle at 50% 35%, rgba(255,255,255,0.16), transparent 44%), radial-gradient(circle at 70% 72%, rgba(255,255,255,0.08), transparent 32%), linear-gradient(180deg, rgba(24,25,26,0.96), rgba(9,10,11,0.98) 68%, rgba(4,5,6,1))",
+          boxShadow: "0 40px 120px rgba(0, 0, 0, 0.6)",
         }}
       />
 
-      <motion.div
-        style={{
-          rotateX: reducedMotion ? 0 : rx,
-          rotateY: reducedMotion ? 0 : ry,
-          transformStyle: "preserve-3d",
-        }}
+      <div
+        style={{ transformStyle: "preserve-3d" }}
         className="relative h-full w-full"
       >
         <div
@@ -326,7 +306,7 @@ export function GlassDome({
           className="absolute inset-[5%] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(circle at 50% 50%, rgba(132,94,247,0.42), rgba(53,33,112,0.12) 42%, transparent 70%)",
+              "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), rgba(255,255,255,0.04) 42%, transparent 70%)",
           }}
         />
 
@@ -335,7 +315,7 @@ export function GlassDome({
           className="absolute inset-[7%] overflow-hidden rounded-full border border-white/18"
           style={{
             background:
-              "radial-gradient(circle at 28% 18%, rgba(255,255,255,0.28), rgba(255,255,255,0.06) 24%, rgba(24,18,66,0.3) 54%, rgba(4,8,20,0.54) 82%), radial-gradient(circle at 70% 80%, rgba(72,138,255,0.16), transparent 26%), radial-gradient(circle at 24% 72%, rgba(171,98,255,0.12), transparent 28%)",
+              "radial-gradient(circle at 28% 18%, rgba(255,255,255,0.28), rgba(255,255,255,0.06) 24%, rgba(30,31,32,0.34) 54%, rgba(4,5,6,0.58) 82%), radial-gradient(circle at 70% 80%, rgba(255,255,255,0.08), transparent 26%), radial-gradient(circle at 24% 72%, rgba(255,255,255,0.06), transparent 28%)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             boxShadow:
@@ -347,7 +327,7 @@ export function GlassDome({
             className="absolute inset-0 rounded-full"
             style={{
               background:
-                "conic-gradient(from 110deg, transparent 0deg, rgba(255,255,255,0.08) 42deg, transparent 110deg, rgba(255,255,255,0.06) 180deg, transparent 240deg, rgba(140,186,255,0.08) 310deg, transparent 360deg)",
+                "conic-gradient(from 110deg, transparent 0deg, rgba(255,255,255,0.08) 42deg, transparent 110deg, rgba(255,255,255,0.06) 180deg, transparent 240deg, rgba(255,255,255,0.07) 310deg, transparent 360deg)",
               mixBlendMode: "screen",
             }}
           />
@@ -362,7 +342,7 @@ export function GlassDome({
           />
 
           {particles.map((particle) => (
-            <motion.span
+            <span
               key={particle.id}
               aria-hidden
               className="absolute rounded-full bg-white/65"
@@ -371,15 +351,9 @@ export function GlassDome({
                 top: `${particle.top}%`,
                 width: particle.size,
                 height: particle.size,
-                boxShadow: `0 0 ${particle.size * 6}px rgba(170, 191, 255, 0.4)`,
+                boxShadow: `0 0 ${particle.size * 6}px rgba(255, 255, 255, 0.28)`,
                 filter: "blur(0.4px)",
-              }}
-              animate={reducedMotion ? undefined : { opacity: [0.12, 0.4, 0.18] }}
-              transition={{
-                duration: particle.duration,
-                delay: particle.delay,
-                repeat: Infinity,
-                ease: "easeInOut",
+                opacity: 0.25,
               }}
             />
           ))}
@@ -394,17 +368,6 @@ export function GlassDome({
             }}
           />
 
-          <motion.div
-            aria-hidden
-            className="absolute inset-y-[-16%] left-[22%] w-[24%]"
-            style={{
-              background:
-                "linear-gradient(110deg, transparent, rgba(255,255,255,0.14), transparent)",
-              filter: "blur(2px)",
-            }}
-            animate={reducedMotion ? undefined : { x: ["-8%", "8%", "-6%"] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
         </div>
 
         <div className="absolute inset-[7%] overflow-hidden rounded-full">
@@ -445,9 +408,9 @@ export function GlassDome({
                   className="relative flex h-full w-full items-center rounded-full border border-white/20 text-left"
                   style={{
                     background:
-                      "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(18,22,52,0.86), rgba(45,27,84,0.64))",
+                      "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
                     boxShadow: isDragging
-                      ? "0 22px 34px rgba(0,0,0,0.28), 0 0 28px rgba(143,105,255,0.18)"
+                      ? "0 22px 34px rgba(0,0,0,0.32), 0 0 24px rgba(255,255,255,0.08)"
                       : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
                     backdropFilter: "blur(14px)",
                     WebkitBackdropFilter: "blur(14px)",
@@ -466,12 +429,12 @@ export function GlassDome({
                     }}
                   />
                   <span
-                    className="relative grid shrink-0 place-items-center overflow-hidden rounded-[0.95rem] border border-white/14"
+                    className="relative grid shrink-0 place-items-center overflow-hidden rounded-lg border border-white/14"
                     style={{
                       width: isCompact ? 34 : 32,
                       height: isCompact ? 34 : 32,
-                      background: "linear-gradient(180deg, rgba(7,10,28,0.78), rgba(26,30,60,0.54))",
-                      boxShadow: `0 0 18px color-mix(in srgb, #${body.color} 28%, transparent)`,
+                      background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
+                      boxShadow: "0 0 18px rgba(255,255,255,0.08)",
                     }}
                   >
                     <ToolLogo slug={body.slug} name={body.name} />
@@ -491,7 +454,7 @@ export function GlassDome({
             );
           })}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -516,7 +479,12 @@ function ToolLogo({ slug, name }: { slug: string; name: string }) {
           background: icon.surface ?? "transparent",
         }}
       >
-        <img src={icon.src} alt="" aria-hidden className="h-[70%] w-[70%] object-contain" />
+        <img
+          src={icon.src}
+          alt=""
+          aria-hidden
+          className="h-[70%] w-[70%] object-contain grayscale contrast-110"
+        />
       </span>
     );
   }

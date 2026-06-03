@@ -28,7 +28,7 @@ export function CaseStudyLink({
         document.body.scrollTop = 0;
       }}
       className={cn(
-        "block h-full cursor-pointer select-none touch-manipulation rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "block h-full cursor-pointer select-none touch-manipulation rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >

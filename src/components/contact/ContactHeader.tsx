@@ -8,15 +8,15 @@ export function ContactHeader() {
         eyebrow="Contact"
         title={
           <>
-            Let&apos;s create something <span className="text-gradient">meaningful</span> together.
+            A clean channel for focused project conversations.
           </>
         }
-        description="Have a project, idea, or collaboration in mind? Drop a note. I read every message."
+        description="Have a project, idea, or collaboration in mind? Send the essentials and I will reply with scope, timing, and next steps."
         centered
         titleTag="h1"
         className="text-center"
         contentClassName="mx-auto max-w-3xl"
-        titleClassName="text-5xl leading-[1.05] md:text-7xl"
+        titleClassName="text-4xl leading-tight sm:text-5xl md:text-7xl"
         descriptionClassName="mx-auto max-w-xl"
       />
     </Reveal>

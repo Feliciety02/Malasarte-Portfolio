@@ -69,13 +69,13 @@ export function Lightbox({
               event.stopPropagation();
               onClose();
             }}
-            className="absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-full glass-strong transition-colors hover:bg-white/10"
+            className="metal-icon absolute right-4 top-4 z-10 h-12 w-12 rounded-full transition-colors hover:bg-white/10"
             aria-label="Close (Esc)"
           >
             <X size={18} />
           </button>
 
-          <div className="absolute left-4 top-4 z-10 rounded-full glass px-4 py-2 text-xs font-medium text-muted-foreground">
+          <div className="metal-ghost absolute left-4 top-4 z-10 rounded-full px-4 py-2 text-xs font-medium text-muted-foreground">
             {index + 1} / {items.length}
           </div>
 
@@ -84,7 +84,7 @@ export function Lightbox({
               event.stopPropagation();
               prev();
             }}
-            className="absolute left-4 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full glass-strong transition-all hover:-translate-x-0.5 hover:bg-white/10 md:left-8"
+            className="metal-icon absolute left-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full transition-all hover:-translate-x-0.5 hover:bg-white/10 md:left-8"
             aria-label="Previous"
           >
             <ArrowLeft size={18} />
@@ -95,7 +95,7 @@ export function Lightbox({
               event.stopPropagation();
               next();
             }}
-            className="absolute right-4 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full glass-strong transition-all hover:translate-x-0.5 hover:bg-white/10 md:right-8"
+            className="metal-icon absolute right-4 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full transition-all hover:translate-x-0.5 hover:bg-white/10 md:right-8"
             aria-label="Next"
           >
             <ArrowRight size={18} />
@@ -116,16 +116,16 @@ export function Lightbox({
                 if (info.offset.x < -80 || info.velocity.x < -500) next();
                 else if (info.offset.x > 80 || info.velocity.x > 500) prev();
               }}
-              className="relative w-full max-w-5xl overflow-hidden rounded-3xl glass-strong shadow-card"
+              className="metal-panel relative w-full max-w-5xl overflow-hidden shadow-card"
             >
               <div className="aspect-[16/10]">
-                <div className={`absolute inset-0 bg-gradient-to-br ${current.color}`} />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.026)_42%,rgba(0,0,0,0.42))]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-display text-xl font-semibold">{current.label}</span>
                     <span className="hidden text-xs uppercase tracking-wider text-muted-foreground md:block">
-                      Use arrow keys · esc to close
+                      Use arrow keys / esc to close
                     </span>
                   </div>
                   {current.note ? (

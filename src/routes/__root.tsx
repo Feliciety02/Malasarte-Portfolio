@@ -10,11 +10,12 @@ import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
+import { MetallicPage } from "@/components/site/MetallicPage";
 // WebGL background removed in favour of a clean monochrome canvas.
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <MetallicPage variant="contact" className="flex min-h-screen items-center justify-center px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-8xl font-bold text-gradient">404</h1>
         <h2 className="mt-4 text-xl font-semibold">Page not found</h2>
@@ -24,13 +25,13 @@ function NotFoundComponent() {
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow"
+            className="metal-cta inline-flex rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground"
           >
             Back home
           </Link>
         </div>
       </div>
-    </div>
+    </MetallicPage>
   );
 }
 

@@ -9,11 +9,11 @@ export function AboutPreviewSection() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 md:grid-cols-5 md:items-center">
           <Reveal className="md:col-span-2">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] glass-strong">
+            <div className="metal-panel relative aspect-[4/5] overflow-hidden">
               <img
                 src={aboutFeImage}
                 alt="Fe Anne Malasarte portrait"
-                className="h-full w-full object-cover"
+                className="satin-photo h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/28 via-transparent to-white/5" />
             </div>
@@ -28,7 +28,7 @@ export function AboutPreviewSection() {
             <p className="mt-5 text-muted-foreground">
               I&apos;m a multidisciplinary designer working across UI/UX, branding, publication, and
               content. I love building things that feel intentional, human, and a little bit
-              magical.
+              precise.
             </p>
             <LinkButton to="/about" variant="glass" className="mt-8">
               Read full story <ArrowRight size={14} />

@@ -39,9 +39,7 @@ export function SectionHeader({
       )}
     >
       <div className={cn(centered ? "max-w-2xl" : undefined, contentClassName)}>
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-          {eyebrow}
-        </span>
+        <span className="metal-kicker">{eyebrow}</span>
         <TitleTag
           className={cn(
             "mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl md:text-5xl",

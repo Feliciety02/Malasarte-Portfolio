@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { FloatingOrbs, Reveal } from "@/components/site/Reveal";
+import aboutFeImage from "@/assets/about-fe.png";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
+import { MetallicPage } from "@/components/site/MetallicPage";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,70 +26,57 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   return (
-    <div className="relative overflow-hidden px-6 pb-10">
-      <FloatingOrbs />
-      <div
-        aria-hidden
-        className="page-midshade pointer-events-none absolute inset-x-0 top-0 h-[34rem]"
-      />
-      <section className="relative mx-auto max-w-6xl pt-12">
-        <div className="grid gap-12 md:grid-cols-5 md:items-center">
+    <MetallicPage variant="about" className="px-6 pb-20">
+      <section className="mx-auto max-w-6xl pt-12 md:pt-20">
+        <div className="grid gap-14 md:grid-cols-5 md:items-end">
           <Reveal className="md:col-span-2">
-            <motion.div
-              whileHover={{ rotate: -2 }}
-              className="relative aspect-[4/5] overflow-hidden rounded-[2rem] glass-strong"
-            >
-              <div className="absolute inset-0 bg-gradient-hero opacity-70" />
-              <div className="absolute inset-0 grid place-items-center">
-                <span className="font-display text-[9rem] font-bold leading-none text-white/15 sm:text-[11rem] md:text-[14rem]">
-                  Fe
-                </span>
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 rounded-2xl glass p-4">
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                  Designer · Storyteller
-                </div>
+            <div className="metal-panel relative aspect-[4/5] overflow-hidden">
+              <img
+                src={aboutFeImage}
+                alt="Fe Anne Malasarte portrait"
+                className="satin-photo h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/42 via-transparent to-white/8" />
+              <div className="absolute bottom-5 left-5 right-5 border-t border-white/12 pt-4">
+                <div className="metal-microcopy">Designer / Storyteller</div>
                 <div className="mt-1 font-display text-lg font-semibold">Fe Anne Malasarte</div>
               </div>
-            </motion.div>
+            </div>
           </Reveal>
 
-          <Reveal delay={0.15} className="md:col-span-3">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              About
-            </span>
-            <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl md:text-6xl">
-              Hi, I&apos;m <span className="text-gradient">Fe Anne</span>.
+          <Reveal delay={0.12} className="md:col-span-3">
+            <span className="metal-kicker">About</span>
+            <h1 className="mt-4 font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+              Human detail, engineered into quiet visual systems.
             </h1>
-            <div className="mt-6 space-y-4 text-sm text-muted-foreground md:text-base">
+            <div className="mt-7 space-y-5 text-sm leading-7 text-muted-foreground md:text-base">
               <p>
-                I&apos;m a creative designer who fell in love with the quiet details - the kerning
-                of a headline, the curve of an icon, the way a color palette can feel like a breath
-                of air.
+                I&apos;m a creative designer who fell in love with the quiet details: the spacing of
+                a headline, the edge of a mark, and the way a layout can make information feel
+                calmer.
               </p>
               <p>
-                My journey started in tech and design organizations, where I learned to build
-                pubmats, brand identities, and digital products that actually serve people. Today, I
-                work across UI/UX, branding, publication design, and a bit of writing - bridging
-                strategy and aesthetic.
+                My work grew through tech and design organizations, where I built publication
+                assets, identities, and digital products that had to be clear, fast to use, and easy
+                to maintain.
               </p>
               <p>
-                Outside of pixels, I love reading, journaling, and helping creators bring their ideas
-                to life - whether through design or virtual support.
+                Today I work across UI/UX, branding, publication design, content, and virtual
+                support, connecting strategy with visual craft.
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid border-y border-white/10 py-6 sm:grid-cols-3">
               {[
                 { k: "5+", v: "Years designing" },
                 { k: "40+", v: "Projects shipped" },
                 { k: "10+", v: "Happy clients" },
               ].map((s) => (
-                <div key={s.v} className="rounded-2xl glass p-4 text-center">
-                  <div className="font-display text-2xl font-bold text-gradient md:text-3xl">
-                    {s.k}
+                <div key={s.v} className="py-4 sm:border-r sm:border-white/10 sm:px-6 sm:first:pl-0 sm:last:border-r-0">
+                  <div className="font-display text-3xl font-bold text-gradient">{s.k}</div>
+                  <div className="mt-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                    {s.v}
                   </div>
-                  <div className="mt-1 text-xs text-muted-foreground">{s.v}</div>
                 </div>
               ))}
             </div>
@@ -96,13 +84,13 @@ function About() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 to="/works"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105"
+                className="metal-cta inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
               >
                 See my work <ArrowRight size={14} />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center rounded-full glass px-6 py-3 text-sm font-semibold hover:bg-white/10"
+                className="metal-ghost inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold hover:bg-white/10"
               >
                 Say hi
               </Link>
@@ -111,8 +99,16 @@ function About() {
         </div>
 
         <Reveal className="mt-24">
-          <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-4xl">Experience</h2>
-          <div className="mt-8 space-y-4">
+          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="metal-kicker">Experience</span>
+              <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">Recent roles</h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-muted-foreground">
+              A concise timeline of the roles and environments that shaped the portfolio work.
+            </p>
+          </div>
+          <div className="mt-10 border-t border-white/10">
             {[
               { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
               { year: "2022 - 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
@@ -120,25 +116,26 @@ function About() {
             ].map((e) => (
               <div
                 key={e.role}
-                className="flex flex-col gap-2 rounded-2xl glass p-6 md:flex-row md:items-center md:justify-between"
+                className="grid gap-3 border-b border-white/10 py-6 md:grid-cols-[10rem_minmax(0,1fr)_12rem] md:items-center"
               >
-                <div>
-                  <div className="font-display text-lg font-semibold">{e.role}</div>
-                  <div className="text-sm text-muted-foreground">{e.place}</div>
-                </div>
-                <span className="text-xs uppercase tracking-wider text-primary">{e.year}</span>
+                <span className="font-mono text-xs uppercase tracking-[0.16em] text-primary">
+                  {e.year}
+                </span>
+                <div className="font-display text-xl font-semibold">{e.role}</div>
+                <div className="text-sm text-muted-foreground md:text-right">{e.place}</div>
               </div>
             ))}
           </div>
         </Reveal>
 
         <Reveal className="mt-24 pb-10">
-          <h2 className="font-display text-2xl font-bold sm:text-3xl md:text-4xl">Code Activity</h2>
+          <span className="metal-kicker">Code Activity</span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-5xl">GitHub signal</h2>
           <div className="mt-8">
             <GitHubContributions username="Feliciety02" />
           </div>
         </Reveal>
       </section>
-    </div>
+    </MetallicPage>
   );
 }

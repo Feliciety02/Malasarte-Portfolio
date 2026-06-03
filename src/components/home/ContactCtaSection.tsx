@@ -5,8 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 export function ContactCtaSection() {
   return (
     <section className="relative px-6 py-24">
-      <Reveal className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] glass-strong p-12 text-center md:p-20">
-        <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-20" />
+      <Reveal className="metal-panel mx-auto max-w-5xl p-12 text-center md:p-20">
         <h2 className="font-display text-4xl font-bold md:text-6xl">
           Hiring for a role that needs <span className="text-gradient">design range</span>?
         </h2>

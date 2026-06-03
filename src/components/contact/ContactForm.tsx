@@ -15,7 +15,7 @@ export function ContactForm() {
           setTimeout(() => setSent(false), 4000);
           event.currentTarget.reset();
         }}
-        className="space-y-5 rounded-3xl glass-strong p-8 md:p-10"
+        className="metal-panel space-y-5 p-8 md:p-10"
       >
         <div className="grid gap-5 md:grid-cols-2">
           <Field label="Your name" name="name" placeholder="Jane Doe" required />
@@ -35,12 +35,12 @@ export function ContactForm() {
             required
             rows={6}
             placeholder="Tell me about your project..."
-            className="mt-2 w-full resize-none rounded-2xl border border-border bg-background/40 px-4 py-3 text-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
+            className="metal-input mt-2 w-full resize-none px-4 py-3 text-sm outline-none transition-all"
           />
         </div>
         <button
           type="submit"
-          className="group inline-flex items-center gap-2 rounded-full bg-gradient-hero px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.02]"
+          className="metal-cta group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
         >
           Send message
           <Send size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -49,7 +49,7 @@ export function ContactForm() {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-sm text-emerald-300"
+            className="flex items-center gap-2 text-sm text-primary"
           >
             <CheckCircle2 size={16} /> Message sent. I&apos;ll get back to you shortly.
           </motion.div>
@@ -86,7 +86,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="mt-2 w-full rounded-2xl border border-border bg-background/40 px-4 py-3 text-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/30"
+        className="metal-input mt-2 w-full px-4 py-3 text-sm outline-none transition-all"
       />
     </div>
   );

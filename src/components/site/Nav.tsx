@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Brand } from "@/components/site/Brand";
 import { navLinks } from "@/data/site";
@@ -8,7 +8,9 @@ import { cn } from "@/lib/utils";
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [atPageEnd, setAtPageEnd] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -16,9 +18,19 @@ export function Nav() {
       const maxScroll =
         Math.max(root.scrollHeight, document.body.scrollHeight) - window.innerHeight;
       const isAtEnd = maxScroll > 80 && window.scrollY >= maxScroll - 12;
+      const current = window.scrollY;
 
-      setScrolled(window.scrollY > 20);
+      setScrolled(current > 20);
       setAtPageEnd(isAtEnd);
+
+      const delta = current - lastScrollY.current;
+      if (current > 60 && delta > 8) {
+        setHidden(true);
+      } else if (delta < -4 || current < 60) {
+        setHidden(false);
+      }
+
+      lastScrollY.current = current;
 
       if (isAtEnd) {
         setOpen(false);
@@ -34,15 +46,16 @@ export function Nav() {
     <header
       className={cn(
         "fixed left-0 right-0 top-0 z-50 transition-all duration-500",
-        scrolled ? "py-3" : "py-5",
+        scrolled ? "py-2.5 sm:py-3" : "py-3 sm:py-5",
+        hidden ? "-translate-y-full" : "translate-y-0",
         atPageEnd && "pointer-events-none -translate-y-4 opacity-0",
       )}
       aria-hidden={atPageEnd}
     >
       <div
         className={cn(
-          "mx-auto flex max-w-7xl items-center justify-between rounded-full px-6 py-3 transition-all duration-500",
-          scrolled ? "mx-4 glass-strong shadow-card md:mx-auto" : "bg-transparent",
+          "mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3",
+          scrolled ? "metal-ghost mx-4 shadow-card md:mx-auto" : "bg-transparent",
         )}
       >
         <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
@@ -53,7 +66,7 @@ export function Nav() {
               key={link.to}
               to={link.to}
               className="relative rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "text-foreground bg-white/5" }}
+              activeProps={{ className: "bg-primary/12 text-foreground" }}
               activeOptions={{ exact: link.to === "/" }}
             >
               {link.label}
@@ -63,14 +76,14 @@ export function Nav() {
 
         <Link
           to="/contact"
-          className="hidden items-center rounded-full bg-gradient-hero px-5 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-105 md:inline-flex"
+          className="metal-cta hidden items-center rounded-full px-5 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] md:inline-flex"
         >
           Let's talk
         </Link>
 
         <button
           onClick={() => setOpen((value) => !value)}
-          className="rounded-full glass p-2 md:hidden"
+          className="metal-ghost rounded-full p-2 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
@@ -78,7 +91,7 @@ export function Nav() {
       </div>
 
       {open ? (
-        <div className="mx-4 mt-2 rounded-2xl glass-strong p-4 md:hidden">
+        <div className="metal-panel mx-4 mt-2 p-4 md:hidden">
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
@@ -86,7 +99,7 @@ export function Nav() {
                 to={link.to}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground"
-                activeProps={{ className: "text-foreground bg-white/5" }}
+                activeProps={{ className: "text-foreground bg-primary/12" }}
                 activeOptions={{ exact: link.to === "/" }}
               >
                 {link.label}

@@ -21,7 +21,7 @@ export function Brand({ className, imageClassName, textClassName, showName = tru
         )}
       />
       {showName ? (
-        <span className={cn("font-display text-lg font-bold tracking-tight", textClassName)}>
+        <span className={cn("font-display text-lg font-bold tracking-normal", textClassName)}>
           Fe Anne Malasarte
         </span>
       ) : null}

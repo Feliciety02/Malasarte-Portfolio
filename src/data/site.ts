@@ -5,7 +5,6 @@ export const navLinks = [
   { to: "/works", label: "Works" },
   { to: "/services", label: "Services" },
   { to: "/skills", label: "Skills" },
-  { to: "/process", label: "Process" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -13,7 +12,6 @@ export const navLinks = [
 export const footerExploreLinks = [
   { to: "/works", label: "Works" },
   { to: "/skills", label: "Skills" },
-  { to: "/process", label: "Process" },
   { to: "/about", label: "About" },
 ] as const;
 

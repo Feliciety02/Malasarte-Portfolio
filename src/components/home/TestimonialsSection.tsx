@@ -20,14 +20,14 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <Reveal key={testimonial.name} delay={index * 0.08}>
               <motion.div
-                whileHover={{ y: -4 }}
-                className="relative h-full rounded-3xl glass-strong p-7 hover-lift"
+                whileHover={{ y: -3 }}
+                className="metal-card relative h-full p-7"
               >
                 <Quote size={20} className="text-primary" />
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   &quot;{testimonial.quote}&quot;
                 </p>
-                <div className="mt-6 border-t border-border/60 pt-4">
+                <div className="mt-6 border-t border-white/10 pt-4">
                   <div className="font-display text-base font-semibold">{testimonial.name}</div>
                   <div className="text-xs text-muted-foreground">{testimonial.role}</div>
                 </div>

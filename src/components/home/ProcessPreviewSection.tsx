@@ -1,10 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
-  useMotionTemplate,
-  useMotionValueEvent,
+  useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
   useTransform,
 } from "motion/react";
@@ -16,6 +14,11 @@ import { processSteps } from "@/data/home";
 import { cn } from "@/lib/utils";
 
 const processMarquee = ["Research", "Concept", "Design", "Deliver"] as const;
+const lastProcessIndex = processSteps.length - 1;
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
 
 const stepCopy: Record<string, { description: string; deliverables: string[] }> = {
   Research: {
@@ -41,55 +44,87 @@ const stepCopy: Record<string, { description: string; deliverables: string[] }> 
 };
 
 export function ProcessPreviewSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const procWidth = useRef(1);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
+  const rawProgress = useMotionValue(0);
+  const smoothProgress = useSpring(rawProgress, { stiffness: 35, damping: 20, mass: 0.8 });
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const reduce = prefersReducedMotion || isMobile;
+
+  /* ── scroll tracking ── */
+  useEffect(() => {
+    if (reduce) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    el.style.height = "300vh";
+
+    let frame = 0;
+    const tick = () => {
+      frame = 0;
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      const dist = Math.max(1, el.offsetHeight - window.innerHeight);
+      const p = clamp((window.scrollY - top) / dist, 0, 1);
+      rawProgress.set(p);
+
+      if (trackRef.current && viewportRef.current) {
+        procWidth.current = Math.max(1, trackRef.current.scrollWidth - viewportRef.current.clientWidth);
+      }
+
+      const sp = clamp((p - 0.33) / (0.85 - 0.33), 0, 1);
+      setActiveIndex((c) => {
+        const n = clamp(Math.floor(sp * processSteps.length * 0.999), 0, lastProcessIndex);
+        return c === n ? c : n;
+      });
+    };
+
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(tick); };
+
+    tick();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+    };
+  }, [reduce, rawProgress]);
+
+  /* ── derived transforms ── */
+  const overlayY = useTransform(smoothProgress, [0, 0.33, 0.85, 1], ["100%", "0%", "0%", "100%"]);
+  const barScale = useTransform(smoothProgress, (v) => {
+    const sp = Math.max(0, Math.min(1, (v - 0.33) / (0.85 - 0.33)));
+    return sp;
+  });
+  const trackX = useTransform(smoothProgress, (v) => {
+    const sp = Math.max(0, Math.min(1, (v - 0.33) / (0.85 - 0.33)));
+    return -sp * procWidth.current;
   });
 
-  // Smooth the scroll progress so horizontal travel feels cinematic.
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 28,
-    mass: 0.35,
-  });
-
-  // Translate 0 → 1 progress into a horizontal offset that reveals the full track.
-  // We move by (cards - 1) / cards of the track width so the last card lands centered-ish.
-  const trackX = useTransform(smoothProgress, [0, 1], ["0%", "-75%"]);
-
-  // Background parallax (subtle, foreground stays still).
-  const metalY = useTransform(smoothProgress, [0, 1], [-12, 12]);
-  const marqueeBaseX = useTransform(smoothProgress, [0, 1], ["0%", "-22%"]);
-  const marqueeReverseBaseX = useTransform(smoothProgress, [0, 1], ["-22%", "0%"]);
-  const marqueeX = useMotionTemplate`${marqueeBaseX}`;
-  const marqueeReverseX = useMotionTemplate`${marqueeReverseBaseX}`;
-  const progressScale = useTransform(smoothProgress, [0, 1], [0, 1]);
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (prefersReducedMotion) return;
-    const next = Math.min(
-      processSteps.length - 1,
-      Math.max(0, Math.floor(latest * processSteps.length * 0.999)),
-    );
-    setActiveIndex(next);
-  });
+  const marqueeX = useTransform(smoothProgress, (v) => `${(v * -8).toFixed(1)}%`);
+  const marqueeRX = useTransform(smoothProgress, (v) => `${(-8 + v * 8).toFixed(1)}%`);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-[#0c0d0e] md:h-[320vh]"
-    >
-      {/* MOBILE / reduced-motion fallback: native horizontal swipe */}
-      <div className="md:hidden">
+    <section ref={containerRef} className="relative bg-[#0c0d0e]">
+      {/* Mobile / reduced-motion fallback */}
+      <div className={reduce ? "block" : "md:hidden"}>
         <div className="relative overflow-hidden px-6 py-20">
           <div className="absolute inset-0 z-0 bg-[#141516]" />
           <div className="absolute inset-0 z-0 opacity-60">
-            <BrushedMetalBackground interactiveTargetRef={sectionRef} />
+            <BrushedMetalBackground interactiveTargetRef={containerRef} />
           </div>
           <div className="relative z-10 mx-auto max-w-2xl">
             <SectionHeader
@@ -127,125 +162,111 @@ export function ProcessPreviewSection() {
         </div>
       </div>
 
-      {/* DESKTOP: vertical-scroll-to-horizontal sticky experience */}
-      <div className="sticky top-0 hidden h-screen overflow-hidden md:block">
-        <div className="absolute inset-0 z-0 bg-[#141516]" />
+      {/* Desktop: scroll-driven overlay (always rendered, Y animated by progress) */}
+      <div className={reduce ? "hidden" : "hidden md:block"}>
         <motion.div
-          aria-hidden
-          className="absolute -inset-x-8 -inset-y-12 z-0"
-          style={prefersReducedMotion ? undefined : { y: metalY }}
+          className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-[#0c0d0e] will-change-transform"
+          style={{ y: overlayY }}
         >
-          <BrushedMetalBackground interactiveTargetRef={sectionRef} />
-        </motion.div>
-
-        {/* ambient glows */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute left-[6%] top-[14%] h-72 w-72 rounded-full bg-white/[0.06] blur-[110px]" />
-          <div className="absolute bottom-[10%] right-[8%] h-80 w-80 rounded-full bg-primary/[0.10] blur-[130px]" />
-        </div>
-
-        {/* marquee parallax (background only) */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]"
-        >
-          <motion.div
-            className="flex w-max gap-16"
-            style={prefersReducedMotion ? undefined : { x: marqueeX }}
-          >
-            {Array.from({ length: 6 }).map((_, g) => (
-              <div key={g} className="flex gap-16">
-                {processMarquee.map((item) => (
-                  <span key={`${g}-${item}`}>{item}</span>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]"
-        >
-          <motion.div
-            className="flex w-max gap-16"
-            style={prefersReducedMotion ? undefined : { x: marqueeReverseX }}
-          >
-            {Array.from({ length: 6 }).map((_, g) => (
-              <div key={g} className="flex gap-16">
-                {processMarquee.map((item) => (
-                  <span key={`${g}-${item}`}>{item}</span>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Sticky viewport content */}
-        <div className="relative z-10 flex h-full flex-col">
-          {/* Header */}
-          <div className="mx-auto w-full max-w-7xl px-8 pt-16">
-            <div className="flex items-end justify-between gap-8">
-              <SectionHeader
-                eyebrow="Workflow"
-                title={
-                  <>
-                    A focused process that keeps work{" "}
-                    <span className="text-gradient">moving</span>.
-                  </>
-                }
-                description="Scroll to travel through every phase — research, concept, design, deliver."
-                className="mb-0"
-                contentClassName="max-w-2xl"
-              />
-              <LinkButton
-                to="/process"
-                variant="text"
-                className="hidden shrink-0 items-center pb-2 lg:inline-flex"
-              >
-                Full process <ArrowRight size={14} />
-              </LinkButton>
-            </div>
-
-            {/* Phase indicator */}
-            <div className="mt-8 flex items-center gap-4">
-              <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
-                  style={
-                    prefersReducedMotion
-                      ? { scaleX: 1, width: "100%" }
-                      : { scaleX: progressScale, width: "100%" }
-                  }
-                />
-              </div>
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
-                <span className="text-white">0{activeIndex + 1}</span>
-                <span className="text-white/40"> / 0{processSteps.length}</span>
-              </div>
-            </div>
+          <div className="absolute inset-0 z-0 bg-[#141516]" />
+          <div aria-hidden className="absolute inset-0 z-0">
+            <BrushedMetalBackground interactiveTargetRef={containerRef} />
           </div>
 
-          {/* Horizontal track */}
-          <div className="relative flex-1">
-            <motion.div
-              ref={trackRef}
-              className="absolute inset-y-0 left-0 flex items-center gap-6 pl-[8vw] pr-[8vw] will-change-transform"
-              style={prefersReducedMotion ? undefined : { x: trackX }}
-            >
-              {processSteps.map((step, i) => (
-                <ProcessCard
-                  key={step.title}
-                  index={i}
-                  total={processSteps.length}
-                  step={step}
-                  copy={stepCopy[step.title]}
-                  isActive={activeIndex === i}
-                  className="h-[64vh] w-[78vw] shrink-0 md:w-[58vw] lg:w-[44vw]"
-                />
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/45 to-transparent" />
+          </div>
+
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]">
+            <motion.div className="flex w-max gap-16" style={{ x: marqueeX }}>
+              {Array.from({ length: 6 }).map((_, g) => (
+                <div key={g} className="flex gap-16">
+                  {processMarquee.map((item) => (
+                    <span key={`${g}-${item}`}>{item}</span>
+                  ))}
+                </div>
               ))}
             </motion.div>
           </div>
-        </div>
+
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]">
+            <motion.div className="flex w-max gap-16" style={{ x: marqueeRX }}>
+              {Array.from({ length: 6 }).map((_, g) => (
+                <div key={g} className="flex gap-16">
+                  {processMarquee.map((item) => (
+                    <span key={`${g}-${item}`}>{item}</span>
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="relative z-10 flex h-full flex-col">
+            <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(2.5rem,5vh,3.5rem)]">
+              <div className="flex items-end justify-between gap-8">
+                <SectionHeader
+                  eyebrow="Workflow"
+                  title={
+                    <>
+                      A focused process that keeps work{" "}
+                      <span className="text-gradient">moving</span>.
+                    </>
+                  }
+                  description="Scroll to travel through every phase — research, concept, design, deliver."
+                  className="mb-0"
+                  contentClassName="max-w-xl"
+                  titleClassName="md:text-3xl lg:text-4xl"
+                />
+                <LinkButton
+                  to="/process"
+                  variant="text"
+                  className="hidden shrink-0 items-center pb-2 lg:inline-flex"
+                >
+                  Full process <ArrowRight size={14} />
+                </LinkButton>
+              </div>
+
+              <div className="mt-[clamp(1.25rem,2.5vh,2rem)] flex items-center gap-4">
+                <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
+                    style={{ scaleX: barScale, width: "100%" }}
+                  />
+                </div>
+                <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
+                  <span className="text-white">0{activeIndex + 1}</span>
+                  <span className="text-white/40"> / 0{processSteps.length}</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              ref={viewportRef}
+              data-process-viewport
+              className="relative mt-[clamp(1.5rem,3vh,2.5rem)] flex-1 overflow-hidden"
+            >
+              <motion.div
+                ref={trackRef}
+                data-process-track
+                className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
+                style={{ x: trackX }}
+              >
+                {processSteps.map((step, i) => (
+                  <ProcessCard
+                    key={step.title}
+                    index={i}
+                    total={processSteps.length}
+                    step={step}
+                    copy={stepCopy[step.title]}
+                    isActive={activeIndex === i}
+                    className="h-[clamp(24rem,62vh,38rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]"
+                  />
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -266,23 +287,20 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
     <motion.article
       aria-current={isActive ? "step" : undefined}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 transition-colors duration-500 md:p-10",
-        isActive
-          ? "glass-strong border-white/20"
-          : "glass border-white/10 bg-background/30",
+        "group relative flex h-full flex-col overflow-hidden border p-8 transition-colors duration-500 md:p-10",
+        isActive ? "metal-card border-white/20" : "metal-panel border-white/10 bg-background/30",
         className,
       )}
-      animate={{ opacity: isActive ? 1 : 0.55, scale: isActive ? 1 : 0.97 }}
-      transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+      animate={{ opacity: isActive ? 1 : 0.68 }}
+      transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
     >
-      {/* big numeral */}
       <div className="pointer-events-none absolute right-6 top-4 font-display text-[8rem] font-bold leading-none text-white/[0.06] md:text-[10rem]">
         0{index + 1}
       </div>
 
       <div className="relative z-10 flex items-center gap-3">
-        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-hero shadow-glow">
-          <Icon size={18} className="text-primary-foreground" />
+        <div className="metal-icon h-12 w-12 text-primary">
+          <Icon size={18} />
         </div>
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
           Phase 0{index + 1}
@@ -305,17 +323,13 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
         </div>
         <ul className="flex flex-wrap gap-2">
           {copy?.deliverables.map((d) => (
-            <li
-              key={d}
-              className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-xs text-white/80"
-            >
+            <li key={d} className="metal-ghost rounded-full px-3 py-1 text-xs text-white/80">
               {d}
             </li>
           ))}
         </ul>
       </div>
 
-      {/* hover sheen */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
