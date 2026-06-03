@@ -3,13 +3,28 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Brand } from "@/components/site/Brand";
 import { navLinks } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [atPageEnd, setAtPageEnd] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const root = document.documentElement;
+      const maxScroll =
+        Math.max(root.scrollHeight, document.body.scrollHeight) - window.innerHeight;
+      const isAtEnd = maxScroll > 80 && window.scrollY >= maxScroll - 12;
+
+      setScrolled(window.scrollY > 20);
+      setAtPageEnd(isAtEnd);
+
+      if (isAtEnd) {
+        setOpen(false);
+      }
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -17,14 +32,18 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-3" : "py-5"
-      }`}
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 transition-all duration-500",
+        scrolled ? "py-3" : "py-5",
+        atPageEnd && "pointer-events-none -translate-y-4 opacity-0",
+      )}
+      aria-hidden={atPageEnd}
     >
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full px-6 py-3 transition-all duration-500 ${
-          scrolled ? "glass-strong shadow-card mx-4 md:mx-auto" : "bg-transparent"
-        }`}
+        className={cn(
+          "mx-auto flex max-w-7xl items-center justify-between rounded-full px-6 py-3 transition-all duration-500",
+          scrolled ? "mx-4 glass-strong shadow-card md:mx-auto" : "bg-transparent",
+        )}
       >
         <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
 

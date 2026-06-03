@@ -22,5 +22,5 @@ export const socialLinks = [
   { icon: Dribbble, href: "https://dribbble.com", label: "Dribbble" },
   { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Mail, href: "mailto:hello@feanne.design", label: "Email" },
+  { icon: Mail, href: "mailto:feannemlsrte@gmail.com", label: "Email" },
 ] as const;

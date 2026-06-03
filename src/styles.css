@@ -38,37 +38,37 @@
 
 :root {
   --radius: 0.75rem;
-  /* Violet on near-black, with yellow accent hints */
-  --background: oklch(0.10 0.012 280);
-  --foreground: oklch(0.97 0.01 280);
-  --card: oklch(0.15 0.02 280 / 60%);
-  --card-foreground: oklch(0.97 0.01 280);
-  --popover: oklch(0.14 0.02 280);
-  --popover-foreground: oklch(0.97 0.01 280);
-  --primary: oklch(0.70 0.20 305);
-  --primary-foreground: oklch(0.10 0.012 280);
-  --secondary: oklch(0.20 0.03 280);
-  --secondary-foreground: oklch(0.97 0.01 280);
-  --muted: oklch(0.18 0.02 280);
-  --muted-foreground: oklch(0.70 0.03 280);
+  /* Monochrome near-black foundation */
+  --background: oklch(0.1 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.15 0 0 / 60%);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.14 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.7 0.2 305);
+  --primary-foreground: oklch(0.1 0.012 280);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.18 0 0);
+  --muted-foreground: oklch(0.7 0 0);
   --accent: oklch(0.88 0.17 95); /* yellow accent */
   --accent-foreground: oklch(0.12 0.01 90);
   --destructive: oklch(0.62 0.24 25);
-  --destructive-foreground: oklch(0.97 0.01 280);
+  --destructive-foreground: oklch(0.97 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.70 0.20 305);
+  --ring: oklch(0.7 0.2 305);
 
-  --glow-purple: oklch(0.65 0.25 295);
-  --glow-blue: oklch(0.7 0.2 240);
-  --glow-pink: oklch(0.75 0.22 350);
+  --glow-purple: oklch(0.72 0 0);
+  --glow-blue: oklch(0.56 0 0);
+  --glow-pink: oklch(0.82 0 0);
   --yellow: oklch(0.88 0.17 95);
 
   --gradient-hero: linear-gradient(
     135deg,
     oklch(0.65 0.25 295) 0%,
     oklch(0.55 0.22 280) 50%,
-    oklch(0.70 0.22 320) 100%
+    oklch(0.7 0.22 320) 100%
   );
   --gradient-text: linear-gradient(
     120deg,
@@ -77,11 +77,11 @@
     oklch(0.88 0.18 320)
   );
   --gradient-mesh:
-    radial-gradient(at 18% 18%, oklch(0.35 0.18 295 / 22%) 0px, transparent 55%),
-    radial-gradient(at 82% 10%, oklch(0.30 0.10 280 / 18%) 0px, transparent 50%),
-    radial-gradient(at 60% 92%, oklch(0.32 0.16 320 / 18%) 0px, transparent 55%);
-  --shadow-glow: 0 10px 60px -15px oklch(0.65 0.25 295 / 45%);
-  --shadow-card: 0 20px 60px -20px oklch(0.04 0.02 280 / 70%);
+    radial-gradient(at 18% 18%, oklch(0.42 0 0 / 18%) 0px, transparent 55%),
+    radial-gradient(at 82% 10%, oklch(0.3 0 0 / 16%) 0px, transparent 50%),
+    radial-gradient(at 60% 92%, oklch(0.36 0 0 / 14%) 0px, transparent 55%);
+  --shadow-glow: 0 10px 60px -15px oklch(0.72 0 0 / 35%);
+  --shadow-card: 0 20px 60px -20px oklch(0.04 0 0 / 70%);
 }
 
 @layer base {
@@ -141,6 +141,31 @@
   }
 }
 
+@layer components {
+  .hero-reference {
+    padding-top: clamp(5.75rem, 11.2vw, 7.25rem);
+  }
+
+  .hero-reference__artwork {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    max-width: min(90%, 900px);
+    width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .hero-reference {
+      padding-top: clamp(5.5rem, 22vw, 7rem);
+    }
+
+    .hero-reference__artwork {
+      max-width: none;
+      width: 80%;
+    }
+  }
+}
+
 @layer utilities {
   .glass {
     background: oklch(1 0 0 / 5%);
@@ -149,7 +174,7 @@
     border: 1px solid oklch(1 0 0 / 10%);
   }
   .glass-strong {
-    background: oklch(0.18 0.04 280 / 70%);
+    background: oklch(0.18 0 0 / 70%);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid oklch(1 0 0 / 12%);
@@ -217,12 +242,7 @@
   }
 
   .thin-x-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      90deg,
-      oklch(0.55 0 0),
-      oklch(0.7 0 0),
-      oklch(0.85 0 0)
-    );
+    background: linear-gradient(90deg, oklch(0.55 0 0), oklch(0.7 0 0), oklch(0.85 0 0));
     border-radius: 9999px;
   }
 
@@ -262,17 +282,6 @@
     background: linear-gradient(90deg, transparent, oklch(1 0 0 / 12%), transparent);
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
-  }
-
-  .cursor-none-all,
-  .cursor-none-all * {
-    cursor: none !important;
-  }
-  @media (max-width: 768px) {
-    .cursor-none-all,
-    .cursor-none-all * {
-      cursor: auto !important;
-    }
   }
 }
 

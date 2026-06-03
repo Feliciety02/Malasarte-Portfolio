@@ -1,8 +1,15 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useLocation,
+} from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
-import { CustomCursor } from "@/components/site/CustomCursor";
+import { LoadingScreen } from "@/components/site/LoadingScreen";
 // WebGL background removed in favour of a clean monochrome canvas.
 
 function NotFoundComponent() {
@@ -39,19 +46,45 @@ export const Route = createRootRoute({
           "Portfolio of Fe Anne Malasarte — UI/UX designer, brand identity & visual storyteller crafting premium digital experiences.",
       },
       { name: "author", content: "Fe Anne Malasarte" },
-      { property: "og:title", content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller" },
+      {
+        property: "og:title",
+        content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller",
+      },
       {
         property: "og:description",
         content: "Premium portfolio of UI/UX, branding and creative design work.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller" },
-      { name: "description", content: "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills." },
-      { property: "og:description", content: "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills." },
-      { name: "twitter:description", content: "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png" },
+      {
+        name: "twitter:title",
+        content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller",
+      },
+      {
+        name: "description",
+        content:
+          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
+      },
+      {
+        property: "og:description",
+        content:
+          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -83,11 +116,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
     <>
-      <CustomCursor />
+      <LoadingScreen />
       <Nav />
-      <main className="min-h-[calc(100svh-6rem)] pt-24">
+      <main className={`min-h-[calc(100svh-6rem)] ${isHome ? "" : "pt-24"}`}>
         <Outlet />
       </main>
       <Footer />

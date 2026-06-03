@@ -32,6 +32,18 @@ export const skillHighlights = [
   { name: "Front End Development", level: 86 },
 ];
 
+export const experienceStats = [
+  { value: "5+", label: "Years designing" },
+  { value: "40+", label: "Projects shipped" },
+  { value: "10+", label: "Clients supported" },
+] as const;
+
+export const experienceTimeline = [
+  { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
+  { year: "2022 - 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
+  { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
+] as const;
+
 export const servicePreviews = [
   {
     icon: Layers,
@@ -40,7 +52,11 @@ export const servicePreviews = [
   },
   { icon: PenTool, title: "Branding", desc: "Identity systems with personality and clarity." },
   { icon: Megaphone, title: "Publication", desc: "Editorial layouts and pubmat campaigns." },
-  { icon: Globe, title: "Front End Development", desc: "Responsive interfaces translated from design into polished builds." },
+  {
+    icon: Globe,
+    title: "Front End Development",
+    desc: "Responsive interfaces translated from design into polished builds.",
+  },
   { icon: FileText, title: "Content & VA", desc: "Captions, blogs, and creator support." },
 ] as const;
 

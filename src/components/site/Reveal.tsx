@@ -1,5 +1,6 @@
 import { motion, useInView } from "motion/react";
 import { useRef, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export function Reveal({
   children,
@@ -27,9 +28,22 @@ export function Reveal({
   );
 }
 
-export function FloatingOrbs() {
+export function FloatingOrbs({
+  className,
+  clipped = true,
+}: {
+  className?: string;
+  clipped?: boolean;
+}) {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute inset-0",
+        clipped ? "overflow-hidden" : undefined,
+        className,
+      )}
+    >
       <div
         className="glow-orb animate-float"
         style={{
