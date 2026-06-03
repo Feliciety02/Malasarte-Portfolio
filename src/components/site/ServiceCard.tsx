@@ -26,18 +26,16 @@ export function ServiceCard({
     return (
       <motion.div
         whileHover={{ y: -3 }}
-        className="blueprint-surface metal-card group relative h-full p-6 md:p-7"
+        className="service-card-clean metal-card group relative h-full p-6 md:p-7"
       >
-        <ServiceHeader Icon={Icon} title={title} />
+        <ServiceHeader Icon={Icon} title={title} showEyebrow={false} />
         <p className="relative z-10 mt-4 text-sm leading-6 text-muted-foreground">{desc}</p>
         {bullets ? (
-          <ul className="relative z-10 mt-6 space-y-3">
+          <ul className="relative z-10 mt-6 space-y-3.5">
             {bullets.map((bullet) => (
-              <li
-                key={bullet}
-                className="flex items-center gap-3 border-t border-white/10 pt-3 text-sm text-white/78"
-              >
-                <Check size={14} className="text-primary" /> {bullet}
+              <li key={bullet} className="flex items-center gap-3 text-sm text-white/76">
+                <Check size={14} className="shrink-0 text-primary" />
+                <span>{bullet}</span>
               </li>
             ))}
           </ul>
@@ -65,15 +63,27 @@ export function ServiceCard({
   );
 }
 
-function ServiceHeader({ Icon, title }: { Icon: LucideIcon; title: string }) {
+function ServiceHeader({
+  Icon,
+  title,
+  showEyebrow = true,
+}: {
+  Icon: LucideIcon;
+  title: string;
+  showEyebrow?: boolean;
+}) {
   return (
     <div className="relative z-10 flex items-start gap-4">
-      <div className="metal-icon h-12 w-12 shrink-0 text-primary">
+      <div className="metal-icon h-12 w-12 shrink-0">
         <Icon size={18} />
       </div>
       <div>
-        <span className="metal-microcopy">Capability</span>
-        <h3 className="mt-2 font-display text-xl font-semibold leading-tight md:text-2xl">
+        {showEyebrow ? <span className="metal-microcopy">Capability</span> : null}
+        <h3
+          className={`font-display text-xl font-semibold leading-tight md:text-2xl ${
+            showEyebrow ? "mt-2" : "mt-1"
+          }`}
+        >
           {title}
         </h3>
       </div>

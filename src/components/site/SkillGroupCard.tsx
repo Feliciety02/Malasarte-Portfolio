@@ -18,7 +18,7 @@ export function SkillGroupCard({
   return (
     <div ref={ref} className="mesh-surface metal-card group p-6 md:p-8">
       <div className="relative z-10 flex items-center gap-4">
-        <div className="metal-icon h-12 w-12 text-primary">
+        <div className="metal-icon h-12 w-12">
           <Icon size={20} />
         </div>
         <div>

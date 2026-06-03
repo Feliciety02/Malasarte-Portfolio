@@ -11,7 +11,7 @@ export function SkillHighlightsSection() {
       <div className="mx-auto max-w-7xl">
         <Reveal>
           <SectionHeader
-            eyebrow="Toolkit"
+            eyebrow="Core strengths"
             title="Skill highlights"
             action={
               <LinkButton

@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { LinkButton } from "@/components/site/LinkButton";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -26,11 +25,9 @@ export function FeaturedProjectsSection() {
           contentClassName="max-w-xl"
         />
         <div className="grid gap-6 md:grid-cols-2">
-          {featuredProjects.map((project, i) => (
-            <div key={project.slug} className="group">
-              <CaseStudyLink slug={project.slug}>
-                <ProjectCard project={project} />
-              </CaseStudyLink>
+          {featuredProjects.map((project) => (
+            <div key={project.slug}>
+              <ProjectCard project={project} />
             </div>
           ))}
         </div>

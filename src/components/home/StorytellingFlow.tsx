@@ -290,7 +290,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
             <SectionHeader eyebrow="Workflow" title={<>A focused process that keeps work <span className="text-gradient">moving</span>.</>}
               description="Research, concept, design, deliver — swipe through how each phase lands." className="mb-10" />
           </div>
-          <div className="relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
+          <div className="mobile-thin-x-scrollbar relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
             {PROCESS_STEPS.map((step, i) => (
               <ProcessCard key={step.title} index={i} total={PROCESS_STEPS.length} step={step} copy={stepCopy[step.title]} isActive
                 className="w-[82vw] shrink-0 snap-center" />

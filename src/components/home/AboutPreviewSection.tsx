@@ -19,7 +19,7 @@ export function AboutPreviewSection() {
             </div>
           </Reveal>
           <Reveal delay={0.1} className="md:col-span-3">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-yellow">
               About
             </span>
             <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">

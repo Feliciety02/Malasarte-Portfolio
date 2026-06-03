@@ -1,11 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { siFramer, siMiro, siNotion, siWebflow, type SimpleIcon } from "simple-icons";
-import afterEffectsLogo from "@/assets/tool-logos/after-effects.svg";
+import androidStudioLogo from "@/assets/tool-logos/androidstudio.svg";
+import burpSuiteLogo from "@/assets/tool-logos/burpsuite.svg";
 import canvaLogo from "@/assets/tool-logos/canva.svg";
+import figjamLogo from "@/assets/tool-logos/figjam.svg";
 import figmaLogo from "@/assets/tool-logos/figma.svg";
-import illustratorLogo from "@/assets/tool-logos/illustrator.svg";
-import indesignLogo from "@/assets/tool-logos/indesign.svg";
-import photoshopLogo from "@/assets/tool-logos/photoshop.svg";
+import framerLogo from "@/assets/tool-logos/framer.svg";
+import gitLogo from "@/assets/tool-logos/git.svg";
+import githubLogo from "@/assets/tool-logos/github.svg";
+import githubDesktopLogo from "@/assets/tool-logos/githubdesktop.svg";
+import googleColabLogo from "@/assets/tool-logos/googlecolab.svg";
+import googleWorkspaceLogo from "@/assets/tool-logos/googleworkspace.svg";
+import jupyterLogo from "@/assets/tool-logos/jupyter.svg";
+import microsoftOfficeLogo from "@/assets/tool-logos/msoffice.svg";
+import miroLogo from "@/assets/tool-logos/miro.svg";
+import mySqlLogo from "@/assets/tool-logos/mysql.svg";
+import phpMyAdminLogo from "@/assets/tool-logos/phpmyadmin.svg";
+import postmanLogo from "@/assets/tool-logos/postman.svg";
+import vsCodeLogo from "@/assets/tool-logos/vscode.svg";
+import webflowLogo from "@/assets/tool-logos/webflow.svg";
+import wiresharkLogo from "@/assets/tool-logos/wireshark.svg";
+import xamppLogo from "@/assets/tool-logos/xampp.svg";
 
 type Tool = { name: string; slug: string; color: string };
 
@@ -37,8 +51,7 @@ type DragState = {
   lastTime: number;
 };
 
-const PILL_HEIGHT = 46;
-const MOBILE_TOKEN_SIZE = 54;
+const MOBILE_TOKEN_SIZE = 64;
 const GLOBE_PADDING = 14;
 const COLLISION_PADDING = 2;
 const POSITION_ITERATIONS = 12;
@@ -53,50 +66,32 @@ const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
 
-type ToolIcon =
-  | {
-      kind: "asset";
-      src: string;
-      surface?: string;
-    }
-  | {
-      kind: "simple";
-      icon: SimpleIcon;
-      foreground: string;
-      surface?: string;
-    };
+type ToolIcon = {
+  src: string;
+};
 
 const TOOL_ICONS: Record<string, ToolIcon> = {
-  figma: { kind: "asset", src: figmaLogo },
-  adobeillustrator: { kind: "asset", src: illustratorLogo },
-  adobephotoshop: { kind: "asset", src: photoshopLogo },
-  adobeindesign: { kind: "asset", src: indesignLogo },
-  adobeaftereffects: { kind: "asset", src: afterEffectsLogo },
-  framer: {
-    kind: "simple",
-    icon: siFramer,
-    foreground: "#111111",
-    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,246,255,0.92))",
-  },
-  webflow: {
-    kind: "simple",
-    icon: siWebflow,
-    foreground: "#111111",
-    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,248,255,0.92))",
-  },
-  notion: {
-    kind: "simple",
-    icon: siNotion,
-    foreground: "#111111",
-    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,246,255,0.92))",
-  },
-  miro: {
-    kind: "simple",
-    icon: siMiro,
-    foreground: "#111111",
-    surface: "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(224,226,228,0.92))",
-  },
-  canva: { kind: "asset", src: canvaLogo },
+  figma: { src: figmaLogo },
+  figjam: { src: figjamLogo },
+  framer: { src: framerLogo },
+  webflow: { src: webflowLogo },
+  miro: { src: miroLogo },
+  canva: { src: canvaLogo },
+  vscode: { src: vsCodeLogo },
+  androidstudio: { src: androidStudioLogo },
+  xampp: { src: xamppLogo },
+  git: { src: gitLogo },
+  github: { src: githubLogo },
+  githubdesktop: { src: githubDesktopLogo },
+  postman: { src: postmanLogo },
+  mysql: { src: mySqlLogo },
+  phpmyadmin: { src: phpMyAdminLogo },
+  jupyter: { src: jupyterLogo },
+  googlecolab: { src: googleColabLogo },
+  msoffice: { src: microsoftOfficeLogo },
+  googleworkspace: { src: googleWorkspaceLogo },
+  wireshark: { src: wiresharkLogo },
+  burpsuite: { src: burpSuiteLogo },
 };
 
 export function GlassDome({
@@ -114,6 +109,8 @@ export function GlassDome({
   const lastFrameRef = useRef<number | null>(null);
   const [size, setSize] = useState(560);
   const [bodies, setBodies] = useState<Body[]>([]);
+  const [revealedId, setRevealedId] = useState<string | null>(null);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -134,32 +131,27 @@ export function GlassDome({
   const baseBodies = useMemo<Body[]>(
     () =>
       tools.map((tool, index) => {
-        const width = isCompact
-          ? MOBILE_TOKEN_SIZE
-          : Math.max(112, Math.min(188, 96 + tool.name.length * 8));
-        const height = isCompact ? MOBILE_TOKEN_SIZE : PILL_HEIGHT;
-        const capRadius = height * 0.5 - 1 + COLLISION_PADDING * 0.5;
-        const halfLength = isCompact
-          ? 0
-          : Math.max(capRadius, width * 0.5 - height * 0.5 + COLLISION_PADDING);
-        const itemsPerRow = isCompact ? 4 : 4;
+        const pillSize = MOBILE_TOKEN_SIZE;
+        const capRadius = pillSize * 0.5 - 1 + COLLISION_PADDING * 0.5;
+        const halfLength = 0;
+        const itemsPerRow = 6;
         const column = index % itemsPerRow;
         const row = Math.floor(index / itemsPerRow);
         const columnCenter = (itemsPerRow - 1) * 0.5;
-        const rowOffset = row % 2 === 0 ? 0 : isCompact ? 18 : 42;
-        const x = (column - columnCenter) * (isCompact ? 74 : 104) + rowOffset * 0.7;
-        const y = -globeRadius * 0.7 - row * (isCompact ? 68 : 58);
+        const rowOffset = row % 2 === 0 ? 0 : 24;
+        const x = (column - columnCenter) * (isCompact ? 70 : 78) + rowOffset * 0.7;
+        const y = -globeRadius * 0.7 - row * 62;
 
         return {
           id: tool.slug,
           name: tool.name,
           slug: tool.slug,
           color: tool.color,
-          width,
-          height,
+          width: pillSize,
+          height: pillSize,
           capRadius,
           halfLength,
-          mass: width * 0.12,
+          mass: pillSize * 0.12,
           x,
           y,
           vx: 0,
@@ -373,6 +365,22 @@ export function GlassDome({
         <div className="absolute inset-[7%] overflow-hidden rounded-full">
           {bodies.map((body) => {
             const isDragging = dragRef.current?.id === body.id;
+            const isRevealed = revealedId === body.id;
+
+            const startLongPress = () => {
+              if (longPressTimer.current) clearTimeout(longPressTimer.current);
+              longPressTimer.current = setTimeout(() => {
+                setRevealedId(body.id);
+              }, 400);
+            };
+
+            const cancelLongPress = () => {
+              if (longPressTimer.current) {
+                clearTimeout(longPressTimer.current);
+                longPressTimer.current = null;
+              }
+              setRevealedId(null);
+            };
 
             return (
               <button
@@ -393,6 +401,13 @@ export function GlassDome({
                     lastTime: performance.now(),
                   };
                   body.asleep = false;
+                  startLongPress();
+                }}
+                onPointerUp={() => {
+                  cancelLongPress();
+                }}
+                onPointerLeave={() => {
+                  cancelLongPress();
                 }}
                 className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
                 style={{
@@ -400,12 +415,12 @@ export function GlassDome({
                   height: body.height,
                   transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad)`,
                   transition: isDragging ? "none" : "box-shadow 180ms ease, filter 180ms ease",
-                  zIndex: isDragging ? 30 : 10,
+                  zIndex: isRevealed ? 40 : isDragging ? 30 : 10,
                   touchAction: "none",
                 }}
               >
                 <div
-                  className="relative flex h-full w-full items-center rounded-full border border-white/20 text-left"
+                  className="relative flex h-full w-full items-center justify-center rounded-full border border-white/20"
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
@@ -415,9 +430,6 @@ export function GlassDome({
                     backdropFilter: "blur(14px)",
                     WebkitBackdropFilter: "blur(14px)",
                     filter: isDragging ? "brightness(1.06)" : "none",
-                    justifyContent: isCompact ? "center" : "flex-start",
-                    gap: isCompact ? 0 : 8,
-                    paddingInline: isCompact ? 0 : 16,
                   }}
                 >
                   <span
@@ -431,19 +443,20 @@ export function GlassDome({
                   <span
                     className="relative grid shrink-0 place-items-center overflow-hidden rounded-lg border border-white/14"
                     style={{
-                      width: isCompact ? 34 : 32,
-                      height: isCompact ? 34 : 32,
+                      width: 40,
+                      height: 40,
                       background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
                       boxShadow: "0 0 18px rgba(255,255,255,0.08)",
                     }}
                   >
-                    <ToolLogo slug={body.slug} name={body.name} />
+                    <ToolLogo slug={body.slug} name={body.name} color={body.color} />
                   </span>
-                  {!isCompact ? (
+
+                  {isRevealed ? (
                     <span
-                      className="relative whitespace-nowrap text-[12px] font-medium tracking-[0.005em] text-white md:text-[12.5px]"
+                      className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/15 bg-[#1a1b1d] px-2.5 py-1 text-[11px] font-medium text-white shadow-xl"
                       style={{
-                        textShadow: "0 1px 10px rgba(8,10,24,0.55)",
+                        backdropFilter: "blur(12px)",
                       }}
                     >
                       {body.name}
@@ -459,7 +472,7 @@ export function GlassDome({
   );
 }
 
-function ToolLogo({ slug, name }: { slug: string; name: string }) {
+function ToolLogo({ slug, name }: { slug: string; name: string; color: string }) {
   const icon = TOOL_ICONS[slug];
 
   if (!icon) {
@@ -470,40 +483,17 @@ function ToolLogo({ slug, name }: { slug: string; name: string }) {
     );
   }
 
-  if (icon.kind === "asset") {
-    return (
-      <span
-        aria-hidden
-        className="grid h-full w-full place-items-center"
-        style={{
-          background: icon.surface ?? "transparent",
-        }}
-      >
-        <img
-          src={icon.src}
-          alt=""
-          aria-hidden
-          className="h-[70%] w-[70%] object-contain grayscale contrast-110"
-        />
-      </span>
-    );
-  }
-
   return (
     <span
       aria-hidden
       className="grid h-full w-full place-items-center"
-      style={{
-        background: icon.surface ?? "transparent",
-      }}
     >
-      <svg
-        viewBox="0 0 24 24"
-        className="h-[68%] w-[68%] object-contain"
-        style={{ color: icon.foreground }}
-      >
-        <path d={icon.icon.path} fill="currentColor" />
-      </svg>
+      <img
+        src={icon.src}
+        alt=""
+        aria-hidden
+        className="h-[70%] w-[70%] object-contain"
+      />
     </span>
   );
 }

@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useReducedMotion } from "motion/react";
 import { AboutPreviewSection } from "@/components/home/AboutPreviewSection";
 import { ContactCtaSection } from "@/components/home/ContactCtaSection";
-import { ExperienceSnapshotSection } from "@/components/home/ExperienceSnapshotSection";
 import { FeaturedProjectsSection } from "@/components/home/FeaturedProjectsSection";
 import { GitHubActivitySection } from "@/components/home/GitHubActivitySection";
 import { HeroBanner } from "@/components/home/HeroBanner";
@@ -41,14 +40,13 @@ function Home() {
       <HeroBanner />
       <MarqueeSection reducedMotion={reducedMotion} />
       <SkillHighlightsSection />
-      <FeaturedProjectsSection />
-      <ExperienceSnapshotSection />
       <ToolsStackSection reducedMotion={reducedMotion} />
+      <GitHubActivitySection />
+      <FeaturedProjectsSection />
       <ProcessPreviewSection />
       <ServicesPreviewSection reducedMotion={reducedMotion} />
       <TestimonialsSection />
       <AboutPreviewSection />
-      <GitHubActivitySection />
       <ContactCtaSection />
     </MetallicPage>
   );

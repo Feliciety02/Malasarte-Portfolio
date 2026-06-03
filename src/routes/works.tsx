@@ -107,7 +107,7 @@ function Works() {
                 exit={{ opacity: 0, scale: 0.98, clipPath: "inset(12% 0 12% 0)" }}
                 transition={{ duration: 0.5, delay: index * 0.04 }}
               >
-                <ProjectCard project={project} variant="grid" />
+                <ProjectCard project={project} />
               </motion.div>
             ))}
           </AnimatePresence>

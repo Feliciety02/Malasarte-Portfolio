@@ -78,8 +78,8 @@ function Marquee({ items, reducedMotion }: { items: string[]; reducedMotion: boo
             {items.map((item) => (
               <div key={`${loopIndex}-${item}`} className="flex items-center gap-12">
                 <span>{item}</span>
-                <span className="text-primary">
-                  <Star size={16} className="fill-primary/70 text-primary" strokeWidth={1.8} />
+                <span className="text-yellow">
+                  <Star size={16} className="fill-yellow/70 text-yellow" strokeWidth={1.8} />
                 </span>
               </div>
             ))}

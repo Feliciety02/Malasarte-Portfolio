@@ -104,13 +104,24 @@ export function ProcessPreviewSection() {
   }, [reduce, rawProgress]);
 
   /* ── derived transforms ── */
-  const overlayY = useTransform(smoothProgress, [0, 0.33, 0.85, 1], ["100%", "0%", "0%", "100%"]);
+  const overlayY = useTransform(smoothProgress, (v) => {
+    if (v < 0.06) return "100%";
+    if (v < 0.42) {
+      const t = (v - 0.06) / (0.42 - 0.06);
+      const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      return `${(1 - eased) * 100}%`;
+    }
+    if (v < 0.85) return "0%";
+    const t = (v - 0.85) / (1 - 0.85);
+    const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+    return `${(-eased) * 100}%`;
+  });
   const barScale = useTransform(smoothProgress, (v) => {
-    const sp = Math.max(0, Math.min(1, (v - 0.33) / (0.85 - 0.33)));
+    const sp = Math.max(0, Math.min(1, (v - 0.42) / (0.85 - 0.42)));
     return sp;
   });
   const trackX = useTransform(smoothProgress, (v) => {
-    const sp = Math.max(0, Math.min(1, (v - 0.33) / (0.85 - 0.33)));
+    const sp = Math.max(0, Math.min(1, (v - 0.42) / (0.85 - 0.42)));
     return -sp * procWidth.current;
   });
 
@@ -138,7 +149,7 @@ export function ProcessPreviewSection() {
               className="mb-10"
             />
           </div>
-          <div className="relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
+          <div className="mobile-thin-x-scrollbar relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
             {processSteps.map((step, i) => {
               const copy = stepCopy[step.title];
               return (
@@ -230,7 +241,7 @@ export function ProcessPreviewSection() {
               <div className="mt-[clamp(1.25rem,2.5vh,2rem)] flex items-center gap-4">
                 <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
                   <motion.div
-                    className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
+                    className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-yellow via-white/70 to-yellow"
                     style={{ scaleX: barScale, width: "100%" }}
                   />
                 </div>
@@ -299,7 +310,7 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
       </div>
 
       <div className="relative z-10 flex items-center gap-3">
-        <div className="metal-icon h-12 w-12 text-primary">
+        <div className="metal-icon h-12 w-12">
           <Icon size={18} />
         </div>
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">

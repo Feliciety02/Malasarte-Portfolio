@@ -23,7 +23,7 @@ export function TestimonialsSection() {
                 whileHover={{ y: -3 }}
                 className="metal-card relative h-full p-7"
               >
-                <Quote size={20} className="text-primary" />
+                <Quote size={20} className="text-yellow" />
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   &quot;{testimonial.quote}&quot;
                 </p>

@@ -15,7 +15,7 @@ export function ContactSidebar() {
           href="mailto:feannemlsrte@gmail.com"
           className="metal-card group flex items-start gap-4 p-6"
         >
-          <div className="metal-icon h-12 w-12 text-primary">
+          <div className="metal-icon h-12 w-12">
             <Mail size={18} />
           </div>
           <div>
@@ -34,7 +34,7 @@ export function ContactSidebar() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="metal-icon h-12 w-12 transition-all hover:scale-105 hover:text-primary"
+                className="metal-icon h-12 w-12 transition-all hover:scale-105 hover:brightness-125"
               >
                 <Icon size={16} />
               </a>

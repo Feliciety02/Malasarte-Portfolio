@@ -4,6 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+::selection {
+  background: oklch(0.78 0.16 85 / 25%);
+}
+
+::-moz-selection {
+  background: oklch(0.78 0.16 85 / 25%);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -51,18 +59,18 @@
   --secondary-foreground: oklch(0.97 0 0);
   --muted: oklch(0.18 0 0);
   --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.68 0.18 298);
+  --accent: oklch(0.75 0.12 75);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.62 0.24 25);
   --destructive-foreground: oklch(0.97 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.68 0.18 298);
+  --ring: oklch(0.75 0.12 75);
 
   --glow-purple: oklch(0.66 0 0);
   --glow-blue: oklch(0.54 0 0);
   --glow-pink: oklch(0.78 0 0);
-  --yellow: oklch(0.76 0 0);
+  --yellow: oklch(0.78 0.16 85);
 
   --gradient-hero: linear-gradient(
     135deg,
@@ -73,7 +81,7 @@
   --gradient-text: linear-gradient(
     120deg,
     oklch(1 0 0),
-    oklch(0.74 0 0),
+    oklch(0.78 0.16 85),
     oklch(0.95 0 0),
     oklch(0.73 0.12 298)
   );
@@ -81,7 +89,7 @@
     radial-gradient(at 18% 18%, oklch(0.42 0 0 / 18%) 0px, transparent 55%),
     radial-gradient(at 82% 10%, oklch(0.3 0 0 / 16%) 0px, transparent 50%),
     radial-gradient(at 60% 92%, oklch(0.36 0 0 / 14%) 0px, transparent 55%);
-  --shadow-glow: 0 16px 38px -24px oklch(0.68 0.18 298 / 70%), inset 0 1px 0 oklch(1 0 0 / 20%);
+  --shadow-glow: 0 16px 38px -24px oklch(0.78 0.16 85 / 70%), inset 0 1px 0 oklch(1 0 0 / 20%);
   --shadow-card: 0 20px 60px -20px oklch(0.04 0 0 / 70%);
 }
 
@@ -147,9 +155,9 @@
     isolation: isolate;
     display: flex;
     min-height: 100svh;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    padding-block: clamp(5.5rem, 8vw, 7.25rem) clamp(1.5rem, 4vw, 3rem);
+    padding-block: clamp(5.5rem, 8vw, 7.25rem) 0;
     background:
       linear-gradient(180deg, rgba(28, 29, 30, 0.98), rgba(7, 8, 9, 0.98)),
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 9px);
@@ -189,74 +197,33 @@
       rgba(255, 255, 255, 0.045) 56%,
       transparent 74%
     );
+    background-size: 200% 200%;
     opacity: 0.42;
+    animation: metal-shimmer 9s ease-in-out infinite;
   }
 
   .hero-reference__content {
     display: grid;
-    min-height: clamp(34rem, calc(100svh - 8rem), 52rem);
-    place-items: center;
+    height: 100%;
+    min-height: 0;
+    place-items: end center;
   }
 
-  .hero-reference__title,
   .hero-reference__portrait {
     grid-area: 1 / 1;
-  }
-
-  .hero-reference__title {
-    z-index: 5;
-    display: grid;
-    width: min(100%, 78rem);
-    place-items: center;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.94);
-    line-height: 0.82;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    text-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.42);
-  }
-
-  .hero-reference__eyebrow {
-    display: block;
-    font-size: clamp(0.875rem, 2.15vw, 2.65rem);
-    font-weight: 800;
-    letter-spacing: 0;
-    line-height: 1;
-  }
-
-  .hero-reference__word {
-    display: block;
-    max-width: 100%;
-    overflow: hidden;
-    background:
-      linear-gradient(180deg, #ffffff 0%, #aeb4b8 42%, #ffffff 55%, #73787d 100%),
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.28) 0 1px, transparent 1px 7px);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    font-size: clamp(2.75rem, 13.6vw, 13.4rem);
-    font-weight: 900;
-    letter-spacing: 0;
-    line-height: 0.78;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .hero-reference__portrait {
     align-self: end;
     justify-self: center;
-    width: clamp(16rem, 34vw, 34rem);
+    width: clamp(32rem, 60vw, 72rem);
     height: auto;
-    max-height: min(74svh, 50rem);
+    max-height: min(92svh, 60rem);
     object-fit: contain;
     filter: drop-shadow(0 2.2rem 2.5rem rgba(0, 0, 0, 0.58));
-    transform: translateY(clamp(2.75rem, 6vw, 5.75rem));
   }
 
   @media (max-width: 1023px) {
     .hero-reference {
       min-height: 85svh;
-      padding-block: clamp(4.75rem, 10vw, 6.25rem) clamp(1.25rem, 4vw, 2rem);
+      padding-block: clamp(4.75rem, 10vw, 6.25rem) 0;
     }
 
     .hero-reference::after {
@@ -264,59 +231,42 @@
     }
 
     .hero-reference__content {
-      min-height: clamp(30rem, 74svh, 43rem);
-    }
-
-    .hero-reference__word {
-      font-size: clamp(2.75rem, 13.2vw, 8.6rem);
+      height: 100%;
+      min-height: 0;
     }
 
     .hero-reference__portrait {
-      width: clamp(16rem, 44vw, 28rem);
-      max-height: min(68svh, 38rem);
-      transform: translateY(clamp(1rem, 4vw, 2.5rem));
+      width: clamp(26rem, 60vw, 50rem);
+      max-height: min(85svh, 44rem);
+      transform: none;
     }
   }
 
   @media (max-width: 767px) {
     .hero-reference {
-      padding-block: clamp(4.5rem, 17vw, 5.5rem) 1.25rem;
+      padding-block: clamp(4.5rem, 17vw, 5.5rem) 0;
     }
 
     .hero-reference__content {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: clamp(1rem, 3.5svh, 1.6rem);
       justify-content: center;
-      min-height: clamp(27rem, 72svh, 36rem);
+      height: 100%;
+      min-height: 0;
+      padding-inline: clamp(0.75rem, 4vw, 1.5rem);
     }
 
-    .hero-reference__title,
     .hero-reference__portrait {
       grid-area: auto;
-    }
-
-    .hero-reference__eyebrow {
-      font-size: clamp(0.875rem, 4.4vw, 1.25rem);
-    }
-
-    .hero-reference__word {
-      font-size: clamp(2.1rem, 9.8vw, 3.25rem);
-    }
-
-    .hero-reference__portrait {
       align-self: center;
-      width: clamp(13.75rem, 58vw, 19rem);
-      max-height: 45svh;
+      width: min(92vw, 32rem);
+      max-height: min(76svh, 38rem);
       transform: none;
     }
   }
 
-  @media (max-width: 420px) {
-    .hero-reference__word {
-      font-size: clamp(2rem, 9vw, 2.35rem);
-    }
-  }
 }
 
 @layer utilities {
@@ -610,6 +560,57 @@
     opacity: 0;
   }
 
+  .work-card {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+      rgba(11, 12, 14, 0.82);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 24px 56px rgba(0, 0, 0, 0.28);
+  }
+
+  .work-card::before {
+    background: radial-gradient(
+      28rem circle at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.045),
+      transparent 42%
+    );
+    opacity: 0.42;
+  }
+
+  .work-card::after {
+    display: none;
+  }
+
+  .service-card-clean {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.016)),
+      rgba(10, 11, 12, 0.78);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 18px 48px rgba(0, 0, 0, 0.28);
+  }
+
+  .service-card-clean::before {
+    background: radial-gradient(
+      28rem circle at 18% 0%,
+      rgba(255, 255, 255, 0.06),
+      transparent 58%
+    );
+    opacity: 0.42;
+  }
+
+  .service-card-clean::after {
+    display: none;
+  }
+
+  .service-card-clean .metal-icon {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.026)),
+      rgba(17, 19, 21, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
   .metal-rail {
     position: relative;
     overflow: hidden;
@@ -623,7 +624,7 @@
     inset-y: 0;
     left: 0;
     width: 22%;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    background: linear-gradient(90deg, transparent, var(--yellow), transparent);
   }
 
   .metal-cta {
@@ -650,15 +651,16 @@
   }
 
   .metal-input:focus {
-    border-color: oklch(0.68 0.18 298 / 66%);
+    border-color: var(--yellow);
     box-shadow:
-      0 0 0 3px oklch(0.68 0.18 298 / 14%),
+      0 0 0 3px oklch(0.78 0.16 85 / 14%),
       inset 0 1px 0 rgba(255, 255, 255, 0.09);
   }
 
   .metal-icon {
     display: grid;
     place-items: center;
+    color: var(--yellow);
     border: 1px solid rgba(255, 255, 255, 0.13);
     border-radius: 0.5rem;
     background:
@@ -673,11 +675,7 @@
   }
 
   .metal-kicker {
-    color: var(--primary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    color: var(--yellow);
   }
 
   .metal-microcopy {
@@ -688,18 +686,39 @@
   }
 
   .metal-progress-track {
+    position: relative;
     overflow: hidden;
     border-radius: 999px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.2)),
-      rgba(255, 255, 255, 0.045);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 228, 218, 0.88)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.08));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
   }
 
   .metal-progress-fill {
+    position: relative;
     background:
-      linear-gradient(90deg, oklch(0.46 0.12 296), var(--primary), oklch(0.88 0 0)),
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 7px);
-    box-shadow: 0 0 22px oklch(0.68 0.18 298 / 22%);
+      linear-gradient(
+        90deg,
+        oklch(0.55 0.13 295) 0%,
+        oklch(0.67 0.11 342) 18%,
+        oklch(0.8 0.17 86) 52%,
+        oklch(0.89 0.08 92) 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 0 16px rgba(234, 189, 78, 0.16);
+  }
+
+  .metal-progress-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 55%);
   }
 
   .machine-reveal {
@@ -764,6 +783,35 @@
     border-radius: 9999px;
   }
 
+  .mobile-thin-x-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.72 0 0 / 46%) transparent;
+  }
+
+  .mobile-thin-x-scrollbar::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  .mobile-thin-x-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .mobile-thin-x-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.48));
+    border-radius: 9999px;
+  }
+
+  @media (max-width: 767px) {
+    .thin-x-scrollbar::-webkit-scrollbar {
+      height: 3px;
+    }
+  }
+
+  @keyframes metal-shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
   @keyframes float-slow {
     0%,
     100% {

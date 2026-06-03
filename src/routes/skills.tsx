@@ -29,7 +29,7 @@ function Skills() {
       <section className="mx-auto max-w-7xl pt-12 md:pt-20">
         <Reveal>
           <SectionHeader
-            eyebrow="Toolkit"
+            eyebrow="Core strengths"
             title={
               <>
                 Skills & <span className="text-gradient">craft</span>
