@@ -5,8 +5,8 @@ import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {
   return (
-    <footer className="relative isolate mb-0 overflow-visible bg-background pb-0 pt-28 sm:pb-0 lg:pt-32">
-      <div className="relative left-1/2 mb-0 w-screen -translate-x-1/2 overflow-visible rounded-b-none rounded-t-[4rem] border border-b-0 border-white/10 bg-[oklch(0.125_0_0/0.98)] shadow-[0_32px_90px_rgba(0,0,0,0.42)] sm:rounded-t-[6rem] lg:rounded-t-[7.5rem]">
+    <footer className="relative isolate mb-0 overflow-visible pb-0 pt-28 sm:pb-0 lg:pt-32">
+      <div className="relative left-1/2 mb-0 min-h-[calc(100svh-7rem)] w-screen -translate-x-1/2 overflow-visible rounded-b-none rounded-t-[4rem] border border-b-0 border-white/10 bg-[oklch(0.125_0_0/0.98)] shadow-[0_32px_90px_rgba(0,0,0,0.42)] sm:rounded-t-[6rem] lg:min-h-[calc(100svh-8rem)] lg:rounded-t-[7.5rem]">
         <Link
           to="/"
           aria-label="Fe Anne Malasarte home"
@@ -19,7 +19,7 @@ export function Footer() {
           />
         </Link>
 
-        <div className="relative z-[1] mx-auto max-w-7xl px-6 pb-7 pt-24 sm:px-10 sm:pb-9 md:px-12 lg:px-14 xl:px-16">
+        <div className="relative z-[1] mx-auto flex min-h-[calc(100svh-7rem)] w-full max-w-7xl flex-col justify-end px-6 pb-7 pt-24 sm:px-10 sm:pb-9 md:px-12 lg:min-h-[calc(100svh-8rem)] lg:px-14 xl:px-16">
           <div className="lg:hidden">
             <div className="mx-auto max-w-sm text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">

@@ -1,4 +1,4 @@
-import { Dribbble, Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { Dribbble, Facebook, Github, Instagram, Linkedin, Mail } from "lucide-react";
 
 export const navLinks = [
   { to: "/", label: "Home" },
@@ -17,6 +17,7 @@ export const footerExploreLinks = [
 
 export const socialLinks = [
   { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/feanneLM", label: "Facebook" },
   { icon: Dribbble, href: "https://dribbble.com", label: "Dribbble" },
   { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   { icon: Github, href: "https://github.com", label: "GitHub" },
