@@ -30,7 +30,13 @@ import { TagPill } from "@/components/site/TagPill";
 import { getProjectGalleryImage } from "@/data/projectImages";
 import { getNextProject, getProject } from "@/data/projects";
 import { fetchPortfolioProjectFromSupabase } from "@/data/supabaseProjects";
-import type { Project, ProjectFigmaEmbed, ProjectGalleryItem, ProjectKind } from "@/data/projects";
+import type {
+  Project,
+  ProjectFigmaEmbed,
+  ProjectFlipbookEmbed,
+  ProjectGalleryItem,
+  ProjectKind,
+} from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -206,11 +212,31 @@ const TEMPLATE_SECTIONS: Record<TemplateKey, SectionDef[]> = {
 const getProjectTemplate = (project: Pick<Project, "kind">) =>
   KIND_TO_TEMPLATE[project.kind] ?? "product";
 
-const getProjectSection = (project: Pick<Project, "kind">, id: string) => {
-  const template = getProjectTemplate(project);
-  const index = TEMPLATE_SECTIONS[template].findIndex((section) => section.id === id);
+const WORKSPACE_PROJECT_CATEGORIES: Project["cat"][] = ["UI/UX Design", "Web Development"];
+
+const canShowProjectWorkspace = (project: Pick<Project, "cat" | "categories">) =>
+  WORKSPACE_PROJECT_CATEGORIES.includes(project.cat) ||
+  project.categories?.some((category) => WORKSPACE_PROJECT_CATEGORIES.includes(category)) === true;
+
+const getProjectSections = (project: Pick<Project, "kind" | "cat" | "categories">) => {
+  const sections = TEMPLATE_SECTIONS[getProjectTemplate(project)];
+
+  if (canShowProjectWorkspace(project)) return sections;
+
+  return sections.filter((section) => section.id !== "workspace");
+};
+
+type ProjectSectionMeta = SectionDef & { number: string };
+
+const getProjectSection = (
+  project: Pick<Project, "kind" | "cat" | "categories">,
+  id: string,
+): ProjectSectionMeta => {
+  const sections = getProjectSections(project);
+  const index = sections.findIndex((section) => section.id === id);
   return {
-    label: index >= 0 ? TEMPLATE_SECTIONS[template][index].label : "",
+    id,
+    label: index >= 0 ? sections[index].label : "",
     number: index >= 0 ? String(index + 1).padStart(2, "0") : "",
   };
 };
@@ -224,7 +250,9 @@ function CaseStudy() {
   const nextProject = getNextProject(project.slug);
   const template = getProjectTemplate(project);
   const meta = TEMPLATE_META[template];
-  const sections = TEMPLATE_SECTIONS[template];
+  const sections = getProjectSections(project);
+  const sectionMeta = (id: string) => getProjectSection(project, id);
+  const showWorkspace = canShowProjectWorkspace(project);
   const isGalleryOnly = template === "gallery";
 
   const galleryItems: LightboxItem[] = useMemo(
@@ -279,7 +307,7 @@ function CaseStudy() {
           <>
             <div className="min-w-0">
               <Snapshot project={project} />
-              <InteractiveWorkspace project={project} />
+              {showWorkspace ? <InteractiveWorkspace project={project} /> : null}
 
               {template === "product" && (
                 <ProductBody project={project} openLightbox={setLightboxIndex} />
@@ -288,13 +316,25 @@ function CaseStudy() {
                 <DevelopmentBody project={project} openLightbox={setLightboxIndex} />
               )}
               {template === "branding" && (
-                <BrandingBody project={project} openLightbox={setLightboxIndex} />
+                <BrandingBody
+                  project={project}
+                  openLightbox={setLightboxIndex}
+                  sectionMeta={sectionMeta}
+                />
               )}
               {template === "creative" && (
-                <CreativeBody project={project} openLightbox={setLightboxIndex} />
+                <CreativeBody
+                  project={project}
+                  openLightbox={setLightboxIndex}
+                  sectionMeta={sectionMeta}
+                />
               )}
               {template === "writing" && (
-                <WritingBody project={project} openLightbox={setLightboxIndex} />
+                <WritingBody
+                  project={project}
+                  openLightbox={setLightboxIndex}
+                  sectionMeta={sectionMeta}
+                />
               )}
 
               <ResultsSection project={project} />
@@ -375,7 +415,7 @@ function ProjectHero({ project, meta }: { project: Project; meta: TemplateMeta }
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mt-8 max-w-6xl font-display text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+          className="mt-8 max-w-5xl font-display text-3xl font-bold leading-[1.06] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
         >
           {project.title}
         </motion.h1>
@@ -741,6 +781,24 @@ function GalleryGrid({
   );
 }
 
+function FlipbookEmbed({ embed }: { embed: ProjectFlipbookEmbed }) {
+  return (
+    <FadeIn delay={0.08}>
+      <div className="mt-10 overflow-hidden rounded-xl border border-white/10 bg-[#060708] shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+        <iframe
+          title={embed.title}
+          src={embed.src}
+          allow="clipboard-write"
+          allowFullScreen
+          scrolling="no"
+          loading="lazy"
+          className="fp-iframe block h-[600px] w-full border-0 xl:h-[680px]"
+        />
+      </div>
+    </FadeIn>
+  );
+}
+
 function StickyTOC({ sections }: { sections: SectionDef[] }) {
   const [active, setActive] = useState(sections[0]?.id);
   useEffect(() => {
@@ -1020,6 +1078,9 @@ function NextProjectCta({
 // ---------------------------------------------------------------------------
 
 type BodyProps = { project: Project; openLightbox: (i: number) => void };
+type StructuredBodyProps = BodyProps & {
+  sectionMeta: (id: string) => ProjectSectionMeta;
+};
 
 function GalleryOnlyBody({ project, openLightbox }: BodyProps) {
   return (
@@ -1166,15 +1227,27 @@ function DevelopmentBody({ project, openLightbox }: BodyProps) {
   );
 }
 
-function BrandingBody({ project, openLightbox }: BodyProps) {
+function BrandingBody({ project, openLightbox, sectionMeta }: StructuredBodyProps) {
+  const story = sectionMeta("story");
+  const strategy = sectionMeta("strategy");
+  const identity = sectionMeta("identity");
+  const applications = sectionMeta("applications");
+  const process = sectionMeta("process");
+  const challenges = sectionMeta("challenges");
+
   return (
     <>
       <SectionAnchor id="story">
-        <EditorialBlock kicker="03" label="Story" title="The brand story" body={project.overview} />
+        <EditorialBlock
+          kicker={story.number}
+          label={story.label}
+          title="The brand story"
+          body={project.overview}
+        />
       </SectionAnchor>
       <SectionAnchor id="strategy">
         <FadeIn>
-          <SectionLabel kicker="04" label="Strategy" />
+          <SectionLabel kicker={strategy.number} label={strategy.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("What the identity had to do")}
           </h2>
@@ -1183,7 +1256,7 @@ function BrandingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="identity">
         <FadeIn>
-          <SectionLabel kicker="05" label="Identity" />
+          <SectionLabel kicker={identity.number} label={identity.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Building the visual language")}
           </h2>
@@ -1192,7 +1265,7 @@ function BrandingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="applications">
         <FadeIn>
-          <SectionLabel kicker="06" label="Applications" />
+          <SectionLabel kicker={applications.number} label={applications.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Identity in the wild")}
           </h2>
@@ -1204,7 +1277,7 @@ function BrandingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="process">
         <FadeIn>
-          <SectionLabel kicker="07" label="Process" />
+          <SectionLabel kicker={process.number} label={process.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("From concept to deliverable")}
           </h2>
@@ -1213,7 +1286,7 @@ function BrandingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="challenges">
         <FadeIn>
-          <SectionLabel kicker="08" label="Challenges" />
+          <SectionLabel kicker={challenges.number} label={challenges.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Where the system was tested")}
           </h2>
@@ -1224,20 +1297,26 @@ function BrandingBody({ project, openLightbox }: BodyProps) {
   );
 }
 
-function CreativeBody({ project, openLightbox }: BodyProps) {
+function CreativeBody({ project, openLightbox, sectionMeta }: StructuredBodyProps) {
+  const overview = sectionMeta("overview");
+  const direction = sectionMeta("direction");
+  const assets = sectionMeta("assets");
+  const rollout = sectionMeta("rollout");
+  const challenges = sectionMeta("challenges");
+
   return (
     <>
       <SectionAnchor id="overview">
         <EditorialBlock
-          kicker="03"
-          label="Campaign"
+          kicker={overview.number}
+          label={overview.label}
           title="Campaign overview"
           body={project.overview}
         />
       </SectionAnchor>
       <SectionAnchor id="direction">
         <FadeIn>
-          <SectionLabel kicker="04" label="Direction" />
+          <SectionLabel kicker={direction.number} label={direction.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Shaping the visual idea")}
           </h2>
@@ -1246,7 +1325,7 @@ function CreativeBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="assets">
         <FadeIn>
-          <SectionLabel kicker="05" label="Assets" />
+          <SectionLabel kicker={assets.number} label={assets.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Magazine-style assembly")}
           </h2>
@@ -1255,7 +1334,7 @@ function CreativeBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="rollout">
         <FadeIn>
-          <SectionLabel kicker="06" label="Rollout" />
+          <SectionLabel kicker={rollout.number} label={rollout.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Bringing it to audience")}
           </h2>
@@ -1264,7 +1343,7 @@ function CreativeBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="challenges">
         <FadeIn>
-          <SectionLabel kicker="07" label="Challenges" />
+          <SectionLabel kicker={challenges.number} label={challenges.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Creative tradeoffs")}
           </h2>
@@ -1275,20 +1354,27 @@ function CreativeBody({ project, openLightbox }: BodyProps) {
   );
 }
 
-function WritingBody({ project, openLightbox }: BodyProps) {
+function WritingBody({ project, openLightbox, sectionMeta }: StructuredBodyProps) {
+  const overview = sectionMeta("overview");
+  const goals = sectionMeta("goals");
+  const process = sectionMeta("process");
+  const deliverables = sectionMeta("deliverables");
+  const focus = sectionMeta("focus");
+  const challenges = sectionMeta("challenges");
+
   return (
     <>
       <SectionAnchor id="overview">
         <EditorialBlock
-          kicker="03"
-          label="Overview"
+          kicker={overview.number}
+          label={overview.label}
           title="Project overview"
           body={project.overview}
         />
       </SectionAnchor>
       <SectionAnchor id="goals">
         <FadeIn>
-          <SectionLabel kicker="04" label="Goals" />
+          <SectionLabel kicker={goals.number} label={goals.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("What the client needed")}
           </h2>
@@ -1308,7 +1394,7 @@ function WritingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="process">
         <FadeIn>
-          <SectionLabel kicker="05" label="Workflow" />
+          <SectionLabel kicker={process.number} label={process.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("From brief to draft")}
           </h2>
@@ -1317,16 +1403,20 @@ function WritingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="deliverables">
         <FadeIn>
-          <SectionLabel kicker="06" label="Deliverables" />
+          <SectionLabel kicker={deliverables.number} label={deliverables.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("What was handed off")}
           </h2>
         </FadeIn>
-        <GalleryGrid project={project} openLightbox={openLightbox} variant="documents" />
+        {project.flipbookEmbed ? (
+          <FlipbookEmbed embed={project.flipbookEmbed} />
+        ) : (
+          <GalleryGrid project={project} openLightbox={openLightbox} variant="documents" />
+        )}
       </SectionAnchor>
       <SectionAnchor id="focus">
         <FadeIn>
-          <SectionLabel kicker="07" label="Focus" />
+          <SectionLabel kicker={focus.number} label={focus.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Where the work went deepest")}
           </h2>
@@ -1335,7 +1425,7 @@ function WritingBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="challenges">
         <FadeIn>
-          <SectionLabel kicker="08" label="Challenges" />
+          <SectionLabel kicker={challenges.number} label={challenges.label} />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Editorial tradeoffs")}
           </h2>

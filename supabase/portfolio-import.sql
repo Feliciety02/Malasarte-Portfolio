@@ -479,18 +479,18 @@ insert into public.portfolio_projects (
   sort_order
 ) values (
   'thriving-mind-mental-wellness-ebook',
-  'Thriving Mind Mental Wellness eBook Writing and Cover Design',
-  'Mental Wellness eBook Project',
+  'Thriving Minds: Understanding Your Mental Health Journey',
+  'Thriving Minds: Understanding Your Mental Health Journey',
   'Writing / VA',
   'writing',
-  'eBook Writing',
-  'Writing and cover design for a mental wellness eBook.',
+  'Mental Wellness Guide',
+  'A beginner-friendly mental wellness guide about awareness, coping skills, self-management, and personal growth.',
   'Content Writer and Layout Designer',
   array['Google Docs', 'Canva', 'Figma']::text[],
   '2024',
   'Mental Wellness eBook Project',
-  'Thriving Mind is a mental wellness eBook project that combined written educational content and cover design into one calm, reader-friendly digital publication.',
-  'Thriving Mind became a more cohesive eBook project where tone, structure, and design all support the same calm reading experience.',
+  'Thriving Minds: Understanding Your Mental Health Journey is a comprehensive mental wellness guide designed to educate readers about mental health from awareness to self-management and personal growth. The book follows a structured progression that helps readers understand mental health challenges, develop practical coping skills, and build a sustainable wellness plan.',
+  'The final eBook became a beginner-friendly mental health education and self-help resource that combines psychological awareness, scientific understanding, and practical wellness strategies. Its central message is that mental health is an ongoing journey of self-awareness, self-care, resilience, and growth.',
   12
 );
 
@@ -1240,7 +1240,7 @@ insert into public.portfolio_project_categories (
   (select id from public.portfolio_projects where slug = 'thriving-mind-mental-wellness-ebook'),
   'Writing / VA',
   'Writing / VA',
-  null,
+  'Thriving Minds: Understanding Your Mental Health Journey',
   5
 );
 
@@ -2145,60 +2145,6 @@ insert into public.portfolio_gallery_items (
   null,
   'wide',
   'from-green-400/40 to-emerald-500/30',
-  2
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'thriving-mind-mental-wellness-ebook'),
-  'Cover Design',
-  'Placeholder for the final mental wellness eBook cover.',
-  null,
-  'tall',
-  'from-violet-500/50 to-pink-500/30',
-  0
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'thriving-mind-mental-wellness-ebook'),
-  'Interior Structure',
-  'Placeholder for section layouts and chapter organization.',
-  null,
-  'wide',
-  'from-pink-500/40 to-purple-500/30',
-  1
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'thriving-mind-mental-wellness-ebook'),
-  'Writing Sample',
-  'Placeholder for sample pages and content excerpts.',
-  null,
-  'wide',
-  'from-indigo-500/40 to-violet-500/30',
   2
 );
 

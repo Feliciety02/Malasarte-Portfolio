@@ -46,6 +46,11 @@ export type ProjectFigmaEmbed = {
   note?: string;
 };
 
+export type ProjectFlipbookEmbed = {
+  src: string;
+  title: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -72,6 +77,7 @@ export type Project = {
   outcome: string;
   gallery: ProjectGalleryItem[];
   figmaEmbed?: ProjectFigmaEmbed;
+  flipbookEmbed?: ProjectFlipbookEmbed;
   nextProjectSlug?: string;
 };
 
@@ -1532,131 +1538,109 @@ export const projects: Project[] = [
     ],
     outcome:
       "The final output delivered a clearer educational eBook experience with both content and cover design working together cohesively.",
-    gallery: [
-      {
-        color: "from-emerald-400/50 to-lime-500/30",
-        label: "Cover Design",
-        ratio: "tall",
-        note: "Placeholder for the final eBook cover design.",
-      },
-      {
-        color: "from-lime-400/40 to-green-500/30",
-        label: "Chapter Layout",
-        ratio: "wide",
-        note: "Placeholder for internal content and chapter structure.",
-      },
-      {
-        color: "from-green-400/40 to-emerald-500/30",
-        label: "Content Sample",
-        ratio: "wide",
-        note: "Placeholder for writing samples or page spreads.",
-      },
-    ],
+    gallery: [],
+    flipbookEmbed: {
+      src: "https://heyzine.com/flip-book/751c8a6bdc.html",
+      title: "Eat Well, Live Well Nutrition eBook flipbook",
+    },
     nextProjectSlug: "thriving-mind-mental-wellness-ebook",
   },
   {
     slug: "thriving-mind-mental-wellness-ebook",
-    title: "Thriving Mind Mental Wellness eBook Writing and Cover Design",
+    title: "Thriving Minds: Understanding Your Mental Health Journey",
+    imageTitle: "Thriving Mind Mental Wellness eBook Writing and Cover Design",
+    directoryTitle: "Thriving Minds: Understanding Your Mental Health Journey",
     cat: "Writing / VA",
     categoryTitles: {
-      "Writing / VA": "Thriving Mind Mental Wellness eBook",
+      "Writing / VA": "Thriving Minds: Understanding Your Mental Health Journey",
     },
     kind: "writing",
-    tag: "eBook Writing",
+    tag: "Mental Wellness Guide",
     color: "from-violet-500/50 to-pink-500/30",
-    desc: "Writing and cover design for a mental wellness eBook.",
+    desc: "A beginner-friendly mental wellness guide about awareness, coping skills, self-management, and personal growth.",
     role: "Content Writer and Layout Designer",
     tools: ["Google Docs", "Canva", "Figma"],
     year: "2024",
     client: "Mental Wellness eBook Project",
     overview:
-      "Thriving Mind is a mental wellness eBook project that combined written educational content and cover design into one calm, reader-friendly digital publication.",
+      "Thriving Minds: Understanding Your Mental Health Journey is a comprehensive mental wellness guide designed to educate readers about mental health from awareness to self-management and personal growth. The book follows a structured progression that helps readers understand mental health challenges, develop practical coping skills, and build a sustainable wellness plan.",
     goals: [
-      "Write clearer and more supportive content around mental wellness topics.",
-      "Create a cover design that feels calm, professional, and accessible.",
-      "Organize the eBook into a structure that supports sustained reading.",
+      "Educate readers on mental health from basic awareness to practical self-management.",
+      "Explain stress, anxiety, depression, sleep, mindfulness, resilience, relationships, lifestyle habits, and professional support in accessible language.",
+      "Guide readers toward a personalized wellness plan built around self-awareness, self-care, resilience, and growth.",
     ],
     impact: [
-      { value: "1", label: "Completed eBook" },
-      { value: "1", label: "Cover design" },
-      { value: "7+", label: "Key sections" },
+      { value: "11", label: "Learning sections" },
+      { value: "9", label: "Educational chapters" },
+      { value: "1", label: "Wellness plan" },
     ],
     focusAreas: [
       {
-        title: "Task Overview",
-        text: "Combined writing and cover design around a more supportive and accessible mental wellness resource.",
+        title: "Mental Health Awareness",
+        text: "Introduced mental well-being, common misconceptions, and the role mental health plays in overall quality of life.",
       },
       {
-        title: "Workflow",
-        text: "Planned the topics, section order, writing tone, and visual identity as one unified process.",
+        title: "Stress and Anxiety Education",
+        text: "Explained the mind-body connection, stress triggers, anxiety symptoms, and practical relaxation techniques.",
       },
       {
-        title: "Content Samples",
-        text: "Prepared reader-friendly sections designed to feel clear, calm, and useful.",
+        title: "Depression and Recovery",
+        text: "Covered warning signs, contributing factors, treatment pathways, support systems, and the message that recovery is possible.",
       },
       {
-        title: "Organization Process",
-        text: "Structured the eBook for better pacing, readability, and consistent tone.",
+        title: "Daily Wellness Habits",
+        text: "Connected sleep, mindfulness, nutrition, exercise, and social connection to emotional balance and resilience.",
       },
       {
-        title: "Final Deliverables",
-        text: "Delivered the completed written content and an aligned eBook cover design.",
+        title: "Personal Growth Plan",
+        text: "Closed the guide with self-care planning, achievable wellness goals, and sustainable habits for long-term mental well-being.",
       },
     ],
     process: [
       {
         title: "Research",
-        text: "Reviewed mental wellness content approaches and organized the material into more supportive sections.",
+        text: "Reviewed mental wellness education themes and shaped the language to feel informative, supportive, and non-stigmatizing.",
       },
       {
-        title: "Concept",
-        text: "Defined tone, pacing, and visual direction before final drafting and cover design work.",
+        title: "Structure",
+        text: "Organized the eBook from awareness and core mental health challenges into coping skills and a long-term wellness plan.",
       },
       {
-        title: "Design",
-        text: "Wrote the content and created the supporting eBook cover as one communication package.",
+        title: "Writing",
+        text: "Drafted chapters on stress, anxiety, depression, sleep, mindfulness, resilience, relationships, nutrition, exercise, and professional help.",
       },
       {
         title: "Deliver",
-        text: "Prepared the final structure with placeholder visuals for cover and interior content previews.",
+        text: "Prepared the final written content with a calm cover direction that matched the guide's educational and wellness-focused tone.",
       },
     ],
     challenges: [
       {
-        title: "Tone Sensitivity",
-        challenge: "Mental wellness content needs care in both wording and presentation.",
+        title: "Sensitive Educational Tone",
+        challenge: "Mental wellness content needed to be clear and helpful without sounding clinical, alarming, or dismissive.",
         solution:
-          "Used calmer language, gentler pacing, and more measured visual direction throughout the project.",
+          "Used plain, supportive, non-stigmatizing language and kept the pacing calm throughout the guide.",
       },
       {
-        title: "Maintaining Reader Flow",
-        challenge: "Longer educational content can lose attention if the structure is too dense.",
+        title: "Broad Topic Scope",
+        challenge: "The eBook covered many mental health topics, which could become overwhelming without a strong sequence.",
         solution:
-          "Broke ideas into clearer sections and supported the reading experience with cleaner formatting logic.",
+          "Built a chapter progression that moves from understanding challenges to practicing coping skills and building daily habits.",
+      },
+      {
+        title: "Actionable Ending",
+        challenge: "The guide needed to leave readers with next steps instead of only general awareness.",
+        solution:
+          "Ended with a personalized wellness plan focused on self-care routines, achievable goals, and sustainable mental health habits.",
       },
     ],
     outcome:
-      "Thriving Mind became a more cohesive eBook project where tone, structure, and design all support the same calm reading experience.",
-    gallery: [
-      {
-        color: "from-violet-500/50 to-pink-500/30",
-        label: "Cover Design",
-        ratio: "tall",
-        note: "Placeholder for the final mental wellness eBook cover.",
-      },
-      {
-        color: "from-pink-500/40 to-purple-500/30",
-        label: "Interior Structure",
-        ratio: "wide",
-        note: "Placeholder for section layouts and chapter organization.",
-      },
-      {
-        color: "from-indigo-500/40 to-violet-500/30",
-        label: "Writing Sample",
-        ratio: "wide",
-        note: "Placeholder for sample pages and content excerpts.",
-      },
-    ],
+      "The final eBook became a beginner-friendly mental health education and self-help resource that combines psychological awareness, scientific understanding, and practical wellness strategies. Its central message is that mental health is an ongoing journey of self-awareness, self-care, resilience, and growth.",
+    gallery: [],
+    flipbookEmbed: {
+      src: "https://heyzine.com/flip-book/5331d1f97c.html",
+      title: "Thriving Minds: Understanding Your Mental Health Journey flipbook",
+    },
     nextProjectSlug: "odara-management-group",
   },
   createSimpleProject({
@@ -1918,7 +1902,7 @@ const directoryTitleOrder = [
   "UMSDC",
   "ENIGMA",
   "Eat Well, Live Well Nutrition eBook Writing and Cover Design",
-  "Thriving Mind Mental Wellness eBook Writing and Cover Design",
+  "Thriving Minds: Understanding Your Mental Health Journey",
   "Salin-Salin",
   "HandyMan",
 ] as const;
