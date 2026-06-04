@@ -447,18 +447,18 @@ insert into public.portfolio_projects (
   sort_order
 ) values (
   'eat-well-live-well-nutrition-ebook',
-  'Eat Well, Live Well Nutrition eBook Writing and Cover Design',
-  'Nutrition eBook Project',
+  'Eat Well, Live Well: Your Complete Food & Nutrition Guide',
+  'Eat Well, Live Well: Your Complete Food & Nutrition Guide',
   'Writing / VA',
   'writing',
-  'eBook Writing',
-  'Writing and cover design for a nutrition-focused eBook.',
+  'Nutrition Guide',
+  'A practical nutrition and healthy lifestyle guide for sustainable eating habits without restrictive dieting.',
   'Content Writer and Layout Designer',
   array['Google Docs', 'Canva', 'Figma']::text[],
   '2024',
   'Nutrition eBook Project',
-  'This project combined eBook writing and cover design for a wellness-focused digital publication centered on nutrition, healthier habits, and accessible educational content.',
-  'The final output delivered a clearer educational eBook experience with both content and cover design working together cohesively.',
+  'Eat Well, Live Well: Your Complete Food & Nutrition Guide is a practical nutrition and healthy lifestyle guide designed to help readers develop sustainable eating habits without relying on restrictive diets, calorie obsession, or unrealistic wellness trends. The book combines nutritional science, meal planning, recipes, and behavior change strategies into an easy-to-follow roadmap for building a healthier relationship with food.',
+  'The final eBook became a beginner-friendly nutrition education and wellness guide that teaches informed food choices, practical meal planning, healthy recipes, behavior change, and sustainable lifestyle habits. Its central message is that lasting health is built through consistent, informed food choices made one meal at a time.',
   11
 );
 
@@ -620,38 +620,6 @@ insert into public.portfolio_projects (
   'Logo direction for the DOST Laon platform concept.',
   'DOST Laon now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
   16
-);
-
-insert into public.portfolio_projects (
-  slug,
-  title,
-  directory_title,
-  primary_category,
-  kind,
-  tag,
-  description,
-  role,
-  tools,
-  year,
-  client,
-  overview,
-  outcome,
-  sort_order
-) values (
-  'cosmic-remedies-by-sia-logo',
-  'Cosmic Remedies by Sia',
-  'Cosmic Remedies by Sia',
-  'Logo & Branding',
-  'branding',
-  'Logo',
-  'Logo direction for Cosmic Remedies by Sia.',
-  'Logo Designer',
-  array['Illustrator', 'Figma']::text[],
-  '2025',
-  'Cosmic Remedies by Sia',
-  'Logo direction for Cosmic Remedies by Sia.',
-  'Cosmic Remedies by Sia now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
-  17
 );
 
 insert into public.portfolio_projects (
@@ -1226,7 +1194,7 @@ insert into public.portfolio_project_categories (
   (select id from public.portfolio_projects where slug = 'eat-well-live-well-nutrition-ebook'),
   'Writing / VA',
   'Writing / VA',
-  null,
+  'Eat Well, Live Well: Your Complete Food & Nutrition Guide',
   5
 );
 
@@ -1294,20 +1262,6 @@ insert into public.portfolio_project_categories (
   sort_order
 ) values (
   (select id from public.portfolio_projects where slug = 'dost-laon-logo'),
-  'Logo & Branding',
-  'Logo',
-  null,
-  3
-);
-
-insert into public.portfolio_project_categories (
-  project_id,
-  category,
-  pill_label,
-  title_override,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'cosmic-remedies-by-sia-logo'),
   'Logo & Branding',
   'Logo',
   null,
@@ -2103,60 +2057,6 @@ insert into public.portfolio_gallery_items (
   color,
   sort_order
 ) values (
-  (select id from public.portfolio_projects where slug = 'eat-well-live-well-nutrition-ebook'),
-  'Cover Design',
-  'Placeholder for the final eBook cover design.',
-  null,
-  'tall',
-  'from-emerald-400/50 to-lime-500/30',
-  0
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'eat-well-live-well-nutrition-ebook'),
-  'Chapter Layout',
-  'Placeholder for internal content and chapter structure.',
-  null,
-  'wide',
-  'from-lime-400/40 to-green-500/30',
-  1
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'eat-well-live-well-nutrition-ebook'),
-  'Content Sample',
-  'Placeholder for writing samples or page spreads.',
-  null,
-  'wide',
-  'from-green-400/40 to-emerald-500/30',
-  2
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
   (select id from public.portfolio_projects where slug = 'sidlac-co-branding'),
   'Primary Asset',
   'Showcase slot for Sidlac Co.''s main visual direction.',
@@ -2358,60 +2258,6 @@ insert into public.portfolio_gallery_items (
   (select id from public.portfolio_projects where slug = 'dost-laon-logo'),
   'Application Preview',
   'Showcase slot for DOST Laon mockups or campaign applications.',
-  null,
-  'square',
-  'from-amber-400/40 to-rose-500/30',
-  2
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'cosmic-remedies-by-sia-logo'),
-  'Primary Asset',
-  'Showcase slot for Cosmic Remedies by Sia''s main visual direction.',
-  null,
-  'wide',
-  'from-violet-500/50 to-cyan-500/30',
-  0
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'cosmic-remedies-by-sia-logo'),
-  'Supporting Layout',
-  'Showcase slot for additional Cosmic Remedies by Sia layouts and variations.',
-  null,
-  'square',
-  'from-cyan-500/40 to-blue-500/30',
-  1
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'cosmic-remedies-by-sia-logo'),
-  'Application Preview',
-  'Showcase slot for Cosmic Remedies by Sia mockups or campaign applications.',
   null,
   'square',
   'from-amber-400/40 to-rose-500/30',

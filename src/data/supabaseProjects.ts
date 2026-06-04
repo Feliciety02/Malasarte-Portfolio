@@ -73,6 +73,8 @@ const portfolioSelect = `
   )
 `;
 
+const hiddenProjectSlugs = new Set(["cosmic-remedies-by-sia-logo"]);
+
 const sortBySortOrder = <T extends { sort_order: number | null }>(items: T[] = []) =>
   [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 
@@ -167,7 +169,9 @@ export async function fetchPortfolioProjectsFromSupabase() {
     if (error) throw error;
     if (!data?.length) return undefined;
 
-    return (data as PortfolioProjectRow[]).map(mapProject);
+    return (data as PortfolioProjectRow[])
+      .filter((item) => !hiddenProjectSlugs.has(item.slug))
+      .map(mapProject);
   } catch (error) {
     console.warn("Unable to load Supabase portfolio projects.", error);
     return undefined;
@@ -176,6 +180,7 @@ export async function fetchPortfolioProjectsFromSupabase() {
 
 export async function fetchPortfolioProjectFromSupabase(slug: string) {
   if (!isSupabaseConfigured) return undefined;
+  if (hiddenProjectSlugs.has(slug)) return undefined;
 
   try {
     const { data, error } = await getSupabaseClient()

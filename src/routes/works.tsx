@@ -168,6 +168,7 @@ function GalleryWorkCard({
   project: Project;
   activeCategory: ProjectCategory;
 }) {
+  const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
 
