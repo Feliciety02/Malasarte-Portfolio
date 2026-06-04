@@ -9,6 +9,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [atPageEnd, setAtPageEnd] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [revealing, setRevealing] = useState(false);
   const [open, setOpen] = useState(false);
   const lastScrollY = useRef(0);
 
@@ -24,9 +25,19 @@ export function Nav() {
       setAtPageEnd(isAtEnd);
 
       const delta = current - lastScrollY.current;
+      const scrollingUp = delta < -4;
+
+      if (current <= 20) {
+        setRevealing(false);
+      } else if (scrollingUp) {
+        setRevealing(true);
+      } else if (delta > 8) {
+        setRevealing(false);
+      }
+
       if (current > 60 && delta > 8) {
         setHidden(true);
-      } else if (delta < -4 || current < 60) {
+      } else if (scrollingUp || current < 60) {
         setHidden(false);
       }
 
@@ -54,8 +65,9 @@ export function Nav() {
     >
       <div
         className={cn(
-          "mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3",
-          scrolled ? "metal-ghost mx-4 shadow-card md:mx-auto" : "bg-transparent",
+          "nav-glass mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3",
+          scrolled ? "nav-glass--solid mx-4 shadow-card md:mx-auto" : "nav-glass--soft",
+          revealing && "nav-glass--reveal",
         )}
       >
         <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
@@ -91,7 +103,7 @@ export function Nav() {
       </div>
 
       {open ? (
-        <div className="metal-panel mx-4 mt-2 p-4 md:hidden">
+        <div className="nav-glass nav-glass--solid mx-4 mt-2 rounded-lg p-4 md:hidden">
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link

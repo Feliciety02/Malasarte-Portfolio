@@ -21,15 +21,16 @@ export const marqueeItems = [
   "UI/UX Design",
   "Branding",
   "Visual Storytelling",
-  "Publication",
-  "Front End Development",
+  "Social Media Graphics",
+  "Creative Assets",
+  "Web Development",
 ];
 
 export const skillHighlights = [
   { name: "UI/UX Design", level: 95 },
   { name: "Branding", level: 88 },
-  { name: "Publication", level: 90 },
-  { name: "Front End Development", level: 86 },
+  { name: "Social Media Graphics", level: 90 },
+  { name: "Web Development", level: 86 },
 ];
 
 export const experienceStats = [
@@ -40,7 +41,7 @@ export const experienceStats = [
 
 export const experienceTimeline = [
   { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
-  { year: "2022 - 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
+  { year: "2022 - 2024", role: "UI/UX & Social Media Graphics Lead", place: "Tech Organization" },
   { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
 ] as const;
 
@@ -51,11 +52,15 @@ export const servicePreviews = [
     desc: "Mobile and web product design from research to handoff.",
   },
   { icon: PenTool, title: "Branding", desc: "Identity systems with personality and clarity." },
-  { icon: Megaphone, title: "Publication", desc: "Editorial layouts and pubmat campaigns." },
+  {
+    icon: Megaphone,
+    title: "Social Media Graphics",
+    desc: "Campaign posts, pubmats, and creative asset systems.",
+  },
   {
     icon: Globe,
-    title: "Front End Development",
-    desc: "Responsive interfaces translated from design into polished builds.",
+    title: "Web Development",
+    desc: "Responsive web experiences translated from design into polished builds.",
   },
   { icon: FileText, title: "Content & VA", desc: "Captions, blogs, and creator support." },
 ] as const;

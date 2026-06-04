@@ -412,7 +412,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
             <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(3rem,7vh,5rem)]">
               <div className="flex items-end justify-between gap-8">
                 <SectionHeader eyebrow="What I Do" title="Services designed to elevate your brand."
-                  description="Scroll through each capability — UI/UX, branding, publication, development, and content."
+                  description="Scroll through each capability — UI/UX, branding, social media graphics, creative assets, development, and content."
                   className="mb-0" contentClassName="max-w-2xl" titleClassName="md:text-4xl lg:text-5xl" />
                 <LinkButton to="/services" variant="text" className="hidden shrink-0 items-center pb-2 lg:inline-flex">
                   All services <ArrowRight size={14} />

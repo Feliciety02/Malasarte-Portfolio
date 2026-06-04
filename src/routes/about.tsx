@@ -57,12 +57,12 @@ function About() {
                 calmer.
               </p>
               <p>
-                My work grew through tech and design organizations, where I built publication
-                assets, identities, and digital products that had to be clear, fast to use, and easy
-                to maintain.
+                My work grew through tech and design organizations, where I built social media
+                graphics, creative assets, identities, and digital products that had to be clear,
+                fast to use, and easy to maintain.
               </p>
               <p>
-                Today I work across UI/UX, branding, publication design, content, and virtual
+                Today I work across UI/UX, branding, social media graphics, content, and virtual
                 support, connecting strategy with visual craft.
               </p>
             </div>
@@ -114,7 +114,7 @@ function About() {
           <div className="mt-10 border-t border-white/10">
             {[
               { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
-              { year: "2022 - 2024", role: "UI/UX & Publication Lead", place: "Tech Organization" },
+              { year: "2022 - 2024", role: "UI/UX & Social Media Graphics Lead", place: "Tech Organization" },
               { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
             ].map((e) => (
               <div

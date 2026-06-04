@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export type LightboxItem = {
   color: string;
   label: string;
   note?: string;
+  src?: string;
 };
 
 export function Lightbox({
@@ -118,7 +120,22 @@ export function Lightbox({
               }}
               className="metal-panel relative w-full max-w-5xl overflow-hidden shadow-card"
             >
-              <div className="aspect-[16/10]">
+              <div className={cn("relative aspect-[16/10] bg-gradient-to-br", current.color)}>
+                {current.src ? (
+                  <img
+                    src={current.src}
+                    alt={current.label}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : null}
+                <div
+                  aria-hidden
+                  className={cn(
+                    "absolute inset-0 bg-gradient-to-br",
+                    current.color,
+                    current.src ? "opacity-20 mix-blend-overlay" : "opacity-100",
+                  )}
+                />
                 <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.026)_42%,rgba(0,0,0,0.42))]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">

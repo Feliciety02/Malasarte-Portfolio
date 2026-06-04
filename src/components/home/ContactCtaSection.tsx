@@ -12,7 +12,7 @@ export function ContactCtaSection() {
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
           Reach out for portfolio context, role fit, or a closer look at work across product,
-          branding, publication, and front-end execution.
+          branding, social media graphics, creative assets, and web development.
         </p>
         <LinkButton to="/contact" className="mt-10">
           Get in touch <ArrowRight size={16} />

@@ -10,7 +10,7 @@ export const skillGroups = [
       { name: "Branding", level: 88 },
       { name: "Logo Design", level: 86 },
       { name: "Social Media Graphics", level: 92 },
-      { name: "Publication Materials", level: 90 },
+      { name: "Creative Assets", level: 90 },
     ],
   },
   {

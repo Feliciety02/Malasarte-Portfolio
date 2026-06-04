@@ -655,6 +655,80 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
+  .nav-glass {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.032)),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.055), transparent 45%, rgba(0, 0, 0, 0.22)),
+      rgba(10, 11, 12, 0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.34),
+      0 18px 44px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(14px) saturate(145%);
+    -webkit-backdrop-filter: blur(14px) saturate(145%);
+  }
+
+  .nav-glass::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(26rem circle at 16% 0%, rgba(255, 255, 255, 0.11), transparent 46%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 32%, rgba(255, 255, 255, 0.025));
+    opacity: 0.78;
+  }
+
+  .nav-glass > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-glass--soft {
+    border-color: rgba(255, 255, 255, 0.09);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+      rgba(10, 11, 12, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px) saturate(125%);
+    -webkit-backdrop-filter: blur(8px) saturate(125%);
+  }
+
+  .nav-glass--solid {
+    border-color: rgba(255, 255, 255, 0.15);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.065), transparent 44%, rgba(0, 0, 0, 0.24)),
+      rgba(12, 13, 14, 0.58);
+    backdrop-filter: blur(22px) saturate(165%);
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+  }
+
+  .nav-glass--reveal {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.42),
+      0 22px 60px rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav-glass,
+    .nav-glass--soft,
+    .nav-glass--solid,
+    .nav-glass--reveal {
+      background: rgba(12, 13, 14, 0.88);
+    }
+  }
+
   .metal-input {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 0.5rem;

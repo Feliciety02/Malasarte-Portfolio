@@ -27,9 +27,9 @@ export function AboutPreviewSection() {
               {accentLastWord("Designer with a soft spot for quiet details.")}
             </h2>
             <p className="mt-5 text-muted-foreground">
-              I&apos;m a multidisciplinary designer working across UI/UX, branding, publication, and
-              content. I love building things that feel intentional, human, and a little bit
-              precise.
+              I&apos;m a multidisciplinary designer working across UI/UX, branding, social media
+              graphics, creative assets, and content. I love building things that feel intentional,
+              human, and a little bit precise.
             </p>
             <LinkButton to="/about" variant="glass" className="mt-8">
               Read full story <ArrowRight size={14} />

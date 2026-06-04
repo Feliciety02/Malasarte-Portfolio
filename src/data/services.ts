@@ -17,16 +17,16 @@ export const serviceCategories = [
   },
   {
     icon: Megaphone,
-    title: "Publication & Pubmats",
+    title: "Social Media Graphics",
     color: "from-amber-400/40 to-orange-500/30",
-    desc: "Editorial layouts, social campaigns, and pubmats designed around a cohesive visual story.",
-    bullets: ["Editorial spreads", "Social campaigns", "Story templates"],
+    desc: "Campaign posts, pubmats, and creative assets designed around a cohesive visual story.",
+    bullets: ["Social campaigns", "Announcement assets", "Story templates"],
   },
   {
     icon: Globe,
-    title: "Front End Development",
+    title: "Web Development",
     color: "from-cyan-400/40 to-blue-500/30",
-    desc: "Responsive front-end builds that turn polished UI into structured, maintainable screens.",
+    desc: "Responsive web builds that turn polished UI into structured, maintainable screens.",
     bullets: ["Responsive interfaces", "Component-based builds", "Design-to-code execution"],
   },
   {

@@ -5,8 +5,13 @@ import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {
   return (
-    <footer className="relative isolate mb-0 overflow-visible pb-0 pt-28 sm:pb-0 lg:pt-32">
-      <div className="relative left-1/2 mb-0 min-h-[calc(100svh-7rem)] w-screen -translate-x-1/2 overflow-visible rounded-b-none rounded-t-[4rem] border border-b-0 border-white/10 bg-[oklch(0.125_0_0/0.98)] shadow-[0_32px_90px_rgba(0,0,0,0.42)] sm:rounded-t-[6rem] lg:min-h-[calc(100svh-8rem)] lg:rounded-t-[7.5rem]">
+    <footer className="relative isolate overflow-visible bg-transparent px-2 pb-3 pt-24 sm:px-3 sm:pb-4 lg:px-4 lg:pt-28">
+      <div className="relative left-1/2 w-[calc(100vw-1rem)] -translate-x-1/2 overflow-visible rounded-b-[1.5rem] rounded-t-[4rem] border border-white/10 bg-[oklch(0.125_0_0/0.98)] shadow-[0_32px_90px_rgba(0,0,0,0.42)] sm:w-[calc(100vw-1.5rem)] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:w-[calc(100vw-2rem)] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 rounded-b-[1.5rem] rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.34)_1px,transparent_1px)] opacity-[0.045] [background-size:18px_18px] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]"
+        />
+
         <Link
           to="/"
           aria-label="Fe Anne Malasarte home"
@@ -19,7 +24,7 @@ export function Footer() {
           />
         </Link>
 
-        <div className="relative z-[1] mx-auto flex min-h-[calc(100svh-7rem)] w-full max-w-7xl flex-col justify-end px-6 pb-7 pt-24 sm:px-10 sm:pb-9 md:px-12 lg:min-h-[calc(100svh-8rem)] lg:px-14 xl:px-16">
+        <div className="relative z-[1] mx-auto w-full max-w-7xl px-6 pb-6 pt-20 sm:px-10 sm:pb-8 md:px-12 lg:px-14 lg:pb-8 lg:pt-20 xl:px-16">
           <div className="lg:hidden">
             <div className="mx-auto max-w-sm text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
@@ -29,7 +34,7 @@ export function Footer() {
                 Fe Anne Malasarte
               </h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                UI/UX, branding, publication design, and creative direction.
+                UI/UX, branding, social media graphics, and creative direction.
               </p>
             </div>
 
@@ -73,17 +78,18 @@ export function Footer() {
               <ArrowRight size={16} className="shrink-0 text-accent" />
             </a>
 
-            <div className="mt-7 grid gap-6 rounded-lg border border-white/8 bg-white/[0.03] p-4 sm:grid-cols-2">
+            <div className="mt-7 grid grid-cols-2 gap-4 rounded-lg border border-white/8 bg-white/[0.03] p-4">
               <div>
                 <h4 className="text-sm font-semibold text-foreground">Explore</h4>
-                <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
                   {footerExploreLinks.map((link) => (
                     <Link
                       key={link.to}
                       to={link.to}
-                      className="transition-colors hover:text-foreground"
+                      className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
                     >
                       {link.label}
+                      <ArrowRight size={12} className="shrink-0 text-accent" />
                     </Link>
                   ))}
                 </div>
@@ -91,7 +97,7 @@ export function Footer() {
 
               <div>
                 <h4 className="text-sm font-semibold text-foreground">Social</h4>
-                <div className="mt-3 flex flex-wrap gap-2.5">
+                <div className="mt-3 grid grid-cols-3 gap-2.5">
                   {socialLinks.map((social) => (
                     <a
                       key={social.label}
@@ -109,7 +115,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative hidden gap-10 lg:grid lg:grid-cols-[1fr_1.25fr_1fr] lg:items-end">
+          <div className="relative hidden gap-8 lg:grid lg:grid-cols-[1fr_1.25fr_1fr] lg:items-end">
             <div>
               <h4 className="font-display text-2xl font-bold text-foreground">Contact</h4>
               <a
@@ -118,11 +124,11 @@ export function Footer() {
               >
                 feannemlsrte@gmail.com
               </a>
-              <p className="mt-4 max-w-xs text-sm leading-6 text-muted-foreground">
+              <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">
                 Creative designer and UI/UX storyteller crafting meaningful digital experiences.
               </p>
 
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent">
+              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
@@ -135,15 +141,15 @@ export function Footer() {
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
                 Portfolio
               </p>
-              <h3 className="mt-3 font-display text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              <h3 className="mt-3 font-display text-4xl font-bold leading-tight text-foreground">
                 Fe Anne Malasarte
               </h3>
               <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-                UI/UX, brand identity, publication design, and creative direction built with care
+                UI/UX, brand identity, social media graphics, and creative direction built with care
                 from concept to polished execution.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:justify-center">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:justify-center">
                 <Link
                   to="/works"
                   className="metal-cta inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
@@ -186,7 +192,7 @@ export function Footer() {
                       href={social.href}
                       aria-label={social.label}
                       target="_blank"
-                    rel="noreferrer"
+                      rel="noreferrer"
                       className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/6 text-muted-foreground transition-all hover:scale-105 hover:bg-primary/16 hover:text-foreground"
                     >
                       <social.icon size={16} />
@@ -197,7 +203,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative mt-8 flex flex-col items-center gap-3 border-t border-white/8 pt-5 text-center text-xs text-muted-foreground sm:flex-row sm:justify-between sm:text-left lg:mt-12">
+          <div className="relative mt-8 flex flex-col items-center gap-3 border-t border-white/8 pt-5 text-center text-xs text-muted-foreground sm:flex-row sm:justify-between sm:text-left lg:mt-8">
             <p>&copy; {new Date().getFullYear()} Fe Anne Malasarte. Designed with care.</p>
             <p className="rounded-full bg-accent px-3 py-1.5 font-medium text-accent-foreground">
               Crafted with creativity and code.
