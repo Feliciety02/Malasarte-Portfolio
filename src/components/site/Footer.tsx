@@ -6,10 +6,10 @@ import { footerExploreLinks, socialLinks } from "@/data/site";
 export function Footer() {
   return (
     <footer className="relative isolate overflow-visible bg-transparent px-2 pb-3 pt-24 sm:px-3 sm:pb-4 lg:px-4 lg:pt-28">
-      <div className="relative left-1/2 w-[calc(100vw-1rem)] -translate-x-1/2 overflow-visible rounded-b-[1.5rem] rounded-t-[4rem] border border-white/10 bg-[oklch(0.125_0_0/0.98)] shadow-[0_32px_90px_rgba(0,0,0,0.42)] sm:w-[calc(100vw-1.5rem)] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:w-[calc(100vw-2rem)] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]">
+      <div className="relative left-1/2 w-[calc(100vw-1rem)] -translate-x-1/2 overflow-visible rounded-b-[1.5rem] rounded-t-[4rem] border border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw-1.5rem)] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:w-[calc(100vw-2rem)] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 rounded-b-[1.5rem] rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.34)_1px,transparent_1px)] opacity-[0.045] [background-size:18px_18px] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]"
+          className="pointer-events-none absolute inset-0 z-0 rounded-b-[1.5rem] rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28)_0.7px,transparent_1.8px)] opacity-[0.08] blur-[0.7px] [background-size:14px_14px] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]"
         />
 
         <Link

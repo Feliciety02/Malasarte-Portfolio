@@ -5,7 +5,7 @@ export function TagPill({ children, className }: { children: ReactNode; classNam
   return (
     <span
       className={cn(
-        "metal-ghost pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/72",
+        "metal-ghost pointer-events-none absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/72 sm:left-5 sm:top-5 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px] sm:tracking-[0.16em]",
         className,
       )}
     >

@@ -1,13 +1,6 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  useInView,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,6 +9,8 @@ import {
   Layers,
   Lightbulb,
   Maximize2,
+  Monitor,
+  Palette,
   RotateCcw,
   Sparkles,
   Star,
@@ -282,16 +277,9 @@ function CaseStudy() {
     };
   }, [project.slug]);
 
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
-
   return (
     <MetallicPage variant="project" className="px-0 pb-24">
-      <motion.div
-        aria-hidden
-        style={{ scaleX: progress }}
-        className="fixed left-0 right-0 top-0 z-40 h-[2px] origin-left bg-gradient-to-r from-primary via-accent to-primary"
-      />
+      <FloatingCatalogBackLink />
 
       <ProjectHero project={project} meta={meta} />
 
@@ -364,6 +352,34 @@ function CaseStudy() {
 // Shared chrome
 // ---------------------------------------------------------------------------
 
+function FloatingCatalogBackLink() {
+  return (
+    <div>
+      <Link
+        to="/works"
+        resetScroll
+        aria-label="Back to all works"
+        title="Back to all works"
+        className="metal-ghost fixed left-4 top-28 z-40 grid h-11 w-11 place-items-center rounded-full text-muted-foreground shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-colors duration-300 hover:border-primary/45 hover:bg-primary/15 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 lg:hidden"
+      >
+        <ArrowLeft size={16} />
+      </Link>
+
+      <Link
+        to="/works"
+        resetScroll
+        aria-label="Back to all works"
+        title="Back to all works"
+        className="group fixed bottom-0 left-0 top-0 z-40 hidden w-24 items-start justify-center pt-36 text-muted-foreground transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/45 lg:flex xl:w-28 2xl:w-[max(7rem,calc((100vw-80rem)/2+5rem))]"
+      >
+        <span className="metal-ghost grid h-11 w-11 place-items-center rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-colors duration-300 group-hover:border-primary/45 group-hover:bg-primary/15">
+          <ArrowLeft size={16} />
+        </span>
+      </Link>
+    </div>
+  );
+}
+
 function ProjectHero({ project, meta }: { project: Project; meta: TemplateMeta }) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -386,19 +402,6 @@ function ProjectHero({ project, meta }: { project: Project; meta: TemplateMeta }
         aria-hidden
         className="absolute inset-0 -z-10 opacity-[0.08] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:80px_80px]"
       />
-
-      <Link
-        to="/works"
-        resetScroll
-        aria-label="Back to all works"
-        title="Back to all works"
-        className="metal-ghost group absolute left-4 top-6 z-20 grid h-10 w-10 place-items-center rounded-full text-muted-foreground shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-x-0.5 hover:border-primary/45 hover:bg-primary/15 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 sm:left-6 sm:top-8 lg:left-[max(2rem,calc((100vw-80rem)/2-4.5rem))]"
-      >
-        <ArrowLeft
-          size={16}
-          className="transition-transform duration-300 group-hover:-translate-x-0.5"
-        />
-      </Link>
 
       <div className="mx-auto max-w-7xl px-6 pb-20 pt-24 md:pb-28 md:pt-36">
         <motion.div
@@ -457,10 +460,54 @@ function Snapshot({ project }: { project: Project }) {
   );
 }
 
+type WorkspaceTabId = "live" | "design";
+
+type WorkspaceTab = {
+  id: WorkspaceTabId;
+  label: string;
+  title: string;
+  note?: string;
+  src: string;
+  externalUrl: string;
+  allow: string;
+  minWidthClassName: string;
+};
+
 function InteractiveWorkspace({ project }: { project: Project }) {
   const figma = project.figmaEmbed;
-  const hasFigma = Boolean(figma?.embedUrl ?? figma?.shareUrl);
-  const embedSrc = figma ? getFigmaEmbedUrl(figma) : undefined;
+  const live = project.liveEmbed;
+  const figmaEmbedSrc = figma ? getFigmaEmbedUrl(figma) : undefined;
+  const liveSrc = live?.src.trim();
+  const workspaceTabs: WorkspaceTab[] = [];
+
+  if (liveSrc) {
+    workspaceTabs.push({
+      id: "live",
+      label: "Live Build",
+      title: live.title,
+      note: live.note,
+      src: liveSrc,
+      externalUrl: liveSrc,
+      allow: "fullscreen; clipboard-read; clipboard-write; autoplay; gamepad",
+      minWidthClassName: "min-w-[24rem] sm:min-w-0",
+    });
+  }
+
+  if (!liveSrc && figmaEmbedSrc) {
+    workspaceTabs.push({
+      id: "design",
+      label: "Design",
+      title: figma?.title ?? `${project.title} design workspace`,
+      note: figma?.note,
+      src: figmaEmbedSrc,
+      externalUrl: figma?.prototypeUrl ?? figma?.shareUrl ?? figmaEmbedSrc,
+      allow: "fullscreen; clipboard-read; clipboard-write",
+      minWidthClassName: "min-w-[52rem] sm:min-w-0",
+    });
+  }
+
+  const [activeTabId, setActiveTabId] = useState<WorkspaceTabId>("live");
+  const activeTab = workspaceTabs.find((tab) => tab.id === activeTabId) ?? workspaceTabs[0];
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [embedKey, setEmbedKey] = useState(0);
@@ -468,16 +515,16 @@ function InteractiveWorkspace({ project }: { project: Project }) {
   useEffect(() => {
     setIsLoaded(false);
     setEmbedKey(0);
-  }, [figma?.embedUrl, figma?.shareUrl]);
+  }, [activeTab?.id, activeTab?.src]);
 
   const resetView = () => {
-    if (!hasFigma) return;
+    if (!activeTab) return;
     setIsLoaded(false);
     setEmbedKey((key) => key + 1);
   };
 
   const enterFullscreen = () => {
-    if (!hasFigma) return;
+    if (!activeTab) return;
     containerRef.current?.requestFullscreen?.();
   };
 
@@ -485,12 +532,54 @@ function InteractiveWorkspace({ project }: { project: Project }) {
     <SectionAnchor id="workspace" className="pt-16 md:pt-24">
       <FadeIn>
         <SectionLabel kicker="02" label="Live Workspace" />
-        <div className="mt-5 flex items-end justify-between gap-6">
-          <h2 className="font-display text-2xl font-bold leading-tight md:text-4xl">
-            {accentLastWord("Explore the design")}
-          </h2>
-          {hasFigma ? (
-            <div className="flex shrink-0 gap-2">
+        <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-display text-2xl font-bold leading-tight md:text-4xl">
+              {accentLastWord(
+                activeTab?.id === "live" ? "Explore the live build" : "Explore the design",
+              )}
+            </h2>
+            {activeTab?.note ? (
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                {activeTab.note}
+              </p>
+            ) : null}
+          </div>
+          {activeTab ? (
+            <div className="flex flex-wrap items-center gap-2">
+              {workspaceTabs.length > 1 ? (
+                <div className="metal-ghost flex rounded-full p-1">
+                  {workspaceTabs.map((tab) => {
+                    const isActive = activeTab.id === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setActiveTabId(tab.id)}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors",
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-white",
+                        )}
+                        aria-pressed={isActive}
+                      >
+                        {tab.id === "live" ? <Monitor size={12} /> : <Palette size={12} />}
+                        {tab.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+              <a
+                href={activeTab.externalUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="metal-ghost flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-white"
+                aria-label={`Open ${activeTab.title} in a new tab`}
+              >
+                <ArrowUpRight size={12} /> Open
+              </a>
               <button
                 type="button"
                 onClick={enterFullscreen}
@@ -524,21 +613,22 @@ function InteractiveWorkspace({ project }: { project: Project }) {
                 "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01) 38%), repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 44px), repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 44px)",
             }}
           >
-            {embedSrc ? (
-              <div className="relative h-full min-w-[52rem] sm:min-w-0">
+            {activeTab ? (
+              <div className={cn("relative h-full", activeTab.minWidthClassName)}>
                 {!isLoaded ? (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white/70" />
                   </div>
                 ) : null}
                 <iframe
-                  key={`${project.slug}-${embedKey}`}
-                  title={`${figma?.title ?? project.title} workspace`}
-                  src={embedSrc}
+                  key={`${project.slug}-${activeTab.id}-${embedKey}`}
+                  title={`${activeTab.title} workspace`}
+                  src={activeTab.src}
                   className="h-full w-full border-0"
-                  allow="fullscreen; clipboard-read; clipboard-write"
+                  allow={activeTab.allow}
                   allowFullScreen
                   loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   onLoad={() => setIsLoaded(true)}
                 />
               </div>
@@ -568,7 +658,7 @@ function WorkspacePlaceholder({ project }: { project: Project }) {
               Preview frame
             </p>
             <h3 className="mt-2 font-display text-2xl font-semibold">
-              Interactive Figma Workspace Coming Soon
+              Interactive Workspace Coming Soon
             </h3>
           </div>
           <Sparkles size={18} className="text-primary" />
@@ -582,8 +672,8 @@ function WorkspacePlaceholder({ project }: { project: Project }) {
           <div className="aspect-video rounded-lg border border-white/8 bg-[linear-gradient(135deg,rgba(255,255,255,0.11),rgba(255,255,255,0.025)_45%,rgba(0,0,0,0.26))]" />
         </div>
         <p className="mt-5 text-sm leading-7 text-muted-foreground">
-          {project.title} will include an embedded workspace here when a public Figma file is
-          available.
+          {project.title} will include the live build or embedded design workspace here when a
+          public URL is available.
         </p>
       </div>
     </div>

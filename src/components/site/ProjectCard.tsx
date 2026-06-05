@@ -42,10 +42,10 @@ export function ProjectCard({ project, activeCategory = project.cat }: ProjectCa
           <TagPill>{pill}</TagPill>
         </div>
 
-        <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6">
-          <h3 className="font-display text-2xl font-semibold leading-tight">{title}</h3>
+        <div className="relative z-10 flex flex-1 flex-col p-4 sm:p-6">
+          <h3 className="font-display text-xl font-semibold leading-tight sm:text-2xl">{title}</h3>
 
-          <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
+          <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
             {project.desc}
           </p>
         </div>

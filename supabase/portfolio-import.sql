@@ -159,18 +159,18 @@ insert into public.portfolio_projects (
   sort_order
 ) values (
   'pietyl-lpg',
-  'Pietyl LPG',
-  'Pietyl LPG',
+  'Pietyl DigiLPG',
+  'Pietyl DigiLPG',
   'Logo & Branding',
   'branding',
   'Business Branding',
-  'Brand identity for an LPG business.',
+  'Brand identity for the Pietyl DigiLPG business.',
   'Brand Designer',
   array['Illustrator', 'Photoshop']::text[],
   '2024',
-  'Pietyl LPG',
-  'Pietyl LPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.',
-  'Pietyl LPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.',
+  'Pietyl DigiLPG',
+  'Pietyl DigiLPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.',
+  'Pietyl DigiLPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.',
   2
 );
 
@@ -556,38 +556,6 @@ insert into public.portfolio_projects (
   'Logo direction for the Adoptify product concept.',
   'Adoptify now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
   14
-);
-
-insert into public.portfolio_projects (
-  slug,
-  title,
-  directory_title,
-  primary_category,
-  kind,
-  tag,
-  description,
-  role,
-  tools,
-  year,
-  client,
-  overview,
-  outcome,
-  sort_order
-) values (
-  'pietyl-management-system-logo',
-  'Pietyl Management System',
-  'Pietyl Management System',
-  'Logo & Branding',
-  'branding',
-  'Logo & Branding',
-  'Logo and brand identity direction for the Pietyl management system.',
-  'Brand Designer',
-  array['Illustrator', 'Figma']::text[],
-  '2025',
-  'Pietyl Management System',
-  'Logo and brand identity direction for the Pietyl management system.',
-  'Pietyl Management System now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
-  15
 );
 
 insert into public.portfolio_projects (
@@ -1236,20 +1204,6 @@ insert into public.portfolio_project_categories (
   (select id from public.portfolio_projects where slug = 'adoptify-logo'),
   'Logo & Branding',
   'Logo',
-  null,
-  3
-);
-
-insert into public.portfolio_project_categories (
-  project_id,
-  category,
-  pill_label,
-  title_override,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'pietyl-management-system-logo'),
-  'Logo & Branding',
-  'Logo & Branding',
   null,
   3
 );
@@ -2150,60 +2104,6 @@ insert into public.portfolio_gallery_items (
   (select id from public.portfolio_projects where slug = 'adoptify-logo'),
   'Application Preview',
   'Showcase slot for Adoptify mockups or campaign applications.',
-  null,
-  'square',
-  'from-amber-400/40 to-rose-500/30',
-  2
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'pietyl-management-system-logo'),
-  'Primary Asset',
-  'Showcase slot for Pietyl Management System''s main visual direction.',
-  null,
-  'wide',
-  'from-sky-500/50 to-indigo-500/30',
-  0
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'pietyl-management-system-logo'),
-  'Supporting Layout',
-  'Showcase slot for additional Pietyl Management System layouts and variations.',
-  null,
-  'square',
-  'from-cyan-500/40 to-blue-500/30',
-  1
-);
-
-insert into public.portfolio_gallery_items (
-  project_id,
-  label,
-  note,
-  image_url,
-  ratio,
-  color,
-  sort_order
-) values (
-  (select id from public.portfolio_projects where slug = 'pietyl-management-system-logo'),
-  'Application Preview',
-  'Showcase slot for Pietyl Management System mockups or campaign applications.',
   null,
   'square',
   'from-amber-400/40 to-rose-500/30',

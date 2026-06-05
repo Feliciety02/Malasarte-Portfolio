@@ -62,29 +62,29 @@ function Works() {
   }
 
   return (
-    <MetallicPage variant="works" className="px-6 pb-28">
-      <section className="mx-auto max-w-7xl pt-12 md:pt-20">
+    <MetallicPage variant="works" className="px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="mx-auto max-w-7xl pt-10 md:pt-20">
         <Reveal>
           <SectionHeader
             eyebrow="Portfolio"
             title="Selected Works"
             description="A growing collection of work across product design, branding, social media graphics, creative assets, web development, and writing."
             contentClassName="max-w-2xl"
-            titleClassName="text-4xl sm:text-5xl md:text-7xl"
-            descriptionClassName="leading-7"
+            titleClassName="text-3xl sm:text-5xl md:text-7xl"
+            descriptionClassName="leading-6 sm:leading-7"
             titleTag="h1"
           />
         </Reveal>
 
-        <div className="metal-rail mt-10" />
+        <div className="metal-rail mt-8 sm:mt-10" />
 
-        <div className="thin-x-scrollbar mt-8 -mx-1 overflow-x-auto pb-2 pt-1">
+        <div className="thin-x-scrollbar mt-6 -mx-1 overflow-x-auto pb-2 pt-1 sm:mt-8">
           <div className="mb-2 flex w-max min-w-full gap-2 px-1">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActive(category)}
-                className={`relative whitespace-nowrap rounded-full px-4 py-2 text-xs font-medium transition-all sm:px-5 sm:text-sm ${
+                className={`relative whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-medium transition-all sm:px-5 sm:text-sm ${
                   active === category
                     ? "metal-cta text-primary-foreground"
                     : "metal-ghost text-muted-foreground hover:text-foreground"
@@ -101,14 +101,14 @@ function Works() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mt-5 max-w-3xl text-sm leading-6 text-muted-foreground"
+          className="mt-4 max-w-3xl text-[13px] leading-6 text-muted-foreground sm:mt-5 sm:text-sm"
         >
           {categoryDescriptions[active]}
         </motion.p>
 
         <motion.div
           layout
-          className={cn("mt-12 grid gap-5 md:mt-14 md:gap-6", getWorkGridClass(active))}
+          className={cn("mt-8 grid gap-4 sm:mt-12 sm:gap-5 md:mt-14 md:gap-6", getWorkGridClass(active))}
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((project, index) => (
@@ -176,7 +176,7 @@ function GalleryWorkCard({
     <CaseStudyLink
       slug={project.slug}
       aria-label={`Open ${title} gallery`}
-      className="metal-panel group relative block min-h-[17rem] overflow-hidden rounded-lg"
+      className="metal-panel group relative block min-h-[14rem] overflow-hidden rounded-lg sm:min-h-[17rem]"
     >
       {coverImage ? (
         <img
@@ -189,9 +189,9 @@ function GalleryWorkCard({
       <div className={cn("absolute inset-0 bg-gradient-to-br", project.color)} />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.64))]" />
       <TagPill className="left-4 top-4">{pill}</TagPill>
-      <div className="relative z-10 flex h-full min-h-[17rem] flex-col justify-end p-5">
-        <ImageIcon size={18} className="mb-4 text-white/70" />
-        <h3 className="font-display text-2xl font-semibold leading-tight">{title}</h3>
+      <div className="relative z-10 flex h-full min-h-[14rem] flex-col justify-end p-4 sm:min-h-[17rem] sm:p-5">
+        <ImageIcon size={18} className="mb-3 text-white/70 sm:mb-4" />
+        <h3 className="font-display text-xl font-semibold leading-tight sm:text-2xl">{title}</h3>
       </div>
     </CaseStudyLink>
   );
@@ -204,6 +204,7 @@ function BrandingWorkCard({
   project: Project;
   activeCategory: ProjectCategory;
 }) {
+  const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
 
@@ -211,7 +212,7 @@ function BrandingWorkCard({
     <CaseStudyLink
       slug={project.slug}
       aria-label={`Open ${title} identity work`}
-      className="metal-card group relative flex min-h-[18rem] flex-col overflow-hidden p-6"
+      className="metal-card group relative flex min-h-[22rem] flex-col overflow-hidden p-4 sm:min-h-[27rem] sm:p-6"
     >
       <div
         aria-hidden
@@ -224,10 +225,26 @@ function BrandingWorkCard({
         <TagPill className="static">{pill}</TagPill>
         <PenTool size={18} className="text-primary" />
       </div>
-      <div className="relative z-10 mt-auto pt-12">
-        <p className="metal-kicker mb-4">{project.tag}</p>
-        <h3 className="font-display text-3xl font-semibold leading-tight">{title}</h3>
-        <p className="mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">{project.desc}</p>
+
+      <div className="relative z-10 mx-auto mt-6 flex aspect-square w-full max-w-[13.5rem] items-center justify-center overflow-hidden rounded-md bg-white/[0.94] p-3 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55)] sm:mt-8 sm:max-w-[19rem] sm:p-4">
+        {coverImage ? (
+          <img
+            src={coverImage}
+            alt={`${title} logo`}
+            className="max-h-[96%] max-w-[96%] object-contain transition-transform duration-700 group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+        ) : (
+          <PenTool size={30} className="text-primary" />
+        )}
+      </div>
+
+      <div className="relative z-10 mt-auto pt-6 sm:pt-8">
+        <p className="metal-kicker mb-3 sm:mb-4">{project.tag}</p>
+        <h3 className="font-display text-2xl font-semibold leading-tight sm:text-3xl">{title}</h3>
+        <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-muted-foreground sm:mt-4 sm:text-sm sm:leading-6">
+          {project.desc}
+        </p>
       </div>
     </CaseStudyLink>
   );
@@ -240,6 +257,7 @@ function DevelopmentWorkCard({
   project: Project;
   activeCategory: ProjectCategory;
 }) {
+  const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
 
@@ -247,20 +265,34 @@ function DevelopmentWorkCard({
     <CaseStudyLink
       slug={project.slug}
       aria-label={`Open ${title} web development work`}
-      className="metal-card group grid min-h-[15rem] gap-6 p-6 sm:grid-cols-[4rem_minmax(0,1fr)]"
+      className="metal-card group grid min-h-[12.5rem] gap-4 p-4 sm:min-h-[15rem] sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-6 sm:p-6"
     >
-      <div className="metal-ghost grid h-16 w-16 place-items-center rounded-lg text-primary">
-        <Globe size={24} />
+      <div className="metal-ghost grid h-12 w-12 place-items-center rounded-lg text-primary sm:h-16 sm:w-16">
+        <Globe size={22} />
       </div>
       <div>
         <TagPill className="static">{pill}</TagPill>
-        <h3 className="mt-5 font-display text-3xl font-semibold leading-tight">{title}</h3>
-        <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{project.desc}</p>
-        <div className="mt-5 flex flex-wrap gap-2">
+        <h3 className="mt-4 font-display text-2xl font-semibold leading-tight sm:mt-5 sm:text-3xl">
+          {title}
+        </h3>
+        {coverImage ? (
+          <div className="mt-4 overflow-hidden rounded-md border border-white/10 bg-white/[0.04] sm:mt-5">
+            <img
+              src={coverImage}
+              alt={`${title} landing page preview`}
+              className="aspect-[16/9] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
+        ) : null}
+        <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+          {project.desc}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
           {project.tools.slice(0, 4).map((tool) => (
             <span
               key={tool}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/72"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/72 sm:px-3 sm:text-xs"
             >
               {tool}
             </span>
@@ -286,9 +318,9 @@ function WritingWorkCard({
     <CaseStudyLink
       slug={project.slug}
       aria-label={`Open ${title} writing work`}
-      className="metal-card group grid min-h-[15rem] gap-6 p-6 sm:grid-cols-[8.5rem_minmax(0,1fr)] lg:grid-cols-[9.5rem_minmax(0,1fr)]"
+      className="metal-card group grid min-h-[12.5rem] gap-4 p-4 sm:min-h-[15rem] sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-6 sm:p-6 lg:grid-cols-[9.5rem_minmax(0,1fr)]"
     >
-      <div className="metal-ghost relative aspect-[3/4] min-h-44 overflow-hidden rounded-md border border-white/12 bg-gradient-to-br from-white/[0.08] via-white/[0.025] to-transparent text-primary">
+      <div className="metal-ghost relative aspect-[3/4] min-h-36 overflow-hidden rounded-md border border-white/12 bg-gradient-to-br from-white/[0.08] via-white/[0.025] to-transparent text-primary sm:min-h-44">
         {coverImage ? (
           <img
             src={coverImage}
@@ -319,8 +351,12 @@ function WritingWorkCard({
       </div>
       <div className="min-w-0 self-center">
         <TagPill className="static">{pill}</TagPill>
-        <h3 className="mt-5 font-display text-2xl font-semibold leading-tight">{title}</h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{project.desc}</p>
+        <h3 className="mt-4 font-display text-xl font-semibold leading-tight sm:mt-5 sm:text-2xl">
+          {title}
+        </h3>
+        <p className="mt-3 line-clamp-3 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+          {project.desc}
+        </p>
       </div>
     </CaseStudyLink>
   );

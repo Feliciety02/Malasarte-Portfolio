@@ -73,7 +73,11 @@ const portfolioSelect = `
   )
 `;
 
-const hiddenProjectSlugs = new Set(["cosmic-remedies-by-sia-logo"]);
+const hiddenProjectSlugs = new Set([
+  "cosmic-remedies-by-sia-logo",
+  "pietyl-management-system-logo",
+]);
+const localIdentitySlugs = new Set(["pietyl-lpg"]);
 
 const sortBySortOrder = <T extends { sort_order: number | null }>(items: T[] = []) =>
   [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
@@ -127,25 +131,28 @@ function mapProject(row: PortfolioProjectRow): Project {
   const galleryRows = sortBySortOrder(row.portfolio_gallery_items ?? []);
 
   const base = localProject ?? makeFallbackProject(row);
+  const useLocalIdentity = localProject ? localIdentitySlugs.has(row.slug) : false;
 
   return {
     ...base,
     slug: row.slug,
-    title: row.title,
-    directoryTitle: row.directory_title ?? base.directoryTitle,
+    title: useLocalIdentity ? base.title : row.title,
+    directoryTitle: useLocalIdentity
+      ? base.directoryTitle
+      : (row.directory_title ?? base.directoryTitle),
     cat: row.primary_category,
     kind: row.kind,
     categories: secondaryCategories.length ? secondaryCategories : base.categories,
     categoryLabels: Object.keys(categoryLabels).length ? categoryLabels : base.categoryLabels,
     categoryTitles: Object.keys(categoryTitles).length ? categoryTitles : base.categoryTitles,
-    tag: row.tag ?? base.tag,
-    desc: row.description ?? base.desc,
+    tag: useLocalIdentity ? base.tag : (row.tag ?? base.tag),
+    desc: useLocalIdentity ? base.desc : (row.description ?? base.desc),
     role: row.role ?? base.role,
     tools: row.tools ?? base.tools,
     year: row.year ?? base.year,
-    client: row.client ?? base.client,
-    overview: row.overview ?? base.overview,
-    outcome: row.outcome ?? base.outcome,
+    client: useLocalIdentity ? base.client : (row.client ?? base.client),
+    overview: useLocalIdentity ? base.overview : (row.overview ?? base.overview),
+    outcome: useLocalIdentity ? base.outcome : (row.outcome ?? base.outcome),
     gallery: galleryRows.length
       ? galleryRows.map((item) => ({
           color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",

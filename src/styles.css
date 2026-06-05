@@ -659,19 +659,20 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.11);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.045)),
-      linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 42%, rgba(0, 0, 0, 0.32)),
-      rgba(10, 11, 12, 0.58);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.026)),
+      rgba(10, 10, 10, 0.56);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.42),
-      0 18px 52px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(36px) saturate(170%) contrast(1.08);
-    -webkit-backdrop-filter: blur(36px) saturate(170%) contrast(1.08);
-    color: rgba(255, 255, 255, 0.88);
-    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.78);
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.48),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(30px) saturate(145%) brightness(0.82) contrast(1.12);
+    -webkit-backdrop-filter: blur(30px) saturate(145%) brightness(0.82) contrast(1.12);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 16px rgba(0, 0, 0, 0.82);
+    transform: translateZ(0);
   }
 
   .nav-glass::before {
@@ -682,9 +683,9 @@
     z-index: 0;
     border-radius: inherit;
     background:
-      radial-gradient(26rem circle at 16% 0%, rgba(255, 255, 255, 0.16), transparent 46%),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent 32%, rgba(255, 255, 255, 0.035));
-    opacity: 0.82;
+      linear-gradient(180deg, rgba(255, 255, 255, 0.105), transparent 42%),
+      repeating-linear-gradient(105deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 9px);
+    opacity: 0.72;
   }
 
   .nav-glass::after {
@@ -694,8 +695,11 @@
     inset: 1px;
     z-index: 0;
     border-radius: inherit;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.3));
-    opacity: 0.64;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.28));
+    backdrop-filter: brightness(0.76);
+    -webkit-backdrop-filter: brightness(0.76);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    opacity: 0.84;
   }
 
   .nav-glass > * {
@@ -705,7 +709,7 @@
 
   .nav-glass a:not(.metal-cta),
   .nav-glass button {
-    color: rgba(255, 255, 255, 0.84);
+    color: rgba(255, 255, 255, 0.88);
   }
 
   .nav-glass a:not(.metal-cta):hover,
@@ -715,40 +719,40 @@
   }
 
   .nav-glass > a:first-child span {
-    color: rgba(255, 255, 255, 0.96);
+    color: rgba(255, 255, 255, 0.98);
   }
 
   .nav-glass--soft {
-    border-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.09);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
-      linear-gradient(115deg, rgba(255, 255, 255, 0.055), transparent 42%, rgba(0, 0, 0, 0.24)),
-      rgba(10, 11, 12, 0.46);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.022)),
+      rgba(10, 10, 10, 0.5);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.16),
-      0 16px 44px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(30px) saturate(155%) contrast(1.06);
-    -webkit-backdrop-filter: blur(30px) saturate(155%) contrast(1.06);
+      inset 0 1px 0 rgba(255, 255, 255, 0.11),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.42),
+      0 8px 32px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(28px) saturate(140%) brightness(0.84) contrast(1.1);
+    -webkit-backdrop-filter: blur(28px) saturate(140%) brightness(0.84) contrast(1.1);
   }
 
   .nav-glass--solid {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.12);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.052)),
-      linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 44%, rgba(0, 0, 0, 0.34)),
-      rgba(12, 13, 14, 0.66);
-    backdrop-filter: blur(44px) saturate(180%) contrast(1.1);
-    -webkit-backdrop-filter: blur(44px) saturate(180%) contrast(1.1);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.028)),
+      rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(30px) saturate(150%) brightness(0.8) contrast(1.14);
+    -webkit-backdrop-filter: blur(30px) saturate(150%) brightness(0.8) contrast(1.14);
   }
 
   .nav-glass--reveal {
-    border-color: rgba(255, 255, 255, 0.24);
+    border-color: rgba(255, 255, 255, 0.15);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.24),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.48),
-      0 22px 64px rgba(0, 0, 0, 0.38);
-    backdrop-filter: blur(52px) saturate(190%) contrast(1.12);
-    -webkit-backdrop-filter: blur(52px) saturate(190%) contrast(1.12);
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 12px 36px rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(30px) saturate(152%) brightness(0.8) contrast(1.15);
+    -webkit-backdrop-filter: blur(30px) saturate(152%) brightness(0.8) contrast(1.15);
   }
 
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

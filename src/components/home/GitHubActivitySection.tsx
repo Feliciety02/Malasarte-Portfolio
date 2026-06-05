@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/site/SectionHeader";
 export function GitHubActivitySection() {
   return (
     <section className="relative px-6 py-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <Reveal>
           <SectionHeader eyebrow="GitHub" title="Code Activity" className="mb-8" />
         </Reveal>

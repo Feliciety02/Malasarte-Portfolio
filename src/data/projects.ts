@@ -51,6 +51,12 @@ export type ProjectFlipbookEmbed = {
   title: string;
 };
 
+export type ProjectLiveEmbed = {
+  src: string;
+  title: string;
+  note?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -78,8 +84,22 @@ export type Project = {
   gallery: ProjectGalleryItem[];
   figmaEmbed?: ProjectFigmaEmbed;
   flipbookEmbed?: ProjectFlipbookEmbed;
+  liveEmbed?: ProjectLiveEmbed;
   nextProjectSlug?: string;
 };
+
+const getOptionalEnvUrl = (value: unknown) => {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  return trimmed.length ? trimmed : undefined;
+};
+
+const defaultUmunityLiveUrl = "https://u-munity-organization-management-sy.vercel.app";
+const umunityLiveUrl =
+  getOptionalEnvUrl(import.meta.env.VITE_UMUNITY_LIVE_URL) ?? defaultUmunityLiveUrl;
+const defaultCosmicRemediesLiveUrl = "https://cosmic-remedies-by-sia.vercel.app";
+const cosmicRemediesLiveUrl =
+  getOptionalEnvUrl(import.meta.env.VITE_COSMIC_REMEDIES_LIVE_URL) ?? defaultCosmicRemediesLiveUrl;
 
 export const categoryDescriptions: Record<"All" | ProjectCategory, string> = {
   All: "A simple directory of the clients, brands, and projects represented in this portfolio.",
@@ -341,6 +361,7 @@ export const projects: Project[] = [
   {
     slug: "lian-monley",
     title: "Lian Monley",
+    imageTitle: "Lian Monley Logo",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Personal Brand",
@@ -450,18 +471,20 @@ export const projects: Project[] = [
   },
   {
     slug: "pietyl-lpg",
-    title: "Pietyl LPG",
+    title: "Pietyl DigiLPG",
+    imageTitle: "Pietyl DigiLPG Logo",
+    directoryTitle: "Pietyl DigiLPG",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Business Branding",
     color: "from-sky-500/50 to-blue-500/30",
-    desc: "Brand identity for an LPG business.",
+    desc: "Brand identity for the Pietyl DigiLPG business.",
     role: "Brand Designer",
     tools: ["Illustrator", "Photoshop"],
     year: "2024",
-    client: "Pietyl LPG",
+    client: "Pietyl DigiLPG",
     overview:
-      "Pietyl LPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.",
+      "Pietyl DigiLPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.",
     goals: [
       "Create a recognizable visual identity for a utility-focused business.",
       "Make the brand feel dependable and practical.",
@@ -532,7 +555,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      "Pietyl LPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.",
+      "Pietyl DigiLPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.",
     gallery: [
       {
         color: "from-sky-500/50 to-blue-500/30",
@@ -558,6 +581,7 @@ export const projects: Project[] = [
   {
     slug: "blue-collar-builders",
     title: "Blue Collar Builders",
+    imageTitle: "Blue Collar Builders Logo",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Construction Identity",
@@ -663,6 +687,7 @@ export const projects: Project[] = [
   {
     slug: "trichomend-plus",
     title: "Trichomend+",
+    imageTitle: "Trichomend+ Logo",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Product Identity",
@@ -1216,6 +1241,13 @@ export const projects: Project[] = [
         note: "Placeholder for mobile and desktop implementation comparisons.",
       },
     ],
+    liveEmbed: cosmicRemediesLiveUrl
+      ? {
+          src: cosmicRemediesLiveUrl,
+          title: "Cosmic Remedies by Sia deployed web app",
+          note: "Explore the deployed Cosmic Remedies by Sia build hosted on Vercel.",
+        }
+      : undefined,
     nextProjectSlug: "umunity",
   },
   {
@@ -1346,6 +1378,13 @@ export const projects: Project[] = [
       title: "UMunity interactive workspace",
       note: "Explore the UMunity Figma system and interface screens inside the embedded workspace.",
     },
+    liveEmbed: umunityLiveUrl
+      ? {
+          src: umunityLiveUrl,
+          title: "UMunity deployed web app",
+          note: "Explore the deployed UMunity build hosted on Vercel.",
+        }
+      : undefined,
     nextProjectSlug: "umsdc-publication-materials-and-assets",
   },
   {
@@ -1540,7 +1579,8 @@ export const projects: Project[] = [
       },
       {
         title: "Supporting Long-term Change",
-        challenge: "The book needed to move beyond short-term motivation and help readers continue after the meal plan.",
+        challenge:
+          "The book needed to move beyond short-term motivation and help readers continue after the meal plan.",
         solution:
           "Ended the guide with realistic goals, personalized healthy living habits, and the message that progress starts one meal at a time.",
       },
@@ -1626,19 +1666,22 @@ export const projects: Project[] = [
     challenges: [
       {
         title: "Sensitive Educational Tone",
-        challenge: "Mental wellness content needed to be clear and helpful without sounding clinical, alarming, or dismissive.",
+        challenge:
+          "Mental wellness content needed to be clear and helpful without sounding clinical, alarming, or dismissive.",
         solution:
           "Used plain, supportive, non-stigmatizing language and kept the pacing calm throughout the guide.",
       },
       {
         title: "Broad Topic Scope",
-        challenge: "The eBook covered many mental health topics, which could become overwhelming without a strong sequence.",
+        challenge:
+          "The eBook covered many mental health topics, which could become overwhelming without a strong sequence.",
         solution:
           "Built a chapter progression that moves from understanding challenges to practicing coping skills and building daily habits.",
       },
       {
         title: "Actionable Ending",
-        challenge: "The guide needed to leave readers with next steps instead of only general awareness.",
+        challenge:
+          "The guide needed to leave readers with next steps instead of only general awareness.",
         solution:
           "Ended with a personalized wellness plan focused on self-care routines, achievable goals, and sustainable mental health habits.",
       },
@@ -1655,6 +1698,7 @@ export const projects: Project[] = [
   createSimpleProject({
     slug: "sidlac-co-branding",
     title: "Sidlac Co.",
+    imageTitle: "Sidlac Co Logo",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Logo & Branding",
@@ -1667,6 +1711,7 @@ export const projects: Project[] = [
   createSimpleProject({
     slug: "adoptify-logo",
     title: "Adoptify",
+    imageTitle: "Adoptify Logo",
     directoryTitle: "Adoptify",
     cat: "Logo & Branding",
     kind: "branding",
@@ -1679,21 +1724,9 @@ export const projects: Project[] = [
     year: "2025",
   }),
   createSimpleProject({
-    slug: "pietyl-management-system-logo",
-    title: "Pietyl Management System",
-    directoryTitle: "Pietyl Management System",
-    cat: "Logo & Branding",
-    kind: "branding",
-    tag: "Logo & Branding",
-    desc: "Logo and brand identity direction for the Pietyl management system.",
-    role: "Brand Designer",
-    tools: ["Illustrator", "Figma"],
-    color: "from-sky-500/50 to-indigo-500/30",
-    year: "2025",
-  }),
-  createSimpleProject({
     slug: "dost-laon-logo",
     title: "DOST Laon",
+    imageTitle: "DOST Laon Logo",
     directoryTitle: "DOST Laon",
     cat: "Logo & Branding",
     kind: "branding",
@@ -1708,6 +1741,7 @@ export const projects: Project[] = [
   createSimpleProject({
     slug: "umunity-logo",
     title: "UMunity",
+    imageTitle: "UMunity Logo",
     directoryTitle: "UMunity",
     cat: "Logo & Branding",
     kind: "branding",
@@ -1842,7 +1876,6 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "blue-collar-builders",
     "trichomend-plus",
     "adoptify-logo",
-    "pietyl-management-system-logo",
     "dost-laon-logo",
     "umunity-logo",
   ],
@@ -1878,7 +1911,7 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
 const directoryTitleOrder = [
   "Odara Management Group",
   "Lian Monley",
-  "Pietyl LPG",
+  "Pietyl DigiLPG",
   "Sidlac Co.",
   "Blue Collar Builders",
   "Trichomend+",
@@ -1887,7 +1920,6 @@ const directoryTitleOrder = [
   "DOST Laon",
   "Cosmic Remedies by Sia",
   "UMunity",
-  "Pietyl DigiLPG",
   "Blockchain Campus Conference 2024",
   "Wound Care",
   "The Digital Income",

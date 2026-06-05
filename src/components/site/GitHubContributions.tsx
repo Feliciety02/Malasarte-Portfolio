@@ -21,13 +21,76 @@ const LEVEL_COLORS: Record<number, string> = {
 };
 
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
-const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 // Gap between cells (px) — fixed, cell size is derived dynamically
 const GAP = 3;
 // Width of the day-label column (px) + the flex gap between it and the grid
 const DAY_COL = 26;
 const DAY_GAP = 8;
+const FALLBACK_DAYS = 365;
+
+const getCacheKey = (username: string) => `github-contributions:${username}`;
+
+function isApiResponse(value: unknown): value is ApiResponse {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as ApiResponse;
+  return Array.isArray(candidate.contributions) && typeof candidate.total === "object";
+}
+
+function readCachedData(username: string) {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = window.localStorage.getItem(getCacheKey(username));
+    if (!cached) return null;
+    const parsed = JSON.parse(cached);
+    return isApiResponse(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedData(username: string, data: ApiResponse) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(getCacheKey(username), JSON.stringify(data));
+  } catch {
+    // Storage is optional; keep the live render even if caching fails.
+  }
+}
+
+function createFallbackData(): ApiResponse {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const contributions = Array.from({ length: FALLBACK_DAYS }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (FALLBACK_DAYS - 1 - index));
+    return {
+      date: date.toISOString().slice(0, 10),
+      count: 0,
+      level: 0 as const,
+    };
+  });
+
+  return {
+    total: { lastYear: 0 },
+    contributions,
+  };
+}
 
 function groupByWeek(contribs: Contribution[]) {
   if (!contribs.length) return [];
@@ -66,21 +129,34 @@ function getMonthLabels(weeks: (Contribution | null)[][]) {
 
 export function GitHubContributions({ username }: { username: string }) {
   const [data, setData] = useState<ApiResponse | null>(null);
-  const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ok" | "fallback">("loading");
   const [cell, setCell] = useState(14);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
       .then((r) => {
         if (!r.ok) throw new Error();
         return r.json();
       })
       .then((d: ApiResponse) => {
+        if (!isMounted) return;
         setData(d);
         setStatus("ok");
+        writeCachedData(username, d);
       })
-      .catch(() => setStatus("error"));
+      .catch(() => {
+        if (!isMounted) return;
+        const cached = readCachedData(username);
+        setData(cached ?? createFallbackData());
+        setStatus(cached ? "ok" : "fallback");
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [username]);
 
   const weeks = data ? groupByWeek(data.contributions) : [];
@@ -102,19 +178,28 @@ export function GitHubContributions({ username }: { username: string }) {
   }, [nWeeks]);
 
   if (status === "loading") return <Skeleton />;
-  if (status === "error" || !data) return null;
+  if (!data) return null;
 
   const monthLabels = getMonthLabels(weeks);
   const total = Object.values(data.total).reduce((a, b) => a + b, 0);
   const step = cell + GAP;
+  const isFallback = status === "fallback";
 
   return (
     <div className="metal-panel p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-1">
         <p className="text-sm text-foreground/80">
-          <span className="font-display text-lg font-bold text-gradient">{total.toLocaleString()}</span>{" "}
-          contributions in the last year
+          {isFallback ? (
+            <span className="font-display text-lg font-bold text-gradient">Contribution grid</span>
+          ) : (
+            <>
+              <span className="font-display text-lg font-bold text-gradient">
+                {total.toLocaleString()}
+              </span>{" "}
+              contributions in the last year
+            </>
+          )}
         </p>
         <a
           href={`https://github.com/${username}`}
@@ -122,8 +207,7 @@ export function GitHubContributions({ username }: { username: string }) {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/70 transition-colors"
         >
-          <Github size={13} />
-          @{username}
+          <Github size={13} />@{username}
         </a>
       </div>
 
@@ -150,7 +234,12 @@ export function GitHubContributions({ username }: { username: string }) {
               {monthLabels.map(({ label, col }) => (
                 <span
                   key={col}
-                  style={{ position: "absolute", left: col * step, fontSize: 10, lineHeight: "18px" }}
+                  style={{
+                    position: "absolute",
+                    left: col * step,
+                    fontSize: 10,
+                    lineHeight: "18px",
+                  }}
                   className="text-muted-foreground select-none"
                 >
                   {label}
@@ -210,8 +299,7 @@ export function GitHubContributions({ username }: { username: string }) {
               height: cell,
               borderRadius: 3,
               background: LEVEL_COLORS[level],
-              border:
-                level > 0 ? "1px solid oklch(1 0 0 / 10%)" : "1px solid oklch(1 0 0 / 4%)",
+              border: level > 0 ? "1px solid oklch(1 0 0 / 10%)" : "1px solid oklch(1 0 0 / 4%)",
             }}
           />
         ))}
