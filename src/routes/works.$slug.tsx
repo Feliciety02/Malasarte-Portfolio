@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate, useRouter } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import {
@@ -69,12 +69,12 @@ export const Route = createFileRoute("/works/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.title} — Case Study — Fe Anne Malasarte` },
+          { title: "Fe Anne Malasarte" },
           { name: "description", content: loaderData.overview },
-          { property: "og:title", content: `${loaderData.title} — Case Study` },
+          { property: "og:title", content: "Fe Anne Malasarte" },
           { property: "og:description", content: loaderData.desc },
         ]
-      : [{ title: "Case Study — Fe Anne Malasarte" }],
+      : [{ title: "Fe Anne Malasarte" }],
   }),
   component: CaseStudy,
   errorComponent: CaseStudyError,
@@ -353,21 +353,24 @@ function CaseStudy() {
 // ---------------------------------------------------------------------------
 
 function FloatingCatalogBackLink() {
+  const navigate = useNavigate();
+  const goBack = () => navigate({ to: "/works" });
+
   return (
     <div>
-      <Link
-        to="/works"
-        resetScroll
+      <button
+        type="button"
+        onClick={goBack}
         aria-label="Back to all works"
         title="Back to all works"
         className="metal-ghost fixed left-4 top-28 z-40 grid h-11 w-11 place-items-center rounded-full text-muted-foreground shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-colors duration-300 hover:border-primary/45 hover:bg-primary/15 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 lg:hidden"
       >
         <ArrowLeft size={16} />
-      </Link>
+      </button>
 
-      <Link
-        to="/works"
-        resetScroll
+      <button
+        type="button"
+        onClick={goBack}
         aria-label="Back to all works"
         title="Back to all works"
         className="group fixed bottom-0 left-0 top-0 z-40 hidden w-24 items-start justify-center pt-36 text-muted-foreground transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/45 lg:flex xl:w-28 2xl:w-[max(7rem,calc((100vw-80rem)/2+5rem))]"
@@ -375,7 +378,7 @@ function FloatingCatalogBackLink() {
         <span className="metal-ghost grid h-11 w-11 place-items-center rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-colors duration-300 group-hover:border-primary/45 group-hover:bg-primary/15">
           <ArrowLeft size={16} />
         </span>
-      </Link>
+      </button>
     </div>
   );
 }
@@ -478,22 +481,11 @@ function InteractiveWorkspace({ project }: { project: Project }) {
   const live = project.liveEmbed;
   const figmaEmbedSrc = figma ? getFigmaEmbedUrl(figma) : undefined;
   const liveSrc = live?.src.trim();
+  const isUxProject = project.cat === "UI/UX Design";
+  const isWebDevProject = project.cat === "Web Development";
   const workspaceTabs: WorkspaceTab[] = [];
 
-  if (liveSrc) {
-    workspaceTabs.push({
-      id: "live",
-      label: "Live Build",
-      title: live.title,
-      note: live.note,
-      src: liveSrc,
-      externalUrl: liveSrc,
-      allow: "fullscreen; clipboard-read; clipboard-write; autoplay; gamepad",
-      minWidthClassName: "min-w-[24rem] sm:min-w-0",
-    });
-  }
-
-  if (!liveSrc && figmaEmbedSrc) {
+  if (isUxProject && figmaEmbedSrc) {
     workspaceTabs.push({
       id: "design",
       label: "Design",
@@ -506,7 +498,21 @@ function InteractiveWorkspace({ project }: { project: Project }) {
     });
   }
 
-  const [activeTabId, setActiveTabId] = useState<WorkspaceTabId>("live");
+  if (isWebDevProject && liveSrc) {
+    workspaceTabs.push({
+      id: "live",
+      label: "Live Build",
+      title: live.title,
+      note: live.note,
+      src: liveSrc,
+      externalUrl: liveSrc,
+      allow: "fullscreen; clipboard-read; clipboard-write; autoplay; gamepad",
+      minWidthClassName: "min-w-[24rem] sm:min-w-0",
+    });
+  }
+
+  const defaultTab: WorkspaceTabId = workspaceTabs[0]?.id ?? "live";
+  const [activeTabId, setActiveTabId] = useState<WorkspaceTabId>(defaultTab);
   const activeTab = workspaceTabs.find((tab) => tab.id === activeTabId) ?? workspaceTabs[0];
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);

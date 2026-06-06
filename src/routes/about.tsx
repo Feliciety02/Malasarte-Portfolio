@@ -9,13 +9,13 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About - Fe Anne Malasarte" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content:
           "Meet Fe Anne - a creative designer with roots in tech orgs, branding, and storytelling.",
       },
-      { property: "og:title", content: "About - Fe Anne Malasarte" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "A short, honest introduction to a designer who loves quiet details.",
@@ -73,7 +73,10 @@ function About() {
                 { k: "40+", v: "Projects shipped" },
                 { k: "10+", v: "Happy clients" },
               ].map((s) => (
-                <div key={s.v} className="py-4 sm:border-r sm:border-white/10 sm:px-6 sm:first:pl-0 sm:last:border-r-0">
+                <div
+                  key={s.v}
+                  className="py-4 sm:border-r sm:border-white/10 sm:px-6 sm:first:pl-0 sm:last:border-r-0"
+                >
                   <div className="font-display text-3xl font-bold text-gradient">{s.k}</div>
                   <div className="mt-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                     {s.v}
@@ -114,7 +117,11 @@ function About() {
           <div className="mt-10 border-t border-white/10">
             {[
               { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
-              { year: "2022 - 2024", role: "UI/UX & Social Media Graphics Lead", place: "Tech Organization" },
+              {
+                year: "2022 - 2024",
+                role: "UI/UX & Social Media Graphics Lead",
+                place: "Tech Organization",
+              },
               { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
             ].map((e) => (
               <div

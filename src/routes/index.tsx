@@ -16,12 +16,12 @@ import { MetallicPage } from "@/components/site/MetallicPage";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Fe Anne Malasarte - Creative Designer & UI/UX Storyteller" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content: "Portfolio home of Fe Anne Malasarte - UI/UX, branding, and creative design.",
       },
-      { property: "og:title", content: "Fe Anne Malasarte - Creative Designer" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "Crafting meaningful, beautifully animated digital experiences.",

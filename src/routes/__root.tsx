@@ -1,15 +1,10 @@
-import {
-  Outlet,
-  Link,
-  createRootRoute,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
 import { MetallicPage } from "@/components/site/MetallicPage";
+import logoFe from "@/assets/logo-fe.png";
 // WebGL background removed in favour of a clean monochrome canvas.
 
 function NotFoundComponent() {
@@ -39,7 +34,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content:
@@ -48,7 +43,7 @@ export const Route = createRootRoute({
       { name: "author", content: "Fe Anne Malasarte" },
       {
         property: "og:title",
-        content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller",
+        content: "Fe Anne Malasarte",
       },
       {
         property: "og:description",
@@ -58,7 +53,7 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Fe Anne Malasarte — Creative Designer & UI/UX Storyteller",
+        content: "Fe Anne Malasarte",
       },
       {
         name: "description",
@@ -87,6 +82,8 @@ export const Route = createRootRoute({
       },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: logoFe },
+      { rel: "apple-touch-icon", href: logoFe },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

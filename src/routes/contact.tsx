@@ -7,12 +7,12 @@ import { MetallicPage } from "@/components/site/MetallicPage";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact - Fe Anne Malasarte" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content: "Let's create something meaningful together - start a project with Fe Anne.",
       },
-      { property: "og:title", content: "Contact - Fe Anne Malasarte" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "Reach out for design, branding, and creative collaborations.",

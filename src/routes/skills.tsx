@@ -8,12 +8,12 @@ import { skillGroups } from "@/data/skills";
 export const Route = createFileRoute("/skills")({
   head: () => ({
     meta: [
-      { title: "Skills - Fe Anne Malasarte" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content: "Design, tech, creative and work skills of Fe Anne Malasarte.",
       },
-      { property: "og:title", content: "Skills - Fe Anne Malasarte" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "An interactive overview of design, tech and creative skills.",

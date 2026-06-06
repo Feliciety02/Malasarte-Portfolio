@@ -1,5 +1,5 @@
 import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
-import { FileText, Globe, ImageIcon, PenTool } from "lucide-react";
+import { FileText, ImageIcon, PenTool } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
@@ -25,13 +25,13 @@ export const Route = createFileRoute("/works")({
   loader: async () => fetchPortfolioProjectsFromSupabase(),
   head: () => ({
     meta: [
-      { title: "Works - Fe Anne Malasarte" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content:
           "Selected works across UI/UX, branding, social media graphics, creative assets, web development, and writing.",
       },
-      { property: "og:title", content: "Works - Fe Anne Malasarte" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "A curated portfolio of designs, brand systems, and creative work.",
@@ -108,7 +108,10 @@ function Works() {
 
         <motion.div
           layout
-          className={cn("mt-8 grid gap-4 sm:mt-12 sm:gap-5 md:mt-14 md:gap-6", getWorkGridClass(active))}
+          className={cn(
+            "mt-8 grid gap-4 sm:mt-12 sm:gap-5 md:mt-14 md:gap-6",
+            getWorkGridClass(active),
+          )}
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((project, index) => (
@@ -259,19 +262,14 @@ function DevelopmentWorkCard({
 }) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
-  const pill = getProjectCategoryLabel(project, activeCategory);
 
   return (
     <CaseStudyLink
       slug={project.slug}
       aria-label={`Open ${title} web development work`}
-      className="metal-card group grid min-h-[12.5rem] gap-4 p-4 sm:min-h-[15rem] sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-6 sm:p-6"
+      className="metal-card group p-4 sm:p-6"
     >
-      <div className="metal-ghost grid h-12 w-12 place-items-center rounded-lg text-primary sm:h-16 sm:w-16">
-        <Globe size={22} />
-      </div>
       <div>
-        <TagPill className="static">{pill}</TagPill>
         <h3 className="mt-4 font-display text-2xl font-semibold leading-tight sm:mt-5 sm:text-3xl">
           {title}
         </h3>
@@ -289,7 +287,7 @@ function DevelopmentWorkCard({
           {project.desc}
         </p>
         <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
-          {project.tools.slice(0, 4).map((tool) => (
+          {project.tools.map((tool) => (
             <span
               key={tool}
               className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/72 sm:px-3 sm:text-xs"

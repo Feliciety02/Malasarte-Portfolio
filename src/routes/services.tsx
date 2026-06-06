@@ -11,12 +11,13 @@ import { serviceCategories } from "@/data/services";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services - Fe Anne Malasarte" },
+      { title: "Fe Anne Malasarte" },
       {
         name: "description",
-        content: "Design services: UI/UX, branding, social media graphics, creative assets, front end development, content, and VA support.",
+        content:
+          "Design services: UI/UX, branding, social media graphics, creative assets, front end development, content, and VA support.",
       },
-      { property: "og:title", content: "Services - Fe Anne Malasarte" },
+      { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
         content: "How I can help - from product design to brand systems and content.",
