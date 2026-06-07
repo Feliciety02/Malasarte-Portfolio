@@ -6,6 +6,7 @@ import {
   getProjectCategoryLabel,
   getProjectDisplayTitle,
   type Project,
+  type ProjectCategory,
   type ProjectFilter,
 } from "@/data/projects";
 
@@ -23,6 +24,7 @@ export function ProjectCard({ project, activeCategory = project.cat }: ProjectCa
     <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.995 }} className="h-full">
       <CaseStudyLink
         slug={project.slug}
+        category={activeCategory === "All" ? undefined : activeCategory}
         aria-label={`Open ${title} work`}
         className="metal-card work-card group relative flex h-full flex-col"
       >

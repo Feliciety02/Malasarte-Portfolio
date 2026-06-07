@@ -924,6 +924,14 @@
     border-radius: 9999px;
   }
 
+  .invisible-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (max-width: 767px) {
     .thin-x-scrollbar::-webkit-scrollbar {
       height: 3px;

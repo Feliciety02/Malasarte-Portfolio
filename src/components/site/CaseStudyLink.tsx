@@ -2,8 +2,17 @@ import { type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
+export type ProjectCategory =
+  | "UI/UX Design"
+  | "Social Media Graphics"
+  | "Creative Assets"
+  | "Logo & Branding"
+  | "Web Development"
+  | "Writing / VA";
+
 type CaseStudyLinkProps = {
   slug: string;
+  category?: ProjectCategory;
   children: ReactNode;
   className?: string;
   "aria-label"?: string;
@@ -11,6 +20,7 @@ type CaseStudyLinkProps = {
 
 export function CaseStudyLink({
   slug,
+  category,
   children,
   className,
   "aria-label": ariaLabel,
@@ -19,6 +29,7 @@ export function CaseStudyLink({
     <Link
       to="/works/$slug"
       params={{ slug }}
+      search={{ ...(category ? { category } : {}) }}
       resetScroll
       preload="intent"
       aria-label={ariaLabel}

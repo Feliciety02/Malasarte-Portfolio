@@ -8,7 +8,7 @@ import { ProjectCard } from "@/components/site/ProjectCard";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { TagPill } from "@/components/site/TagPill";
-import { getProjectCoverImage } from "@/data/projectImages";
+import { getProjectCoverImage, getProjectGalleryImage } from "@/data/projectImages";
 import {
   categoryDescriptions,
   getProjectCategoryLabel,
@@ -160,8 +160,57 @@ function CategoryWorkCard({
   if (activeCategory === "Writing / VA") {
     return <WritingWorkCard project={project} activeCategory={activeCategory} />;
   }
+  if (activeCategory === "UI/UX Design") {
+    return <UxWorkCard project={project} activeCategory={activeCategory} />;
+  }
 
   return <ProjectCard project={project} activeCategory={activeCategory} />;
+}
+
+function UxWorkCard({
+  project,
+  activeCategory,
+}: {
+  project: Project;
+  activeCategory: ProjectCategory;
+}) {
+  const figmaImage =
+    project.gallery.length > 0 ? getProjectGalleryImage(project, project.gallery[0]) : undefined;
+  const title = getProjectDisplayTitle(project, activeCategory);
+  const pill = getProjectCategoryLabel(project, activeCategory);
+
+  return (
+    <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.995 }} className="h-full">
+      <CaseStudyLink
+        slug={project.slug}
+        category={activeCategory}
+        aria-label={`Open ${title} work`}
+        className="metal-card work-card group relative flex h-full flex-col"
+      >
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-white/8 bg-gradient-to-br from-white/10 to-white/[0.02]">
+          {figmaImage ? (
+            <img
+              src={figmaImage}
+              alt={`${title} design preview`}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          ) : null}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,11,12,0.08),rgba(10,11,12,0.03)_42%,rgba(4,5,6,0.24)_100%)]"
+          />
+          <TagPill>{pill}</TagPill>
+        </div>
+        <div className="relative z-10 flex flex-1 flex-col p-4 sm:p-6">
+          <h3 className="font-display text-xl font-semibold leading-tight sm:text-2xl">{title}</h3>
+          <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
+            {project.desc}
+          </p>
+        </div>
+      </CaseStudyLink>
+    </motion.div>
+  );
 }
 
 function GalleryWorkCard({
@@ -178,6 +227,7 @@ function GalleryWorkCard({
   return (
     <CaseStudyLink
       slug={project.slug}
+      category={activeCategory}
       aria-label={`Open ${title} gallery`}
       className="metal-panel group relative block min-h-[14rem] overflow-hidden rounded-lg sm:min-h-[17rem]"
     >
@@ -214,6 +264,7 @@ function BrandingWorkCard({
   return (
     <CaseStudyLink
       slug={project.slug}
+      category={activeCategory}
       aria-label={`Open ${title} identity work`}
       className="metal-card group relative flex min-h-[22rem] flex-col overflow-hidden p-4 sm:min-h-[27rem] sm:p-6"
     >
@@ -262,14 +313,17 @@ function DevelopmentWorkCard({
 }) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
+  const pill = getProjectCategoryLabel(project, activeCategory);
 
   return (
     <CaseStudyLink
       slug={project.slug}
+      category={activeCategory}
       aria-label={`Open ${title} web development work`}
       className="metal-card group p-4 sm:p-6"
     >
       <div>
+        <TagPill className="static">{pill}</TagPill>
         <h3 className="mt-4 font-display text-2xl font-semibold leading-tight sm:mt-5 sm:text-3xl">
           {title}
         </h3>
@@ -315,6 +369,7 @@ function WritingWorkCard({
   return (
     <CaseStudyLink
       slug={project.slug}
+      category={activeCategory}
       aria-label={`Open ${title} writing work`}
       className="metal-card group grid min-h-[12.5rem] gap-4 p-4 sm:min-h-[15rem] sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-6 sm:p-6 lg:grid-cols-[9.5rem_minmax(0,1fr)]"
     >

@@ -6,7 +6,7 @@ export type ProjectCategory =
   | "Web Development"
   | "Writing / VA";
 
-export type ProjectKind = "uiux" | "publication" | "branding" | "frontend" | "gallery" | "writing";
+export type ProjectKind = "uiux" | "publication" | "branding" | "frontend" | "gallery" | "writing" | "logo";
 
 export type ProjectMetric = {
   value: string;
@@ -38,23 +38,48 @@ export type ProjectFocusArea = {
   text: string;
 };
 
-export type ProjectFigmaEmbed = {
-  shareUrl: string;
-  embedUrl?: string;
-  prototypeUrl?: string;
-  title?: string;
-  note?: string;
-};
-
 export type ProjectFlipbookEmbed = {
   src: string;
   title: string;
 };
 
-export type ProjectLiveEmbed = {
-  src: string;
+export type ProjectBrandColor = {
+  name: string;
+  hex: string;
+  meaning: string[];
+};
+
+export type ProjectBrandSymbol = {
   title: string;
-  note?: string;
+  image?: string;
+  items: { name: string; meaning: string }[];
+};
+
+export type ProjectBrandTypography = {
+  name: string;
+  family: string;
+  reasons: string[];
+};
+
+export type ProjectBrandResearch = {
+  title?: string;
+  body: string;
+  insights: string[];
+};
+
+export type ProjectBranding = {
+  mode?: "full" | "logo";
+  challenge?: string;
+  solution?: string;
+  highlights?: string[];
+  research?: ProjectBrandResearch;
+  symbol?: ProjectBrandSymbol;
+  colors?: ProjectBrandColor[];
+  typography?: ProjectBrandTypography;
+  personality?: string[];
+  applications?: string[];
+  deliverables?: string[];
+  outcome?: string;
 };
 
 export type Project = {
@@ -82,10 +107,32 @@ export type Project = {
   challenges: ProjectChallenge[];
   outcome: string;
   gallery: ProjectGalleryItem[];
-  figmaEmbed?: ProjectFigmaEmbed;
+  figmaPreviewUrl?: string;
   flipbookEmbed?: ProjectFlipbookEmbed;
-  liveEmbed?: ProjectLiveEmbed;
+  vercelLiveUrl?: string;
+  branding?: ProjectBranding;
   nextProjectSlug?: string;
+  categoryVariants?: Partial<
+    Record<
+      ProjectCategory,
+      Partial<
+        Pick<
+          Project,
+          | "desc"
+          | "overview"
+          | "role"
+          | "tools"
+          | "gallery"
+          | "figmaPreviewUrl"
+          | "vercelLiveUrl"
+          | "outcome"
+          | "goals"
+          | "tag"
+          | "branding"
+        >
+      >
+    >
+  >;
 };
 
 const getOptionalEnvUrl = (value: unknown) => {
@@ -97,7 +144,7 @@ const getOptionalEnvUrl = (value: unknown) => {
 const defaultUmunityLiveUrl = "https://u-munity-organization-management-sy.vercel.app";
 const umunityLiveUrl =
   getOptionalEnvUrl(import.meta.env.VITE_UMUNITY_LIVE_URL) ?? defaultUmunityLiveUrl;
-const defaultCosmicRemediesLiveUrl = "https://cosmic-remedies-by-sia.vercel.app";
+const defaultCosmicRemediesLiveUrl = "https://cosmic-remidies-by-sia-website.vercel.app";
 const cosmicRemediesLiveUrl =
   getOptionalEnvUrl(import.meta.env.VITE_COSMIC_REMEDIES_LIVE_URL) ?? defaultCosmicRemediesLiveUrl;
 
@@ -471,111 +518,267 @@ export const projects: Project[] = [
   },
   {
     slug: "pietyl-lpg",
-    title: "Pietyl DigiLPG",
+    title: "PIEYTL Marketing",
     imageTitle: "Pietyl DigiLPG Logo",
-    directoryTitle: "Pietyl DigiLPG",
+    directoryTitle: "PIEYTL Marketing",
     cat: "Logo & Branding",
     kind: "branding",
-    tag: "Business Branding",
-    color: "from-sky-500/50 to-blue-500/30",
-    desc: "Brand identity for the Pietyl DigiLPG business.",
-    role: "Brand Designer",
+    tag: "Brand Identity & Logo Design",
+    color: "from-cyan-400/55 to-teal-500/30",
+    desc: "Full brand identity and logo design for PIEYTL Marketing, an LPG-focused business.",
+    role: "Logo Designer • Brand Strategist",
     tools: ["Illustrator", "Photoshop"],
     year: "2024",
-    client: "Pietyl DigiLPG",
+    client: "PIEYTL Marketing",
     overview:
-      "Pietyl DigiLPG needed a stronger visual identity that could feel dependable, recognizable, and easier to apply across signage, uniforms, and business materials.",
+      "PIEYTL Marketing is an LPG-focused business that required a professional visual identity capable of establishing trust, improving brand recognition, and creating consistency across both digital and physical touchpoints. The project involved designing the company's logo, defining its visual language, and creating a complete branding system that would serve as the foundation for future marketing materials and digital products.",
     goals: [
-      "Create a recognizable visual identity for a utility-focused business.",
-      "Make the brand feel dependable and practical.",
-      "Prepare a system that works well across physical applications.",
+      "Reflect the LPG industry.",
+      "Build customer trust.",
+      "Stand out from competitors.",
+      "Remain scalable across print and digital platforms.",
+      "Create a consistent visual experience.",
     ],
     impact: [
-      { value: "1", label: "Business identity" },
-      { value: "4", label: "Application mockups" },
-      { value: "2", label: "Logo variations" },
+      { value: "1", label: "Logo system" },
+      { value: "3", label: "Brand colors" },
+      { value: "7+", label: "Application surfaces" },
     ],
     focusAreas: [
       {
-        title: "Brand Overview",
-        text: "Positioned the business around reliability, service trust, and local recognizability.",
+        title: "Industry Reading",
+        text: "Studied how utility and energy brands communicate trust, scale, and modernity.",
       },
       {
-        title: "Design Direction",
-        text: "Built a stronger and more direct visual system suited to service branding and physical visibility.",
+        title: "Symbol Direction",
+        text: "Explored cylinder, flame, and wordmark combinations suited to LPG identity.",
       },
       {
-        title: "Concept Development",
-        text: "Explored icon and wordmark combinations that could feel clear even at signage scale.",
-      },
-      {
-        title: "Logo Meaning",
-        text: "Used a more practical mark structure to support fast recognition and brand memorability.",
-      },
-      {
-        title: "Color Palette",
-        text: "Chose high-visibility colors suited to real-world application use.",
-      },
-      {
-        title: "Brand Applications",
-        text: "Extended the identity into vehicle, uniform, and signage mockups.",
+        title: "System Building",
+        text: "Defined color, typography, and personality rules that extend beyond the logo.",
       },
     ],
     process: [
       {
-        title: "Research",
-        text: "Reviewed category competitors and studied practical constraints of service-based branding.",
+        title: "Research & Discovery",
+        text: "Reviewed the LPG category, mapped competitor identities, and identified white space.",
       },
       {
         title: "Concept",
-        text: "Developed mark directions that prioritized clarity and direct recognition.",
+        text: "Sketched symbol + wordmark combinations that read as energy, reliability, and modernity.",
       },
       {
         title: "Design",
-        text: "Refined the final logo, palette, and utility-focused application set.",
+        text: "Refined the cylinder + flame mark, wordmark, color palette, and typography system.",
       },
       {
         title: "Deliver",
-        text: "Prepared a practical brand package with placeholder field-use mockups.",
+        text: "Packaged the identity into logo lockups, color and type guides, and application assets.",
       },
     ],
     challenges: [
       {
-        title: "Utility Brand Perception",
-        challenge:
-          "The business needed to feel professional without overcomplicating the identity.",
+        title: "Generic Category Codes",
+        challenge: "Most LPG businesses rely on generic logos and inconsistent branding.",
         solution:
-          "Focused on clarity, visibility, and simpler geometry instead of decorative branding language.",
+          "Combined a simplified cylinder mark with a modern wordmark to lift the brand out of the commodity space.",
       },
       {
-        title: "Real-world Use",
-        challenge: "The identity needed to survive physical applications and quick recognition.",
+        title: "Trust at a Glance",
+        challenge: "The identity had to communicate trust, energy, and professionalism instantly.",
         solution:
-          "Tested the logo against signage, uniforms, and branded operational materials early.",
+          "Used a bold geometric wordmark paired with a focused palette of Federal Blue and Canary.",
+      },
+      {
+        title: "Cross-surface Consistency",
+        challenge: "The brand had to look right on signage, vehicles, and digital touchpoints.",
+        solution:
+          "Built the system around clear hierarchy, scalable marks, and high-contrast color pairings.",
       },
     ],
     outcome:
-      "Pietyl DigiLPG gained a more coherent and more visible brand identity suited to both business credibility and practical use.",
+      "The final identity successfully establishes PIEYTL Marketing as a modern LPG brand with a professional visual presence that is scalable, memorable, and adaptable across multiple platforms.",
+    branding: {
+      mode: "full",
+      research: {
+        title: "Opportunity",
+        body: "Industry analysis revealed that most LPG businesses rely heavily on generic logos and inconsistent branding. The opportunity was to create a recognizable identity that immediately communicates energy, reliability, professionalism, safety, and modernization.",
+        insights: ["Energy", "Reliability", "Professionalism", "Safety", "Modernization"],
+      },
+      symbol: {
+        title: "Symbol meaning",
+        image: "/src/assets/work-placeholders/projects/Pieytl Branding.svg",
+        items: [
+          {
+            name: "LPG Cylinder",
+            meaning: "Represents the company's core service and industry.",
+          },
+          {
+            name: "Flame Icon",
+            meaning: "Symbolizes energy, fuel, and business growth.",
+          },
+          {
+            name: "Bold Typography",
+            meaning: "Communicates reliability and professionalism.",
+          },
+        ],
+      },
+      colors: [
+        {
+          name: "Canary",
+          hex: "#1FFEF2",
+          meaning: ["Innovation", "Energy", "Visibility"],
+        },
+        {
+          name: "Federal Blue",
+          hex: "#0F8A8D",
+          meaning: ["Trust", "Stability", "Professionalism"],
+        },
+        {
+          name: "White",
+          hex: "#FFFFFF",
+          meaning: ["Clarity", "Simplicity", "Transparency"],
+        },
+      ],
+      typography: {
+        name: "Poppins",
+        family: "Poppins, sans-serif",
+        reasons: [
+          "Modern appearance",
+          "Excellent readability",
+          "Digital friendliness",
+          "Professional character",
+        ],
+      },
+      personality: ["Professional", "Reliable", "Modern", "Customer-focused", "Trustworthy"],
+      applications: [
+        "Business documents",
+        "Company presentations",
+        "Social media assets",
+        "Marketing materials",
+        "Signage",
+        "Website interfaces",
+        "Mobile platforms",
+      ],
+      deliverables: [
+        "Primary Logo",
+        "Secondary Logo Variations",
+        "Icon Mark",
+        "Color System",
+        "Typography System",
+        "Brand Guidelines",
+        "Visual Identity Assets",
+      ],
+      outcome:
+        "The final identity successfully establishes PIEYTL Marketing as a modern LPG brand with a professional visual presence that is scalable, memorable, and adaptable across multiple platforms.",
+    },
     gallery: [
       {
-        color: "from-sky-500/50 to-blue-500/30",
+        color: "from-cyan-400/55 to-teal-500/30",
         label: "Primary Identity",
         ratio: "square",
-        note: "Placeholder for core logo and service lockups.",
+        note: "Placeholder for the LPG cylinder + flame mark and full lockup.",
       },
       {
-        color: "from-blue-500/40 to-cyan-500/30",
-        label: "Vehicle Mockup",
+        color: "from-teal-500/40 to-sky-500/30",
+        label: "Color System",
         ratio: "wide",
-        note: "Placeholder for transport and field-use branding.",
+        note: "Placeholder for Canary, Federal Blue, and White palette applications.",
       },
       {
-        color: "from-cyan-400/40 to-sky-400/30",
-        label: "Uniform Application",
+        color: "from-cyan-500/40 to-blue-500/30",
+        label: "Vehicle & Signage",
         ratio: "tall",
-        note: "Placeholder for apparel and service personnel mockups.",
+        note: "Placeholder for transport and field-use branding mockups.",
       },
     ],
+    nextProjectSlug: "pieytl-branding",
+  },
+  {
+    slug: "pieytl-branding",
+    title: "PIEYTL Marketing",
+    imageTitle: "Pieytl Branding",
+    directoryTitle: "PIEYTL Marketing",
+    cat: "Logo & Branding",
+    kind: "logo",
+    tag: "Logo Design",
+    color: "from-cyan-400/55 to-teal-500/30",
+    desc: "Logo design for PIEYTL Marketing, an LPG-focused business.",
+    role: "Logo Designer • Brand Strategist",
+    tools: ["Illustrator", "Photoshop"],
+    year: "2024",
+    client: "PIEYTL Marketing",
+    overview:
+      "PIEYTL Marketing needed a professional logo that reflects its LPG industry expertise while establishing trust and recognition among customers.",
+    goals: [
+      "Reflect the company's LPG specialization.",
+      "Build instant trust and recognition.",
+      "Stay clear at both small and large scales.",
+      "Work across digital and print platforms.",
+    ],
+    impact: [
+      { value: "1", label: "Primary logo" },
+      { value: "1", label: "Icon mark" },
+      { value: "∞", label: "Surfaces" },
+    ],
+    focusAreas: [],
+    process: [],
+    challenges: [],
+    outcome:
+      "A recognizable and professional logo that strengthens PIEYTL Marketing's brand presence and provides a strong foundation for future marketing materials.",
+    gallery: [
+      {
+        color: "from-cyan-400/55 to-teal-500/30",
+        label: "Primary Logo",
+        ratio: "square",
+        note: "Placeholder for the final PIEYTL Marketing logo mark and lockup.",
+      },
+      {
+        color: "from-teal-500/40 to-sky-500/30",
+        label: "Icon Mark",
+        ratio: "wide",
+        note: "Placeholder for the standalone LPG cylinder + flame icon.",
+      },
+      {
+        color: "from-cyan-500/40 to-blue-500/30",
+        label: "Logo Application",
+        ratio: "tall",
+        note: "Placeholder for business cards, signage, or social header use.",
+      },
+    ],
+    branding: {
+      mode: "logo",
+      challenge:
+        "Create a simple yet memorable identity that clearly represents the company's services and remains effective across digital and print platforms.",
+      solution:
+        "The final logo combines an LPG cylinder and flame symbol with a bold modern wordmark, creating an identity that communicates reliability, energy, and professionalism.",
+      highlights: [
+        "LPG cylinder icon representing the core business",
+        "Flame symbol representing energy and growth",
+        "Clean, modern, and scalable design",
+        "Strong visibility across multiple applications",
+      ],
+      symbol: {
+        title: "Logo mark",
+        image: "/src/assets/work-placeholders/projects/Pieytl Branding.svg",
+        items: [
+          {
+            name: "LPG Cylinder",
+            meaning: "Represents the core business and industry.",
+          },
+          {
+            name: "Flame Symbol",
+            meaning: "Stands for energy, fuel, and business growth.",
+          },
+          {
+            name: "Bold Wordmark",
+            meaning: "Communicates reliability and professionalism.",
+          },
+        ],
+      },
+      outcome:
+        "A recognizable and professional logo that strengthens PIEYTL Marketing's brand presence and provides a strong foundation for future marketing materials.",
+    },
     nextProjectSlug: "blue-collar-builders",
   },
   {
@@ -897,13 +1100,8 @@ export const projects: Project[] = [
         note: "Placeholder for application and follow-up interface states.",
       },
     ],
-    figmaEmbed: {
-      shareUrl: "https://www.figma.com/design/ld5OWQ10gzn8veCSgct4SK/Adoptify?node-id=113-3016",
-      embedUrl:
-        "https://embed.figma.com/design/ld5OWQ10gzn8veCSgct4SK/Adoptify?node-id=113-3016&embed-host=share",
-      title: "Adoptify interactive workspace",
-      note: "Explore the Adoptify screens, flows, and prototype structure inside the embedded Figma file.",
-    },
+    figmaPreviewUrl:
+      "https://embed.figma.com/design/ld5OWQ10gzn8veCSgct4SK/Adoptify?node-id=113-3016&embed-host=share",
     nextProjectSlug: "pietyl-management-system",
   },
   {
@@ -1013,14 +1211,8 @@ export const projects: Project[] = [
         note: "Placeholder for operational status and monitoring views.",
       },
     ],
-    figmaEmbed: {
-      shareUrl:
-        "https://www.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331",
-      embedUrl:
-        "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331&embed-host=share",
-      title: "Pietyl DigiLPG interactive workspace",
-      note: "Explore the Pietyl DigiLPG website view and interface concept directly inside Figma.",
-    },
+    figmaPreviewUrl:
+      "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331&embed-host=share",
     nextProjectSlug: "dost-laon",
   },
   {
@@ -1125,34 +1317,28 @@ export const projects: Project[] = [
         note: "Placeholder for menus, page structure, and content modules.",
       },
     ],
-    figmaEmbed: {
-      shareUrl: "https://www.figma.com/design/7nHC4DDibMbUwZdo0MDSvV/DOST-LAON?node-id=0-1",
-      embedUrl:
-        "https://embed.figma.com/design/7nHC4DDibMbUwZdo0MDSvV/DOST-LAON?node-id=0-1&embed-host=share",
-      title: "DOST LAON interactive workspace",
-      note: "Review the DOST Project LAON interface system, frames, and navigation direction inside Figma.",
-    },
+    figmaPreviewUrl:
+      "https://embed.figma.com/design/7nHC4DDibMbUwZdo0MDSvV/DOST-LAON?node-id=0-1&embed-host=share",
     nextProjectSlug: "cosmic-remedies-by-sia",
   },
   {
     slug: "cosmic-remedies-by-sia",
     title: "Cosmic Remedies by Sia",
-    cat: "UI/UX Design",
-    categories: ["Web Development"],
+    cat: "Web Development",
     kind: "frontend",
-    tag: "UI + Front End",
+    tag: "Web Development",
     color: "from-violet-500/50 to-cyan-500/30",
-    desc: "A digital product and web experience for Cosmic Remedies by Sia.",
-    role: "UI/UX Designer and Web Developer",
-    tools: ["Figma", "React", "Tailwind CSS"],
+    desc: "A responsive web build of the Cosmic Remedies by Sia digital product experience.",
+    role: "Web Developer",
+    tools: ["React", "Tailwind CSS"],
     year: "2025",
     client: "Cosmic Remedies by Sia",
     overview:
-      "Cosmic Remedies by Sia combines interface direction and web implementation for a more immersive digital experience rooted in storytelling, product presentation, and responsive build quality.",
+      "A responsive web implementation of the Cosmic Remedies by Sia brand experience, translating the product vision into a working site with polished layout, storytelling sections, and cross-device coverage.",
     goals: [
-      "Design a cohesive digital experience that matches the brand's unique personality.",
-      "Translate the interface into a working responsive web build.",
-      "Keep the experience polished across both design and implementation layers.",
+      "Build a responsive web experience that captures the brand's unique personality.",
+      "Implement clean, maintainable code with reusable components.",
+      "Ensure polished layout and interaction across desktop and mobile breakpoints.",
     ],
     impact: [
       { value: "1", label: "Design-to-build flow" },
@@ -1220,7 +1406,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      "Cosmic Remedies by Sia stands as both a UI/UX project and a web implementation case, showing continuity from concept to working experience.",
+      "Cosmic Remedies by Sia is a fully implemented web experience that brings the brand's vision to life through responsive design, reusable components, and polished front-end execution.",
     gallery: [
       {
         color: "from-violet-500/50 to-cyan-500/30",
@@ -1241,13 +1427,7 @@ export const projects: Project[] = [
         note: "Placeholder for mobile and desktop implementation comparisons.",
       },
     ],
-    liveEmbed: cosmicRemediesLiveUrl
-      ? {
-          src: cosmicRemediesLiveUrl,
-          title: "Cosmic Remedies by Sia deployed web app",
-          note: "Explore the deployed Cosmic Remedies by Sia build hosted on Vercel.",
-        }
-      : undefined,
+    vercelLiveUrl: cosmicRemediesLiveUrl || undefined,
     nextProjectSlug: "umunity",
   },
   {
@@ -1371,20 +1551,27 @@ export const projects: Project[] = [
         note: "Reusable tables, cards, forms, and navigation patterns in code.",
       },
     ],
-    figmaEmbed: {
-      shareUrl: "https://www.figma.com/design/zw7EIzr4RSkhabog08oVBK/UMUnuty?node-id=13-350",
-      embedUrl:
-        "https://embed.figma.com/design/zw7EIzr4RSkhabog08oVBK/UMUnuty?node-id=13-350&embed-host=share",
-      title: "UMunity interactive workspace",
-      note: "Explore the UMunity Figma system and interface screens inside the embedded workspace.",
+    figmaPreviewUrl:
+      "https://embed.figma.com/design/zw7EIzr4RSkhabog08oVBK/UMUnuty?node-id=13-350&embed-host=share",
+    vercelLiveUrl: umunityLiveUrl || undefined,
+    categoryVariants: {
+      "UI/UX Design": {
+        tools: ["Figma", "FigJam", "Miro", "Notion"],
+        desc: "Product design system for a school organization management platform covering events, communication, records, and coordination.",
+        overview:
+          "UMunity is a product design concept focused on school organization management — dashboards, events, records, announcements, and communication flows shaped for both student members and organization officers.",
+        outcome:
+          "UMunity now reads as a complete product design case study, showing the Figma system, user flows, reusable components, and prototype direction for a student organization management platform.",
+      },
+      "Web Development": {
+        tools: ["React", "Tailwind CSS", "TypeScript"],
+        desc: "Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.",
+        overview:
+          "The UMunity web build translates the product design system into a responsive front-end implementation using React, Tailwind CSS, and TypeScript — covering the dashboard, event modules, records, announcements, and navigation structure.",
+        outcome:
+          "UMunity now reads as a complete design-to-build case study, showing both the Figma system and the web implementation layer for a student organization management platform.",
+      },
     },
-    liveEmbed: umunityLiveUrl
-      ? {
-          src: umunityLiveUrl,
-          title: "UMunity deployed web app",
-          note: "Explore the deployed UMunity build hosted on Vercel.",
-        }
-      : undefined,
     nextProjectSlug: "umsdc-publication-materials-and-assets",
   },
   {
@@ -1872,6 +2059,7 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "odara-management-group",
     "lian-monley",
     "pietyl-lpg",
+    "pieytl-branding",
     "sidlac-co-branding",
     "blue-collar-builders",
     "trichomend-plus",
@@ -1879,13 +2067,7 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "dost-laon-logo",
     "umunity-logo",
   ],
-  "UI/UX Design": [
-    "cosmic-remedies-by-sia",
-    "umunity",
-    "dost-laon",
-    "pietyl-management-system",
-    "adoptify",
-  ],
+  "UI/UX Design": ["umunity", "dost-laon", "pietyl-management-system", "adoptify"],
   "Social Media Graphics": [
     "blockchain-campus-conference-2024",
     "sidlac-co-social-media",
@@ -1989,4 +2171,22 @@ export const getNextProject = (slug: string) => {
 
   const index = projects.findIndex((project) => project.slug === slug);
   return projects[(index + 1) % projects.length];
+};
+
+export const getProjectBySlugAndCategory = (
+  slug: string,
+  category?: ProjectCategory,
+): Project | undefined => {
+  const base = getProject(slug);
+  if (!base) return undefined;
+
+  const cat = category ?? base.cat;
+
+  const variant = base.categoryVariants?.[cat];
+  const merged: Project = variant ? { ...base, ...variant } : { ...base };
+
+  if (cat === "Web Development") merged.figmaPreviewUrl = undefined;
+  if (cat === "UI/UX Design") merged.vercelLiveUrl = undefined;
+
+  return merged;
 };

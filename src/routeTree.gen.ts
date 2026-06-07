@@ -15,7 +15,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as WorksSlugRouteImport } from './routes/works.$slug'
+import { Route as WorksSlugRouteRouteImport } from './routes/works.$slug/route'
 
 const WorksRoute = WorksRouteImport.update({
   id: '/works',
@@ -47,7 +47,7 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WorksSlugRoute = WorksSlugRouteImport.update({
+const WorksSlugRouteRoute = WorksSlugRouteRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => WorksRoute,
@@ -60,7 +60,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
-  '/works/$slug': typeof WorksSlugRoute
+  '/works/$slug': typeof WorksSlugRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,7 +69,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
-  '/works/$slug': typeof WorksSlugRoute
+  '/works/$slug': typeof WorksSlugRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,7 +79,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
-  '/works/$slug': typeof WorksSlugRoute
+  '/works/$slug': typeof WorksSlugRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,18 +168,18 @@ declare module '@tanstack/react-router' {
       id: '/works/$slug'
       path: '/$slug'
       fullPath: '/works/$slug'
-      preLoaderRoute: typeof WorksSlugRouteImport
+      preLoaderRoute: typeof WorksSlugRouteRouteImport
       parentRoute: typeof WorksRoute
     }
   }
 }
 
 interface WorksRouteChildren {
-  WorksSlugRoute: typeof WorksSlugRoute
+  WorksSlugRouteRoute: typeof WorksSlugRouteRoute
 }
 
 const WorksRouteChildren: WorksRouteChildren = {
-  WorksSlugRoute: WorksSlugRoute,
+  WorksSlugRouteRoute: WorksSlugRouteRoute,
 }
 
 const WorksRouteWithChildren = WorksRoute._addFileChildren(WorksRouteChildren)
