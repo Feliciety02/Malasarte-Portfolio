@@ -14,6 +14,52 @@ import logoUMSDC from "@/assets/about/UM Student Developers Community (UMSDC).sv
 import logoUMindanao from "@/assets/about/University of Mindanao.svg";
 import logoNotreDame from "@/assets/about/Notre Dame of Esperanza.svg";
 import logoGuihing from "@/assets/about/Guihing Central Elementary School.svg";
+import nstw1 from "@/assets/Events/nstw 1.jpg";
+import nstw2 from "@/assets/Events/nstw 2.jpg";
+import nstw3 from "@/assets/Events/nstw 3.jpg";
+import nstw4 from "@/assets/Events/nstw 4.jpg";
+import caraga1 from "@/assets/Events/caraga 1.jpg";
+import caraga2 from "@/assets/Events/caraga 2.jpg";
+import caraga3 from "@/assets/Events/caraga 3.jpg";
+import caraga4 from "@/assets/Events/caraga 4.jpg";
+import govtech1 from "@/assets/Events/govtech 1.jpg";
+import govtech2 from "@/assets/Events/govtech 2.jpg";
+import govtech3 from "@/assets/Events/govtech 3.jpg";
+import govtech4 from "@/assets/Events/govtech 4.jpg";
+import trichomend1 from "@/assets/Events/trichomend 1.jpg";
+import trichomend2 from "@/assets/Events/trichomend 2.jpg";
+import trichomend3 from "@/assets/Events/trichomend 3.jpg";
+import trichomend4 from "@/assets/Events/trichomend 4.jpg";
+import technovation1 from "@/assets/Events/technovation summit 1.jpg";
+import technovation2 from "@/assets/Events/technovation summit 2.jpg";
+import technovation3 from "@/assets/Events/technovation summit 3.jpg";
+import technovation4 from "@/assets/Events/technovation summit 4.jpg";
+import sui1 from "@/assets/Events/sui 1.jpg";
+import sui2 from "@/assets/Events/sui 2.jpg";
+import psits from "@/assets/Events/PSITS.jpg";
+import marketingStrategy from "@/assets/Events/Marketing Strategy Excellence Award.jpg";
+import mostActiveVolunteer from "@/assets/Events/Most Active Volunteer Award.jpg";
+import aptos from "@/assets/Events/aptos hours.jpg";
+import aptosHours2 from "@/assets/Events/aptos hours 2.jpg";
+import devfest2024 from "@/assets/Events/devfest 2024.jpg";
+import umsdcTraining from "@/assets/Events/UMSDC Internal Training – Basics of Figma.jpg";
+import dostCamp1 from "@/assets/Events/DOST Student Leadership Camp 1.jpg";
+import dostCamp2 from "@/assets/Events/DOST Student Leadership Camp 2.jpg";
+import pycon2024 from "@/assets/Events/pycon 2024.jpg";
+import blockchainCampus from "@/assets/Events/Davao Blockchain Campus Conference.jpg";
+import buildstation1 from "@/assets/Events/Buildstation solana radar 1.jpg";
+import buildstation2 from "@/assets/Events/Buildstation solana radar 2.jpg";
+import solanaIRL1 from "@/assets/Events/Solana IRL 1.jpg";
+import solanaIRL2 from "@/assets/Events/Solana IRL 2.jpg";
+import vana1 from "@/assets/Events/vana 1.jpg";
+import vana2 from "@/assets/Events/vana 2.jpg";
+import dostKickstart from "@/assets/Events/DOST KickStart.jpg";
+import blooming1 from "@/assets/Events/Blooming Fridays UIUX Workshop Series 1.jpg";
+import blooming2 from "@/assets/Events/Blooming Fridays UIUX Workshop Series 2.jpg";
+import designThinking1 from "@/assets/Events/design thinking 1.jpg";
+import designThinking2 from "@/assets/Events/design thinking 2.jpg";
+import designThinking3 from "@/assets/Events/design thinking 3.jpg";
+import designThinking4 from "@/assets/Events/design thinking 4.jpg";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -55,7 +101,7 @@ function TimelineSection({ items }: { items: TimelineItem[] }) {
             )}
             <div className="min-w-0 flex-1">
               <span className="font-mono text-sm uppercase tracking-widest text-primary">{item.period}</span>
-              <h3 className="mt-1 font-display text-lg font-bold">{item.title}</h3>
+              <h3 className="mt-1 font-display text-lg font-bold">{item.title}</ h3>
               <p className="text-base text-muted-foreground">{item.subtitle}</p>
               {item.desc && <p className="mt-2 text-base leading-relaxed text-muted-foreground/80">{item.desc}</p>}
             </div>
@@ -85,6 +131,141 @@ function ShowMore({
   );
 }
 
+const CONFERENCE_GRADIENTS = [
+  "from-primary/20 to-primary/5",
+  "from-blue-500/20 to-purple-500/5",
+  "from-amber-500/20 to-orange-500/5",
+  "from-rose-500/20 to-pink-500/5",
+];
+
+const conferenceImages: (string[] | null)[] = [
+  [nstw1, nstw2, nstw3, nstw4],
+  [dostCamp1, dostCamp2],
+  [dostKickstart],
+  [designThinking1, designThinking2, designThinking3, designThinking4],
+  [sui1, sui2],
+  null,
+  null,
+  null,
+  [solanaIRL1, solanaIRL2],
+  null,
+  null,
+  [blooming1, blooming2],
+  null,
+  null,
+  [vana1, vana2],
+  [devfest2024],
+  [aptos, aptosHours2],
+];
+
+const volunteerImages: (string[] | null)[] = [
+  null,
+  [govtech1, govtech2, govtech3, govtech4],
+  [caraga1, caraga2, caraga3, caraga4],
+  [buildstation1, buildstation2],
+  null,
+  [pycon2024],
+  [blockchainCampus],
+  null,
+  null,
+];
+
+const awardImages: (string[] | null)[] = [
+  null,
+  [marketingStrategy],
+  [mostActiveVolunteer],
+  [technovation1, technovation2, technovation3, technovation4],
+  [trichomend1, trichomend2, trichomend3, trichomend4],
+  null,
+  [psits],
+];
+
+function AwardsGallery({ images }: { images: string[] | null }) {
+  if (images && images.length === 1) {
+    return (
+      <div className="metal-panel rounded-lg overflow-hidden aspect-square">
+        <img src={images[0]} alt="" className="h-full w-full object-cover" />
+      </div>
+    );
+  }
+
+  if (images) {
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        {images.map((src, i) => (
+          <div key={i} className="aspect-square rounded-lg metal-panel overflow-hidden">
+            <img src={src} alt="" className="h-full w-full object-cover" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      {CONFERENCE_GRADIENTS.map((g, i) => (
+        <div
+          key={i}
+          className={`aspect-square rounded-lg bg-gradient-to-br ${g} metal-panel flex items-center justify-center`}
+        >
+          <span className="text-[10px] font-medium text-muted-foreground/40">
+            {(i + 1).toString().padStart(2, "0")}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ConferenceGallery({ images, conferenceIndex }: { images: string[] | null; conferenceIndex: number }) {
+  if (images && images.length === 1) {
+    return (
+      <div className="metal-panel rounded-lg overflow-hidden aspect-square">
+        <img src={images[0]} alt="" className="h-full w-full object-cover" />
+      </div>
+    );
+  }
+
+  if (images && images.length === 2) {
+    return (
+      <div className="flex flex-col gap-2 aspect-square">
+        {images.map((src, i) => (
+          <div key={i} className="flex-1 metal-panel overflow-hidden rounded-lg">
+            <img src={src} alt="" className="h-full w-full object-cover" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (images) {
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        {images.map((src, i) => (
+          <div key={i} className="aspect-square rounded-lg metal-panel overflow-hidden">
+            <img src={src} alt="" className="h-full w-full object-cover" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      {CONFERENCE_GRADIENTS.map((g, i) => (
+        <div
+          key={i}
+          className={`aspect-square rounded-lg bg-gradient-to-br ${g} metal-panel flex items-center justify-center`}
+        >
+          <span className="text-[10px] font-medium text-muted-foreground/40">
+            {(conferenceIndex * 4 + i + 1).toString().padStart(2, "0")}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type TimelineItem = {
   period: string;
   title: string;
@@ -94,9 +275,9 @@ type TimelineItem = {
 };
 
 function About() {
-  const [awardsOpen, setAwardsOpen] = useState(false);
-  const [volunteerOpen, setVolunteerOpen] = useState(false);
-  const [conferencesOpen, setConferencesOpen] = useState(false);
+  const [selectedConference, setSelectedConference] = useState(0);
+  const [selectedAward, setSelectedAward] = useState(0);
+  const [selectedVolunteer, setSelectedVolunteer] = useState(0);
 
   const leadership: TimelineItem[] = [
     { period: "2025 – Present", title: "President", subtitle: "UM Student Developers Community (UMSDC)", logo: logoUMSDC, desc: "Leading one of the University's premier technology organizations, overseeing community programs, technical initiatives, partnerships, events, and student development activities." },
@@ -111,21 +292,22 @@ function About() {
   ];
 
   const education: TimelineItem[] = [
-    { period: "2023 – Present", title: "BS Computer Science", subtitle: "University of Mindanao", logo: logoUMindanao, desc: "Dean's Lister • DOST-SEI Undergraduate Scholar" },
-    { period: "2021 – 2023", title: "Senior High School – STEM Strand", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame, desc: "With High Honors • Excellence in Science and Technology Award" },
-    { period: "2017 – 2021", title: "Junior High School", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame, desc: "With Honors" },
+    { period: "2023 – Present", title: "BS Computer Science", subtitle: "University of Mindanao", logo: logoUMindanao },
+    { period: "A.Y. 2023 – 2024", title: "Dean's Lister – Second Honors", subtitle: "University of Mindanao" },
+    { period: "A.Y. 2024 – 2025", title: "Dean's Lister – First Honors", subtitle: "University of Mindanao" },
+    { period: "2021 – 2023", title: "Senior High School – STEM Strand", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame },
+    { period: "2017 – 2021", title: "Junior High School", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame },
     { period: "2010 – 2016", title: "Special Science Elementary School (SSES)", subtitle: "Guihing Central Elementary School", logo: logoGuihing },
   ];
 
   const awards = [
     { title: "DOST-SEI Undergraduate Scholarship", detail: "2023 – Present" },
-    { title: "Dean's Lister – Second Honors", detail: "A.Y. 2023 – 2024" },
-    { title: "Dean's Lister – Second Honors", detail: "A.Y. 2024 – 2025" },
     { title: "Marketing Strategy Excellence Award", detail: "CCE-CSG • 2025" },
     { title: "Most Active Volunteer Award", detail: "UM Student Developers Community • 2025" },
     { title: "National Technovation Summit 2025 – Finalist", detail: "Team Hackaton Aces • Cebu City" },
     { title: "DOST STTP Region XI 2025 – 2nd Runner-Up", detail: "Team Trichomend • Davao City" },
     { title: "Excellence in Science and Technology", detail: "Notre Dame of Esperanza • S.Y. 2022 – 2023" },
+    { title: "PSITS Word Factory Champion", detail: "2025" },
   ];
 
   const volunteer = [
@@ -160,12 +342,7 @@ function About() {
     { event: "Aptos Hours: Introducing Aptos and Hiraya Network", date: "Apr 27, 2025" },
   ];
 
-  const visibleVolunteer = volunteer.slice(0, 3);
-  const hiddenVolunteer = volunteer.slice(3);
-  const visibleConferences = conferences.slice(0, 4);
-  const hiddenConferences = conferences.slice(4);
-  const visibleAwards = awards.slice(0, 4);
-  const hiddenAwards = awards.slice(4);
+
 
   return (
     <MetallicPage variant="about" className="px-6 pb-20">
@@ -302,7 +479,7 @@ function About() {
             <div>
               <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Design</h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["UI/UX Design", "Design Systems", "Branding & Identity", "Graphic Design", "Figma"].map((s) => (
+                {["UI/UX Design", "Graphic Design", "Logo Design", "Branding & Identity", "Brand Strategy", "Creative Strategy", "Product Design", "Social Media Graphics", "UX Research", "Wireframing", "Prototyping"].map((s) => (
                   <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
                 ))}
               </div>
@@ -310,15 +487,15 @@ function About() {
             <div>
               <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Development</h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Front-End", "Responsive Web", "HTML / CSS", "JavaScript", "PHP", "MySQL"].map((s) => (
+                {["Front-End", "Responsive Web", "HTML / CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "PHP", "MySQL"].map((s) => (
                   <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Leadership</h3>
+              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Leadership & Content</h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Student Leadership", "Public Speaking", "Event Management", "Marketing Strategy", "Community Building", "Technical Volunteering"].map((s) => (
+                {["Student Leadership", "Public Speaking", "Event Management", "Marketing Strategy", "Community Building", "Technical Volunteering", "Content Writing / Copywriting"].map((s) => (
                   <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
                 ))}
               </div>
@@ -332,36 +509,23 @@ function About() {
             title="Awards & Honors"
             description="Academic, leadership, and competitive achievements."
           />
-          <ul className="mt-10 space-y-3">
-            {visibleAwards.map((a) => (
-              <li key={a.title} className="flex items-start gap-3 metal-panel rounded-xl p-5">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
-                <div>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
+            <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
+              {awards.map((a, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedAward(i)}
+                  className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
+                    selectedAward === i ? "ring-2 ring-primary" : "hover:bg-white/5"
+                  }`}
+                >
                   <p className="font-display text-sm font-bold">{a.title}</p>
                   <p className="mt-0.5 text-sm text-muted-foreground">{a.detail}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <Collapsible open={awardsOpen} onOpenChange={setAwardsOpen}>
-            <CollapsibleContent>
-              <ul className="mt-3 space-y-3">
-                {hiddenAwards.map((a) => (
-                  <li key={a.title} className="flex items-start gap-3 metal-panel rounded-xl p-5">
-                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
-                    <div>
-                      <p className="font-display text-sm font-bold">{a.title}</p>
-                      <p className="mt-0.5 text-sm text-muted-foreground">{a.detail}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </CollapsibleContent>
-            <CollapsibleTrigger className="group mt-4 inline-flex items-center gap-1.5 text-sm uppercase tracking-widest text-muted-foreground/60 hover:text-primary transition-colors">
-              {awardsOpen ? "Show less" : `Show ${hiddenAwards.length} more`}
-              <ChevronDown size={14} className={cn("transition-transform", awardsOpen && "rotate-180")} />
-            </CollapsibleTrigger>
-          </Collapsible>
+                </button>
+              ))}
+            </div>
+            <AwardsGallery images={awardImages[selectedAward]} />
+          </div>
         </Reveal>
 
         <Reveal className="mt-20">
@@ -404,13 +568,16 @@ function About() {
             title="Speaking Engagements"
             description="Sharing knowledge through talks and workshops."
           />
-          <div className="metal-panel mt-10 rounded-xl p-6 sm:p-8">
-            <span className="font-mono text-sm uppercase tracking-widest text-primary">January 24, 2025</span>
-            <h3 className="mt-2 font-display text-lg font-bold">UMSDC Internal Training – Basics of Figma</h3>
-            <p className="mt-1 text-base font-medium text-primary">Speaker</p>
-            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-              Delivered a training session covering UI/UX fundamentals, design thinking, wireframing, prototyping, and Figma workflows.
-            </p>
+          <div className="metal-panel mt-10 rounded-xl p-6 sm:p-8 flex gap-6 items-start">
+            <img src={umsdcTraining} alt="" className="h-48 w-48 shrink-0 rounded-lg object-cover metal-panel" />
+            <div>
+              <span className="font-mono text-sm uppercase tracking-widest text-primary">January 24, 2025</span>
+              <h3 className="mt-2 font-display text-lg font-bold">UMSDC Internal Training – Basics of Figma</h3>
+              <p className="mt-1 text-base font-medium text-primary">Speaker</p>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                Delivered a training session covering UI/UX fundamentals, design thinking, wireframing, prototyping, and Figma workflows.
+              </p>
+            </div>
           </div>
         </Reveal>
 
@@ -420,32 +587,24 @@ function About() {
             title="Volunteer Experience"
             description="Contributing time and skills to tech events, communities, and meaningful causes."
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {visibleVolunteer.map((v) => (
-              <div key={v.event} className="metal-panel rounded-xl p-5">
-                <span className="font-mono text-sm uppercase tracking-widest text-primary">{v.date}</span>
-                <h3 className="mt-1.5 font-display text-base font-bold">{v.event}</h3>
-                <p className="mt-0.5 text-sm text-muted-foreground">{v.role}</p>
-              </div>
-            ))}
+          <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
+            <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
+              {volunteer.map((v, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedVolunteer(i)}
+                  className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
+                    selectedVolunteer === i ? "ring-2 ring-primary" : "hover:bg-white/5"
+                  }`}
+                >
+                  <span className="font-mono text-sm uppercase tracking-widest text-primary">{v.date}</span>
+                  <h3 className="mt-1 font-display text-base font-bold">{v.event}</h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{v.role}</p>
+                </button>
+              ))}
+            </div>
+            <ConferenceGallery images={volunteerImages[selectedVolunteer]} conferenceIndex={selectedVolunteer} />
           </div>
-          <Collapsible open={volunteerOpen} onOpenChange={setVolunteerOpen}>
-            <CollapsibleContent>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {hiddenVolunteer.map((v) => (
-                  <div key={v.event} className="metal-panel rounded-xl p-5">
-                    <span className="font-mono text-sm uppercase tracking-widest text-primary">{v.date}</span>
-                    <h3 className="mt-1.5 font-display text-base font-bold">{v.event}</h3>
-                    <p className="mt-0.5 text-sm text-muted-foreground">{v.role}</p>
-                  </div>
-                ))}
-              </div>
-            </CollapsibleContent>
-            <CollapsibleTrigger className="group mt-4 inline-flex items-center gap-1.5 text-sm uppercase tracking-widest text-muted-foreground/60 hover:text-primary transition-colors">
-              {volunteerOpen ? "Show less" : `Show ${hiddenVolunteer.length} more`}
-              <ChevronDown size={14} className={cn("transition-transform", volunteerOpen && "rotate-180")} />
-            </CollapsibleTrigger>
-          </Collapsible>
         </Reveal>
 
         <Reveal className="mt-20">
@@ -454,35 +613,26 @@ function About() {
             title="Conferences, Trainings & Community"
             description="Continuous learning through workshops, meetups, and national programs."
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {visibleConferences.map((c) => (
-              <div key={c.event} className="metal-panel rounded-xl p-5">
-                <span className="font-mono text-sm uppercase tracking-widest text-primary">
-                  {c.date}{c.location ? ` • ${c.location}` : ""}
-                </span>
-                <h3 className="mt-1.5 font-display text-base font-bold">{c.event}</h3>
-                {c.org && <p className="mt-0.5 text-sm text-muted-foreground">{c.org}</p>}
-              </div>
-            ))}
+          <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
+            <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
+              {conferences.map((c, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedConference(i)}
+                  className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
+                    selectedConference === i ? "ring-2 ring-primary" : "hover:bg-white/5"
+                  }`}
+                >
+                  <span className="font-mono text-sm uppercase tracking-widest text-primary">
+                    {c.date}{c.location ? ` • ${c.location}` : ""}
+                  </span>
+                  <h3 className="mt-1 font-display text-base font-bold">{c.event}</h3>
+                  {c.org && <p className="mt-0.5 text-sm text-muted-foreground">{c.org}</p>}
+                </button>
+              ))}
+            </div>
+            <ConferenceGallery images={conferenceImages[selectedConference]} conferenceIndex={selectedConference} />
           </div>
-          <Collapsible open={conferencesOpen} onOpenChange={setConferencesOpen}>
-            <CollapsibleContent>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {hiddenConferences.map((c) => (
-                  <div key={c.event} className="metal-panel rounded-xl p-5">
-                    <span className="font-mono text-sm uppercase tracking-widest text-primary">
-                      {c.date}{c.location ? ` • ${c.location}` : ""}
-                    </span>
-                    <h3 className="mt-1.5 font-display text-base font-bold">{c.event}</h3>
-                  </div>
-                ))}
-              </div>
-            </CollapsibleContent>
-            <CollapsibleTrigger className="group mt-4 inline-flex items-center gap-1.5 text-sm uppercase tracking-widest text-muted-foreground/60 hover:text-primary transition-colors">
-              {conferencesOpen ? "Show less" : `Show ${hiddenConferences.length} more`}
-              <ChevronDown size={14} className={cn("transition-transform", conferencesOpen && "rotate-180")} />
-            </CollapsibleTrigger>
-          </Collapsible>
         </Reveal>
 
         <Reveal className="mt-20 pb-10">
