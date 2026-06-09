@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import aboutFeImage from "@/assets/about-fe.png";
+import aboutFeImage from "@/assets/about/about-fe.png";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { LinkButton } from "@/components/site/LinkButton";
 import { Reveal } from "@/components/site/Reveal";

@@ -1,5 +1,5 @@
 import { useRouterState } from "@tanstack/react-router";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, type Easing, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import logoFe from "@/assets/logo-fe.png";
 
@@ -66,7 +66,7 @@ export function LoadingScreen() {
       };
   const ringTransition = prefersReducedMotion
     ? { duration: 0 }
-    : { duration: 1.8, ease: "easeInOut", repeat: Infinity };
+    : { duration: 1.8, ease: "easeInOut" as Easing, repeat: Infinity };
 
   return (
     <AnimatePresence>

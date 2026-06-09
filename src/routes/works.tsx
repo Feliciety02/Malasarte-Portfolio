@@ -314,6 +314,7 @@ function DevelopmentWorkCard({
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
+  const visibleTools = project.tools.filter((tool) => !isUxDesignTool(tool));
 
   return (
     <CaseStudyLink
@@ -340,18 +341,29 @@ function DevelopmentWorkCard({
         <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">
           {project.desc}
         </p>
-        <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
-          {project.tools.map((tool) => (
-            <span
-              key={tool}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/72 sm:px-3 sm:text-xs"
-            >
-              {tool}
-            </span>
-          ))}
-        </div>
+        {visibleTools.length ? (
+          <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
+            {visibleTools.map((tool) => (
+              <span
+                key={tool}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/72 sm:px-3 sm:text-xs"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
+        ) : null}
       </div>
     </CaseStudyLink>
+  );
+}
+
+const UX_DESIGN_TOOL_HINTS = ["figma", "figjam", "miro", "notion"];
+
+function isUxDesignTool(tool: string) {
+  const normalized = tool.trim().toLowerCase();
+  return UX_DESIGN_TOOL_HINTS.some(
+    (hint) => normalized === hint || normalized.includes(hint),
   );
 }
 

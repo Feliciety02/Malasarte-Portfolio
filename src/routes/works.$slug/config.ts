@@ -124,11 +124,20 @@ export const getProjectTemplate = (project: Pick<Project, "kind">) =>
 
 export const WORKSPACE_PROJECT_CATEGORIES: Project["cat"][] = ["UI/UX Design", "Web Development"];
 
-export const canShowProjectWorkspace = (project: Pick<Project, "cat" | "categories">) =>
-  WORKSPACE_PROJECT_CATEGORIES.includes(project.cat) ||
-  project.categories?.some((category) => WORKSPACE_PROJECT_CATEGORIES.includes(category)) === true;
+export const canShowProjectWorkspace = (
+  project: Pick<Project, "cat" | "categories" | "vercelLiveUrl" | "hideLiveWorkspace">,
+) => {
+  if (project.hideLiveWorkspace) return false;
+  if (!project.vercelLiveUrl?.trim()) return false;
+  return (
+    WORKSPACE_PROJECT_CATEGORIES.includes(project.cat) ||
+    project.categories?.some((category) => WORKSPACE_PROJECT_CATEGORIES.includes(category)) === true
+  );
+};
 
-export const getProjectSections = (project: Pick<Project, "kind" | "cat" | "categories">) => {
+export const getProjectSections = (
+  project: Pick<Project, "kind" | "cat" | "categories" | "vercelLiveUrl" | "hideLiveWorkspace">,
+) => {
   const sections = TEMPLATE_SECTIONS[getProjectTemplate(project)];
 
   if (canShowProjectWorkspace(project)) return sections;

@@ -28,11 +28,11 @@ export function SkillHighlightsSection() {
 
         <div className="grid gap-4 md:grid-cols-2">
           {skillHighlights.map((skill, index) => (
-            <Reveal key={skill.name} delay={index * 0.06}>
+            <Reveal key={skill.name} delay={Math.floor(index / 2) * 0.1}>
               <SkillHighlightCard
                 name={skill.name}
                 level={skill.level}
-                delay={0.2 + index * 0.06}
+                delay={0.2 + Math.floor(index / 2) * 0.1}
               />
             </Reveal>
           ))}

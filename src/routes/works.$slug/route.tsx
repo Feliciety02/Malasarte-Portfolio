@@ -24,7 +24,7 @@ import {
   getProjectSection,
   canShowProjectWorkspace,
 } from "./config";
-import { InteractiveWorkspace } from "./workspace";
+import { InteractiveWorkspace, WorkspacePhotoGallery } from "./workspace";
 import { GalleryGrid } from "./gallery";
 import { RelatedProjects } from "./related";
 import { StickyTOC, SectionAnchor, SectionLabel, FadeIn } from "./sections";
@@ -128,6 +128,8 @@ function CaseStudy() {
   const sections = getProjectSections(project);
   const sectionMeta = (id: string) => getProjectSection(project, id);
   const showWorkspace = canShowProjectWorkspace(project);
+  const shouldSwapToGallery =
+    !showWorkspace && project.cat === "Web Development" && project.gallery.length > 0;
   const isGalleryOnly = template === "gallery";
 
   const galleryItems: LightboxItem[] = useMemo(
@@ -175,13 +177,24 @@ function CaseStudy() {
           <>
             <div className="min-w-0">
               <Snapshot project={project} />
-              {showWorkspace ? <InteractiveWorkspace project={project} /> : null}
+              {showWorkspace ? (
+                <InteractiveWorkspace project={project} />
+              ) : shouldSwapToGallery ? (
+                <WorkspacePhotoGallery
+                  project={project}
+                  openLightbox={setLightboxIndex}
+                />
+              ) : null}
 
               {template === "product" && (
                 <ProductBody project={project} openLightbox={setLightboxIndex} />
               )}
               {template === "development" && (
-                <DevelopmentBody project={project} openLightbox={setLightboxIndex} />
+                <DevelopmentBody
+                  project={project}
+                  openLightbox={setLightboxIndex}
+                  sectionMeta={sectionMeta}
+                />
               )}
               {template === "branding" && (
                 <BrandingBody

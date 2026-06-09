@@ -94,20 +94,29 @@ export function ProductBody({ project, openLightbox }: BodyProps) {
   );
 }
 
-export function DevelopmentBody({ project, openLightbox }: BodyProps) {
+export function DevelopmentBody({
+  project,
+  openLightbox,
+  sectionMeta,
+}: StructuredBodyProps) {
+  const hasLiveBuild = Boolean(project.vercelLiveUrl?.trim()) && !project.hideLiveWorkspace;
+
   return (
     <>
       <SectionAnchor id="problem">
         <EditorialBlock
-          kicker="03"
-          label="Problem"
+          kicker={sectionMeta("problem").number}
+          label={sectionMeta("problem").label}
           title="The technical brief"
           body={project.overview}
         />
       </SectionAnchor>
       <SectionAnchor id="stack">
         <FadeIn>
-          <SectionLabel kicker="04" label="Stack" />
+          <SectionLabel
+            kicker={sectionMeta("stack").number}
+            label={sectionMeta("stack").label}
+          />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Tools behind the build")}
           </h2>
@@ -124,7 +133,10 @@ export function DevelopmentBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="architecture">
         <FadeIn>
-          <SectionLabel kicker="05" label="Architecture" />
+          <SectionLabel
+            kicker={sectionMeta("architecture").number}
+            label={sectionMeta("architecture").label}
+          />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("How the system fits together")}
           </h2>
@@ -133,7 +145,10 @@ export function DevelopmentBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="process">
         <FadeIn>
-          <SectionLabel kicker="06" label="Build" />
+          <SectionLabel
+            kicker={sectionMeta("process").number}
+            label={sectionMeta("process").label}
+          />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Phases that shipped the product")}
           </h2>
@@ -142,22 +157,30 @@ export function DevelopmentBody({ project, openLightbox }: BodyProps) {
       </SectionAnchor>
       <SectionAnchor id="challenges">
         <FadeIn>
-          <SectionLabel kicker="07" label="Challenges" />
+          <SectionLabel
+            kicker={sectionMeta("challenges").number}
+            label={sectionMeta("challenges").label}
+          />
           <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
             {accentLastWord("Problems worth solving")}
           </h2>
         </FadeIn>
         <ChallengesBlock project={project} />
       </SectionAnchor>
-      <SectionAnchor id="features">
-        <FadeIn>
-          <SectionLabel kicker="08" label="Features" />
-          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-            {accentLastWord("Interface and implementation")}
-          </h2>
-        </FadeIn>
-        <GalleryGrid project={project} openLightbox={openLightbox} variant="grid" />
-      </SectionAnchor>
+      {hasLiveBuild ? null : (
+        <SectionAnchor id="features">
+          <FadeIn>
+            <SectionLabel
+              kicker={sectionMeta("features").number}
+              label={sectionMeta("features").label}
+            />
+            <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
+              {accentLastWord("Interface and implementation")}
+            </h2>
+          </FadeIn>
+          <GalleryGrid project={project} openLightbox={openLightbox} variant="grid" />
+        </SectionAnchor>
+      )}
     </>
   );
 }

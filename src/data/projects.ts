@@ -110,6 +110,7 @@ export type Project = {
   figmaPreviewUrl?: string;
   flipbookEmbed?: ProjectFlipbookEmbed;
   vercelLiveUrl?: string;
+  hideLiveWorkspace?: boolean;
   branding?: ProjectBranding;
   nextProjectSlug?: string;
   categoryVariants?: Partial<
