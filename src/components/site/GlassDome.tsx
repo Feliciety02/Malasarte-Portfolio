@@ -206,7 +206,6 @@ export function GlassDome({
   }, [globeRadius]);
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-
     const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
     if (!local) return;
 
@@ -289,10 +288,7 @@ export function GlassDome({
         }}
       />
 
-      <div
-        style={{ transformStyle: "preserve-3d" }}
-        className="relative h-full w-full"
-      >
+      <div style={{ transformStyle: "preserve-3d" }} className="relative h-full w-full">
         <div
           aria-hidden
           className="absolute inset-[5%] rounded-full blur-3xl"
@@ -359,7 +355,6 @@ export function GlassDome({
               filter: "blur(5px)",
             }}
           />
-
         </div>
 
         <div className="absolute inset-[7%] overflow-hidden rounded-full">
@@ -477,23 +472,18 @@ function ToolLogo({ slug, name }: { slug: string; name: string; color: string })
 
   if (!icon) {
     return (
-      <span aria-hidden className="select-none text-[10px] font-semibold uppercase tracking-[-0.01em] text-white">
+      <span
+        aria-hidden
+        className="select-none text-[10px] font-semibold uppercase tracking-[-0.01em] text-white"
+      >
         {name.slice(0, 2)}
       </span>
     );
   }
 
   return (
-    <span
-      aria-hidden
-      className="grid h-full w-full place-items-center"
-    >
-      <img
-        src={icon.src}
-        alt=""
-        aria-hidden
-        className="h-[70%] w-[70%] object-contain"
-      />
+    <span aria-hidden className="grid h-full w-full place-items-center">
+      <img src={icon.src} alt="" aria-hidden className="h-[70%] w-[70%] object-contain" />
     </span>
   );
 }

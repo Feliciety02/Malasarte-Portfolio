@@ -1,17 +1,22 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Brand } from "@/components/site/Brand";
 import { navLinks } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [atPageEnd, setAtPageEnd] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [revealing, setRevealing] = useState(false);
   const [open, setOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const isActive = (to: (typeof navLinks)[number]["to"]) =>
+    to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(`${to}/`);
 
   useEffect(() => {
     const onScroll = () => {
@@ -73,53 +78,135 @@ export function Nav() {
         <Brand imageClassName="h-8 w-8" textClassName="text-lg" />
 
         <nav className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="relative rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "bg-primary/12 text-foreground" }}
-              activeOptions={{ exact: link.to === "/" }}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const linkIsActive = isActive(link.to);
+
+            return (
+              <motion.div
+                key={link.to}
+                whileHover={prefersReducedMotion ? undefined : { y: -2 }}
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                className="relative"
+              >
+                <Link
+                  to={link.to}
+                  className={cn(
+                    "group relative block overflow-hidden rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300",
+                    linkIsActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                  aria-current={linkIsActive ? "page" : undefined}
+                >
+                  {linkIsActive ? (
+                    <motion.span
+                      layoutId="desktop-nav-active"
+                      className="absolute inset-0 rounded-full border border-primary/20 bg-primary/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_22px_-10px_hsl(var(--primary))]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  ) : null}
+                  <span className="absolute inset-x-4 bottom-1.5 h-px origin-center scale-x-0 bg-primary/70 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                  <span className="relative z-10">{link.label}</span>
+                </Link>
+              </motion.div>
+            );
+          })}
         </nav>
 
-        <Link
-          to="/contact"
-          className="metal-cta hidden items-center rounded-full px-5 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] md:inline-flex"
+        <motion.div
+          whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.03 }}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 420, damping: 28 }}
+          className="hidden md:block"
         >
-          Let's talk
-        </Link>
+          <Link
+            to="/contact"
+            className={cn(
+              "metal-cta group relative inline-flex items-center overflow-hidden rounded-full px-5 py-2 text-sm font-semibold text-primary-foreground",
+              isActive("/contact") && "ring-2 ring-primary/35 ring-offset-2 ring-offset-background",
+            )}
+            aria-current={isActive("/contact") ? "page" : undefined}
+          >
+            <span className="absolute inset-y-0 -left-1/2 w-1/3 skew-x-[-18deg] bg-white/20 blur-sm transition-all duration-500 group-hover:left-[120%]" />
+            <span className="relative">Let's talk</span>
+          </Link>
+        </motion.div>
 
-        <button
+        <motion.button
           onClick={() => setOpen((value) => !value)}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
           className="metal-ghost rounded-full p-2 md:hidden"
           aria-label="Toggle menu"
+          aria-expanded={open}
         >
-          {open ? <X size={18} /> : <Menu size={18} />}
-        </button>
+          <motion.span
+            className="flex"
+            animate={prefersReducedMotion ? undefined : { rotate: open ? 90 : 0 }}
+            transition={{ type: "spring", stiffness: 420, damping: 28 }}
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </motion.span>
+        </motion.button>
       </div>
 
-      {open ? (
-        <div className="nav-glass nav-glass--solid mx-4 mt-2 rounded-lg p-4 md:hidden">
-          <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground"
-                activeProps={{ className: "text-foreground bg-primary/12" }}
-                activeOptions={{ exact: link.to === "/" }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      ) : null}
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
+            className="nav-glass nav-glass--solid mx-4 mt-2 overflow-hidden rounded-lg p-4 md:hidden"
+          >
+            <div className="flex flex-col gap-1">
+              {navLinks.map((link, index) => {
+                const linkIsActive = isActive(link.to);
+
+                return (
+                  <motion.div
+                    key={link.to}
+                    initial={prefersReducedMotion ? false : { opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      delay: prefersReducedMotion ? 0 : index * 0.035,
+                      duration: prefersReducedMotion ? 0 : 0.18,
+                    }}
+                  >
+                    <Link
+                      to={link.to}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "group relative block overflow-hidden rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-300",
+                        linkIsActive
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                      )}
+                      aria-current={linkIsActive ? "page" : undefined}
+                    >
+                      {linkIsActive ? (
+                        <motion.span
+                          layoutId="mobile-nav-active"
+                          className="absolute inset-0 rounded-lg border border-primary/15 bg-primary/12"
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        />
+                      ) : null}
+                      <span className="relative z-10 flex items-center justify-between">
+                        {link.label}
+                        <motion.span
+                          className="h-1.5 w-1.5 rounded-full bg-primary"
+                          initial={false}
+                          animate={{ scale: linkIsActive ? 1 : 0, opacity: linkIsActive ? 1 : 0 }}
+                        />
+                      </span>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

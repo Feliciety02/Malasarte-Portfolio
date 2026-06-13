@@ -16,6 +16,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorksSlugRouteRouteImport } from './routes/works.$slug/route'
+import { Route as WorksCategorySlugRouteRouteImport } from './routes/works.$category.$slug/route'
 
 const WorksRoute = WorksRouteImport.update({
   id: '/works',
@@ -52,6 +53,11 @@ const WorksSlugRouteRoute = WorksSlugRouteRouteImport.update({
   path: '/$slug',
   getParentRoute: () => WorksRoute,
 } as any)
+const WorksCategorySlugRouteRoute = WorksCategorySlugRouteRouteImport.update({
+  id: '/$category/$slug',
+  path: '/$category/$slug',
+  getParentRoute: () => WorksRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
+  '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
+  '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
+  '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/skills'
     | '/works'
     | '/works/$slug'
+    | '/works/$category/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/skills'
     | '/works'
     | '/works/$slug'
+    | '/works/$category/$slug'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/skills'
     | '/works'
     | '/works/$slug'
+    | '/works/$category/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,15 +183,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorksSlugRouteRouteImport
       parentRoute: typeof WorksRoute
     }
+    '/works/$category/$slug': {
+      id: '/works/$category/$slug'
+      path: '/$category/$slug'
+      fullPath: '/works/$category/$slug'
+      preLoaderRoute: typeof WorksCategorySlugRouteRouteImport
+      parentRoute: typeof WorksRoute
+    }
   }
 }
 
 interface WorksRouteChildren {
   WorksSlugRouteRoute: typeof WorksSlugRouteRoute
+  WorksCategorySlugRouteRoute: typeof WorksCategorySlugRouteRoute
 }
 
 const WorksRouteChildren: WorksRouteChildren = {
   WorksSlugRouteRoute: WorksSlugRouteRoute,
+  WorksCategorySlugRouteRoute: WorksCategorySlugRouteRoute,
 }
 
 const WorksRouteWithChildren = WorksRoute._addFileChildren(WorksRouteChildren)

@@ -1,13 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
-import {
-  ArrowUpRight,
-  Maximize2,
-  Monitor,
-  Palette,
-  RotateCcw,
-  Sparkles,
-} from "lucide-react";
+import { ArrowUpRight, Maximize2, Monitor, Palette, RotateCcw, Sparkles } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { accentLastWord } from "@/components/site/HeadingAccent";
@@ -230,10 +223,7 @@ export function WorkspacePhotoGallery({
   return (
     <SectionAnchor id="workspace" className="pt-16 md:pt-24">
       <FadeIn>
-        <SectionLabel
-          kicker="02"
-          label="Photo Gallery"
-        />
+        <SectionLabel kicker="02" label="Photo Gallery" />
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-2xl font-bold leading-tight md:text-4xl">

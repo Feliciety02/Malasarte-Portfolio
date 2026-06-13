@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 import { LinkButton } from "@/components/site/LinkButton";
@@ -81,7 +75,10 @@ export function ProcessPreviewSection() {
       rawProgress.set(p);
 
       if (trackRef.current && viewportRef.current) {
-        procWidth.current = Math.max(1, trackRef.current.scrollWidth - viewportRef.current.clientWidth);
+        procWidth.current = Math.max(
+          1,
+          trackRef.current.scrollWidth - viewportRef.current.clientWidth,
+        );
       }
 
       const sp = clamp((p - 0.33) / (0.85 - 0.33), 0, 1);
@@ -91,7 +88,9 @@ export function ProcessPreviewSection() {
       });
     };
 
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(tick); };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
 
     tick();
     window.addEventListener("scroll", schedule, { passive: true });
@@ -114,7 +113,7 @@ export function ProcessPreviewSection() {
     if (v < 0.85) return "0%";
     const t = (v - 0.85) / (1 - 0.85);
     const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
-    return `${(-eased) * 100}%`;
+    return `${-eased * 100}%`;
   });
   const barScale = useTransform(smoothProgress, (v) => {
     const sp = Math.max(0, Math.min(1, (v - 0.42) / (0.85 - 0.42)));
@@ -185,7 +184,10 @@ export function ProcessPreviewSection() {
             <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/45 to-transparent" />
           </div>
 
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]"
+          >
             <motion.div className="flex w-max gap-16" style={{ x: marqueeX }}>
               {Array.from({ length: 6 }).map((_, g) => (
                 <div key={g} className="flex gap-16">
@@ -197,7 +199,10 @@ export function ProcessPreviewSection() {
             </motion.div>
           </div>
 
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]"
+          >
             <motion.div className="flex w-max gap-16" style={{ x: marqueeRX }}>
               {Array.from({ length: 6 }).map((_, g) => (
                 <div key={g} className="flex gap-16">

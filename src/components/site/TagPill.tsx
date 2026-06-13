@@ -1,7 +1,15 @@
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export function TagPill({ children, className }: { children: ReactNode; className?: string }) {
+export function TagPill({
+  children,
+  className,
+  dotClassName,
+}: {
+  children: ReactNode;
+  className?: string;
+  dotClassName?: string;
+}) {
   return (
     <span
       className={cn(
@@ -9,7 +17,7 @@ export function TagPill({ children, className }: { children: ReactNode; classNam
         className,
       )}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
+      <span className={cn("h-1.5 w-1.5 rounded-full bg-primary", dotClassName)} aria-hidden />
       {children}
     </span>
   );

@@ -41,10 +41,10 @@ export function WebGLBackground() {
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
     const uniforms = {
-      uTime:       { value: 0 },
+      uTime: { value: 0 },
       uResolution: { value: new Vector2(window.innerWidth, window.innerHeight) },
-      uMouse:      { value: new Vector2(0.5, 0.5) },
-      uScroll:     { value: 0 },
+      uMouse: { value: new Vector2(0.5, 0.5) },
+      uScroll: { value: 0 },
     };
 
     const material = new ShaderMaterial({
@@ -52,7 +52,7 @@ export function WebGLBackground() {
       fragmentShader,
       uniforms,
       depthWrite: false,
-      depthTest:  false,
+      depthTest: false,
     });
 
     const mesh = new Mesh(new PlaneGeometry(2, 2), material);
@@ -95,9 +95,9 @@ export function WebGLBackground() {
       mSmooth.x += (mTarget.x - mSmooth.x) * lf;
       mSmooth.y += (mTarget.y - mSmooth.y) * lf;
 
-      uniforms.uTime.value   += delta * timeScale;
+      uniforms.uTime.value += delta * timeScale;
       uniforms.uMouse.value.set(mSmooth.x, mSmooth.y);
-      uniforms.uScroll.value  = window.scrollY / Math.max(window.innerHeight, 1);
+      uniforms.uScroll.value = window.scrollY / Math.max(window.innerHeight, 1);
 
       renderer.render(scene, camera);
     };

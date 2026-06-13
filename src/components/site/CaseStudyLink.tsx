@@ -12,7 +12,7 @@ export type ProjectCategory =
 
 type CaseStudyLinkProps = {
   slug: string;
-  category?: ProjectCategory;
+  routeCategory: string;
   children: ReactNode;
   className?: string;
   "aria-label"?: string;
@@ -20,16 +20,15 @@ type CaseStudyLinkProps = {
 
 export function CaseStudyLink({
   slug,
-  category,
+  routeCategory,
   children,
   className,
   "aria-label": ariaLabel,
 }: CaseStudyLinkProps) {
   return (
     <Link
-      to="/works/$slug"
-      params={{ slug }}
-      search={{ ...(category ? { category } : {}) }}
+      to="/works/$category/$slug"
+      params={{ category: routeCategory, slug }}
       resetScroll
       preload="intent"
       aria-label={ariaLabel}

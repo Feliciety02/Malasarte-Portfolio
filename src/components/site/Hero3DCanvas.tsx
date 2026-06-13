@@ -67,26 +67,39 @@ export function Hero3DCanvas({ wrapperRef }: Props) {
 
     // ── Materials ─────────────────────────────────────────────────────────────
     const purpleMat = new MeshStandardMaterial({
-      color: 0x8b5cf6, emissive: 0x3b1ea8, emissiveIntensity: 0.55,
-      metalness: 0.85, roughness: 0.08,
+      color: 0x8b5cf6,
+      emissive: 0x3b1ea8,
+      emissiveIntensity: 0.55,
+      metalness: 0.85,
+      roughness: 0.08,
     });
     const blueMat = new MeshStandardMaterial({
-      color: 0x3b82f6, emissive: 0x1a3d8f, emissiveIntensity: 0.45,
-      metalness: 0.90, roughness: 0.05,
+      color: 0x3b82f6,
+      emissive: 0x1a3d8f,
+      emissiveIntensity: 0.45,
+      metalness: 0.9,
+      roughness: 0.05,
     });
     const cyanMat = new MeshStandardMaterial({
-      color: 0x06b6d4, emissive: 0x035266, emissiveIntensity: 0.55,
-      metalness: 0.80, roughness: 0.10,
+      color: 0x06b6d4,
+      emissive: 0x035266,
+      emissiveIntensity: 0.55,
+      metalness: 0.8,
+      roughness: 0.1,
     });
     const cyanRingMat = new MeshStandardMaterial({
-      color: 0x06b6d4, emissive: 0x046a80, emissiveIntensity: 0.75,
-      metalness: 0.60, roughness: 0.18,
-      transparent: true, opacity: 0.60,
+      color: 0x06b6d4,
+      emissive: 0x046a80,
+      emissiveIntensity: 0.75,
+      metalness: 0.6,
+      roughness: 0.18,
+      transparent: true,
+      opacity: 0.6,
     });
 
     // ── Central tori ──────────────────────────────────────────────────────────
     const torus1 = new Mesh(new TorusGeometry(1.1, 0.23, 40, 120), purpleMat);
-    torus1.rotation.x = Math.PI * 0.30;
+    torus1.rotation.x = Math.PI * 0.3;
     torus1.rotation.z = Math.PI * 0.05;
     scene.add(torus1);
 
@@ -96,11 +109,12 @@ export function Hero3DCanvas({ wrapperRef }: Props) {
     scene.add(torus2);
 
     // ── Icosahedrons (design crystals) ────────────────────────────────────────
-    const icoData: Array<{ pos: [number, number, number]; mat: MeshStandardMaterial; r: number }> = [
-      { pos: [-2.2,  1.3, -0.9], mat: blueMat,   r: 0.42 },
-      { pos: [ 2.1, -1.1, -0.4], mat: blueMat,   r: 0.38 },
-      { pos: [-1.4, -2.0,  0.6], mat: cyanMat,   r: 0.35 },
-    ];
+    const icoData: Array<{ pos: [number, number, number]; mat: MeshStandardMaterial; r: number }> =
+      [
+        { pos: [-2.2, 1.3, -0.9], mat: blueMat, r: 0.42 },
+        { pos: [2.1, -1.1, -0.4], mat: blueMat, r: 0.38 },
+        { pos: [-1.4, -2.0, 0.6], mat: cyanMat, r: 0.35 },
+      ];
     icoData.forEach(({ pos, mat, r }) => {
       const m = new Mesh(new IcosahedronGeometry(r, 0), mat);
       m.position.set(...pos);
@@ -108,10 +122,11 @@ export function Hero3DCanvas({ wrapperRef }: Props) {
     });
 
     // ── Octahedron diamonds ───────────────────────────────────────────────────
-    const octData: Array<{ pos: [number, number, number]; mat: MeshStandardMaterial; r: number }> = [
-      { pos: [ 2.0,  1.8,  0.2], mat: purpleMat, r: 0.36 },
-      { pos: [-2.7, -0.3, -1.0], mat: cyanMat,   r: 0.30 },
-    ];
+    const octData: Array<{ pos: [number, number, number]; mat: MeshStandardMaterial; r: number }> =
+      [
+        { pos: [2.0, 1.8, 0.2], mat: purpleMat, r: 0.36 },
+        { pos: [-2.7, -0.3, -1.0], mat: cyanMat, r: 0.3 },
+      ];
     octData.forEach(({ pos, mat, r }) => {
       const m = new Mesh(new OctahedronGeometry(r, 0), mat);
       m.position.set(...pos);
@@ -121,13 +136,19 @@ export function Hero3DCanvas({ wrapperRef }: Props) {
     // ── Ambient glow particles ─────────────────────────────────────────────────
     const pColors = [0x8b5cf6, 0x3b82f6, 0x06b6d4];
     const pPos: Array<[number, number, number]> = [
-      [ 0.9,  2.3,  1.0], [-1.1,  2.6, -0.3], [ 3.1,  0.5,  0.2],
-      [-3.0,  1.2,  0.5], [ 2.4, -2.4, -0.8], [-0.4, -3.1,  0.9],
-      [ 1.5,  0.3,  2.6],
+      [0.9, 2.3, 1.0],
+      [-1.1, 2.6, -0.3],
+      [3.1, 0.5, 0.2],
+      [-3.0, 1.2, 0.5],
+      [2.4, -2.4, -0.8],
+      [-0.4, -3.1, 0.9],
+      [1.5, 0.3, 2.6],
     ];
     pPos.forEach((pos, i) => {
       const mat = new MeshStandardMaterial({
-        color: pColors[i % 3], emissive: pColors[i % 3], emissiveIntensity: 2.8,
+        color: pColors[i % 3],
+        emissive: pColors[i % 3],
+        emissiveIntensity: 2.8,
       });
       const m = new Mesh(new SphereGeometry(0.065, 8, 8), mat);
       m.position.set(...pos);
@@ -136,7 +157,8 @@ export function Hero3DCanvas({ wrapperRef }: Props) {
 
     // ── Resize ────────────────────────────────────────────────────────────────
     const onResize = () => {
-      const w = window.innerWidth, h = window.innerHeight;
+      const w = window.innerWidth,
+        h = window.innerHeight;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);

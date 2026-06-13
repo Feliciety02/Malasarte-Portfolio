@@ -4,6 +4,7 @@ import type { Project } from "@/data/projects";
 import { projects, getProjectCategoryLabel } from "@/data/projects";
 import { getProjectCoverImage } from "@/data/projectImages";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
+import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { TagPill } from "@/components/site/TagPill";
 import { SectionAnchor, SectionLabel, FadeIn } from "./sections";
 import { accentLastWord } from "@/components/site/HeadingAccent";
@@ -51,7 +52,7 @@ function RelatedProjectCard({ project }: { project: Project }) {
     <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.995 }} className="h-full">
       <CaseStudyLink
         slug={project.slug}
-        category={project.cat}
+        routeCategory={getRouteCategoryForProject(project)}
         aria-label={`Open ${project.title} work`}
         className="metal-card work-card group relative flex h-full flex-col"
       >

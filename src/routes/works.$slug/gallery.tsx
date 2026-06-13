@@ -4,7 +4,13 @@ import { getProjectGalleryImage } from "@/data/projectImages";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "./sections";
 
-export function GalleryPreviewImage({ project, item }: { project: Project; item: ProjectGalleryItem }) {
+export function GalleryPreviewImage({
+  project,
+  item,
+}: {
+  project: Project;
+  item: ProjectGalleryItem;
+}) {
   const image = getProjectGalleryImage(project, item);
 
   return (

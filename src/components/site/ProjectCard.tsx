@@ -9,6 +9,7 @@ import {
   type ProjectCategory,
   type ProjectFilter,
 } from "@/data/projects";
+import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 
 type ProjectCardProps = {
   project: Project;
@@ -24,7 +25,7 @@ export function ProjectCard({ project, activeCategory = project.cat }: ProjectCa
     <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.995 }} className="h-full">
       <CaseStudyLink
         slug={project.slug}
-        category={activeCategory === "All" ? undefined : activeCategory}
+        routeCategory={getRouteCategoryForProject(project)}
         aria-label={`Open ${title} work`}
         className="metal-card work-card group relative flex h-full flex-col"
       >

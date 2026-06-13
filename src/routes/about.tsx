@@ -16,29 +16,21 @@ import logoNotreDame from "@/assets/about/Notre Dame of Esperanza.svg";
 import logoGuihing from "@/assets/about/Guihing Central Elementary School.svg";
 import nstw1 from "@/assets/Events/nstw 1.jpg";
 import nstw2 from "@/assets/Events/nstw 2.jpg";
-import nstw3 from "@/assets/Events/nstw 3.jpg";
-import nstw4 from "@/assets/Events/nstw 4.jpg";
 import caraga1 from "@/assets/Events/caraga 1.jpg";
 import caraga2 from "@/assets/Events/caraga 2.jpg";
-import caraga3 from "@/assets/Events/caraga 3.jpg";
-import caraga4 from "@/assets/Events/caraga 4.jpg";
 import govtech1 from "@/assets/Events/govtech 1.jpg";
 import govtech2 from "@/assets/Events/govtech 2.jpg";
-import govtech3 from "@/assets/Events/govtech 3.jpg";
-import govtech4 from "@/assets/Events/govtech 4.jpg";
 import trichomend1 from "@/assets/Events/trichomend 1.jpg";
 import trichomend2 from "@/assets/Events/trichomend 2.jpg";
-import trichomend3 from "@/assets/Events/trichomend 3.jpg";
-import trichomend4 from "@/assets/Events/trichomend 4.jpg";
 import technovation1 from "@/assets/Events/technovation summit 1.jpg";
 import technovation2 from "@/assets/Events/technovation summit 2.jpg";
-import technovation3 from "@/assets/Events/technovation summit 3.jpg";
-import technovation4 from "@/assets/Events/technovation summit 4.jpg";
 import sui1 from "@/assets/Events/sui 1.jpg";
 import sui2 from "@/assets/Events/sui 2.jpg";
 import psits from "@/assets/Events/PSITS.jpg";
 import marketingStrategy from "@/assets/Events/Marketing Strategy Excellence Award.jpg";
 import mostActiveVolunteer from "@/assets/Events/Most Active Volunteer Award.jpg";
+import dostOrientation1 from "@/assets/Events/DOST-SEI Scholarship Orientation 2024 1.jpg";
+import dostOrientation2 from "@/assets/Events/DOST-SEI Scholarship Orientation 2.jpg";
 import aptos from "@/assets/Events/aptos hours.jpg";
 import aptosHours2 from "@/assets/Events/aptos hours 2.jpg";
 import devfest2024 from "@/assets/Events/devfest 2024.jpg";
@@ -60,6 +52,7 @@ import designThinking1 from "@/assets/Events/design thinking 1.jpg";
 import designThinking2 from "@/assets/Events/design thinking 2.jpg";
 import designThinking3 from "@/assets/Events/design thinking 3.jpg";
 import designThinking4 from "@/assets/Events/design thinking 4.jpg";
+import { PortfolioStats } from "@/components/about/PortfolioStats";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -100,10 +93,16 @@ function TimelineSection({ items }: { items: TimelineItem[] }) {
               </div>
             )}
             <div className="min-w-0 flex-1">
-              <span className="font-mono text-sm uppercase tracking-widest text-primary">{item.period}</span>
-              <h3 className="mt-1 font-display text-lg font-bold">{item.title}</ h3>
+              <span className="font-mono text-sm uppercase tracking-widest text-primary">
+                {item.period}
+              </span>
+              <h3 className="mt-1 font-display text-lg font-bold">{item.title}</h3>
               <p className="text-base text-muted-foreground">{item.subtitle}</p>
-              {item.desc && <p className="mt-2 text-base leading-relaxed text-muted-foreground/80">{item.desc}</p>}
+              {item.desc && (
+                <p className="mt-2 text-base leading-relaxed text-muted-foreground/80">
+                  {item.desc}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -112,13 +111,7 @@ function TimelineSection({ items }: { items: TimelineItem[] }) {
   );
 }
 
-function ShowMore({
-  children,
-  label,
-}: {
-  children: React.ReactNode;
-  label: string;
-}) {
+function ShowMore({ children, label }: { children: React.ReactNode; label: string }) {
   const [open, setOpen] = useState(false);
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
@@ -139,10 +132,10 @@ const CONFERENCE_GRADIENTS = [
 ];
 
 const conferenceImages: (string[] | null)[] = [
-  [nstw1, nstw2, nstw3, nstw4],
+  [nstw1, nstw2],
   [dostCamp1, dostCamp2],
   [dostKickstart],
-  [designThinking1, designThinking2, designThinking3, designThinking4],
+  [designThinking1, designThinking2],
   [sui1, sui2],
   null,
   null,
@@ -160,22 +153,22 @@ const conferenceImages: (string[] | null)[] = [
 
 const volunteerImages: (string[] | null)[] = [
   null,
-  [govtech1, govtech2, govtech3, govtech4],
-  [caraga1, caraga2, caraga3, caraga4],
+  [govtech1, govtech2],
+  [caraga1, caraga2],
   [buildstation1, buildstation2],
   null,
   [pycon2024],
   [blockchainCampus],
   null,
   null,
+  [dostOrientation1, dostOrientation2],
 ];
 
 const awardImages: (string[] | null)[] = [
-  null,
+  [trichomend1, trichomend2],
+  [technovation1, technovation2],
   [marketingStrategy],
   [mostActiveVolunteer],
-  [technovation1, technovation2, technovation3, technovation4],
-  [trichomend1, trichomend2, trichomend3, trichomend4],
   null,
   [psits],
 ];
@@ -217,7 +210,13 @@ function AwardsGallery({ images }: { images: string[] | null }) {
   );
 }
 
-function ConferenceGallery({ images, conferenceIndex }: { images: string[] | null; conferenceIndex: number }) {
+function ConferenceGallery({
+  images,
+  conferenceIndex,
+}: {
+  images: string[] | null;
+  conferenceIndex: number;
+}) {
   if (images && images.length === 1) {
     return (
       <div className="metal-panel rounded-lg overflow-hidden aspect-square">
@@ -280,33 +279,109 @@ function About() {
   const [selectedVolunteer, setSelectedVolunteer] = useState(0);
 
   const leadership: TimelineItem[] = [
-    { period: "2025 – Present", title: "President", subtitle: "UM Student Developers Community (UMSDC)", logo: logoUMSDC, desc: "Leading one of the University's premier technology organizations, overseeing community programs, technical initiatives, partnerships, events, and student development activities." },
-    { period: "2024 – 2025", title: "Chief of Marketing and Promotions", subtitle: "College of Computing Education Student Government (CCE-CSG)", logo: logoCCECSG },
-    { period: "2024 – 2025", title: "Secretary", subtitle: "DOST Agilas Association – University of Mindanao", logo: logoDOSTAgilas },
-    { period: "2024 – 2025", title: "Computer Science Representative", subtitle: "UM Student Developers Community (UMSDC)", logo: logoUMSDC },
-    { period: "2024 – 2025", title: "Records Keeper", subtitle: "Data Owls – University of Mindanao", logo: logoDataOwls },
-    { period: "2024 – 2025", title: "Creatives Committee Member", subtitle: "UM Student Developers Community (UMSDC)", logo: logoUMSDC },
-    { period: "2024 – 2025", title: "Creatives Committee Member", subtitle: "UM Enigma", logo: logoUMEnigma },
-    { period: "2024 – 2025", title: "Creatives Committee Member", subtitle: "Junior Blockchain Education Consortium of the Philippines (JBECP)", logo: logoJBECP },
-    { period: "2022 – 2023", title: "Business Manager", subtitle: "Student Advisory Council – Notre Dame of Esperanza", logo: logoStudentAdvisoryCouncil },
+    {
+      period: "2025 – Present",
+      title: "President",
+      subtitle: "UM Student Developers Community (UMSDC)",
+      logo: logoUMSDC,
+      desc: "Leading one of the University's premier technology organizations, overseeing community programs, technical initiatives, partnerships, events, and student development activities.",
+    },
+    {
+      period: "2024 – 2025",
+      title: "Chief of Marketing and Promotions",
+      subtitle: "College of Computing Education Student Government (CCE-CSG)",
+      logo: logoCCECSG,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Secretary",
+      subtitle: "DOST Agilas Association – University of Mindanao",
+      logo: logoDOSTAgilas,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Computer Science Representative",
+      subtitle: "UM Student Developers Community (UMSDC)",
+      logo: logoUMSDC,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Records Keeper",
+      subtitle: "Data Owls – University of Mindanao",
+      logo: logoDataOwls,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Creatives Committee Member",
+      subtitle: "UM Student Developers Community (UMSDC)",
+      logo: logoUMSDC,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Creatives Committee Member",
+      subtitle: "UM Enigma",
+      logo: logoUMEnigma,
+    },
+    {
+      period: "2024 – 2025",
+      title: "Creatives Committee Member",
+      subtitle: "Junior Blockchain Education Consortium of the Philippines (JBECP)",
+      logo: logoJBECP,
+    },
+    {
+      period: "2022 – 2023",
+      title: "Business Manager",
+      subtitle: "Student Advisory Council – Notre Dame of Esperanza",
+      logo: logoStudentAdvisoryCouncil,
+    },
   ];
 
   const education: TimelineItem[] = [
-    { period: "2023 – Present", title: "BS Computer Science", subtitle: "University of Mindanao", logo: logoUMindanao },
-    { period: "A.Y. 2023 – 2024", title: "Dean's Lister – Second Honors", subtitle: "University of Mindanao" },
-    { period: "A.Y. 2024 – 2025", title: "Dean's Lister – First Honors", subtitle: "University of Mindanao" },
-    { period: "2021 – 2023", title: "Senior High School – STEM Strand", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame },
-    { period: "2017 – 2021", title: "Junior High School", subtitle: "Notre Dame of Esperanza", logo: logoNotreDame },
-    { period: "2010 – 2016", title: "Special Science Elementary School (SSES)", subtitle: "Guihing Central Elementary School", logo: logoGuihing },
+    {
+      period: "2023 – Present",
+      title: "BS Computer Science",
+      subtitle: "University of Mindanao",
+      logo: logoUMindanao,
+    },
+    {
+      period: "A.Y. 2023 – 2024",
+      title: "Dean's Lister – Second Honors",
+      subtitle: "University of Mindanao",
+    },
+    {
+      period: "A.Y. 2024 – 2025",
+      title: "Dean's Lister – First Honors",
+      subtitle: "University of Mindanao",
+    },
+    {
+      period: "2021 – 2023",
+      title: "Senior High School – STEM Strand",
+      subtitle: "Notre Dame of Esperanza",
+      logo: logoNotreDame,
+    },
+    {
+      period: "2017 – 2021",
+      title: "Junior High School",
+      subtitle: "Notre Dame of Esperanza",
+      logo: logoNotreDame,
+    },
+    {
+      period: "2010 – 2016",
+      title: "Special Science Elementary School (SSES)",
+      subtitle: "Guihing Central Elementary School",
+      logo: logoGuihing,
+    },
   ];
 
   const awards = [
-    { title: "DOST-SEI Undergraduate Scholarship", detail: "2023 – Present" },
+    { title: "DOST STTP Region XI 2025 – 2nd Runner-Up", detail: "Team Trichomend • Davao City" },
+    {
+      title: "National Technovation Summit 2025 – Finalist",
+      detail: "Team Hackaton Aces • Cebu City",
+    },
     { title: "Marketing Strategy Excellence Award", detail: "CCE-CSG • 2025" },
     { title: "Most Active Volunteer Award", detail: "UM Student Developers Community • 2025" },
-    { title: "National Technovation Summit 2025 – Finalist", detail: "Team Hackaton Aces • Cebu City" },
-    { title: "DOST STTP Region XI 2025 – 2nd Runner-Up", detail: "Team Trichomend • Davao City" },
-    { title: "Excellence in Science and Technology", detail: "Notre Dame of Esperanza • S.Y. 2022 – 2023" },
+    { title: "DOST-SEI Undergraduate Scholarship", detail: "2023 – Present" },
     { title: "PSITS Word Factory Champion", detail: "2025" },
   ];
 
@@ -317,13 +392,47 @@ function About() {
     { event: "Buildstation: Solana Radar", role: "Registrations Committee", date: "Aug 10, 2024" },
     { event: "Campus DevCon: Tech Nexus", role: "Creatives Committee", date: "Dec 7, 2024" },
     { event: "PyCon Mini Davao", role: "Creatives Committee", date: "Sep 26, 2024" },
-    { event: "Davao Blockchain Campus Conference", role: "Creatives Committee", date: "Oct 10, 2024" },
-    { event: "Davao Innovation & Startup Championship", role: "Usherettes Team", date: "Sep 30, 2024" },
-    { event: "DICT Regional Startup Pitching Competition", role: "Documentary Committee", date: "Sep 22, 2024" },
+    {
+      event: "Davao Blockchain Campus Conference",
+      role: "Creatives Committee",
+      date: "Oct 10, 2024",
+    },
+    {
+      event: "Davao Innovation & Startup Championship",
+      role: "Usherettes Team",
+      date: "Sep 30, 2024",
+    },
+    {
+      event: "DICT Regional Startup Pitching Competition",
+      role: "Documentary Committee",
+      date: "Sep 22, 2024",
+    },
+    { event: "DOST-SEI Scholarship Orientation 2024", role: "Volunteer", date: "2024" },
   ];
 
+  const volunteerEntries = volunteer
+    .map((v, i) => ({ ...v, images: volunteerImages[i], originalIndex: i }))
+    .sort((a, b) => {
+      if (a.images && !b.images) return -1;
+      if (!a.images && b.images) return 1;
+      return 0;
+    });
+
+  const awardEntries = awards
+    .map((a, i) => ({ ...a, images: awardImages[i], originalIndex: i }))
+    .sort((a, b) => {
+      if (a.images && !b.images) return -1;
+      if (!a.images && b.images) return 1;
+      return 0;
+    });
+
   const conferences = [
-    { event: "National Science and Technology Week", org: "NSTW 2025", date: "Nov 19–22, 2025", location: "Ilocos Norte" },
+    {
+      event: "National Science and Technology Week",
+      org: "NSTW 2025",
+      date: "Nov 19–22, 2025",
+      location: "Ilocos Norte",
+    },
     { event: "DOST Student Leadership Camp", date: "Jul 2–6, 2025" },
     { event: "DOST KickSTART", date: "Jul 6, 2025" },
     { event: "Design Thinking Workshop", date: "2025" },
@@ -342,7 +451,13 @@ function About() {
     { event: "Aptos Hours: Introducing Aptos and Hiraya Network", date: "Apr 27, 2025" },
   ];
 
-
+  const conferenceEntries = conferences
+    .map((c, i) => ({ ...c, images: conferenceImages[i], originalIndex: i }))
+    .sort((a, b) => {
+      if (a.images && !b.images) return -1;
+      if (!a.images && b.images) return 1;
+      return 0;
+    });
 
   return (
     <MetallicPage variant="about" className="px-6 pb-20">
@@ -370,35 +485,19 @@ function About() {
             </h1>
             <div className="mt-7 space-y-5 text-base leading-7 text-muted-foreground">
               <p>
-                I&apos;m Fe Anne L. Malasarte, a DOST-SEI Scholar and Computer Science student at the
-                University of Mindanao. I specialize in UI/UX Design, Web Development, Branding, and
-                Creative Strategy, combining technical expertise with design thinking to build impactful
-                digital experiences.
+                I&apos;m Fe Anne L. Malasarte, a DOST-SEI Scholar and Computer Science student at
+                the University of Mindanao. I specialize in UI/UX Design, Web Development, Branding,
+                and Creative Strategy, combining technical expertise with design thinking to build
+                impactful digital experiences.
               </p>
               <p>
-                Alongside my academic journey, I actively contribute to technology communities, student
-                organizations, and innovation initiatives across Mindanao through leadership, volunteer
-                work, and community engagement.
+                Alongside my academic journey, I actively contribute to technology communities,
+                student organizations, and innovation initiatives across Mindanao through
+                leadership, volunteer work, and community engagement.
               </p>
             </div>
 
-            <div className="mt-10 grid border-y border-white/10 py-6 sm:grid-cols-3">
-              {[
-                { k: "5+", v: "Years designing" },
-                { k: "40+", v: "Projects shipped" },
-                { k: "10+", v: "Happy clients" },
-              ].map((s) => (
-                <div
-                  key={s.v}
-                  className="py-4 sm:border-r sm:border-white/10 sm:px-6 sm:first:pl-0 sm:last:border-r-0"
-                >
-                  <div className="font-display text-3xl font-bold text-gradient">{s.k}</div>
-                  <div className="mt-2 text-sm uppercase tracking-[0.16em] text-muted-foreground">
-                    {s.v}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <PortfolioStats />
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
@@ -432,14 +531,20 @@ function About() {
           <div className="mt-10 border-t border-white/10">
             {[
               { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
-              { year: "2022 - 2024", role: "UI/UX & Social Media Graphics Lead", place: "Tech Organization" },
+              {
+                year: "2022 - 2024",
+                role: "UI/UX & Social Media Graphics Lead",
+                place: "Tech Organization",
+              },
               { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
             ].map((e) => (
               <div
                 key={e.role}
                 className="grid gap-3 border-b border-white/10 py-6 md:grid-cols-[10rem_minmax(0,1fr)_12rem] md:items-center"
               >
-                <span className="font-mono text-sm uppercase tracking-[0.16em] text-primary">{e.year}</span>
+                <span className="font-mono text-sm uppercase tracking-[0.16em] text-primary">
+                  {e.year}
+                </span>
                 <div className="font-display text-xl font-semibold">{e.role}</div>
                 <div className="text-base text-muted-foreground md:text-right">{e.place}</div>
               </div>
@@ -477,26 +582,77 @@ function About() {
           />
           <div className="mt-8 grid gap-5 sm:grid-cols-3">
             <div>
-              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Design</h3>
+              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">
+                Design
+              </h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["UI/UX Design", "Graphic Design", "Logo Design", "Branding & Identity", "Brand Strategy", "Creative Strategy", "Product Design", "Social Media Graphics", "UX Research", "Wireframing", "Prototyping"].map((s) => (
-                  <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
+                {[
+                  "UI/UX Design",
+                  "Graphic Design",
+                  "Logo Design",
+                  "Branding & Identity",
+                  "Brand Strategy",
+                  "Creative Strategy",
+                  "Product Design",
+                  "Social Media Graphics",
+                  "UX Research",
+                  "Wireframing",
+                  "Prototyping",
+                ].map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground"
+                  >
+                    {s}
+                  </span>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Development</h3>
+              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">
+                Development
+              </h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Front-End", "Responsive Web", "HTML / CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "PHP", "MySQL"].map((s) => (
-                  <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
+                {[
+                  "Front-End",
+                  "Responsive Web",
+                  "HTML / CSS",
+                  "JavaScript",
+                  "TypeScript",
+                  "React",
+                  "Tailwind CSS",
+                  "PHP",
+                  "MySQL",
+                ].map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground"
+                  >
+                    {s}
+                  </span>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">Leadership & Content</h3>
+              <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">
+                Leadership & Content
+              </h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Student Leadership", "Public Speaking", "Event Management", "Marketing Strategy", "Community Building", "Technical Volunteering", "Content Writing / Copywriting"].map((s) => (
-                  <span key={s} className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground">{s}</span>
+                {[
+                  "Student Leadership",
+                  "Public Speaking",
+                  "Event Management",
+                  "Marketing Strategy",
+                  "Community Building",
+                  "Technical Volunteering",
+                  "Content Writing / Copywriting",
+                ].map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground"
+                  >
+                    {s}
+                  </span>
                 ))}
               </div>
             </div>
@@ -511,9 +667,9 @@ function About() {
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
             <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
-              {awards.map((a, i) => (
+              {awardEntries.map((a, i) => (
                 <button
-                  key={i}
+                  key={a.originalIndex}
                   onClick={() => setSelectedAward(i)}
                   className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
                     selectedAward === i ? "ring-2 ring-primary" : "hover:bg-white/5"
@@ -524,7 +680,7 @@ function About() {
                 </button>
               ))}
             </div>
-            <AwardsGallery images={awardImages[selectedAward]} />
+            <AwardsGallery images={awardEntries[selectedAward].images} />
           </div>
         </Reveal>
 
@@ -541,7 +697,12 @@ function About() {
               rel="noopener noreferrer"
               className="metal-panel group flex flex-col items-center gap-5 rounded-xl p-6 text-center transition-all duration-300 hover:scale-[1.02] sm:p-8"
             >
-              <img src={credentialDatabases} alt="IT Specialist – Databases" className="h-56 w-56 shrink-0" loading="lazy" />
+              <img
+                src={credentialDatabases}
+                alt="IT Specialist – Databases"
+                className="h-56 w-56 shrink-0"
+                loading="lazy"
+              />
               <div>
                 <p className="font-display text-lg font-bold">IT Specialist – Databases</p>
                 <p className="mt-1 text-sm text-muted-foreground">Click to verify on Credly</p>
@@ -553,7 +714,12 @@ function About() {
               rel="noopener noreferrer"
               className="metal-panel group flex flex-col items-center gap-5 rounded-xl p-6 text-center transition-all duration-300 hover:scale-[1.02] sm:p-8"
             >
-              <img src={credentialCybersecurity} alt="IT Specialist – Cybersecurity" className="h-56 w-56 shrink-0" loading="lazy" />
+              <img
+                src={credentialCybersecurity}
+                alt="IT Specialist – Cybersecurity"
+                className="h-56 w-56 shrink-0"
+                loading="lazy"
+              />
               <div>
                 <p className="font-display text-base font-bold">IT Specialist – Cybersecurity</p>
                 <p className="mt-1 text-sm text-muted-foreground">Click to verify on Credly</p>
@@ -569,13 +735,22 @@ function About() {
             description="Sharing knowledge through talks and workshops."
           />
           <div className="metal-panel mt-10 rounded-xl p-6 sm:p-8 flex gap-6 items-start">
-            <img src={umsdcTraining} alt="" className="h-48 w-48 shrink-0 rounded-lg object-cover metal-panel" />
+            <img
+              src={umsdcTraining}
+              alt=""
+              className="h-48 w-48 shrink-0 rounded-lg object-cover metal-panel"
+            />
             <div>
-              <span className="font-mono text-sm uppercase tracking-widest text-primary">January 24, 2025</span>
-              <h3 className="mt-2 font-display text-lg font-bold">UMSDC Internal Training – Basics of Figma</h3>
+              <span className="font-mono text-sm uppercase tracking-widest text-primary">
+                January 24, 2025
+              </span>
+              <h3 className="mt-2 font-display text-lg font-bold">
+                UMSDC Internal Training – Basics of Figma
+              </h3>
               <p className="mt-1 text-base font-medium text-primary">Speaker</p>
               <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                Delivered a training session covering UI/UX fundamentals, design thinking, wireframing, prototyping, and Figma workflows.
+                Delivered a training session covering UI/UX fundamentals, design thinking,
+                wireframing, prototyping, and Figma workflows.
               </p>
             </div>
           </div>
@@ -589,21 +764,26 @@ function About() {
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
             <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
-              {volunteer.map((v, i) => (
+              {volunteerEntries.map((v, i) => (
                 <button
-                  key={i}
+                  key={v.originalIndex}
                   onClick={() => setSelectedVolunteer(i)}
                   className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
                     selectedVolunteer === i ? "ring-2 ring-primary" : "hover:bg-white/5"
                   }`}
                 >
-                  <span className="font-mono text-sm uppercase tracking-widest text-primary">{v.date}</span>
+                  <span className="font-mono text-sm uppercase tracking-widest text-primary">
+                    {v.date}
+                  </span>
                   <h3 className="mt-1 font-display text-base font-bold">{v.event}</h3>
                   <p className="mt-0.5 text-sm text-muted-foreground">{v.role}</p>
                 </button>
               ))}
             </div>
-            <ConferenceGallery images={volunteerImages[selectedVolunteer]} conferenceIndex={selectedVolunteer} />
+            <ConferenceGallery
+              images={volunteerEntries[selectedVolunteer].images}
+              conferenceIndex={selectedVolunteer}
+            />
           </div>
         </Reveal>
 
@@ -615,23 +795,27 @@ function About() {
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 items-start">
             <div className="aspect-[1/1] overflow-y-auto space-y-3 pr-2">
-              {conferences.map((c, i) => (
+              {conferenceEntries.map((c, i) => (
                 <button
-                  key={i}
+                  key={c.originalIndex}
                   onClick={() => setSelectedConference(i)}
                   className={`w-full text-left metal-panel rounded-xl p-4 transition-all duration-200 ${
                     selectedConference === i ? "ring-2 ring-primary" : "hover:bg-white/5"
                   }`}
                 >
                   <span className="font-mono text-sm uppercase tracking-widest text-primary">
-                    {c.date}{c.location ? ` • ${c.location}` : ""}
+                    {c.date}
+                    {c.location ? ` • ${c.location}` : ""}
                   </span>
                   <h3 className="mt-1 font-display text-base font-bold">{c.event}</h3>
                   {c.org && <p className="mt-0.5 text-sm text-muted-foreground">{c.org}</p>}
                 </button>
               ))}
             </div>
-            <ConferenceGallery images={conferenceImages[selectedConference]} conferenceIndex={selectedConference} />
+            <ConferenceGallery
+              images={conferenceEntries[selectedConference].images}
+              conferenceIndex={selectedConference}
+            />
           </div>
         </Reveal>
 

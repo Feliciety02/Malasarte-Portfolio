@@ -19,10 +19,7 @@ export function TestimonialsSection() {
         <div className="grid gap-5 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <Reveal key={testimonial.name} delay={index * 0.08}>
-              <motion.div
-                whileHover={{ y: -3 }}
-                className="metal-card relative h-full p-7"
-              >
+              <motion.div whileHover={{ y: -3 }} className="metal-card relative h-full p-7">
                 <Quote size={20} className="text-yellow" />
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   &quot;{testimonial.quote}&quot;

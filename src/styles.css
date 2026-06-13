@@ -374,44 +374,19 @@
   }
 
   .metal-page--works::before {
-    background:
-      radial-gradient(
-        58rem circle at var(--mx) var(--my),
-        rgba(255, 255, 255, 0.095),
-        transparent 46%
-      ),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 20%),
-      linear-gradient(180deg, #17191b, #0b0c0d 48%, #050606);
+    background: linear-gradient(180deg, #141617, #0a0b0c 48%, #050606);
   }
 
   .metal-page--works::after {
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent 0 18px,
-        rgba(255, 255, 255, 0.035) 19px,
-        transparent 20px
-      ),
-      linear-gradient(100deg, transparent 18%, rgba(255, 255, 255, 0.1) 48%, transparent 70%);
-    opacity: 0.24;
+    display: none;
   }
 
   .metal-page--project::before {
-    background:
-      radial-gradient(
-        46rem circle at var(--mx) var(--my),
-        rgba(255, 255, 255, 0.12),
-        transparent 44%
-      ),
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 7px),
-      linear-gradient(180deg, #1a1b1d, #0d0e0f 46%, #060607);
+    background: linear-gradient(180deg, #141617, #0a0b0c 46%, #060607);
   }
 
   .metal-page--project::after {
-    background:
-      linear-gradient(104deg, transparent 12%, rgba(255, 255, 255, 0.07) 45%, transparent 67%),
-      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 10px);
-    opacity: 0.26;
+    display: none;
   }
 
   .metal-page--services::before {

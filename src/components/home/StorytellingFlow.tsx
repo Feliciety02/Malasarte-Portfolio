@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 import { LinkButton } from "@/components/site/LinkButton";
@@ -23,7 +17,13 @@ const MARQUEE = ["Research", "Concept", "Design", "Deliver"] as const;
 
 /* scroll budget ratios — total outer height = 100vh + BUDGET vh */
 const BUDGET = 500;
-const P: Record<string, [number, number]> = { process: [0, 0.40], handoff: [0.40, 0.47], services: [0.47, 0.82], exit: [0.82, 0.90], release: [0.90, 1] };
+const P: Record<string, [number, number]> = {
+  process: [0, 0.4],
+  handoff: [0.4, 0.47],
+  services: [0.47, 0.82],
+  exit: [0.82, 0.9],
+  release: [0.9, 1],
+};
 
 function clamp(v: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, v));
@@ -41,19 +41,23 @@ function remap(v: number, from: [number, number], to: [number, number]) {
 /* ── process copy ── */
 const stepCopy: Record<string, { description: string; deliverables: string[] }> = {
   Research: {
-    description: "Listen to the brief, audit the landscape, and map the audience before a single pixel moves.",
+    description:
+      "Listen to the brief, audit the landscape, and map the audience before a single pixel moves.",
     deliverables: ["Discovery call", "Competitor audit", "Insight brief"],
   },
   Concept: {
-    description: "Translate insight into direction — moodboards, sketches, and narrative pillars to anchor the work.",
+    description:
+      "Translate insight into direction — moodboards, sketches, and narrative pillars to anchor the work.",
     deliverables: ["Moodboards", "Lo-fi sketches", "Creative direction"],
   },
   Design: {
-    description: "Craft the visual system, refine the interactions, and pressure-test every screen against the story.",
+    description:
+      "Craft the visual system, refine the interactions, and pressure-test every screen against the story.",
     deliverables: ["Design system", "Hi-fi screens", "Prototype"],
   },
   Deliver: {
-    description: "Polish, document, and hand off production-ready assets so the team can ship with confidence.",
+    description:
+      "Polish, document, and hand off production-ready assets so the team can ship with confidence.",
     deliverables: ["Dev handoff", "Brand assets", "Launch support"],
   },
 };
@@ -72,7 +76,8 @@ const serviceCardData = SERVICES.map((p) => {
 
 /* ── ProcessCard ── */
 type ProcessCardProps = {
-  index: number; total: number;
+  index: number;
+  total: number;
   step: (typeof PROCESS_STEPS)[number];
   copy: { description: string; deliverables: string[] } | undefined;
   isActive: boolean;
@@ -96,21 +101,40 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
         0{index + 1}
       </div>
       <div className="relative z-10 flex items-center gap-3">
-        <div className="metal-icon h-12 w-12 text-primary"><Icon size={18} /></div>
-        <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">Phase 0{index + 1}</span>
+        <div className="metal-icon h-12 w-12 text-primary">
+          <Icon size={18} />
+        </div>
+        <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
+          Phase 0{index + 1}
+        </span>
       </div>
-      <h3 className="relative z-10 mt-6 font-display text-4xl font-semibold md:text-5xl">{step.title}</h3>
-      {copy ? <p className="relative z-10 mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">{copy.description}</p> : null}
+      <h3 className="relative z-10 mt-6 font-display text-4xl font-semibold md:text-5xl">
+        {step.title}
+      </h3>
+      {copy ? (
+        <p className="relative z-10 mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+          {copy.description}
+        </p>
+      ) : null}
       <div className="relative z-10 mt-auto pt-8">
-        <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">Deliverables</div>
+        <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+          Deliverables
+        </div>
         <ul className="flex flex-wrap gap-2">
           {copy?.deliverables.map((d) => (
-            <li key={d} className="metal-ghost rounded-full px-3 py-1 text-xs text-white/80">{d}</li>
+            <li key={d} className="metal-ghost rounded-full px-3 py-1 text-xs text-white/80">
+              {d}
+            </li>
           ))}
         </ul>
       </div>
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: "radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.06), transparent 40%)" }}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.06), transparent 40%)",
+        }}
       />
     </motion.article>
   );
@@ -118,11 +142,24 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
 
 /* ── ServiceCard (horizontal variant) ── */
 type ServiceCardProps = {
-  icon: any; title: string; desc: string; color: string; bullets: readonly string[];
-  isActive: boolean; index: number;
+  icon: any;
+  title: string;
+  desc: string;
+  color: string;
+  bullets: readonly string[];
+  isActive: boolean;
+  index: number;
 };
 
-function HServiceCard({ icon: Icon, title, desc, color, bullets, isActive, index }: ServiceCardProps) {
+function HServiceCard({
+  icon: Icon,
+  title,
+  desc,
+  color,
+  bullets,
+  isActive,
+  index,
+}: ServiceCardProps) {
   return (
     <motion.article
       aria-current={isActive ? "step" : undefined}
@@ -138,27 +175,45 @@ function HServiceCard({ icon: Icon, title, desc, color, bullets, isActive, index
       </div>
 
       <div className="relative z-10 flex items-center gap-3">
-        <div className="metal-icon h-12 w-12 text-primary"><Icon size={18} /></div>
+        <div className="metal-icon h-12 w-12 text-primary">
+          <Icon size={18} />
+        </div>
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
           Capability 0{index + 1}
         </span>
       </div>
 
-      <h3 className="relative z-10 mt-5 font-display text-3xl font-semibold md:text-4xl lg:text-5xl">{title}</h3>
+      <h3 className="relative z-10 mt-5 font-display text-3xl font-semibold md:text-4xl lg:text-5xl">
+        {title}
+      </h3>
 
-      <p className="relative z-10 mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">{desc}</p>
+      <p className="relative z-10 mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+        {desc}
+      </p>
 
       <div className="relative z-10 mt-auto pt-8">
-        <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">Key offers</div>
+        <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+          Key offers
+        </div>
         <ul className="flex flex-wrap gap-2">
           {bullets.map((b) => (
-            <li key={b} className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1 text-xs text-white/80">{b}</li>
+            <li
+              key={b}
+              className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1 text-xs text-white/80"
+            >
+              {b}
+            </li>
           ))}
         </ul>
       </div>
 
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: "radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.06), transparent 40%)" }}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.06), transparent 40%)",
+        }}
       />
     </motion.article>
   );
@@ -216,10 +271,16 @@ export function StorytellingFlow({ reducedMotion }: Props) {
 
       /* measure track widths */
       if (processTrackRef.current && processViewportRef.current) {
-        procWidth.current = Math.max(1, processTrackRef.current.scrollWidth - processViewportRef.current.clientWidth);
+        procWidth.current = Math.max(
+          1,
+          processTrackRef.current.scrollWidth - processViewportRef.current.clientWidth,
+        );
       }
       if (servicesTrackRef.current && servicesViewportRef.current) {
-        svcWidth.current = Math.max(1, servicesTrackRef.current.scrollWidth - servicesViewportRef.current.clientWidth);
+        svcWidth.current = Math.max(
+          1,
+          servicesTrackRef.current.scrollWidth - servicesViewportRef.current.clientWidth,
+        );
       }
 
       /* indices */
@@ -235,12 +296,21 @@ export function StorytellingFlow({ reducedMotion }: Props) {
       });
     };
 
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(tick); };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
 
     updateHeight();
     tick();
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", () => { updateHeight(); schedule(); }, { passive: true });
+    window.addEventListener(
+      "resize",
+      () => {
+        updateHeight();
+        schedule();
+      },
+      { passive: true },
+    );
 
     return () => {
       cancelAnimationFrame(frame);
@@ -285,34 +355,66 @@ export function StorytellingFlow({ reducedMotion }: Props) {
         {/* process mobile */}
         <section className="relative overflow-hidden bg-[#0c0d0e] px-6 py-20 md:hidden">
           <div className="absolute inset-0 z-0 bg-[#141516]" />
-          <div className="absolute inset-0 z-0 opacity-60"><BrushedMetalBackground interactiveTargetRef={containerRef} /></div>
+          <div className="absolute inset-0 z-0 opacity-60">
+            <BrushedMetalBackground interactiveTargetRef={containerRef} />
+          </div>
           <div className="relative z-10 mx-auto max-w-2xl">
-            <SectionHeader eyebrow="Workflow" title="A focused process that keeps work moving."
-              description="Research, concept, design, deliver — swipe through how each phase lands." className="mb-10" />
+            <SectionHeader
+              eyebrow="Workflow"
+              title="A focused process that keeps work moving."
+              description="Research, concept, design, deliver — swipe through how each phase lands."
+              className="mb-10"
+            />
           </div>
           <div className="mobile-thin-x-scrollbar relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
             {PROCESS_STEPS.map((step, i) => (
-              <ProcessCard key={step.title} index={i} total={PROCESS_STEPS.length} step={step} copy={stepCopy[step.title]} isActive
-                className="w-[82vw] shrink-0 snap-center" />
+              <ProcessCard
+                key={step.title}
+                index={i}
+                total={PROCESS_STEPS.length}
+                step={step}
+                copy={stepCopy[step.title]}
+                isActive
+                className="w-[82vw] shrink-0 snap-center"
+              />
             ))}
           </div>
           <div className="relative z-10 mx-auto mt-8 max-w-2xl">
-            <LinkButton to="/process" variant="text" className="inline-flex items-center">Full process <ArrowRight size={14} /></LinkButton>
+            <LinkButton to="/process" variant="text" className="inline-flex items-center">
+              Full process <ArrowRight size={14} />
+            </LinkButton>
           </div>
         </section>
 
         {/* services mobile */}
         <section className="relative overflow-hidden px-6 py-24">
-          <div aria-hidden className="absolute inset-0" style={{
-            background: "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.22)), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.024) 1px, transparent 1px)",
-            backgroundSize: "auto, 5rem 5rem, 5rem 5rem",
-          }} />
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.22)), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.024) 1px, transparent 1px)",
+              backgroundSize: "auto, 5rem 5rem, 5rem 5rem",
+            }}
+          />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24)_28%,rgba(0,0,0,0.62)_100%)]" />
           <div className="relative z-10 mx-auto max-w-7xl">
-            <SectionHeader eyebrow="What I do" title="Services preview"
+            <SectionHeader
+              eyebrow="What I do"
+              title="Services preview"
               description="A compact technical grid of the services I design, build, and shape."
-              action={<LinkButton to="/services" variant="text" className="hidden items-center md:inline-flex">All services <ArrowRight size={14} /></LinkButton>}
-              className="mb-12" contentClassName="max-w-xl" />
+              action={
+                <LinkButton
+                  to="/services"
+                  variant="text"
+                  className="hidden items-center md:inline-flex"
+                >
+                  All services <ArrowRight size={14} />
+                </LinkButton>
+              }
+              className="mb-12"
+              contentClassName="max-w-xl"
+            />
           </div>
         </section>
       </>
@@ -323,7 +425,6 @@ export function StorytellingFlow({ reducedMotion }: Props) {
   return (
     <section ref={containerRef} className="relative">
       <div className="sticky top-0 h-screen overflow-hidden">
-
         {/* ── background layer ── */}
         <div className="absolute inset-0 z-0 bg-[#0c0d0e]" />
 
@@ -333,7 +434,9 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           style={{ opacity: processOpacity, scale: processScale, y: processY_ }}
         >
           <div className="absolute inset-0 z-0 bg-[#141516]" />
-          <div aria-hidden className="absolute inset-0 z-0"><BrushedMetalBackground interactiveTargetRef={containerRef} /></div>
+          <div aria-hidden className="absolute inset-0 z-0">
+            <BrushedMetalBackground interactiveTargetRef={containerRef} />
+          </div>
 
           <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
             <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />
@@ -341,17 +444,31 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           </div>
 
           {/* marquees */}
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]"
+          >
             <motion.div className="flex w-max gap-16" style={{ x: marqueeX }}>
               {Array.from({ length: 6 }).map((_, g) => (
-                <div key={g} className="flex gap-16">{MARQUEE.map((m) => <span key={`${g}-${m}`}>{m}</span>)}</div>
+                <div key={g} className="flex gap-16">
+                  {MARQUEE.map((m) => (
+                    <span key={`${g}-${m}`}>{m}</span>
+                  ))}
+                </div>
               ))}
             </motion.div>
           </div>
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]"
+          >
             <motion.div className="flex w-max gap-16" style={{ x: marqueeRX }}>
               {Array.from({ length: 6 }).map((_, g) => (
-                <div key={g} className="flex gap-16">{MARQUEE.map((m) => <span key={`${g}-${m}`}>{m}</span>)}</div>
+                <div key={g} className="flex gap-16">
+                  {MARQUEE.map((m) => (
+                    <span key={`${g}-${m}`}>{m}</span>
+                  ))}
+                </div>
               ))}
             </motion.div>
           </div>
@@ -360,18 +477,29 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           <div className="relative z-10 flex h-full flex-col">
             <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(3rem,7vh,5rem)]">
               <div className="flex items-end justify-between gap-8">
-                <SectionHeader eyebrow="Workflow" title="A focused process that keeps work moving."
+                <SectionHeader
+                  eyebrow="Workflow"
+                  title="A focused process that keeps work moving."
                   description="Scroll to travel through every phase — research, concept, design, deliver."
-                  className="mb-0" contentClassName="max-w-2xl" titleClassName="md:text-4xl lg:text-5xl" />
-                <LinkButton to="/process" variant="text" className="hidden shrink-0 items-center pb-2 lg:inline-flex">
+                  className="mb-0"
+                  contentClassName="max-w-2xl"
+                  titleClassName="md:text-4xl lg:text-5xl"
+                />
+                <LinkButton
+                  to="/process"
+                  variant="text"
+                  className="hidden shrink-0 items-center pb-2 lg:inline-flex"
+                >
                   Full process <ArrowRight size={14} />
                 </LinkButton>
               </div>
 
               <div className="mt-[clamp(1.75rem,4vh,2.75rem)] flex items-center gap-4">
                 <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
-                  <motion.div className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
-                    style={{ scaleX: procBarScale, width: "100%" }} />
+                  <motion.div
+                    className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
+                    style={{ scaleX: procBarScale, width: "100%" }}
+                  />
                 </div>
                 <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
                   <span className="text-white">0{procActiveIdx + 1}</span>
@@ -380,14 +508,25 @@ export function StorytellingFlow({ reducedMotion }: Props) {
               </div>
             </div>
 
-            <div ref={processViewportRef} className="relative mt-[clamp(2rem,5vh,4.25rem)] flex-1 overflow-hidden">
-              <motion.div ref={processTrackRef}
+            <div
+              ref={processViewportRef}
+              className="relative mt-[clamp(2rem,5vh,4.25rem)] flex-1 overflow-hidden"
+            >
+              <motion.div
+                ref={processTrackRef}
                 className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
-                style={{ x: processTrackX }}>
+                style={{ x: processTrackX }}
+              >
                 {PROCESS_STEPS.map((step, i) => (
-                  <ProcessCard key={step.title} index={i} total={PROCESS_STEPS.length} step={step} copy={stepCopy[step.title]}
+                  <ProcessCard
+                    key={step.title}
+                    index={i}
+                    total={PROCESS_STEPS.length}
+                    step={step}
+                    copy={stepCopy[step.title]}
                     isActive={procActiveIdx === i}
-                    className="h-[clamp(22rem,54vh,34rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]" />
+                    className="h-[clamp(22rem,54vh,34rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]"
+                  />
                 ))}
               </motion.div>
             </div>
@@ -400,29 +539,45 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           style={{ opacity: servicesOpacityIn, scale: servicesScaleIn, y: servicesYIn }}
         >
           {/* background */}
-          <div className="absolute inset-0"
+          <div
+            className="absolute inset-0"
             style={{
-              background: "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.22)), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.024) 1px, transparent 1px)",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.22)), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.024) 1px, transparent 1px)",
               backgroundSize: "auto, 5rem 5rem, 5rem 5rem",
-            }} />
+            }}
+          />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24)_28%,rgba(0,0,0,0.62)_100%)]" />
-          <div aria-hidden className="absolute inset-0 opacity-[0.07]"><BrushedMetalBackground interactiveTargetRef={containerRef} /></div>
+          <div aria-hidden className="absolute inset-0 opacity-[0.07]">
+            <BrushedMetalBackground interactiveTargetRef={containerRef} />
+          </div>
 
           <div className="relative z-10 flex h-full flex-col">
             <div className="mx-auto w-full max-w-7xl px-8 pt-[clamp(3rem,7vh,5rem)]">
               <div className="flex items-end justify-between gap-8">
-                <SectionHeader eyebrow="What I Do" title="Services designed to elevate your brand."
+                <SectionHeader
+                  eyebrow="What I Do"
+                  title="Services designed to elevate your brand."
                   description="Scroll through each capability — UI/UX, branding, social media graphics, creative assets, development, and content."
-                  className="mb-0" contentClassName="max-w-2xl" titleClassName="md:text-4xl lg:text-5xl" />
-                <LinkButton to="/services" variant="text" className="hidden shrink-0 items-center pb-2 lg:inline-flex">
+                  className="mb-0"
+                  contentClassName="max-w-2xl"
+                  titleClassName="md:text-4xl lg:text-5xl"
+                />
+                <LinkButton
+                  to="/services"
+                  variant="text"
+                  className="hidden shrink-0 items-center pb-2 lg:inline-flex"
+                >
                   All services <ArrowRight size={14} />
                 </LinkButton>
               </div>
 
               <div className="mt-[clamp(1.75rem,4vh,2.75rem)] flex items-center gap-4">
                 <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
-                  <motion.div className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
-                    style={{ scaleX: svcBarScale, width: "100%" }} />
+                  <motion.div
+                    className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-primary via-white/70 to-primary"
+                    style={{ scaleX: svcBarScale, width: "100%" }}
+                  />
                 </div>
                 <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
                   <span className="text-white">0{svcActiveIdx + 1}</span>
@@ -431,15 +586,29 @@ export function StorytellingFlow({ reducedMotion }: Props) {
               </div>
             </div>
 
-            <div ref={servicesViewportRef} className="relative mt-[clamp(2rem,5vh,4.25rem)] flex-1 overflow-hidden">
-              <motion.div ref={servicesTrackRef}
+            <div
+              ref={servicesViewportRef}
+              className="relative mt-[clamp(2rem,5vh,4.25rem)] flex-1 overflow-hidden"
+            >
+              <motion.div
+                ref={servicesTrackRef}
                 className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
-                style={{ x: servicesTrackX }}>
+                style={{ x: servicesTrackX }}
+              >
                 {serviceCardData.map((svc, i) => (
-                  <div key={svc.title}
-                    className="h-[clamp(22rem,54vh,34rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]">
-                    <HServiceCard index={i} icon={svc.icon} title={svc.title} desc={svc.desc}
-                      color={svc.color} bullets={svc.bullets} isActive={svcActiveIdx === i} />
+                  <div
+                    key={svc.title}
+                    className="h-[clamp(22rem,54vh,34rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]"
+                  >
+                    <HServiceCard
+                      index={i}
+                      icon={svc.icon}
+                      title={svc.title}
+                      desc={svc.desc}
+                      color={svc.color}
+                      bullets={svc.bullets}
+                      isActive={svcActiveIdx === i}
+                    />
                   </div>
                 ))}
               </motion.div>
@@ -447,10 +616,11 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           </div>
 
           {/* exit overlay for the services layer */}
-          <motion.div className="absolute inset-0 z-30 pointer-events-none bg-[#0c0d0e]"
-            style={{ opacity: exitCoverOpacity }} />
+          <motion.div
+            className="absolute inset-0 z-30 pointer-events-none bg-[#0c0d0e]"
+            style={{ opacity: exitCoverOpacity }}
+          />
         </motion.div>
-
       </div>
     </section>
   );

@@ -6,7 +6,14 @@ export type ProjectCategory =
   | "Web Development"
   | "Writing / VA";
 
-export type ProjectKind = "uiux" | "publication" | "branding" | "frontend" | "gallery" | "writing" | "logo";
+export type ProjectKind =
+  | "uiux"
+  | "publication"
+  | "branding"
+  | "frontend"
+  | "gallery"
+  | "writing"
+  | "logo";
 
 export type ProjectMetric = {
   value: string;
@@ -29,6 +36,8 @@ export type ProjectGalleryItem = {
   label: string;
   imageTitle?: string;
   imageLabel?: string;
+  imageUrl?: string;
+  assetPath?: string;
   ratio: "square" | "wide" | "tall";
   note: string;
 };
@@ -67,6 +76,20 @@ export type ProjectBrandResearch = {
   insights: string[];
 };
 
+export type ProjectBrandIdentityImage = {
+  src: string;
+  alt: string;
+  title?: string;
+  description?: string;
+};
+
+export type ProjectMissionValues = {
+  mission: string;
+  vision: string;
+  values: { title: string; text: string }[];
+  stats?: { value: string; label: string }[];
+};
+
 export type ProjectBranding = {
   mode?: "full" | "logo";
   challenge?: string;
@@ -74,6 +97,7 @@ export type ProjectBranding = {
   highlights?: string[];
   research?: ProjectBrandResearch;
   symbol?: ProjectBrandSymbol;
+  identityImages?: ProjectBrandIdentityImage[];
   colors?: ProjectBrandColor[];
   typography?: ProjectBrandTypography;
   personality?: string[];
@@ -89,6 +113,8 @@ export type Project = {
   directoryTitle?: string;
   cat: ProjectCategory;
   kind: ProjectKind;
+  /** Preferred card size in portfolio grid. Matches cover image aspect ratio. */
+  cardSize?: "large" | "tall" | "wide" | "medium";
   categories?: ProjectCategory[];
   categoryLabels?: Partial<Record<ProjectCategory, string>>;
   categoryTitles?: Partial<Record<ProjectCategory, string>>;
@@ -112,28 +138,9 @@ export type Project = {
   vercelLiveUrl?: string;
   hideLiveWorkspace?: boolean;
   branding?: ProjectBranding;
+  missionVisionValues?: ProjectMissionValues;
   nextProjectSlug?: string;
-  categoryVariants?: Partial<
-    Record<
-      ProjectCategory,
-      Partial<
-        Pick<
-          Project,
-          | "desc"
-          | "overview"
-          | "role"
-          | "tools"
-          | "gallery"
-          | "figmaPreviewUrl"
-          | "vercelLiveUrl"
-          | "outcome"
-          | "goals"
-          | "tag"
-          | "branding"
-        >
-      >
-    >
-  >;
+  categoryVariants?: Partial<Record<ProjectCategory, Partial<Project>>>;
 };
 
 const getOptionalEnvUrl = (value: unknown) => {
@@ -184,6 +191,7 @@ type SimpleProjectInput = {
   overview?: string;
   gallery?: ProjectGalleryItem[];
   imageTitle?: string;
+  cardSize?: "large" | "tall" | "wide" | "medium";
   nextProjectSlug?: string;
 };
 
@@ -245,11 +253,13 @@ const createSimpleProject = ({
   overview = desc,
   gallery,
   imageTitle,
+  cardSize,
   nextProjectSlug,
 }: SimpleProjectInput): Project => ({
   slug,
   title,
   imageTitle,
+  cardSize,
   directoryTitle: directoryTitle ?? title,
   cat,
   kind,
@@ -301,11 +311,12 @@ export const projects: Project[] = [
     title: "Odara Management Group",
     cat: "Logo & Branding",
     kind: "branding",
+    cardSize: "medium",
     tag: "Brand Identity",
     color: "from-fuchsia-500/50 to-violet-500/30",
     desc: "Corporate identity system for a management group.",
     role: "Brand Designer",
-    tools: ["Illustrator", "Figma", "Photoshop"],
+    tools: ["Figma"],
     year: "2025",
     client: "Odara Management Group",
     overview:
@@ -384,6 +395,14 @@ export const projects: Project[] = [
     ],
     outcome:
       "The final identity gives Odara Management Group a clearer and more professional visual foundation that can scale across core business touchpoints.",
+    branding: {
+      mode: "full",
+      symbol: {
+        title: "Odara Management brand identity",
+        image: "/src/assets/work-placeholders/projects/Odara Brand Kit.png",
+        items: [],
+      },
+    },
     gallery: [
       {
         color: "from-fuchsia-500/50 to-violet-500/30",
@@ -410,21 +429,23 @@ export const projects: Project[] = [
     slug: "lian-monley",
     title: "Lian Monley",
     imageTitle: "Lian Monley Logo",
+    cardSize: "medium",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Personal Brand",
     color: "from-rose-500/50 to-pink-500/30",
-    desc: "Personal branding system with a polished editorial feel.",
+    desc: "Commissioned personal brand identity developed through multiple logo explorations and a refined wellness-focused system.",
     role: "Brand Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     year: "2025",
     client: "Lian Monley",
     overview:
-      "Lian Monley needed a more refined personal identity that could support social presence, presentation materials, and professional self-branding across digital touchpoints.",
+      "Lian Monley commissioned a personal identity for her work as a holistic gut health expert. The engagement included several distinct logo directions before one route was selected and developed into a calm, credible, and wellness-focused brand system for digital content, consultations, and professional materials.",
     goals: [
-      "Create a memorable personal identity with elegant positioning.",
-      "Build a logo and visual language suited for online visibility.",
-      "Support multiple applications from profile graphics to documents.",
+      "Explore several logo concepts before committing to a final identity direction.",
+      "Balance professional health expertise with a calm and approachable wellness tone.",
+      "Create a recognizable LM monogram that remains clear at small digital sizes.",
+      "Build a visual language suited for social content, consultations, and educational materials.",
     ],
     impact: [
       { value: "1", label: "Identity system" },
@@ -442,59 +463,89 @@ export const projects: Project[] = [
       },
       {
         title: "Concept Development",
-        text: "Explored monograms, initials, and signature-based directions before refining the strongest route.",
+        text: "Presented six commissioned logo directions using monograms, organic symbols, letterforms, and wellness-inspired forms before refining the strongest route.",
       },
       {
         title: "Logo Meaning",
-        text: "Built a mark that feels personal, polished, and easy to use across digital formats.",
+        text: "The selected LM monogram combines the client's initials with a centered droplet-like form, suggesting balance, care, and holistic wellbeing.",
       },
       {
         title: "Color Palette",
-        text: "Selected a palette that feels sophisticated without being overly rigid.",
+        text: "A composed blue and soft-neutral palette was chosen to communicate trust, calm, clarity, and professional guidance.",
       },
       {
         title: "Typography",
-        text: "Paired display and supporting type to keep the brand expressive but controlled.",
+        text: "Medino and Gotham establish a modern, highly legible hierarchy that feels refined without becoming overly clinical.",
       },
       {
         title: "Brand Applications",
-        text: "Applied the system to profile visuals, covers, and self-promotional assets.",
+        text: "The identity was prepared for profile visuals, consultation materials, wellness content, educational covers, and social media touchpoints.",
       },
     ],
     process: [
       {
         title: "Research",
-        text: "Collected references from editorial and personal branding spaces to define a stronger visual tone.",
+        text: "Reviewed holistic health, wellness, and expert-led personal brands to define a tone that felt trustworthy, calm, and distinctive.",
       },
       {
-        title: "Concept",
-        text: "Tested initials, wordmarks, and signature-inspired forms before narrowing the identity route.",
+        title: "Logo Explorations",
+        text: "Developed and presented six varied concepts so the client could compare typographic, symbolic, and monogram-led approaches.",
       },
       {
-        title: "Design",
-        text: "Built the logo, typography pairings, and digital-ready brand applications.",
+        title: "Selection & Refinement",
+        text: "Refined the chosen LM monogram, improved its proportions, and developed supporting submarks and color variations.",
       },
       {
-        title: "Deliver",
-        text: "Prepared a mini brand kit with placeholder social and presentation mockups.",
+        title: "Brand Kit",
+        text: "Prepared the final logo system, submarks, palette, typography direction, visual references, and practical export files.",
       },
     ],
     challenges: [
       {
-        title: "Personal But Polished",
-        challenge: "The identity needed to feel individual without looking informal.",
+        title: "Choosing One Direction",
+        challenge:
+          "The client wanted to see many possibilities before selecting a visual direction that felt personal and credible.",
         solution:
-          "Used stronger typographic control and a more restrained system rather than decorative branding tricks.",
+          "Presented six clearly differentiated concepts, then evaluated them against recognition, relevance, scalability, and professional fit.",
       },
       {
-        title: "Digital Adaptability",
-        challenge: "The brand would live mostly across small digital touchpoints.",
+        title: "Wellness Without Cliches",
+        challenge:
+          "The identity needed to communicate holistic care without relying on generic leaves, medical symbols, or overly decorative wellness imagery.",
         solution:
-          "Prioritized clarity, clean spacing, and simplified applications for better consistency online.",
+          "Focused the final direction on a custom LM monogram, controlled geometry, calm color, and subtle symbolism.",
       },
     ],
     outcome:
-      "The final system gives Lian Monley a cleaner and more intentional personal brand that can scale across public-facing materials.",
+      "The final system gives Lian Monley a distinctive and professional identity built through a transparent exploration process, with a flexible monogram, supporting submarks, and a calm visual foundation for future wellness content.",
+    branding: {
+      mode: "full",
+      identityImages: [
+        {
+          src: "/src/assets/work-placeholders/projects/Lian Monley Logo Iterations.svg",
+          alt: "Six commissioned logo concepts explored for Lian Monley",
+          title: "Commissioned logo explorations",
+          description:
+            "Six distinct directions were presented to compare monogram structures, organic forms, typography, and wellness symbolism before selecting the final route.",
+        },
+        {
+          src: "/src/assets/work-placeholders/projects/Lian Monley Brand Kit.svg",
+          alt: "Final Lian Monley holistic gut health expert brand kit",
+          title: "Selected identity system",
+          description:
+            "The approved LM monogram was developed into primary and secondary marks, submarks, color variations, a calm visual direction, and a practical typography system.",
+        },
+      ],
+      deliverables: [
+        "Six initial logo concepts",
+        "Refined primary LM monogram",
+        "Secondary logo and submark set",
+        "Brand color palette",
+        "Typography direction",
+        "Mini brand identity guide",
+        "Digital-ready logo export package",
+      ],
+    },
     gallery: [
       {
         color: "from-rose-500/50 to-pink-500/30",
@@ -521,14 +572,15 @@ export const projects: Project[] = [
     slug: "pietyl-lpg",
     title: "PIEYTL Marketing",
     imageTitle: "Pietyl DigiLPG Logo",
+    cardSize: "medium",
     directoryTitle: "PIEYTL Marketing",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Brand Identity & Logo Design",
     color: "from-cyan-400/55 to-teal-500/30",
-    desc: "Full brand identity and logo design for PIEYTL Marketing, an LPG-focused business.",
+    desc: "PIETYL Marketing is an LPG-focused business identity designed for clarity, trust, and strong local brand recognition.",
     role: "Logo Designer • Brand Strategist",
-    tools: ["Illustrator", "Photoshop"],
+    tools: ["Figma"],
     year: "2024",
     client: "PIEYTL Marketing",
     overview:
@@ -599,6 +651,39 @@ export const projects: Project[] = [
     ],
     outcome:
       "The final identity successfully establishes PIEYTL Marketing as a modern LPG brand with a professional visual presence that is scalable, memorable, and adaptable across multiple platforms.",
+    missionVisionValues: {
+      mission:
+        "Simplify daily LPG operations through practical tools that improve efficiency, accuracy, and service reliability.",
+      vision:
+        "Empower LPG businesses to scale confidently through connected operations and smarter decision-making.",
+      values: [
+        {
+          title: "Clarity",
+          text: "Transparent communication and straightforward solutions that eliminate confusion.",
+        },
+        {
+          title: "Accountability",
+          text: "Ownership of outcomes and commitment to delivering on every promise.",
+        },
+        {
+          title: "Safety",
+          text: "Prioritising secure and compliant operations across every touchpoint.",
+        },
+        {
+          title: "Reliability",
+          text: "Dependable systems and support that businesses can count on daily.",
+        },
+        {
+          title: "Operational Excellence",
+          text: "Continuous improvement through precision, process, and attention to detail.",
+        },
+      ],
+      stats: [
+        { value: "10+", label: "Years Industry Experience" },
+        { value: "99%", label: "Operational Accuracy" },
+        { value: "24/7", label: "Platform Availability" },
+      ],
+    },
     branding: {
       mode: "full",
       research: {
@@ -699,6 +784,7 @@ export const projects: Project[] = [
     slug: "pieytl-branding",
     title: "PIEYTL Marketing",
     imageTitle: "Pieytl Branding",
+    cardSize: "tall",
     directoryTitle: "PIEYTL Marketing",
     cat: "Logo & Branding",
     kind: "logo",
@@ -706,7 +792,7 @@ export const projects: Project[] = [
     color: "from-cyan-400/55 to-teal-500/30",
     desc: "Logo design for PIEYTL Marketing, an LPG-focused business.",
     role: "Logo Designer • Brand Strategist",
-    tools: ["Illustrator", "Photoshop"],
+    tools: ["Figma"],
     year: "2024",
     client: "PIEYTL Marketing",
     overview:
@@ -786,13 +872,14 @@ export const projects: Project[] = [
     slug: "blue-collar-builders",
     title: "Blue Collar Builders",
     imageTitle: "Blue Collar Builders Logo",
+    cardSize: "medium",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Construction Identity",
     color: "from-indigo-500/50 to-sky-500/30",
     desc: "Brand identity for a builders and construction business.",
     role: "Brand Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     year: "2024",
     client: "Blue Collar Builders",
     overview:
@@ -891,14 +978,15 @@ export const projects: Project[] = [
   {
     slug: "trichomend-plus",
     title: "Trichomend+",
-    imageTitle: "Trichomend+ Logo",
+    imageTitle: "Trichomend Plus Logo",
+    cardSize: "wide",
     cat: "Logo & Branding",
     kind: "branding",
     tag: "Product Identity",
     color: "from-emerald-500/50 to-teal-500/30",
     desc: "Brand identity direction for a treatment-focused product.",
     role: "Brand Designer",
-    tools: ["Illustrator", "Figma", "Photoshop"],
+    tools: ["Figma"],
     year: "2025",
     client: "Trichomend+",
     overview:
@@ -974,6 +1062,14 @@ export const projects: Project[] = [
     ],
     outcome:
       "Trichomend+ now has a more polished product identity direction that can scale into packaging and campaign assets.",
+    branding: {
+      mode: "full",
+      symbol: {
+        title: "Trichomend+ brand identity",
+        image: "/src/assets/work-placeholders/projects/Trichomend Brand Kit.png",
+        items: [],
+      },
+    },
     gallery: [
       {
         color: "from-emerald-500/50 to-teal-500/30",
@@ -999,6 +1095,9 @@ export const projects: Project[] = [
   {
     slug: "adoptify",
     title: "Adoptify",
+    imageTitle: "adoptify ui ux",
+    directoryTitle: "Adoptify",
+    cardSize: "wide",
     cat: "UI/UX Design",
     kind: "uiux",
     tag: "App Design",
@@ -1108,117 +1207,213 @@ export const projects: Project[] = [
   {
     slug: "pietyl-management-system",
     title: "Pietyl DigiLPG",
-    imageTitle: "Pietyl Management System",
+    imageTitle: "pietyl LPG landing page",
+    cardSize: "wide",
     directoryTitle: "Pietyl DigiLPG",
     cat: "UI/UX Design",
     categories: ["Web Development"],
     kind: "uiux",
     tag: "Management System",
     color: "from-sky-500/50 to-indigo-500/30",
-    desc: "System design for a business management platform.",
+    desc: "UI/UX design for Pietyl DigiLPG's internal management system.",
     role: "Product Designer",
     tools: ["Figma", "FigJam"],
     year: "2025",
     client: "Pietyl DigiLPG",
     overview:
-      "Pietyl Management System is a structured interface system designed to support internal operations, records, workflow management, and monitoring inside a business environment.",
+      "Pietyl DigiLPG required a structured interface system for managing internal operations, records, workflow tracking, and monitoring. The design focused on building a clean, intuitive management dashboard that digitizes decades of operational knowledge into a modern, easy-to-use platform.",
     goals: [
-      "Organize complex operations into a clearer dashboard experience.",
-      "Make monitoring, records, and workflow tracking easier to manage.",
-      "Build a system that can scale with added modules over time.",
+      "Design a management dashboard that simplifies complex operational data.",
+      "Create intuitive navigation for records, workflow, and monitoring modules.",
+      "Build a scalable interface system that adapts to future business needs.",
     ],
     impact: [
-      { value: "8", label: "Modules planned" },
-      { value: "50+", label: "Interface screens" },
-      { value: "1", label: "System foundation" },
+      { value: "1", label: "System design" },
+      { value: "6+", label: "Interface modules" },
+      { value: "30+", label: "Years of business legacy" },
     ],
     focusAreas: [
       {
-        title: "Research",
-        text: "Mapped operational tasks and user roles to decide what information mattered most in the core system view.",
+        title: "User Research",
+        text: "Studied the client's operational workflows and staff interactions to understand pain points and data management needs.",
       },
       {
-        title: "User Flow",
-        text: "Structured movement between dashboard, records, workflows, and monitoring sections.",
+        title: "Information Architecture",
+        text: "Structured navigation and content hierarchy across dashboard, records, workflow, and monitoring sections.",
       },
       {
-        title: "Wireframes",
-        text: "Explored low-fidelity structures to reduce complexity before visual refinement.",
+        title: "Wireframing",
+        text: "Explored low-fidelity layouts to optimize screen density and task flow before moving to high-fidelity design.",
       },
       {
-        title: "Final UI",
-        text: "Created a cleaner management environment with stronger hierarchy and reusable modules.",
+        title: "Visual Design",
+        text: "Applied a cohesive color system, typography, and spacing to create a professional, trustworthy interface.",
       },
       {
-        title: "Prototype",
-        text: "Connected the core flows to demonstrate navigation logic and task-based transitions.",
+        title: "Prototyping",
+        text: "Connected core user flows to demonstrate how staff would navigate between tasks and modules.",
       },
       {
-        title: "Components",
-        text: "Built reusable tables, form patterns, cards, and status modules for scale.",
+        title: "Design System",
+        text: "Built reusable UI components including tables, forms, cards, and navigation modules for long-term scalability.",
       },
     ],
     process: [
       {
         title: "Research",
-        text: "Observed system needs and grouped them into clearer operational categories.",
+        text: "Mapped the client's operational needs, data structures, and user roles to define the system requirements.",
       },
       {
         title: "Concept",
-        text: "Defined a management structure that reduced menu friction and improved task visibility.",
+        text: "Defined the interface structure and visual direction for the management dashboard and supporting modules.",
       },
       {
         title: "Design",
-        text: "Built dashboards, monitoring views, record systems, and reusable operational UI patterns.",
+        text: "Created wireframes, high-fidelity mockups, and an interactive prototype covering core workflows.",
       },
       {
         title: "Deliver",
-        text: "Prepared a modular case study with placeholder screens for future system expansion.",
+        text: "Prepared a modular case study with placeholder screens to protect confidential operational data.",
       },
     ],
     challenges: [
       {
-        title: "Dense Operational Content",
-        challenge: "The system needed to support many functions without becoming visually heavy.",
+        title: "Confidential Data Handling",
+        challenge:
+          "The management system screens contain sensitive business data that cannot be shown publicly.",
         solution:
-          "Used modular grouping and clearer hierarchy to separate tasks and reduce cognitive load.",
+          "Designed the case study with placeholder content and mock data to demonstrate functionality without exposing real information.",
       },
       {
-        title: "Scalable Structure",
-        challenge: "The system needed to remain flexible as more business modules were added.",
+        title: "Bridging Analog to Digital",
+        challenge:
+          "Transitioning a business with decades of paper-based workflows into a digital system required thoughtful UX.",
         solution:
-          "Designed reusable layouts and navigation patterns instead of solving each view separately.",
+          "Focused on simplicity and familiarity, using clear navigation patterns that felt intuitive for non-tech-savvy users.",
       },
     ],
     outcome:
-      "The resulting concept gives Pietyl a more scalable management-system direction built around clarity and long-term usability.",
+      "Pietyl DigiLPG now has a comprehensive management system design built around clarity, trust, and long-term usability, with a scalable interface system ready for future modules.",
     gallery: [
       {
         color: "from-sky-500/50 to-indigo-500/30",
         label: "Dashboard",
         ratio: "wide",
-        note: "Placeholder for overview metrics and key actions.",
+        note: "Placeholder for the main dashboard view.",
       },
       {
         color: "from-indigo-500/40 to-blue-500/30",
         label: "Records Module",
         ratio: "square",
-        note: "Placeholder for lists, forms, and record-detail screens.",
+        note: "Placeholder for the records management interface.",
       },
       {
         color: "from-cyan-500/40 to-sky-500/30",
         label: "Workflow Tracking",
         ratio: "square",
-        note: "Placeholder for operational status and monitoring views.",
+        note: "Placeholder for the workflow monitoring screens.",
       },
     ],
     figmaPreviewUrl:
       "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331&embed-host=share",
+    categoryVariants: {
+      "Web Development": {
+        kind: "frontend",
+        tag: "Web Development",
+        role: "Web Developer",
+        tools: ["React", "Tailwind CSS", "TypeScript"],
+        desc: "Landing page and management system development for Pietyl DigiLPG, a long-standing LPG business since the 90s.",
+        overview:
+          "Pietyl DigiLPG, a long-standing LPG business operating since the 90s, needed a stronger digital presence. The project delivered two key pieces: a clean, simple landing page for store publicity and a functional management system to streamline their internal operations. The landing page serves as the public face of the business, while the management system handles records, workflow, and monitoring behind the scenes.",
+        goals: [
+          "Build a simple, professional landing page for store publicity and customer outreach.",
+          "Develop a management system to support the business's long-standing operational needs.",
+          "Create a cohesive digital identity that reflects decades of industry trust.",
+        ],
+        impact: [
+          { value: "1", label: "Landing page" },
+          { value: "1", label: "Management system" },
+          { value: "30+", label: "Years of business legacy" },
+        ],
+        focusAreas: [
+          {
+            title: "Landing Page",
+            text: "Designed a clean, straightforward landing page focused on store publicity and customer trust signals.",
+          },
+          {
+            title: "Management System",
+            text: "Built a back-end interface to digitize workflows, records, and operational monitoring for the LPG business.",
+          },
+          {
+            title: "Placeholder Strategy",
+            text: "Used image placeholders throughout the showcase to protect confidential business data.",
+          },
+        ],
+        process: [
+          {
+            title: "Research",
+            text: "Reviewed the client's existing workflows, store operations, and LPG industry landscape to define requirements.",
+          },
+          {
+            title: "Design",
+            text: "Created clean wireframes and mockups for both the public-facing landing page and the internal management interface.",
+          },
+          {
+            title: "Develop",
+            text: "Built the landing page and management system using React, Tailwind CSS, and TypeScript with reusable components.",
+          },
+          {
+            title: "Deliver",
+            text: "Deployed the project with placeholder assets in sensitive sections to protect client confidentiality.",
+          },
+        ],
+        challenges: [
+          {
+            title: "Confidential Data Handling",
+            challenge:
+              "The management system contains sensitive client and operational data that could not be shown publicly.",
+            solution:
+              "Used placeholders and mock data in the showcase to demonstrate functionality without exposing real business information.",
+          },
+          {
+            title: "Bridging Old and New",
+            challenge:
+              "Transitioning a decades-old business into digital workflows required careful adaptation.",
+            solution:
+              "Focused on simplicity and ease of use, designing interfaces that felt familiar while introducing modern efficiency.",
+          },
+        ],
+        outcome:
+          "Pietyl DigiLPG now has a professional landing page for customer-facing publicity and a streamlined management system to support daily operations, all built on a modern web stack with room to grow.",
+        gallery: [
+          {
+            color: "from-sky-500/50 to-indigo-500/30",
+            label: "Landing Page Preview",
+            ratio: "wide",
+            note: "Placeholder for the Pietyl DigiLPG landing page design.",
+          },
+          {
+            color: "from-indigo-500/40 to-blue-500/30",
+            label: "Management Dashboard",
+            ratio: "square",
+            note: "Placeholder for the internal management dashboard view.",
+          },
+          {
+            color: "from-cyan-500/40 to-sky-500/30",
+            label: "System Module",
+            ratio: "square",
+            note: "Placeholder for operational module screens.",
+          },
+        ],
+      },
+    },
     nextProjectSlug: "dost-laon",
   },
   {
     slug: "dost-laon",
     title: "DOST Laon",
+    imageTitle: "DOST LAON ui ux",
+    cardSize: "wide",
     cat: "UI/UX Design",
     kind: "uiux",
     tag: "Platform Design",
@@ -1327,6 +1522,7 @@ export const projects: Project[] = [
     title: "Cosmic Remedies by Sia",
     cat: "Web Development",
     kind: "frontend",
+    cardSize: "wide",
     tag: "Web Development",
     color: "from-violet-500/50 to-cyan-500/30",
     desc: "A responsive web build of the Cosmic Remedies by Sia digital product experience.",
@@ -1437,6 +1633,7 @@ export const projects: Project[] = [
     cat: "UI/UX Design",
     categories: ["Web Development"],
     kind: "frontend",
+    cardSize: "wide",
     tag: "UI/UX + Web System",
     color: "from-cyan-500/50 to-blue-500/30",
     desc: "A school organization management system shaped in Figma and translated into a responsive web build.",
@@ -1579,6 +1776,7 @@ export const projects: Project[] = [
     slug: "umsdc-publication-materials-and-assets",
     title: "UMSDC",
     imageTitle: "UMSDC Publication Materials and Assets",
+    cardSize: "medium",
     directoryTitle: "UMSDC",
     cat: "Social Media Graphics",
     categories: ["Creative Assets"],
@@ -1663,18 +1861,21 @@ export const projects: Project[] = [
       {
         color: "from-pink-500/50 to-orange-400/30",
         label: "Announcement Asset",
+        assetPath: "umsdc-publication-materials-and-assets/01-announcement-asset",
         ratio: "tall",
         note: "Placeholder for social media post and key announcement layout.",
       },
       {
         color: "from-rose-500/40 to-pink-500/30",
         label: "Campaign Set",
+        assetPath: "umsdc-publication-materials-and-assets/02-campaign-set",
         ratio: "wide",
         note: "Placeholder for event or campaign visual system.",
       },
       {
         color: "from-orange-400/40 to-amber-400/30",
         label: "Org Graphics",
+        assetPath: "umsdc-publication-materials-and-assets/03-org-graphics",
         ratio: "wide",
         note: "Placeholder for recurring organization assets and social support materials.",
       },
@@ -1685,6 +1886,7 @@ export const projects: Project[] = [
     slug: "eat-well-live-well-nutrition-ebook",
     title: "Eat Well, Live Well: Your Complete Food & Nutrition Guide",
     imageTitle: "Eat Well, Live Well Nutrition eBook Writing and Cover Design",
+    cardSize: "tall",
     directoryTitle: "Eat Well, Live Well: Your Complete Food & Nutrition Guide",
     cat: "Writing / VA",
     categoryTitles: {
@@ -1786,6 +1988,7 @@ export const projects: Project[] = [
     slug: "thriving-mind-mental-wellness-ebook",
     title: "Thriving Minds: Understanding Your Mental Health Journey",
     imageTitle: "Thriving Mind Mental Wellness eBook Writing and Cover Design",
+    cardSize: "tall",
     directoryTitle: "Thriving Minds: Understanding Your Mental Health Journey",
     cat: "Writing / VA",
     categoryTitles: {
@@ -1892,9 +2095,10 @@ export const projects: Project[] = [
     tag: "Logo & Branding",
     desc: "Logo and brand identity direction for Sidlac Co.",
     role: "Brand Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     color: "from-amber-400/45 to-orange-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "adoptify-logo",
@@ -1907,9 +2111,10 @@ export const projects: Project[] = [
     tag: "Logo",
     desc: "Logo direction for the Adoptify product concept.",
     role: "Logo Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     color: "from-violet-500/50 to-indigo-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "dost-laon-logo",
@@ -1922,9 +2127,10 @@ export const projects: Project[] = [
     tag: "Logo",
     desc: "Logo direction for the DOST Laon platform concept.",
     role: "Logo Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     color: "from-blue-500/50 to-cyan-500/30",
     year: "2025",
+    cardSize: "tall",
   }),
   createSimpleProject({
     slug: "umunity-logo",
@@ -1937,9 +2143,10 @@ export const projects: Project[] = [
     tag: "Logo",
     desc: "Logo direction for the UMunity school organization management system.",
     role: "Logo Designer",
-    tools: ["Illustrator", "Figma"],
+    tools: ["Figma"],
     color: "from-cyan-500/50 to-blue-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "blockchain-campus-conference-2024",
@@ -1950,6 +2157,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-indigo-500/50 to-cyan-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "sidlac-co-social-media",
@@ -1961,6 +2169,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-orange-400/45 to-rose-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "odara-management-group-social-media",
@@ -1972,6 +2181,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-fuchsia-500/50 to-violet-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "wound-care",
@@ -1982,6 +2192,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-emerald-500/45 to-cyan-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "the-digital-income",
@@ -1992,6 +2203,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-amber-400/45 to-green-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "tech-nexus-devcon-philippines",
@@ -2002,6 +2214,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-blue-500/50 to-violet-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "pyconf-mini-davao-2024",
@@ -2012,6 +2225,7 @@ export const projects: Project[] = [
     role: "Social Media Graphic Designer",
     color: "from-yellow-400/40 to-blue-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "enigma",
@@ -2024,6 +2238,7 @@ export const projects: Project[] = [
     tools: ["Figma", "Canva", "Photoshop"],
     color: "from-purple-500/50 to-pink-500/30",
     year: "2024",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "salin-salin",
@@ -2036,6 +2251,7 @@ export const projects: Project[] = [
     tools: ["React", "Tailwind CSS", "TypeScript"],
     color: "from-teal-500/45 to-blue-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
   createSimpleProject({
     slug: "handyman",
@@ -2048,9 +2264,9 @@ export const projects: Project[] = [
     tools: ["React", "Tailwind CSS", "TypeScript"],
     color: "from-orange-400/45 to-cyan-500/30",
     year: "2025",
+    cardSize: "medium",
   }),
 ];
-
 export const getProject = (slug: string) => projects.find((project) => project.slug === slug);
 
 export type ProjectFilter = "All" | ProjectCategory;

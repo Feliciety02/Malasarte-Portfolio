@@ -36,9 +36,13 @@ function Home() {
   const reducedMotion = !!prefersReducedMotion;
 
   return (
-    <MetallicPage variant="home" className="overflow-x-clip">
-      <HeroBanner />
-      <MarqueeSection reducedMotion={reducedMotion} />
+    <MetallicPage variant="home" className="px-6 pb-28">
+      <div className="-mx-6">
+        <HeroBanner />
+      </div>
+      <div className="-mx-6">
+        <MarqueeSection reducedMotion={reducedMotion} />
+      </div>
       <SkillHighlightsSection />
       <ToolsStackSection reducedMotion={reducedMotion} />
       <GitHubActivitySection />

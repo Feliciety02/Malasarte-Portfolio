@@ -1,6 +1,13 @@
 import type { Project, ProjectKind } from "@/data/projects";
 
-export type TemplateKey = "product" | "development" | "branding" | "creative" | "gallery" | "writing" | "logo";
+export type TemplateKey =
+  | "product"
+  | "development"
+  | "branding"
+  | "creative"
+  | "gallery"
+  | "writing"
+  | "logo";
 
 const KIND_TO_TEMPLATE: Record<ProjectKind, TemplateKey> = {
   uiux: "product",
@@ -46,75 +53,43 @@ const TEMPLATE_SECTIONS: Record<TemplateKey, SectionDef[]> = {
   product: [
     { id: "snapshot", label: "Snapshot" },
     { id: "workspace", label: "Workspace" },
-    { id: "problem", label: "Problem" },
-    { id: "goals", label: "Goals" },
-    { id: "process", label: "Process" },
-    { id: "decisions", label: "Decisions" },
     { id: "showcase", label: "Showcase" },
-    { id: "challenges", label: "Challenges" },
-    { id: "results", label: "Results" },
-    { id: "reflection", label: "Reflection" },
+    { id: "deliverables", label: "Deliverables" },
     { id: "next", label: "Next" },
   ],
   development: [
     { id: "snapshot", label: "Snapshot" },
     { id: "workspace", label: "Workspace" },
-    { id: "problem", label: "Problem" },
-    { id: "stack", label: "Stack" },
-    { id: "architecture", label: "Architecture" },
-    { id: "process", label: "Build" },
-    { id: "challenges", label: "Challenges" },
     { id: "features", label: "Features" },
-    { id: "results", label: "Performance" },
-    { id: "reflection", label: "Reflection" },
+    { id: "deliverables", label: "Deliverables" },
     { id: "next", label: "Next" },
   ],
   branding: [
     { id: "snapshot", label: "Snapshot" },
-    { id: "workspace", label: "Workspace" },
-    { id: "story", label: "Story" },
-    { id: "strategy", label: "Strategy" },
-    { id: "research", label: "Research" },
     { id: "identity", label: "Identity" },
     { id: "deliverables", label: "Deliverables" },
-    { id: "process", label: "Process" },
-    { id: "challenges", label: "Challenges" },
-    { id: "results", label: "Impact" },
-    { id: "reflection", label: "Reflection" },
     { id: "next", label: "Next" },
   ],
   creative: [
     { id: "snapshot", label: "Snapshot" },
-    { id: "workspace", label: "Workspace" },
-    { id: "overview", label: "Campaign" },
-    { id: "direction", label: "Direction" },
     { id: "assets", label: "Assets" },
-    { id: "rollout", label: "Rollout" },
-    { id: "challenges", label: "Challenges" },
-    { id: "results", label: "Results" },
-    { id: "reflection", label: "Reflection" },
+    { id: "deliverables", label: "Deliverables" },
     { id: "next", label: "Next" },
   ],
-  gallery: [{ id: "showcase", label: "Gallery" }],
+  gallery: [
+    { id: "showcase", label: "Gallery" },
+    { id: "deliverables", label: "Deliverables" },
+  ],
   logo: [
     { id: "snapshot", label: "Snapshot" },
-    { id: "challenge", label: "Challenge" },
-    { id: "strategy", label: "Strategy" },
     { id: "identity", label: "Identity" },
-    { id: "impact", label: "Impact" },
+    { id: "deliverables", label: "Deliverables" },
     { id: "next", label: "Next" },
   ],
   writing: [
     { id: "snapshot", label: "Snapshot" },
-    { id: "workspace", label: "Workspace" },
-    { id: "overview", label: "Overview" },
-    { id: "goals", label: "Goals" },
-    { id: "process", label: "Workflow" },
+    { id: "showcase", label: "Preview" },
     { id: "deliverables", label: "Deliverables" },
-    { id: "focus", label: "Focus" },
-    { id: "challenges", label: "Challenges" },
-    { id: "results", label: "Outcome" },
-    { id: "reflection", label: "Reflection" },
     { id: "next", label: "Next" },
   ],
 };
@@ -125,10 +100,13 @@ export const getProjectTemplate = (project: Pick<Project, "kind">) =>
 export const WORKSPACE_PROJECT_CATEGORIES: Project["cat"][] = ["UI/UX Design", "Web Development"];
 
 export const canShowProjectWorkspace = (
-  project: Pick<Project, "cat" | "categories" | "vercelLiveUrl" | "hideLiveWorkspace">,
+  project: Pick<
+    Project,
+    "cat" | "categories" | "vercelLiveUrl" | "figmaPreviewUrl" | "hideLiveWorkspace"
+  >,
 ) => {
   if (project.hideLiveWorkspace) return false;
-  if (!project.vercelLiveUrl?.trim()) return false;
+  if (!project.vercelLiveUrl?.trim() && !project.figmaPreviewUrl?.trim()) return false;
   return (
     WORKSPACE_PROJECT_CATEGORIES.includes(project.cat) ||
     project.categories?.some((category) => WORKSPACE_PROJECT_CATEGORIES.includes(category)) === true

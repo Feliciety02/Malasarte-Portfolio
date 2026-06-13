@@ -86,6 +86,7 @@ function makeFallbackProject(row: PortfolioProjectRow): Project {
   const gallery = sortBySortOrder(row.portfolio_gallery_items ?? []).map((item) => ({
     color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
     label: item.label,
+    imageUrl: item.image_url ?? undefined,
     ratio: item.ratio ?? "square",
     note: item.note ?? "",
   }));
@@ -154,9 +155,11 @@ function mapProject(row: PortfolioProjectRow): Project {
     overview: useLocalIdentity ? base.overview : (row.overview ?? base.overview),
     outcome: useLocalIdentity ? base.outcome : (row.outcome ?? base.outcome),
     gallery: galleryRows.length
-      ? galleryRows.map((item) => ({
+      ? galleryRows.map((item, index) => ({
+          ...base.gallery[index],
           color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
           label: item.label,
+          imageUrl: item.image_url ?? undefined,
           ratio: item.ratio ?? "square",
           note: item.note ?? "",
         }))

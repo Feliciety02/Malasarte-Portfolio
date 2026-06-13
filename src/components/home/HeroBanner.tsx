@@ -14,21 +14,31 @@ export function HeroBanner() {
     <section className="hero-reference relative overflow-hidden bg-[#141516]">
       <BrushedMetalBackground />
 
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[18%] z-0 overflow-hidden text-nowrap font-display text-[clamp(3.5rem,10vw,8rem)] font-bold uppercase tracking-[0.12em] text-white/[0.035]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-[18%] z-0 overflow-hidden text-nowrap font-display text-[clamp(3.5rem,10vw,8rem)] font-bold uppercase tracking-[0.12em] text-white/[0.035]"
+      >
         <motion.div className="flex w-max gap-16" style={{ x: marqueeX }}>
           {Array.from({ length: 6 }).map((_, g) => (
             <div key={g} className="flex gap-16">
-              {MARQUEE.map((w) => <span key={`${g}-${w}`}>{w}</span>)}
+              {MARQUEE.map((w) => (
+                <span key={`${g}-${w}`}>{w}</span>
+              ))}
             </div>
           ))}
         </motion.div>
       </div>
 
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-[18%] z-0 overflow-hidden text-nowrap font-display text-[clamp(2.5rem,7vw,5.5rem)] font-bold uppercase tracking-[0.12em] text-white/[0.024]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-[18%] z-0 overflow-hidden text-nowrap font-display text-[clamp(2.5rem,7vw,5.5rem)] font-bold uppercase tracking-[0.12em] text-white/[0.024]"
+      >
         <motion.div className="flex w-max gap-16" style={{ x: marqueeRX }}>
           {Array.from({ length: 6 }).map((_, g) => (
             <div key={g} className="flex gap-16">
-              {MARQUEE.map((w) => <span key={`${g}-${w}`}>{w}</span>)}
+              {MARQUEE.map((w) => (
+                <span key={`${g}-${w}`}>{w}</span>
+              ))}
             </div>
           ))}
         </motion.div>
