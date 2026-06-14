@@ -1,33 +1,42 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import androidStudioLogo from "@/assets/tool-logos/androidstudio.svg";
-import burpSuiteLogo from "@/assets/tool-logos/burpsuite.svg";
-import canvaLogo from "@/assets/tool-logos/canva.svg";
-import figjamLogo from "@/assets/tool-logos/figjam.svg";
-import figmaLogo from "@/assets/tool-logos/figma.svg";
-import framerLogo from "@/assets/tool-logos/framer.svg";
-import gitLogo from "@/assets/tool-logos/git.svg";
-import githubLogo from "@/assets/tool-logos/github.svg";
-import githubDesktopLogo from "@/assets/tool-logos/githubdesktop.svg";
-import googleColabLogo from "@/assets/tool-logos/googlecolab.svg";
-import googleWorkspaceLogo from "@/assets/tool-logos/googleworkspace.svg";
-import jupyterLogo from "@/assets/tool-logos/jupyter.svg";
-import microsoftOfficeLogo from "@/assets/tool-logos/msoffice.svg";
-import miroLogo from "@/assets/tool-logos/miro.svg";
-import mySqlLogo from "@/assets/tool-logos/mysql.svg";
-import phpMyAdminLogo from "@/assets/tool-logos/phpmyadmin.svg";
-import postmanLogo from "@/assets/tool-logos/postman.svg";
-import vsCodeLogo from "@/assets/tool-logos/vscode.svg";
-import webflowLogo from "@/assets/tool-logos/webflow.svg";
-import wiresharkLogo from "@/assets/tool-logos/wireshark.svg";
-import xamppLogo from "@/assets/tool-logos/xampp.svg";
+import burpSuiteLogo from "@/assets/tools/burpsuite.svg";
+import canvaLogo from "@/assets/tools/canva.svg";
+import cssLogo from "@/assets/tools/css3.svg";
+import figjamLogo from "@/assets/tools/figjam.svg";
+import figmaLogo from "@/assets/tools/figma.svg";
+import framerLogo from "@/assets/tools/framer.svg";
+import gitLogo from "@/assets/tools/git.svg";
+import githubLogo from "@/assets/tools/github.svg";
+import googleColabLogo from "@/assets/tools/googlecolab.svg";
+import googleWorkspaceLogo from "@/assets/tools/googleworkspace.svg";
+import htmlLogo from "@/assets/tools/html5.svg";
+import intelliJLogo from "@/assets/tools/intellijidea.svg";
+import javaLogo from "@/assets/tools/java.svg";
+import javascriptLogo from "@/assets/tools/javascript.svg";
+import jupyterLogo from "@/assets/tools/jupyter.svg";
+import laravelLogo from "@/assets/tools/laravel.svg";
+import microsoftOfficeLogo from "@/assets/tools/msoffice.svg";
+import mySqlLogo from "@/assets/tools/mysql.svg";
+import nextJsLogo from "@/assets/tools/nextdotjs.svg";
+import phpLogo from "@/assets/tools/php.svg";
+import phpMyAdminLogo from "@/assets/tools/phpmyadmin.svg";
+import postmanLogo from "@/assets/tools/postman.svg";
+import pythonLogo from "@/assets/tools/python.svg";
+import reactLogo from "@/assets/tools/react.svg";
+import tailwindCssLogo from "@/assets/tools/tailwindcss.svg";
+import typescriptLogo from "@/assets/tools/typescript.svg";
+import vsCodeLogo from "@/assets/tools/vscode.svg";
+import wiresharkLogo from "@/assets/tools/wireshark.svg";
+import xamppLogo from "@/assets/tools/xampp.svg";
 
-type Tool = { name: string; slug: string; color: string };
+type Tool = { name: string; slug: string; color: string; category: string };
 
 type Body = {
   id: string;
   name: string;
   slug: string;
   color: string;
+  category: string;
   width: number;
   height: number;
   capRadius: number;
@@ -74,15 +83,11 @@ const TOOL_ICONS: Record<string, ToolIcon> = {
   figma: { src: figmaLogo },
   figjam: { src: figjamLogo },
   framer: { src: framerLogo },
-  webflow: { src: webflowLogo },
-  miro: { src: miroLogo },
   canva: { src: canvaLogo },
   vscode: { src: vsCodeLogo },
-  androidstudio: { src: androidStudioLogo },
   xampp: { src: xamppLogo },
   git: { src: gitLogo },
   github: { src: githubLogo },
-  githubdesktop: { src: githubDesktopLogo },
   postman: { src: postmanLogo },
   mysql: { src: mySqlLogo },
   phpmyadmin: { src: phpMyAdminLogo },
@@ -92,14 +97,28 @@ const TOOL_ICONS: Record<string, ToolIcon> = {
   googleworkspace: { src: googleWorkspaceLogo },
   wireshark: { src: wiresharkLogo },
   burpsuite: { src: burpSuiteLogo },
+  html5: { src: htmlLogo },
+  css3: { src: cssLogo },
+  javascript: { src: javascriptLogo },
+  typescript: { src: typescriptLogo },
+  react: { src: reactLogo },
+  nextdotjs: { src: nextJsLogo },
+  tailwindcss: { src: tailwindCssLogo },
+  php: { src: phpLogo },
+  laravel: { src: laravelLogo },
+  java: { src: javaLogo },
+  python: { src: pythonLogo },
+  intellijidea: { src: intelliJLogo },
 };
 
 export function GlassDome({
   tools,
   reducedMotion,
+  activeCategory,
 }: {
   tools: readonly Tool[];
   reducedMotion: boolean;
+  activeCategory: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const bodiesRef = useRef<Body[]>([]);
@@ -118,7 +137,7 @@ export function GlassDome({
 
     const ro = new ResizeObserver(() => {
       const nextWidth = el.clientWidth;
-      setSize(Math.min(nextWidth, 720));
+      setSize(Math.min(nextWidth, 860));
     });
 
     ro.observe(el);
@@ -147,6 +166,7 @@ export function GlassDome({
           name: tool.name,
           slug: tool.slug,
           color: tool.color,
+          category: tool.category,
           width: pillSize,
           height: pillSize,
           capRadius,
@@ -275,7 +295,7 @@ export function GlassDome({
       ref={containerRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative mx-auto aspect-square w-full max-w-[680px]"
+      className="relative mx-auto aspect-square w-full"
       style={{ perspective: 1400 }}
     >
       <div
@@ -441,10 +461,17 @@ export function GlassDome({
                       width: 40,
                       height: 40,
                       background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
-                      boxShadow: "0 0 18px rgba(255,255,255,0.08)",
+                      boxShadow: activeCategory === body.category
+                        ? `0 0 20px #${body.color}66, 0 0 60px #${body.color}33, 0 0 18px rgba(255,255,255,0.08)`
+                        : "0 0 18px rgba(255,255,255,0.08)",
                     }}
                   >
-                    <ToolLogo slug={body.slug} name={body.name} color={body.color} />
+                    <ToolLogo
+                      slug={body.slug}
+                      name={body.name}
+                      color={body.color}
+                      isActive={activeCategory === body.category}
+                    />
                   </span>
 
                   {isRevealed ? (
@@ -467,7 +494,7 @@ export function GlassDome({
   );
 }
 
-function ToolLogo({ slug, name }: { slug: string; name: string; color: string }) {
+function ToolLogo({ slug, name, color, isActive }: { slug: string; name: string; color: string; isActive: boolean }) {
   const icon = TOOL_ICONS[slug];
 
   if (!icon) {
@@ -475,6 +502,10 @@ function ToolLogo({ slug, name }: { slug: string; name: string; color: string })
       <span
         aria-hidden
         className="select-none text-[10px] font-semibold uppercase tracking-[-0.01em] text-white"
+        style={{
+          opacity: isActive ? 1 : 0.4,
+          filter: isActive ? "none" : "grayscale(1)",
+        }}
       >
         {name.slice(0, 2)}
       </span>
@@ -483,7 +514,16 @@ function ToolLogo({ slug, name }: { slug: string; name: string; color: string })
 
   return (
     <span aria-hidden className="grid h-full w-full place-items-center">
-      <img src={icon.src} alt="" aria-hidden className="h-[70%] w-[70%] object-contain" />
+      <img
+        src={icon.src}
+        alt=""
+        aria-hidden
+        className="h-[70%] w-[70%] object-contain transition-all duration-300"
+        style={{
+          filter: isActive ? "none" : "grayscale(1) brightness(1.15)",
+          transition: "filter 0.3s ease",
+        }}
+      />
     </span>
   );
 }

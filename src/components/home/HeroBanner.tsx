@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import heroDesktop from "@/assets/hero-desktop.svg";
-import heroMobile from "@/assets/hero-mobile.svg";
+import heroDesktop from "@/assets/brand/hero-desktop.svg";
+import heroMobile from "@/assets/brand/hero-mobile.svg";
 import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 
 const MARQUEE = ["Fe Anne Malasarte", "Design", "Develop", "Create"];

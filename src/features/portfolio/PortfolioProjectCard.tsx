@@ -23,10 +23,10 @@ const sizeClasses: Record<CardSize, string> = {
 };
 
 const imageAspect: Record<CardSize, string> = {
-  large: "aspect-square",
-  tall: "aspect-[3/4]",
-  wide: "aspect-[16/10]",
-  medium: "aspect-[4/3]",
+  large: "aspect-video",
+  tall: "aspect-video",
+  wide: "aspect-video",
+  medium: "aspect-video",
 };
 
 export function PortfolioProjectCard({
@@ -140,8 +140,8 @@ export function PortfolioProjectCard({
                       src={coverImage}
                       alt={`${title} preview`}
                       className={cn(
-                        "h-full w-full transition-all duration-700 group-hover:scale-105",
-                        isBranding ? "object-contain p-4 sm:p-6" : "object-cover",
+                        "h-full w-full object-contain transition-all duration-700 group-hover:scale-105",
+                        isBranding && "p-4 sm:p-6",
                       )}
                       loading="lazy"
                     />

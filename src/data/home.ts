@@ -12,9 +12,12 @@ import {
 
 export const featuredSlugs = [
   "adoptify",
-  "odara-management-group",
+  "dost-laon",
+  "pietyl-management-system",
+  "umunity",
   "cosmic-remedies-by-sia",
-  "umsdc-publication-materials-and-assets",
+  "salin-salin",
+  "handyman",
 ] as const;
 
 export const marqueeItems = [
@@ -90,26 +93,41 @@ export const testimonials = [
   },
 ] as const;
 
-export const tools = [
-  { name: "Figma", slug: "figma", color: "F24E1E" },
-  { name: "FigJam", slug: "figjam", color: "F24E1E" },
-  { name: "Framer", slug: "framer", color: "0055FF" },
-  { name: "Webflow", slug: "webflow", color: "146EF5" },
-  { name: "Miro", slug: "miro", color: "FFD02F" },
-  { name: "Canva", slug: "canva", color: "00C4CC" },
-  { name: "VS Code", slug: "vscode", color: "007ACC" },
-  { name: "Android Studio", slug: "androidstudio", color: "3DDC84" },
-  { name: "XAMPP", slug: "xampp", color: "FB7A24" },
-  { name: "Git", slug: "git", color: "F05032" },
-  { name: "GitHub", slug: "github", color: "181717" },
-  { name: "GitHub Desktop", slug: "githubdesktop", color: "181717" },
-  { name: "Postman", slug: "postman", color: "FF6C37" },
-  { name: "MySQL Workbench", slug: "mysql", color: "4479A1" },
-  { name: "phpMyAdmin", slug: "phpmyadmin", color: "6C78AF" },
-  { name: "Jupyter", slug: "jupyter", color: "F37626" },
-  { name: "Google Colab", slug: "googlecolab", color: "F9AB00" },
-  { name: "Microsoft Office", slug: "msoffice", color: "D83B01" },
-  { name: "Google Workspace", slug: "googleworkspace", color: "4285F4" },
-  { name: "Wireshark", slug: "wireshark", color: "1679A7" },
-  { name: "Burp Suite", slug: "burpsuite", color: "FF6633" },
-] as const;
+export type ToolCategory = "frontend" | "backend" | "tools";
+
+export const tools: readonly {
+  name: string;
+  slug: string;
+  color: string;
+  category: ToolCategory;
+}[] = [
+  { name: "HTML", slug: "html5", color: "E34F26", category: "frontend" },
+  { name: "CSS", slug: "css3", color: "1572B6", category: "frontend" },
+  { name: "JavaScript", slug: "javascript", color: "F7DF1E", category: "frontend" },
+  { name: "TypeScript", slug: "typescript", color: "3178C6", category: "frontend" },
+  { name: "React", slug: "react", color: "61DAFB", category: "frontend" },
+  { name: "Next.js", slug: "nextdotjs", color: "000000", category: "frontend" },
+  { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4", category: "frontend" },
+  { name: "Figma", slug: "figma", color: "F24E1E", category: "frontend" },
+  { name: "FigJam", slug: "figjam", color: "F24E1E", category: "frontend" },
+  { name: "Framer", slug: "framer", color: "0055FF", category: "frontend" },
+  { name: "Canva", slug: "canva", color: "00C4CC", category: "frontend" },
+  { name: "PHP", slug: "php", color: "777BB4", category: "backend" },
+  { name: "Laravel", slug: "laravel", color: "FF2D20", category: "backend" },
+  { name: "Java", slug: "java", color: "007396", category: "backend" },
+  { name: "Python", slug: "python", color: "3776AB", category: "backend" },
+  { name: "MySQL", slug: "mysql", color: "4479A1", category: "backend" },
+  { name: "XAMPP", slug: "xampp", color: "FB7A24", category: "backend" },
+  { name: "Postman", slug: "postman", color: "FF6C37", category: "backend" },
+  { name: "phpMyAdmin", slug: "phpmyadmin", color: "6C78AF", category: "backend" },
+  { name: "Jupyter Notebook", slug: "jupyter", color: "F37626", category: "backend" },
+  { name: "Google Colab", slug: "googlecolab", color: "F9AB00", category: "backend" },
+  { name: "Git", slug: "git", color: "F05032", category: "tools" },
+  { name: "GitHub", slug: "github", color: "181717", category: "tools" },
+  { name: "VS Code", slug: "vscode", color: "007ACC", category: "tools" },
+  { name: "IntelliJ IDEA", slug: "intellijidea", color: "000000", category: "tools" },
+  { name: "Microsoft Office", slug: "msoffice", color: "D83B01", category: "tools" },
+  { name: "Google Workspace", slug: "googleworkspace", color: "4285F4", category: "tools" },
+  { name: "Wireshark", slug: "wireshark", color: "1679A7", category: "tools" },
+  { name: "Burp Suite", slug: "burpsuite", color: "FF6633", category: "tools" },
+];

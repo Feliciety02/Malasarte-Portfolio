@@ -1,5 +1,5 @@
 import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { projects } from "@/data/projects";
 import { getProjectsByCategoryFrom } from "@/data/projects";
@@ -53,18 +53,48 @@ function Works() {
   const loadedProjects = Route.useLoaderData();
   const sourceProjects = loadedProjects ?? projects;
   const [active, setActive] = useState<FilterCategory>("All");
-  const filtered = getProjectsByCategoryFrom(sourceProjects, active);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const filtered = useMemo(
+    () => getProjectsByCategoryFrom(sourceProjects, active),
+    [sourceProjects, active],
+  );
 
   const allShuffled = useMemo(() => shuffle(sourceProjects), [sourceProjects]);
 
-  const featuredProject = useMemo(
-    () =>
-      active !== "All"
-        ? (filtered.find((p) => p.slug === featuredProjectSlugs[active as ProjectCategory]) ??
-          filtered[0])
-        : undefined,
-    [filtered, active],
+  const featuredProjects = useMemo(() => {
+    const preferredSlug =
+      active === "All" ? undefined : featuredProjectSlugs[active as ProjectCategory];
+    const preferredIndex = preferredSlug
+      ? filtered.findIndex((project) => project.slug === preferredSlug)
+      : -1;
+
+    if (preferredIndex <= 0) return filtered;
+    return [...filtered.slice(preferredIndex), ...filtered.slice(0, preferredIndex)];
+  }, [active, filtered]);
+
+  const featuredProjectSignature = useMemo(
+    () => featuredProjects.map((project) => project.slug).join("|"),
+    [featuredProjects],
   );
+
+  useEffect(() => {
+    setFeaturedIndex(0);
+  }, [active, featuredProjectSignature]);
+
+  useEffect(() => {
+    if (pathname !== "/works" || featuredProjects.length <= 1) return;
+
+    const interval = window.setInterval(() => {
+      setFeaturedIndex((current) => (current + 1) % featuredProjects.length);
+    }, 10_000);
+
+    return () => window.clearInterval(interval);
+  }, [pathname, active, featuredProjects.length]);
+
+  const featuredProject =
+    featuredProjects.length > 0
+      ? featuredProjects[featuredIndex % featuredProjects.length]
+      : undefined;
 
   if (pathname !== "/works") {
     return <Outlet />;
@@ -86,25 +116,17 @@ function Works() {
               : `No projects in ${active}`}
         </p>
 
+        {featuredProject ? (
+          <FeaturedProject project={featuredProject} activeCategory={active} />
+        ) : null}
+
         {active === "All" ? (
           <PortfolioGallery projects={allShuffled} activeCategory="All" />
         ) : active === "Social Media Graphics" ? (
           <SocialMediaGraphicsShowcase projects={filtered} />
-        ) : active === "Writing / VA" ? (
+        ) : filtered.length > 0 ? (
           <PortfolioGallery projects={filtered} activeCategory={active} />
-        ) : (
-          <>
-            {featuredProject ? (
-              <FeaturedProject project={featuredProject} activeCategory={active} />
-            ) : null}
-            {filtered.length > (featuredProject ? 1 : 0) ? (
-              <PortfolioGallery
-                projects={filtered.filter((p) => p.slug !== featuredProject?.slug)}
-                activeCategory={active}
-              />
-            ) : null}
-          </>
-        )}
+        ) : null}
       </div>
     </MetallicPage>
   );

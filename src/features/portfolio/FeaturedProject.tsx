@@ -3,13 +3,13 @@ import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { TagPill } from "@/components/site/TagPill";
 import { getProjectCoverImage } from "@/data/projectImages";
 import { getProjectDisplayTitle, getProjectCategoryLabel } from "@/data/projects";
-import type { Project, ProjectCategory } from "@/data/projects";
+import type { Project, ProjectFilter } from "@/data/projects";
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { cn } from "@/lib/utils";
 
 type FeaturedProjectProps = {
   project: Project;
-  activeCategory?: ProjectCategory;
+  activeCategory?: ProjectFilter;
 };
 
 const featuredImageAspect: Record<string, string> = {
@@ -54,7 +54,9 @@ export function FeaturedProject({ project, activeCategory = project.cat }: Featu
           </div>
         </div>
 
-        <div className={cn("metal-card group relative overflow-hidden rounded-2xl p-5 sm:p-6", aspect)}>
+        <div
+          className={cn("metal-card group relative overflow-hidden rounded-2xl p-5 sm:p-6", aspect)}
+        >
           {coverImage ? (
             <img
               src={coverImage}

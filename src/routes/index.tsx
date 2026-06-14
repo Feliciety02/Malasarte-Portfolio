@@ -1,16 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useReducedMotion } from "motion/react";
-import { AboutPreviewSection } from "@/components/home/AboutPreviewSection";
+import { AboutHubSection } from "@/components/home/AboutHubSection";
 import { ContactCtaSection } from "@/components/home/ContactCtaSection";
-import { FeaturedProjectsSection } from "@/components/home/FeaturedProjectsSection";
-import { GitHubActivitySection } from "@/components/home/GitHubActivitySection";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { MarqueeSection } from "@/components/home/MarqueeSection";
 import { ProcessPreviewSection } from "@/components/home/ProcessPreviewSection";
 import { ServicesPreviewSection } from "@/components/home/ServicesPreviewSection";
-import { SkillHighlightsSection } from "@/components/home/SkillHighlightsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { ToolsStackSection } from "@/components/home/ToolsStackSection";
 import { MetallicPage } from "@/components/site/MetallicPage";
 
 export const Route = createFileRoute("/")({
@@ -43,14 +39,10 @@ function Home() {
       <div className="-mx-6">
         <MarqueeSection reducedMotion={reducedMotion} />
       </div>
-      <SkillHighlightsSection />
-      <ToolsStackSection reducedMotion={reducedMotion} />
-      <GitHubActivitySection />
-      <FeaturedProjectsSection />
-      <ProcessPreviewSection />
+      <AboutHubSection reducedMotion={reducedMotion} />
+      <ProcessPreviewSection reducedMotion={reducedMotion} />
       <ServicesPreviewSection reducedMotion={reducedMotion} />
       <TestimonialsSection />
-      <AboutPreviewSection />
       <ContactCtaSection />
     </MetallicPage>
   );

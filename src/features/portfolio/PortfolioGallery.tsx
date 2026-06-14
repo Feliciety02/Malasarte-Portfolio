@@ -12,6 +12,9 @@ function getCardSize(
   if (activeCategory === "Writing / VA") {
     return "wide";
   }
+  if (activeCategory === "UI/UX Design" || activeCategory === "Web Development") {
+    return "medium";
+  }
   return project.cardSize ?? "medium";
 }
 

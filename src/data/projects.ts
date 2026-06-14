@@ -399,7 +399,7 @@ export const projects: Project[] = [
       mode: "full",
       symbol: {
         title: "Odara Management brand identity",
-        image: "/src/assets/work-placeholders/projects/Odara Brand Kit.png",
+        image: "/src/assets/projects/covers/Odara Brand Kit.png",
         items: [],
       },
     },
@@ -522,14 +522,14 @@ export const projects: Project[] = [
       mode: "full",
       identityImages: [
         {
-          src: "/src/assets/work-placeholders/projects/Lian Monley Logo Iterations.svg",
+          src: "/src/assets/projects/covers/Lian Monley Logo Iterations.svg",
           alt: "Six commissioned logo concepts explored for Lian Monley",
           title: "Commissioned logo explorations",
           description:
             "Six distinct directions were presented to compare monogram structures, organic forms, typography, and wellness symbolism before selecting the final route.",
         },
         {
-          src: "/src/assets/work-placeholders/projects/Lian Monley Brand Kit.svg",
+          src: "/src/assets/projects/covers/Lian Monley Brand Kit.svg",
           alt: "Final Lian Monley holistic gut health expert brand kit",
           title: "Selected identity system",
           description:
@@ -693,7 +693,7 @@ export const projects: Project[] = [
       },
       symbol: {
         title: "Symbol meaning",
-        image: "/src/assets/work-placeholders/projects/Pieytl Branding.svg",
+        image: "/src/assets/projects/covers/Pieytl Branding.svg",
         items: [
           {
             name: "LPG Cylinder",
@@ -847,7 +847,7 @@ export const projects: Project[] = [
       ],
       symbol: {
         title: "Logo mark",
-        image: "/src/assets/work-placeholders/projects/Pieytl Branding.svg",
+        image: "/src/assets/projects/covers/Pieytl Branding.svg",
         items: [
           {
             name: "LPG Cylinder",
@@ -1066,7 +1066,7 @@ export const projects: Project[] = [
       mode: "full",
       symbol: {
         title: "Trichomend+ brand identity",
-        image: "/src/assets/work-placeholders/projects/Trichomend Brand Kit.png",
+        image: "/src/assets/projects/covers/Trichomend Brand Kit.png",
         items: [],
       },
     },
@@ -2243,6 +2243,7 @@ export const projects: Project[] = [
   createSimpleProject({
     slug: "salin-salin",
     title: "Salin-Salin",
+    imageTitle: "salin webpage",
     cat: "Web Development",
     kind: "frontend",
     tag: "Web Development",
