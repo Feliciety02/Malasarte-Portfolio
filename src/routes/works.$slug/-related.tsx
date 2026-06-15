@@ -6,9 +6,9 @@ import { getProjectCoverImage } from "@/data/projectImages";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { TagPill } from "@/components/site/TagPill";
-import { SectionAnchor, SectionLabel, FadeIn } from "./sections";
+import { SectionAnchor, SectionLabel, FadeIn } from "./-sections";
 import { accentLastWord } from "@/components/site/HeadingAccent";
-import { getProjectSection } from "./config";
+import { getProjectSection } from "./-config";
 
 export function RelatedProjects({ currentProject }: { currentProject: Project }) {
   const section = getProjectSection(currentProject, "next");

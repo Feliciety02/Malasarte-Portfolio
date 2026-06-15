@@ -4,9 +4,9 @@ import { ArrowUpRight, Maximize2, Monitor, Palette, RotateCcw, Sparkles } from "
 import type { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { accentLastWord } from "@/components/site/HeadingAccent";
-import { SectionAnchor, SectionLabel, FadeIn } from "./sections";
-import { GalleryGrid } from "./gallery";
-import type { WorkspaceTab, WorkspaceTabId } from "./config";
+import { SectionAnchor, SectionLabel, FadeIn } from "./-sections";
+import { GalleryGrid } from "./-gallery";
+import type { WorkspaceTab, WorkspaceTabId } from "./-config";
 
 export function InteractiveWorkspace({ project }: { project: Project }) {
   const figmaPreviewUrl = project.figmaPreviewUrl?.trim();

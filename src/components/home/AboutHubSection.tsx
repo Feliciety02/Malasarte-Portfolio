@@ -78,15 +78,17 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
             </h1>
             <div className="mt-7 space-y-5 text-base leading-7 text-muted-foreground">
               <p>
-                I&apos;m Fe Anne L. Malasarte, a DOST-SEI Scholar and Computer Science student at
-                the University of Mindanao. I specialize in UI/UX Design, Web Development, Branding,
-                and Creative Strategy, combining technical expertise with design thinking to build
-                impactful digital experiences.
+                I&apos;m Fe Anne L. Malasarte, a DOST-SEI Scholar and Computer Science candidate at
+                the University of Mindanao, where I specialize in UI/UX design, web development,
+                branding, and creative strategy. My work bridges technical rigor with design
+                thinking to deliver user-centered digital experiences.
               </p>
               <p>
-                Alongside my academic journey, I actively contribute to technology communities,
-                student organizations, and innovation initiatives across Mindanao through
-                leadership, volunteer work, and community engagement.
+                Beyond academic pursuits, I contribute to technology communities and innovation
+                initiatives across Mindanao through leadership roles, volunteer engagement, and
+                cross-functional collaboration. I bring the same structured approach to every
+                project — whether designing an interface, building an application, or crafting a
+                brand identity.
               </p>
             </div>
 
@@ -173,13 +175,8 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                               ? "rgba(255,255,255,0.25)"
                               : "rgba(255,255,255,0.1)",
                           background:
-                            activeCategory === cat.key
-                              ? "rgba(255,255,255,0.08)"
-                              : "transparent",
-                          color:
-                            activeCategory === cat.key
-                              ? "white"
-                              : "rgba(255,255,255,0.55)",
+                            activeCategory === cat.key ? "rgba(255,255,255,0.08)" : "transparent",
+                          color: activeCategory === cat.key ? "white" : "rgba(255,255,255,0.55)",
                         }}
                         onMouseEnter={() => setHoveredCategory(cat.key)}
                         onMouseLeave={() => setHoveredCategory(null)}
@@ -187,6 +184,31 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                         {cat.label}
                       </button>
                     ))}
+                  </div>
+
+                  <div className="mt-8 space-y-5">
+                    {categoryInfo.map((cat) => {
+                      const categoryTools = tools.filter((t) => t.category === cat.key);
+                      return (
+                        <div key={cat.key}>
+                          <h3
+                            className="text-sm font-semibold uppercase tracking-wider"
+                            style={{
+                              color: activeCategory === cat.key ? "white" : "rgba(255,255,255,0.5)",
+                            }}
+                          >
+                            {cat.label}
+                          </h3>
+                          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                            {categoryTools.map((tool) => (
+                              <span key={tool.slug} className="text-xs text-muted-foreground/70">
+                                {tool.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

@@ -33,13 +33,15 @@ export const Route = createFileRoute("/works")({
   component: Works,
 });
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+function shuffle<T>(items: T[]): T[] {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
   }
-  return a;
+
+  return shuffled;
 }
 
 const featuredProjectSlugs: Partial<Record<ProjectCategory, string>> = {
@@ -54,23 +56,50 @@ function Works() {
   const sourceProjects = loadedProjects ?? projects;
   const [active, setActive] = useState<FilterCategory>("All");
   const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [socialSelectionRequest, setSocialSelectionRequest] = useState<{
+    slug: string;
+    requestId: number;
+  } | null>(null);
+
+  const handleSocialClick = (slug: string) => {
+    setActive("Social Media Graphics");
+    setSocialSelectionRequest((current) => ({
+      slug,
+      requestId: (current?.requestId ?? 0) + 1,
+    }));
+  };
+  const handleBackToProjects = () => {
+    setActive("All");
+    setSocialSelectionRequest(null);
+  };
+  const [randomizedAllProjects, setRandomizedAllProjects] = useState<Project[]>([]);
   const filtered = useMemo(
     () => getProjectsByCategoryFrom(sourceProjects, active),
     [sourceProjects, active],
   );
+  const allProjects = useMemo(
+    () => getProjectsByCategoryFrom(sourceProjects, "All"),
+    [sourceProjects],
+  );
 
-  const allShuffled = useMemo(() => shuffle(sourceProjects), [sourceProjects]);
+  useEffect(() => {
+    setRandomizedAllProjects(shuffle(allProjects));
+  }, [allProjects]);
+
+  const allTabProjects =
+    randomizedAllProjects.length === allProjects.length ? randomizedAllProjects : allProjects;
 
   const featuredProjects = useMemo(() => {
-    const preferredSlug =
-      active === "All" ? undefined : featuredProjectSlugs[active as ProjectCategory];
+    if (active === "All") return allTabProjects;
+
+    const preferredSlug = featuredProjectSlugs[active as ProjectCategory];
     const preferredIndex = preferredSlug
       ? filtered.findIndex((project) => project.slug === preferredSlug)
       : -1;
 
     if (preferredIndex <= 0) return filtered;
     return [...filtered.slice(preferredIndex), ...filtered.slice(0, preferredIndex)];
-  }, [active, filtered]);
+  }, [active, allTabProjects, filtered]);
 
   const featuredProjectSignature = useMemo(
     () => featuredProjects.map((project) => project.slug).join("|"),
@@ -106,26 +135,49 @@ function Works() {
       <div className="relative z-10 pt-12 md:pt-20 pb-20 sm:pb-28">
         <PortfolioHero />
 
-        <CategoryFilterBar active={active} onChange={setActive} />
+        <CategoryFilterBar
+          active={active}
+          onChange={(category) => {
+            setActive(category);
+            if (category !== "Social Media Graphics") setSocialSelectionRequest(null);
+          }}
+        />
 
         <p className="mx-auto mt-6 max-w-7xl px-4 text-[13px] leading-6 text-muted-foreground sm:px-6 sm:text-sm">
           {active === "All"
-            ? `${allShuffled.length} projects across every category.`
+            ? `${allTabProjects.length} projects across every category.`
             : filtered.length > 0
               ? `${filtered.length} project${filtered.length === 1 ? "" : "s"} in ${active}`
               : `No projects in ${active}`}
         </p>
 
         {featuredProject ? (
-          <FeaturedProject project={featuredProject} activeCategory={active} />
+          <FeaturedProject
+            project={featuredProject}
+            activeCategory={active}
+            onSocialClick={handleSocialClick}
+          />
         ) : null}
 
         {active === "All" ? (
-          <PortfolioGallery projects={allShuffled} activeCategory="All" />
+          <PortfolioGallery
+            projects={allTabProjects}
+            activeCategory="All"
+            onSocialClick={handleSocialClick}
+          />
         ) : active === "Social Media Graphics" ? (
-          <SocialMediaGraphicsShowcase projects={filtered} />
+          <SocialMediaGraphicsShowcase
+            projects={filtered}
+            requestedSlug={socialSelectionRequest?.slug}
+            requestId={socialSelectionRequest?.requestId}
+          />
         ) : filtered.length > 0 ? (
-          <PortfolioGallery projects={filtered} activeCategory={active} />
+          <PortfolioGallery
+            projects={filtered}
+            activeCategory={active}
+            onSocialClick={handleSocialClick}
+            onBackToProjects={handleBackToProjects}
+          />
         ) : null}
       </div>
     </MetallicPage>

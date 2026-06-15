@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { Project, ProjectFlipbookEmbed, ProjectGalleryItem } from "@/data/projects";
 import { getProjectGalleryImage } from "@/data/projectImages";
 import { cn } from "@/lib/utils";
-import { FadeIn } from "./sections";
+import { FadeIn } from "./-sections";
 
 export function GalleryPreviewImage({
   project,

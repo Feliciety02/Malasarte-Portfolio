@@ -8,14 +8,15 @@ export function ContactCtaSection() {
     <section className="relative px-6 py-24">
       <Reveal className="metal-panel mx-auto max-w-5xl p-12 text-center md:p-20">
         <h2 className="font-display text-4xl font-bold md:text-6xl">
-          Hiring for a role that needs <AccentText>design range</AccentText>?
+          Looking for a designer who can <AccentText>deliver across disciplines</AccentText>?
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-          Reach out for portfolio context, role fit, or a closer look at work across product,
-          branding, social media graphics, creative assets, and web development.
+          Whether you need a polished interface, a performant web application, or a cohesive brand
+          presence — I&apos;d welcome the opportunity to discuss how I can contribute to your next
+          project.
         </p>
         <LinkButton to="/contact" className="mt-10">
-          Get in touch <ArrowRight size={16} />
+          Start a conversation <ArrowRight size={16} />
         </LinkButton>
       </Reveal>
     </section>

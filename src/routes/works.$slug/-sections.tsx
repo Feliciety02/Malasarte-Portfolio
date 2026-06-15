@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { cn } from "@/lib/utils";
-import type { SectionDef } from "./config";
+import type { SectionDef } from "./-config";
 
 export function SectionAnchor({
   id,

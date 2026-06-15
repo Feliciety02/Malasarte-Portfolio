@@ -78,6 +78,7 @@ const hiddenProjectSlugs = new Set([
   "pietyl-management-system-logo",
 ]);
 const localIdentitySlugs = new Set(["pietyl-lpg", "pieytl-branding"]);
+const localGallerySlugs = new Set(["enigma", "umsdc-publication-materials-and-assets"]);
 
 const sortBySortOrder = <T extends { sort_order: number | null }>(items: T[] = []) =>
   [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
@@ -133,6 +134,7 @@ function mapProject(row: PortfolioProjectRow): Project {
 
   const base = localProject ?? makeFallbackProject(row);
   const useLocalIdentity = localProject ? localIdentitySlugs.has(row.slug) : false;
+  const useLocalGallery = localProject ? localGallerySlugs.has(row.slug) : false;
 
   return {
     ...base,
@@ -154,16 +156,17 @@ function mapProject(row: PortfolioProjectRow): Project {
     client: useLocalIdentity ? base.client : (row.client ?? base.client),
     overview: useLocalIdentity ? base.overview : (row.overview ?? base.overview),
     outcome: useLocalIdentity ? base.outcome : (row.outcome ?? base.outcome),
-    gallery: galleryRows.length
-      ? galleryRows.map((item, index) => ({
-          ...base.gallery[index],
-          color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
-          label: item.label,
-          imageUrl: item.image_url ?? undefined,
-          ratio: item.ratio ?? "square",
-          note: item.note ?? "",
-        }))
-      : base.gallery,
+    gallery:
+      !useLocalGallery && galleryRows.length
+        ? galleryRows.map((item, index) => ({
+            ...base.gallery[index],
+            color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
+            label: item.label,
+            imageUrl: item.image_url ?? undefined,
+            ratio: item.ratio ?? "square",
+            note: item.note ?? "",
+          }))
+        : base.gallery,
   };
 }
 

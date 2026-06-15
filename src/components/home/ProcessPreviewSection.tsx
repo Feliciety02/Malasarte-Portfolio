@@ -112,7 +112,7 @@ export function ProcessPreviewSection() {
             <SectionHeader
               eyebrow="Selected Work"
               title="Featured projects"
-              description="A closer look at recent work across branding, design, and development."
+              description="A curated selection of recent projects spanning UI/UX design, web development, and brand identity."
               className="mb-10"
             />
           </div>
@@ -185,7 +185,7 @@ export function ProcessPreviewSection() {
               <SectionHeader
                 eyebrow="Selected Work"
                 title="Featured projects"
-                description="Scroll through a curated selection of recent projects."
+                description="Scroll through a curated selection of recent projects across UI/UX, web development, and branding."
                 className="mb-0"
                 contentClassName="max-w-xl"
                 titleClassName="md:text-3xl lg:text-4xl"

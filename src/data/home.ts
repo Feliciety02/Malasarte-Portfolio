@@ -1,14 +1,4 @@
-import {
-  FileText,
-  Globe,
-  Layers,
-  Lightbulb,
-  Megaphone,
-  PenTool,
-  Pencil,
-  Rocket,
-  Search,
-} from "lucide-react";
+import { Globe, Layers, Lightbulb, Megaphone, Pencil, Rocket, Search } from "lucide-react";
 
 export const featuredSlugs = [
   "adoptify",
@@ -22,50 +12,55 @@ export const featuredSlugs = [
 
 export const marqueeItems = [
   "UI/UX Design",
-  "Branding",
-  "Visual Storytelling",
-  "Social Media Graphics",
-  "Creative Assets",
   "Web Development",
+  "Social Media Graphics",
+  "Brand Identity",
+  "Visual Storytelling",
+  "Creative Direction",
 ];
 
 export const skillHighlights = [
   { name: "UI/UX Design", level: 95 },
-  { name: "Branding", level: 88 },
+  { name: "Web Development", level: 88 },
   { name: "Social Media Graphics", level: 90 },
-  { name: "Web Development", level: 86 },
+  { name: "Brand Identity", level: 86 },
 ];
 
 export const experienceStats = [
-  { value: "5+", label: "Years designing" },
-  { value: "40+", label: "Projects shipped" },
-  { value: "10+", label: "Clients supported" },
+  { value: "5+", label: "Years of experience" },
+  { value: "40+", label: "Projects delivered" },
+  { value: "10+", label: "Clients served" },
 ] as const;
 
 export const experienceTimeline = [
-  { year: "2024 - Now", role: "Freelance Designer & VA", place: "Remote" },
-  { year: "2022 - 2024", role: "UI/UX & Social Media Graphics Lead", place: "Tech Organization" },
-  { year: "2020 - 2022", role: "Junior Designer", place: "Creative Collective" },
+  { year: "2024 — Present", role: "Freelance Designer & Developer", place: "Remote" },
+  {
+    year: "2022 — 2024",
+    role: "UI/UX & Social Media Graphics Lead",
+    place: "Technology Organization",
+  },
+  { year: "2020 — 2022", role: "Junior Designer", place: "Creative Agency" },
 ] as const;
 
 export const servicePreviews = [
   {
+    icon: Globe,
+    title: "Web Development",
+    desc: "Full-stack development of responsive, performant web applications using modern frameworks and industry best practices — from system architecture through deployment and optimization.",
+    stars: 5 as const,
+  },
+  {
     icon: Layers,
     title: "UI/UX Design",
-    desc: "Mobile and web product design from research to handoff.",
+    desc: "Comprehensive user experience design encompassing research, information architecture, wireframing, high-fidelity prototyping, and usability testing to deliver intuitive digital products.",
+    stars: 5 as const,
   },
-  { icon: PenTool, title: "Branding", desc: "Identity systems with personality and clarity." },
   {
     icon: Megaphone,
     title: "Social Media Graphics",
-    desc: "Campaign posts, pubmats, and creative asset systems.",
+    desc: "Strategic visual content tailored for multi-platform campaigns, brand storytelling, and audience engagement across social media channels.",
+    stars: 5 as const,
   },
-  {
-    icon: Globe,
-    title: "Web Development",
-    desc: "Responsive web experiences translated from design into polished builds.",
-  },
-  { icon: FileText, title: "Content & VA", desc: "Captions, blogs, and creator support." },
 ] as const;
 
 export const processSteps = [
@@ -73,24 +68,6 @@ export const processSteps = [
   { icon: Lightbulb, title: "Concept" },
   { icon: Pencil, title: "Design" },
   { icon: Rocket, title: "Deliver" },
-] as const;
-
-export const testimonials = [
-  {
-    quote: "Fe Anne brought clarity and warmth to our product - every screen feels intentional.",
-    name: "Maya R.",
-    role: "Founder · Lumen Financial",
-  },
-  {
-    quote: "A rare designer who can hold brand strategy and pixel-level craft in the same hand.",
-    name: "Jordan K.",
-    role: "Creative Director · Folio Studio",
-  },
-  {
-    quote: "Our org week campaign reached more people than any year prior. The visuals just sang.",
-    name: "Sam T.",
-    role: "Lead · Tech Org Council",
-  },
 ] as const;
 
 export type ToolCategory = "frontend" | "backend" | "tools";

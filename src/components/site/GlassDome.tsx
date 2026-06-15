@@ -461,9 +461,10 @@ export function GlassDome({
                       width: 40,
                       height: 40,
                       background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
-                      boxShadow: activeCategory === body.category
-                        ? `0 0 20px #${body.color}66, 0 0 60px #${body.color}33, 0 0 18px rgba(255,255,255,0.08)`
-                        : "0 0 18px rgba(255,255,255,0.08)",
+                      boxShadow:
+                        activeCategory === body.category
+                          ? `0 0 20px #${body.color}66, 0 0 60px #${body.color}33, 0 0 18px rgba(255,255,255,0.08)`
+                          : "0 0 18px rgba(255,255,255,0.08)",
                     }}
                   >
                     <ToolLogo
@@ -494,7 +495,17 @@ export function GlassDome({
   );
 }
 
-function ToolLogo({ slug, name, color, isActive }: { slug: string; name: string; color: string; isActive: boolean }) {
+function ToolLogo({
+  slug,
+  name,
+  color,
+  isActive,
+}: {
+  slug: string;
+  name: string;
+  color: string;
+  isActive: boolean;
+}) {
   const icon = TOOL_ICONS[slug];
 
   if (!icon) {

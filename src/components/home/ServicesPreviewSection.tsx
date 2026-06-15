@@ -10,7 +10,7 @@ type ServicesPreviewSectionProps = {
 };
 
 export function ServicesPreviewSection({ reducedMotion }: ServicesPreviewSectionProps) {
-  const featuredServices = servicePreviews.slice(0, 3);
+  const featuredServices = servicePreviews;
 
   return (
     <section className="relative overflow-hidden bg-[#0c0d0e] px-6 py-24">
@@ -28,16 +28,16 @@ export function ServicesPreviewSection({ reducedMotion }: ServicesPreviewSection
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <SectionHeader
-            eyebrow="What I do"
-            title="Services preview"
-            description="A compact technical grid of the services I design, build, and shape."
+            eyebrow="Core expertise"
+            title="Services"
+            description="Specialized capabilities across the full product lifecycle — from conceptual design and user research to development and deployment."
             action={
               <LinkButton
                 to="/services"
                 variant="text"
                 className="hidden items-center md:inline-flex"
               >
-                All services <ArrowRight size={14} />
+                View all capabilities <ArrowRight size={14} />
               </LinkButton>
             }
             className="mb-12"

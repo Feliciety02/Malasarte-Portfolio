@@ -6,10 +6,12 @@ import { getProjectDisplayTitle, getProjectCategoryLabel } from "@/data/projects
 import type { Project, ProjectFilter } from "@/data/projects";
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { cn } from "@/lib/utils";
+import { SocialMediaBentoPreview } from "./SocialMediaBentoPreview";
 
 type FeaturedProjectProps = {
   project: Project;
   activeCategory?: ProjectFilter;
+  onSocialClick?: (slug: string) => void;
 };
 
 const featuredImageAspect: Record<string, string> = {
@@ -19,11 +21,19 @@ const featuredImageAspect: Record<string, string> = {
   medium: "aspect-[4/3]",
 };
 
-export function FeaturedProject({ project, activeCategory = project.cat }: FeaturedProjectProps) {
+export function FeaturedProject({
+  project,
+  activeCategory = project.cat,
+  onSocialClick,
+}: FeaturedProjectProps) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
-  const aspect = featuredImageAspect[project.cardSize ?? "medium"];
+  const isBranding = activeCategory === "Logo & Branding";
+  const aspect = isBranding ? "aspect-square" : featuredImageAspect[project.cardSize ?? "medium"];
+  const isSocial =
+    project.cat === "Social Media Graphics" ||
+    project.categories?.includes("Social Media Graphics");
 
   return (
     <section className="relative z-10 mx-auto mt-16 max-w-7xl px-4 sm:mt-20 sm:px-6">
@@ -40,32 +50,62 @@ export function FeaturedProject({ project, activeCategory = project.cat }: Featu
           </p>
 
           <div className="mt-6">
-            <CaseStudyLink
-              slug={project.slug}
-              routeCategory={getRouteCategoryForProject(project)}
-              className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
-            >
-              View Case Study
-              <ArrowUpRight
-                size={15}
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </CaseStudyLink>
+            {isSocial && onSocialClick ? (
+              <button
+                type="button"
+                onClick={() => onSocialClick(project.slug)}
+                className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
+              >
+                View Project
+                <ArrowUpRight
+                  size={15}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </button>
+            ) : (
+              <CaseStudyLink
+                slug={project.slug}
+                routeCategory={getRouteCategoryForProject(project)}
+                className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
+              >
+                View Case Study
+                <ArrowUpRight
+                  size={15}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </CaseStudyLink>
+            )}
           </div>
         </div>
 
         <div
-          className={cn("metal-card group relative overflow-hidden rounded-2xl p-5 sm:p-6", aspect)}
+          className={cn(
+            "metal-card group relative overflow-hidden rounded-2xl",
+            !isSocial && "p-5 sm:p-6",
+            isBranding && "bg-white",
+            aspect,
+          )}
         >
-          {coverImage ? (
+          {isSocial ? (
+            <SocialMediaBentoPreview
+              project={project}
+              fallbackImage={coverImage}
+              className="rounded-[inherit]"
+            />
+          ) : coverImage ? (
             <img
               src={coverImage}
               alt={`${title} preview`}
-              className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+              className={cn(
+                "h-full w-full object-contain transition-transform duration-700 group-hover:scale-105",
+                isBranding && "p-4 sm:p-6",
+              )}
             />
           ) : null}
 
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          {!isBranding ? (
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          ) : null}
 
           <TagPill>{pill}</TagPill>
         </div>

@@ -3,7 +3,7 @@ import heroDesktop from "@/assets/brand/hero-desktop.svg";
 import heroMobile from "@/assets/brand/hero-mobile.svg";
 import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 
-const MARQUEE = ["Fe Anne Malasarte", "Design", "Develop", "Create"];
+const MARQUEE = ["Fe Anne Malasarte", "Design", "Develop", "Deliver"];
 
 export function HeroBanner() {
   const { scrollYProgress } = useScroll();

@@ -30,9 +30,7 @@ export function PortfolioCategorySection({ category, projects }: PortfolioCatego
   return (
     <section className="relative z-10 mx-auto mt-14 max-w-7xl px-4 sm:mt-20 sm:px-6">
       <div className="mb-6 flex flex-col gap-1 sm:mb-8">
-        <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-          {category}
-        </h2>
+        <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">{category}</h2>
         <p className="text-[13px] leading-5 text-muted-foreground sm:text-sm">
           {projects.length} project{projects.length === 1 ? "" : "s"}
           <span className="mx-2 inline-block text-white/10">·</span>

@@ -1,11 +1,12 @@
 import { motion } from "motion/react";
-import { ArrowRight, Check, type LucideIcon } from "lucide-react";
+import { ArrowRight, Check, Star, type LucideIcon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 type ServiceCardProps = {
   icon: LucideIcon;
   title: string;
   desc: string;
+  stars?: number;
   color?: string;
   bullets?: readonly string[];
   variant?: "preview" | "full";
@@ -17,6 +18,7 @@ export function ServiceCard({
   icon: Icon,
   title,
   desc,
+  stars,
   bullets,
   variant = "preview",
   reducedMotion = false,
@@ -30,6 +32,13 @@ export function ServiceCard({
       >
         <ServiceHeader Icon={Icon} title={title} showEyebrow={false} />
         <p className="relative z-10 mt-4 text-sm leading-6 text-muted-foreground">{desc}</p>
+        {stars ? (
+          <div className="relative z-10 mt-4 flex items-center gap-1">
+            {Array.from({ length: stars }).map((_, i) => (
+              <Star key={i} size={12} className="fill-yellow/80 text-yellow" strokeWidth={1.5} />
+            ))}
+          </div>
+        ) : null}
         {bullets ? (
           <ul className="relative z-10 mt-6 space-y-3.5">
             {bullets.map((bullet) => (
@@ -55,6 +64,13 @@ export function ServiceCard({
       >
         <ServiceHeader Icon={Icon} title={title} />
         <p className="relative z-10 mt-4 text-sm leading-6 text-muted-foreground">{desc}</p>
+        {stars ? (
+          <div className="relative z-10 mt-4 flex items-center gap-1">
+            {Array.from({ length: stars }).map((_, i) => (
+              <Star key={i} size={12} className="fill-yellow/80 text-yellow" strokeWidth={1.5} />
+            ))}
+          </div>
+        ) : null}
         <div className="relative z-10 mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-foreground">
           Explore service <ArrowRight size={12} />
         </div>

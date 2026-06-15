@@ -3,8 +3,8 @@ import { motion } from "motion/react";
 import type { Project, ProjectMissionValues } from "@/data/projects";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { cn } from "@/lib/utils";
-import { SectionAnchor, SectionLabel, FadeIn } from "./sections";
-import { getProjectSection } from "./config";
+import { SectionAnchor, SectionLabel, FadeIn } from "./-sections";
+import { getProjectSection } from "./-config";
 
 export function EditorialBlock({
   kicker,

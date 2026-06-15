@@ -6,7 +6,6 @@ import { HeroBanner } from "@/components/home/HeroBanner";
 import { MarqueeSection } from "@/components/home/MarqueeSection";
 import { ProcessPreviewSection } from "@/components/home/ProcessPreviewSection";
 import { ServicesPreviewSection } from "@/components/home/ServicesPreviewSection";
-import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { MetallicPage } from "@/components/site/MetallicPage";
 
 export const Route = createFileRoute("/")({
@@ -40,9 +39,8 @@ function Home() {
         <MarqueeSection reducedMotion={reducedMotion} />
       </div>
       <AboutHubSection reducedMotion={reducedMotion} />
-      <ProcessPreviewSection reducedMotion={reducedMotion} />
+      <ProcessPreviewSection />
       <ServicesPreviewSection reducedMotion={reducedMotion} />
-      <TestimonialsSection />
       <ContactCtaSection />
     </MetallicPage>
   );

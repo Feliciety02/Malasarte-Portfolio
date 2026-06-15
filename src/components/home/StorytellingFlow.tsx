@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, type LucideIcon } from "lucide-react";
 import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 import { LinkButton } from "@/components/site/LinkButton";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -142,7 +142,7 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
 
 /* ── ServiceCard (horizontal variant) ── */
 type ServiceCardProps = {
-  icon: any;
+  icon: LucideIcon;
   title: string;
   desc: string;
   color: string;

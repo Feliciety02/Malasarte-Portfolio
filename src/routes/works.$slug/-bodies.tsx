@@ -1,16 +1,16 @@
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { getProjectCoverImage } from "@/data/projectImages";
 import type { Project } from "@/data/projects";
-import { SectionAnchor, SectionLabel, FadeIn } from "./sections";
-import { GalleryGrid, FlipbookEmbed } from "./gallery";
+import { SectionAnchor, SectionLabel, FadeIn } from "./-sections";
+import { GalleryGrid, FlipbookEmbed } from "./-gallery";
 import {
   FocusGrid,
   BrandSymbolBlock,
   BrandColorPalette,
   BrandTypographyBlock,
   BrandPersonalityList,
-} from "./blocks";
-import { getProjectSection, type BodyProps } from "./config";
+} from "./-blocks";
+import { getProjectSection, type BodyProps } from "./-config";
 
 export function GalleryOnlyBody({ project, openLightbox }: BodyProps) {
   return (

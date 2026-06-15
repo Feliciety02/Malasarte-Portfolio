@@ -44,7 +44,7 @@ function buildNoiseTexture(size = 192) {
   return texture;
 }
 
-export function BrushedMetalBackground({}: BrushedMetalBackgroundProps = {}) {
+export function BrushedMetalBackground(_props: BrushedMetalBackgroundProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
