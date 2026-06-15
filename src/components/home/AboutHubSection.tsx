@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import aboutFeImage from "@/assets/about/about-fe.png";
@@ -25,6 +25,20 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
   const [clickedCategory, setClickedCategory] = useState<ToolCategory | null>(null);
   const [hoveredCategory, setHoveredCategory] = useState<ToolCategory | null>(null);
   const activeCategory = hoveredCategory ?? clickedCategory;
+
+  const handleToolHover = useCallback(
+    (slug: string | null) => {
+      if (!slug) {
+        setHoveredCategory(null);
+        return;
+      }
+      const tool = tools.find((t) => t.slug === slug);
+      if (tool) {
+        setHoveredCategory(tool.category as ToolCategory);
+      }
+    },
+    [],
+  );
   return (
     <section className="relative overflow-hidden px-6 py-20 md:py-28">
       <div
@@ -149,6 +163,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                     tools={tools}
                     reducedMotion={reducedMotion}
                     activeCategory={activeCategory}
+                    onToolHover={handleToolHover}
                   />
                 </div>
                 <div className="lg:col-span-2">
@@ -160,48 +175,48 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                     Drag the tools inside the metal dome and they respond with real weight, soft
                     collisions, and a natural settle at rest.
                   </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {categoryInfo.map((cat) => (
-                      <button
-                        key={cat.key}
-                        type="button"
-                        onClick={() =>
-                          setClickedCategory(clickedCategory === cat.key ? null : cat.key)
-                        }
-                        className="rounded-full border px-4 py-1.5 text-xs font-medium transition-all duration-200"
-                        style={{
-                          borderColor:
-                            activeCategory === cat.key
-                              ? "rgba(255,255,255,0.25)"
-                              : "rgba(255,255,255,0.1)",
-                          background:
-                            activeCategory === cat.key ? "rgba(255,255,255,0.08)" : "transparent",
-                          color: activeCategory === cat.key ? "white" : "rgba(255,255,255,0.55)",
-                        }}
-                        onMouseEnter={() => setHoveredCategory(cat.key)}
-                        onMouseLeave={() => setHoveredCategory(null)}
-                      >
-                        {cat.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 space-y-5">
+                  <div className="mt-6 space-y-4">
                     {categoryInfo.map((cat) => {
                       const categoryTools = tools.filter((t) => t.category === cat.key);
+                      const isActive = activeCategory === cat.key;
+
                       return (
                         <div key={cat.key}>
-                          <h3
-                            className="text-sm font-semibold uppercase tracking-wider"
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setClickedCategory(clickedCategory === cat.key ? null : cat.key)
+                            }
+                            onMouseEnter={() => setHoveredCategory(cat.key)}
+                            onMouseLeave={() => setHoveredCategory(null)}
+                            className="flex items-center gap-2 text-left"
+                          >
+                            <span
+                              className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-wider transition-all duration-300"
+                              style={{
+                                background: isActive
+                                  ? "rgba(255,255,255,0.1)"
+                                  : "rgba(255,255,255,0.04)",
+                                color: isActive ? "white" : "rgba(255,255,255,0.5)",
+                                border: isActive
+                                  ? "1px solid rgba(255,255,255,0.2)"
+                                  : "1px solid rgba(255,255,255,0.08)",
+                              }}
+                            >
+                              {cat.label}
+                            </span>
+                          </button>
+                          <div
+                            className="mt-2 flex flex-wrap gap-x-3.5 gap-y-1 pl-1 transition-all duration-300"
                             style={{
-                              color: activeCategory === cat.key ? "white" : "rgba(255,255,255,0.5)",
+                              opacity: isActive ? 1 : 0.5,
                             }}
                           >
-                            {cat.label}
-                          </h3>
-                          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                             {categoryTools.map((tool) => (
-                              <span key={tool.slug} className="text-xs text-muted-foreground/70">
+                              <span
+                                key={tool.slug}
+                                className="text-[11px] text-muted-foreground/70"
+                              >
                                 {tool.name}
                               </span>
                             ))}

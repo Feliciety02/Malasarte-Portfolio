@@ -115,10 +115,12 @@ export function GlassDome({
   tools,
   reducedMotion,
   activeCategory,
+  onToolHover,
 }: {
   tools: readonly Tool[];
   reducedMotion: boolean;
   activeCategory: string | null;
+  onToolHover?: (slug: string | null) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const bodiesRef = useRef<Body[]>([]);
@@ -277,8 +279,11 @@ export function GlassDome({
     };
   };
 
-  const handlePointerLeave = () => {
+  const handleDomeLeave = () => {
     moveHistoryRef.current = null;
+    if (onToolHover && !dragRef.current) {
+      onToolHover(null);
+    }
   };
 
   const handlePointerUp = () => {
@@ -294,7 +299,7 @@ export function GlassDome({
     <div
       ref={containerRef}
       onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
+      onPointerLeave={handleDomeLeave}
       className="relative mx-auto aspect-square w-full"
       style={{ perspective: 1400 }}
     >
@@ -397,6 +402,10 @@ export function GlassDome({
               setRevealedId(null);
             };
 
+            const isActive = activeCategory === body.category;
+            const hasActiveCategory = activeCategory !== null;
+            const isInactive = hasActiveCategory && !isActive;
+
             return (
               <button
                 key={body.id}
@@ -421,16 +430,27 @@ export function GlassDome({
                 onPointerUp={() => {
                   cancelLongPress();
                 }}
-                onPointerLeave={() => {
+                onPointerLeave={(event) => {
                   cancelLongPress();
+                  if (onToolHover && dragRef.current?.id !== body.id) {
+                    onToolHover(null);
+                  }
+                }}
+                onPointerEnter={() => {
+                  if (onToolHover && !dragRef.current) {
+                    onToolHover(body.slug);
+                  }
                 }}
                 className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
                 style={{
                   width: body.width,
                   height: body.height,
-                  transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad)`,
-                  transition: isDragging ? "none" : "box-shadow 180ms ease, filter 180ms ease",
-                  zIndex: isRevealed ? 40 : isDragging ? 30 : 10,
+                  transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad) scale(${isActive ? 1.1 : 1})`,
+                  transition: isDragging
+                    ? "none"
+                    : "opacity 400ms ease, transform 400ms ease, box-shadow 400ms ease",
+                  zIndex: isRevealed ? 40 : isDragging ? 30 : isActive ? 20 : 10,
+                  opacity: isInactive ? 0.3 : 1,
                   touchAction: "none",
                 }}
               >
@@ -441,7 +461,9 @@ export function GlassDome({
                       "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
                     boxShadow: isDragging
                       ? "0 22px 34px rgba(0,0,0,0.32), 0 0 24px rgba(255,255,255,0.08)"
-                      : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
+                      : isActive && hasActiveCategory
+                        ? `0 0 28px #${body.color}88, 0 0 70px #${body.color}44, 0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)`
+                        : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
                     backdropFilter: "blur(14px)",
                     WebkitBackdropFilter: "blur(14px)",
                     filter: isDragging ? "brightness(1.06)" : "none",
@@ -462,16 +484,18 @@ export function GlassDome({
                       height: 40,
                       background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
                       boxShadow:
-                        activeCategory === body.category
-                          ? `0 0 20px #${body.color}66, 0 0 60px #${body.color}33, 0 0 18px rgba(255,255,255,0.08)`
+                        isActive && hasActiveCategory
+                          ? `0 0 24px #${body.color}88, 0 0 70px #${body.color}44, 0 0 18px rgba(255,255,255,0.08)`
                           : "0 0 18px rgba(255,255,255,0.08)",
+                      transition: "box-shadow 400ms ease",
                     }}
                   >
                     <ToolLogo
                       slug={body.slug}
                       name={body.name}
                       color={body.color}
-                      isActive={activeCategory === body.category}
+                      isActive={isActive}
+                      hasActiveCategory={hasActiveCategory}
                     />
                   </span>
 
@@ -500,11 +524,13 @@ function ToolLogo({
   name,
   color,
   isActive,
+  hasActiveCategory = false,
 }: {
   slug: string;
   name: string;
   color: string;
   isActive: boolean;
+  hasActiveCategory?: boolean;
 }) {
   const icon = TOOL_ICONS[slug];
 
@@ -514,8 +540,9 @@ function ToolLogo({
         aria-hidden
         className="select-none text-[10px] font-semibold uppercase tracking-[-0.01em] text-white"
         style={{
-          opacity: isActive ? 1 : 0.4,
+          opacity: isActive ? 1 : hasActiveCategory ? 0.25 : 0.4,
           filter: isActive ? "none" : "grayscale(1)",
+          transition: "opacity 400ms ease, filter 400ms ease",
         }}
       >
         {name.slice(0, 2)}
@@ -529,10 +556,14 @@ function ToolLogo({
         src={icon.src}
         alt=""
         aria-hidden
-        className="h-[70%] w-[70%] object-contain transition-all duration-300"
+        className="h-[70%] w-[70%] object-contain"
         style={{
-          filter: isActive ? "none" : "grayscale(1) brightness(1.15)",
-          transition: "filter 0.3s ease",
+          filter: isActive
+            ? "none"
+            : hasActiveCategory
+              ? "grayscale(1) brightness(0.5) opacity(0.3)"
+              : "grayscale(1) brightness(1.15)",
+          transition: "filter 400ms ease",
         }}
       />
     </span>
