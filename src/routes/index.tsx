@@ -31,7 +31,7 @@ function Home() {
   const reducedMotion = !!prefersReducedMotion;
 
   return (
-    <MetallicPage variant="home" className="px-6 pb-28">
+    <MetallicPage variant="home" className="px-6 pb-0">
       <div className="-mx-6">
         <HeroBanner />
       </div>

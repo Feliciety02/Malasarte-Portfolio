@@ -60,7 +60,7 @@ export function ServiceCard({
     >
       <Link
         to="/services"
-        className="blueprint-surface metal-card group block h-full p-6 transition-transform duration-500 hover:-translate-y-1 md:p-7"
+        className="group block h-full rounded-xl border border-white/[0.07] bg-white/[0.03] p-6 shadow-lg backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.14] hover:bg-white/[0.06] md:p-7"
       >
         <ServiceHeader Icon={Icon} title={title} />
         <p className="relative z-10 mt-4 text-sm leading-6 text-muted-foreground">{desc}</p>
@@ -90,7 +90,7 @@ function ServiceHeader({
 }) {
   return (
     <div className="relative z-10 flex items-start gap-4">
-      <div className="metal-icon h-12 w-12 shrink-0">
+      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] text-primary">
         <Icon size={18} />
       </div>
       <div>

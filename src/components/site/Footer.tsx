@@ -5,12 +5,58 @@ import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {
   return (
-    <footer className="relative isolate overflow-visible bg-transparent px-2 pb-3 pt-24 sm:px-3 sm:pb-4 lg:px-4 lg:pt-28">
-      <div className="relative left-1/2 w-[calc(100vw-1rem)] -translate-x-1/2 overflow-visible rounded-b-[1.5rem] rounded-t-[4rem] border border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw-1.5rem)] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:w-[calc(100vw-2rem)] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]">
+    <footer className="relative z-10 -mt-24 isolate overflow-visible bg-transparent px-2 pt-24 sm:px-3 lg:-mt-28 lg:px-4 lg:pt-28">
+      <style>{`
+        @keyframes footerOrbA {
+          0% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(40px, 30px) scale(1.1); }
+          66% { transform: translate(-20px, -40px) scale(0.9); }
+          100% { transform: translate(30px, -20px) scale(1.05); }
+        }
+        @keyframes footerOrbB {
+          0% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(-30px, -20px) scale(1.15); }
+          50% { transform: translate(20px, 30px) scale(0.85); }
+          75% { transform: translate(-40px, 10px) scale(1.1); }
+          100% { transform: translate(10px, -30px) scale(0.95); }
+        }
+        @keyframes footerOrbC {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, -25px) scale(1.2); }
+          100% { transform: translate(-25px, 15px) scale(0.9); }
+        }
+      `}</style>
+      <div className="relative left-1/2 w-[calc(100vw+2rem)] -translate-x-1/2 overflow-visible rounded-t-[4rem] border-x border-t border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw+3rem)] sm:rounded-t-[6rem] lg:w-[calc(100vw+4rem)] lg:rounded-t-[7rem]">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 rounded-b-[1.5rem] rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28)_0.7px,transparent_1.8px)] opacity-[0.08] blur-[0.7px] [background-size:14px_14px] sm:rounded-b-[2rem] sm:rounded-t-[6rem] lg:rounded-b-[2.25rem] lg:rounded-t-[7rem]"
+          className="pointer-events-none absolute inset-0 z-0 rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28)_0.7px,transparent_1.8px)] opacity-[0.08] blur-[0.7px] [background-size:14px_14px] sm:rounded-t-[6rem] lg:rounded-t-[7rem]"
         />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-t-[4rem] sm:rounded-t-[6rem] lg:rounded-t-[7rem]"
+        >
+          <div
+            className="absolute -left-10 -top-10 h-80 w-80 rounded-full opacity-25 blur-[100px]"
+            style={{
+              background: "radial-gradient(circle, rgba(255,215,0,0.6), transparent 70%)",
+              animation: "footerOrbA 14s ease-in-out infinite alternate",
+            }}
+          />
+          <div
+            className="absolute -bottom-16 -right-8 h-72 w-72 rounded-full opacity-20 blur-[90px]"
+            style={{
+              background: "radial-gradient(circle, rgba(255,215,0,0.5), transparent 70%)",
+              animation: "footerOrbB 18s ease-in-out infinite alternate",
+            }}
+          />
+          <div
+            className="absolute bottom-1/3 left-1/3 h-56 w-56 rounded-full opacity-15 blur-[80px]"
+            style={{
+              background: "radial-gradient(circle, rgba(255,200,50,0.5), transparent 70%)",
+              animation: "footerOrbC 12s ease-in-out infinite alternate",
+            }}
+          />
+        </div>
 
         <Link
           to="/"

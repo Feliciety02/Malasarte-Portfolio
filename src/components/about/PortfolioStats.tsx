@@ -6,7 +6,29 @@ const stats = [
   { icon: Clock, value: "2023-Present", label: "Timeline" },
 ];
 
-export function PortfolioStats() {
+type PortfolioStatsProps = {
+  variant?: "default" | "editorial";
+};
+
+export function PortfolioStats({ variant = "default" }: PortfolioStatsProps) {
+  if (variant === "editorial") {
+    return (
+      <dl className="mt-10 grid grid-cols-3 border-y border-white/10">
+        {stats.map((stat) => (
+          <div
+            key={stat.label}
+            className="py-5 pr-3 [&:not(:first-child)]:border-l [&:not(:first-child)]:border-white/10 [&:not(:first-child)]:pl-5"
+          >
+            <dt className="text-xs text-muted-foreground">{stat.label}</dt>
+            <dd className="mt-1 font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+              {stat.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    );
+  }
+
   return (
     <div className="mt-10 flex flex-wrap gap-8 border-y border-white/10 py-6 sm:gap-12 md:gap-16">
       {stats.map((stat) => (

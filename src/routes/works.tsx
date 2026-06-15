@@ -1,7 +1,7 @@
 import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { MetallicPage } from "@/components/site/MetallicPage";
-import { projects } from "@/data/projects";
+import { projects, matchesProjectCategory } from "@/data/projects";
 import { getProjectsByCategoryFrom } from "@/data/projects";
 import type { Project, ProjectCategory } from "@/data/projects";
 import { fetchPortfolioProjectsFromSupabase } from "@/data/supabaseProjects";
@@ -50,11 +50,43 @@ const featuredProjectSlugs: Partial<Record<ProjectCategory, string>> = {
   "Social Media Graphics": "umsdc-publication-materials-and-assets",
 };
 
+function computePortfolioStats(projects: Project[]) {
+  const allProjects = getProjectsByCategoryFrom(projects, "All");
+  const totalProjects = allProjects.length;
+
+  const uniqueCategories = new Set<ProjectCategory>();
+  for (const p of allProjects) {
+    uniqueCategories.add(p.cat);
+    if (p.categories) {
+      for (const c of p.categories) {
+        uniqueCategories.add(c);
+      }
+    }
+  }
+
+  const years = allProjects.map((p) => parseInt(p.year, 10)).filter((y) => !isNaN(y));
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+
+  const orgs = new Set(allProjects.map((p) => p.client));
+  const orgsCount = orgs.size;
+
+  return {
+    stats: [
+      { value: `${totalProjects}`, label: "Projects" },
+      { value: `${uniqueCategories.size}`, label: "Categories" },
+      { value: `${maxYear - minYear}+`, label: "Years of Work" },
+      { value: `${orgsCount}+`, label: "Organizations Served" },
+    ],
+  };
+}
+
 function Works() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const loadedProjects = Route.useLoaderData();
   const sourceProjects = loadedProjects ?? projects;
   const [active, setActive] = useState<FilterCategory>("All");
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [socialSelectionRequest, setSocialSelectionRequest] = useState<{
     slug: string;
@@ -72,6 +104,7 @@ function Works() {
     setActive("All");
     setSocialSelectionRequest(null);
   };
+  const { stats } = useMemo(() => computePortfolioStats(sourceProjects), [sourceProjects]);
   const [randomizedAllProjects, setRandomizedAllProjects] = useState<Project[]>([]);
   const filtered = useMemo(
     () => getProjectsByCategoryFrom(sourceProjects, active),
@@ -131,9 +164,9 @@ function Works() {
 
   return (
     <MetallicPage variant="works" className="relative px-0">
-      <PortfolioBackground />
+      <PortfolioBackground hoveredCategory={hoveredCategory} />
       <div className="relative z-10 pt-12 md:pt-20 pb-20 sm:pb-28">
-        <PortfolioHero />
+        <PortfolioHero stats={stats} />
 
         <CategoryFilterBar
           active={active}
@@ -141,15 +174,8 @@ function Works() {
             setActive(category);
             if (category !== "Social Media Graphics") setSocialSelectionRequest(null);
           }}
+          onHover={setHoveredCategory}
         />
-
-        <p className="mx-auto mt-6 max-w-7xl px-4 text-[13px] leading-6 text-muted-foreground sm:px-6 sm:text-sm">
-          {active === "All"
-            ? `${allTabProjects.length} projects across every category.`
-            : filtered.length > 0
-              ? `${filtered.length} project${filtered.length === 1 ? "" : "s"} in ${active}`
-              : `No projects in ${active}`}
-        </p>
 
         {featuredProject ? (
           <FeaturedProject

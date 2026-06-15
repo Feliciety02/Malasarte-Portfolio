@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { Grid, Palette, Globe, Stamp, Share2, Package, FileText } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const categories = [
   "All",
@@ -13,48 +13,73 @@ const categories = [
 
 type FilterCategory = (typeof categories)[number];
 
+const categoryIcons: Record<FilterCategory, LucideIcon> = {
+  All: Grid,
+  "UI/UX Design": Palette,
+  "Web Development": Globe,
+  "Logo & Branding": Stamp,
+  "Social Media Graphics": Share2,
+  "Creative Assets": Package,
+  "Writing / VA": FileText,
+};
+
+const categoryAccentColors: Record<FilterCategory, string> = {
+  All: "rgba(255,255,255,0.15)",
+  "UI/UX Design": "rgba(147, 51, 234, 0.25)",
+  "Web Development": "rgba(59, 130, 246, 0.25)",
+  "Logo & Branding": "rgba(250, 204, 21, 0.25)",
+  "Social Media Graphics": "rgba(236, 72, 153, 0.25)",
+  "Creative Assets": "rgba(45, 212, 191, 0.25)",
+  "Writing / VA": "rgba(52, 211, 153, 0.25)",
+};
+
 type CategoryFilterBarProps = {
   active: FilterCategory;
   onChange: (category: FilterCategory) => void;
+  onHover: (category: string | null) => void;
 };
 
-export function CategoryFilterBar({ active, onChange }: CategoryFilterBarProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const activeEl = container.querySelector<HTMLButtonElement>(`[data-cat="${active}"]`);
-    if (!activeEl) return;
-    setIndicator({ left: activeEl.offsetLeft, width: activeEl.offsetWidth });
-  }, [active]);
-
+export function CategoryFilterBar({ active, onChange, onHover }: CategoryFilterBarProps) {
   return (
     <section className="relative z-10 mx-auto mt-10 max-w-7xl px-4 sm:mt-14 sm:px-6">
-      <div className="relative mx-auto overflow-hidden rounded-[20px] border border-white/[0.07] bg-black/50 p-2 shadow-[0_0_60px_-16px_rgba(255,215,0,0.1)] backdrop-blur-xl sm:p-2.5">
-        <div ref={containerRef} className="relative flex flex-wrap justify-center gap-1 sm:gap-1.5">
-          <div
-            className="absolute inset-y-2 rounded-[14px] bg-gradient-to-r from-yellow/20 to-yellow/10 shadow-[inset_0_1px_0_rgba(255,215,0,0.2),0_0_24px_-8px_rgba(255,215,0,0.2)] transition-all duration-400 ease-out sm:inset-y-2.5"
-            style={{ left: indicator.left, width: indicator.width }}
-          />
+      <div className="mx-auto flex flex-wrap justify-center gap-2 sm:gap-2.5">
+        {categories.map((category) => {
+          const Icon = categoryIcons[category];
+          const isActive = active === category;
+          const accent = categoryAccentColors[category];
 
-          {categories.map((category) => (
+          return (
             <button
               key={category}
-              data-cat={category}
+              type="button"
               onClick={() => onChange(category)}
-              className={cn(
-                "relative z-10 rounded-[14px] px-4 py-2.5 text-[12px] font-medium tracking-tight transition-colors duration-300 sm:px-6 sm:py-3 sm:text-[14px]",
-                active === category
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground/80",
-              )}
+              onMouseEnter={() => onHover(category === "All" ? null : category)}
+              onMouseLeave={() => onHover(null)}
+              className="group relative flex items-center gap-2 rounded-full px-3.5 py-2.5 text-left text-sm font-medium transition-all duration-300 sm:px-4"
+              style={{
+                background: isActive
+                  ? "linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))"
+                  : "rgba(255,255,255,0.04)",
+                border: isActive ? `1px solid ${accent}` : "1px solid rgba(255,255,255,0.08)",
+                color: isActive ? "white" : "rgba(255,255,255,0.55)",
+                boxShadow: isActive
+                  ? `0 0 20px ${accent}, 0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.10)`
+                  : "0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+              }}
             >
-              {category}
+              <Icon
+                size={15}
+                className="shrink-0 transition-all duration-300"
+                style={{
+                  color: isActive ? accent.replace("0.25", "1") : "rgba(255,255,255,0.4)",
+                }}
+              />
+              <span>{category === "All" ? "All Work" : category}</span>
             </button>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </section>
   );

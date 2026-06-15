@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorksRouteImport } from './routes/works'
-import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -21,11 +20,6 @@ import { Route as WorksCategorySlugRouteRouteImport } from './routes/works.$cate
 const WorksRoute = WorksRouteImport.update({
   id: '/works',
   path: '/works',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SkillsRoute = SkillsRouteImport.update({
-  id: '/skills',
-  path: '/skills',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -64,7 +58,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
-  '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
   '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
@@ -74,7 +67,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
-  '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
   '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
@@ -85,7 +77,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
-  '/skills': typeof SkillsRoute
   '/works': typeof WorksRouteWithChildren
   '/works/$slug': typeof WorksSlugRouteRoute
   '/works/$category/$slug': typeof WorksCategorySlugRouteRoute
@@ -97,7 +88,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/services'
-    | '/skills'
     | '/works'
     | '/works/$slug'
     | '/works/$category/$slug'
@@ -107,7 +97,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/services'
-    | '/skills'
     | '/works'
     | '/works/$slug'
     | '/works/$category/$slug'
@@ -117,7 +106,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/services'
-    | '/skills'
     | '/works'
     | '/works/$slug'
     | '/works/$category/$slug'
@@ -128,7 +116,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
-  SkillsRoute: typeof SkillsRoute
   WorksRoute: typeof WorksRouteWithChildren
 }
 
@@ -139,13 +126,6 @@ declare module '@tanstack/react-router' {
       path: '/works'
       fullPath: '/works'
       preLoaderRoute: typeof WorksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/skills': {
-      id: '/skills'
-      path: '/skills'
-      fullPath: '/skills'
-      preLoaderRoute: typeof SkillsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -210,7 +190,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
-  SkillsRoute: SkillsRoute,
   WorksRoute: WorksRouteWithChildren,
 }
 export const routeTree = rootRouteImport
