@@ -77,12 +77,14 @@ export function PortfolioProjectCard({
         <div className="flex h-full flex-col">
           <div className="relative h-[65%] shrink-0 overflow-hidden bg-white">
             {coverImage ? (
-              <img
-                src={coverImage}
-                alt={`${title} preview`}
-                className="h-full w-full object-contain p-6 transition-transform duration-700 group-hover:scale-105 sm:p-8"
-                loading="lazy"
-              />
+              <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
+                <img
+                  src={coverImage}
+                  alt={`${title} preview`}
+                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
             ) : (
               <div className="flex h-full items-center justify-center">
                 <span className="text-[11px] uppercase tracking-[0.15em] text-black/45">
@@ -90,9 +92,10 @@ export function PortfolioProjectCard({
                 </span>
               </div>
             )}
+            <div aria-hidden className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/80 to-transparent" />
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col p-4">
+          <div className="flex min-h-0 flex-1 flex-col bg-black/80 p-4">
             <h3 className="line-clamp-2 font-display text-lg font-bold leading-tight sm:text-xl">
               {title}
             </h3>
@@ -171,15 +174,23 @@ export function PortfolioProjectCard({
               )}
             >
               {coverImage ? (
-                <img
-                  src={coverImage}
-                  alt={`${title} preview`}
-                  className={cn(
-                    "h-full w-full object-contain transition-all duration-700 group-hover:scale-105",
-                    isBranding && "p-4 sm:p-6",
-                  )}
-                  loading="lazy"
-                />
+                isBranding ? (
+                  <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
+                    <img
+                      src={coverImage}
+                      alt={`${title} preview`}
+                      className="max-h-full max-w-full object-contain transition-all duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={coverImage}
+                    alt={`${title} preview`}
+                    className="h-full w-full object-contain transition-all duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                )
               ) : (
                 <div className="flex h-full items-center justify-center">
                   <span className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
@@ -213,7 +224,7 @@ export function PortfolioProjectCard({
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-3 p-4 sm:p-5">
+          <div className="flex flex-col gap-3 px-4 pb-4 pt-2 sm:px-5 sm:pb-5">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl">{title}</h3>
               <span className="shrink-0 text-[11px] font-medium uppercase tracking-[0.15em] text-yellow/60 sm:text-xs">

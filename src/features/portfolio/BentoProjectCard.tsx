@@ -17,10 +17,10 @@ type BentoProjectCardProps = {
 };
 
 const spanClasses: Record<BentoCardType, string> = {
-  featured: "min-h-[24rem] md:col-span-2 md:min-h-0",
-  portrait: "min-h-[34rem] md:row-span-2 md:min-h-0",
-  standard: "min-h-[22rem] md:min-h-0",
-  gallery: "min-h-[22rem] md:min-h-0",
+  featured: "min-h-[28rem] md:col-span-2 md:min-h-0",
+  portrait: "min-h-[38rem] md:row-span-2 md:min-h-0",
+  standard: "min-h-[26rem] md:min-h-0",
+  gallery: "min-h-[26rem] md:min-h-0",
 };
 
 function ProjectPreview({
@@ -40,23 +40,33 @@ function ProjectPreview({
 
   if (!coverImage) return null;
 
-  return (
-    <>
-      {!isBranding ? (
+  if (isBranding) {
+    return (
+      <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
         <img
           src={coverImage}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-2xl"
+          alt={`${project.title} preview`}
+          className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.025]"
+          loading="lazy"
         />
-      ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <img
+        src={coverImage}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-2xl"
+      />
       <img
         src={coverImage}
         alt={`${project.title} preview`}
         className={cn(
           "relative h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.025]",
           type === "portrait" && "p-5 sm:p-7",
-          isBranding && "p-8 sm:p-10",
         )}
         loading="lazy"
       />
@@ -103,11 +113,16 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
       {!isBranding ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
         />
-      ) : null}
+      ) : (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent"
+        />
+      )}
 
-      <TagPill>{category}</TagPill>
+      <TagPill className={isBranding ? "text-gray-800" : undefined}>{category}</TagPill>
 
       {project.vercelLiveUrl?.trim() ? (
         <a
@@ -122,12 +137,18 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
         </a>
       ) : null}
 
-      <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-        <div className="flex items-end justify-between gap-4">
+      <div
+        className={cn(
+          "absolute inset-x-0 bottom-0 z-10",
+          isBranding ? "bg-white" : "bg-black/80",
+        )}
+      >
+        <div className="flex items-end justify-between gap-4 px-5 pb-5 pt-3 sm:px-6 sm:pb-6">
           <div className="min-w-0">
             <h3
               className={cn(
                 "font-display font-bold leading-tight tracking-[-0.02em]",
+                isBranding && "text-black",
                 type === "featured"
                   ? "text-3xl sm:text-4xl"
                   : type === "portrait"
@@ -139,7 +160,8 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
             </h3>
             <p
               className={cn(
-                "mt-2 text-[13px] leading-6 text-white/65",
+                "mt-2 text-[13px] leading-6",
+                isBranding ? "text-black/60" : "text-white/65",
                 type === "featured" ? "line-clamp-2 max-w-2xl sm:text-sm" : "line-clamp-1",
               )}
             >
@@ -147,7 +169,14 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
             </p>
           </div>
 
-          <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-yellow/80 transition-colors group-hover:text-yellow">
+          <span
+            className={cn(
+              "inline-flex shrink-0 items-center gap-1.5 text-xs font-medium transition-colors",
+              isBranding
+                ? "text-yellow group-hover:text-yellow/80"
+                : "text-yellow/80 group-hover:text-yellow",
+            )}
+          >
             View
             <ArrowUpRight
               size={15}

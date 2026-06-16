@@ -82,7 +82,7 @@ export function PortfolioGallery({
 
     return (
       <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-16 sm:px-6">
-        <div className="grid grid-flow-dense gap-5 md:auto-rows-[20rem] md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="grid grid-flow-dense gap-5 md:auto-rows-[26rem] md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {bentoProjects.map(({ project, type }) => (
             <BentoProjectCard
               key={project.slug}
@@ -97,32 +97,10 @@ export function PortfolioGallery({
   }
 
   if (activeCategory === "Logo & Branding") {
-    const recommendations = projects.slice(0, 3);
-
     return (
       <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-16 sm:px-6">
-        <div className="mb-5 flex items-center justify-between gap-4 sm:mb-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            Recommended Projects
-          </p>
-
-          {onBackToProjects ? (
-            <button
-              type="button"
-              onClick={onBackToProjects}
-              className="group inline-flex items-center gap-2 text-sm font-medium text-yellow/75 transition-colors hover:text-yellow"
-            >
-              <ArrowLeft
-                size={15}
-                className="transition-transform duration-300 group-hover:-translate-x-1"
-              />
-              Back to Projects
-            </button>
-          ) : null}
-        </div>
-
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {recommendations.map((project, index) => (
+          {projects.map((project, index) => (
             <PortfolioProjectCard
               key={project.slug}
               project={project}

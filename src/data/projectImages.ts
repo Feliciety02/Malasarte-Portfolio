@@ -12,12 +12,12 @@ type GalleryImageRef = {
 };
 
 const projectCoverImages = import.meta.glob<string>(
-  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.png"],
+  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.png", "../assets/projects/covers/*.jpg", "../assets/projects/covers/*.jpeg"],
   { eager: true, import: "default" },
 );
 
 const projectGalleryImages = import.meta.glob<string>(
-  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.png"],
+  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.png", "../assets/projects/gallery/*.jpg", "../assets/projects/gallery/*.jpeg"],
   {
     eager: true,
     import: "default",

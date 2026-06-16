@@ -17,7 +17,7 @@ export function FeaturesSection({ project, sectionNumber, openLightbox }: Sectio
         </h2>
       </FadeIn>
       {openLightbox ? (
-        <GalleryGrid project={project} openLightbox={openLightbox} variant="grid" />
+        <GalleryGrid project={project} openLightbox={openLightbox} variant="stack" />
       ) : null}
     </SectionAnchor>
   );

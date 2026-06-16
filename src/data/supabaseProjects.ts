@@ -77,7 +77,7 @@ const hiddenProjectSlugs = new Set([
   "cosmic-remedies-by-sia-logo",
   "pietyl-management-system-logo",
 ]);
-const localIdentitySlugs = new Set(["pietyl-lpg", "pieytl-branding"]);
+const localIdentitySlugs = new Set(["pietyl-lpg"]);
 const localGallerySlugs = new Set(["enigma", "umsdc-publication-materials-and-assets"]);
 
 const sortBySortOrder = <T extends { sort_order: number | null }>(items: T[] = []) =>

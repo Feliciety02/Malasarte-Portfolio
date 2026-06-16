@@ -1,10 +1,8 @@
 import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { MetallicPage } from "@/components/site/MetallicPage";
-import { projects, matchesProjectCategory } from "@/data/projects";
-import { getProjectsByCategoryFrom } from "@/data/projects";
+import { projects, matchesProjectCategory, getProjectsByCategoryFrom } from "@/data/projects";
 import type { Project, ProjectCategory } from "@/data/projects";
-import { fetchPortfolioProjectsFromSupabase } from "@/data/supabaseProjects";
 import { PortfolioBackground } from "@/features/portfolio/PortfolioBackground";
 import { PortfolioHero } from "@/features/portfolio/PortfolioHero";
 import { CategoryFilterBar } from "@/features/portfolio/CategoryFilterBar";
@@ -14,7 +12,6 @@ import { PortfolioGallery } from "@/features/portfolio/PortfolioGallery";
 import { SocialMediaGraphicsShowcase } from "@/features/portfolio/SocialMediaGraphicsShowcase";
 
 export const Route = createFileRoute("/works")({
-  loader: async () => fetchPortfolioProjectsFromSupabase(),
   head: () => ({
     meta: [
       { title: "Fe Anne Malasarte" },
@@ -83,8 +80,7 @@ function computePortfolioStats(projects: Project[]) {
 
 function Works() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const loadedProjects = Route.useLoaderData();
-  const sourceProjects = loadedProjects ?? projects;
+  const sourceProjects = projects;
   const [active, setActive] = useState<FilterCategory>("All");
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
@@ -116,8 +112,8 @@ function Works() {
   );
 
   useEffect(() => {
-    setRandomizedAllProjects(shuffle(allProjects));
-  }, [allProjects]);
+    if (active === "All") setRandomizedAllProjects(shuffle(allProjects));
+  }, [active, allProjects]);
 
   const allTabProjects =
     randomizedAllProjects.length === allProjects.length ? randomizedAllProjects : allProjects;

@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import type { Project, ProjectFlipbookEmbed, ProjectGalleryItem } from "@/data/projects";
 import { getProjectGalleryImage } from "@/data/projectImages";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,126 @@ function GalleryPreviewImage({ project, item }: { project: Project; item: Projec
   );
 }
 
+function Slideshow({
+  items,
+  project,
+  openLightbox,
+}: {
+  items: ProjectGalleryItem[];
+  project: Project;
+  openLightbox: (i: number) => void;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+
+  const goTo = useCallback(
+    (i: number) => {
+      setDirection(i > current ? 1 : -1);
+      setCurrent(((i % items.length) + items.length) % items.length);
+    },
+    [current, items.length],
+  );
+
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  useEffect(() => {
+    if (paused) return;
+    intervalRef.current = setInterval(next, 5000);
+    return () => clearInterval(intervalRef.current);
+  }, [paused, next]);
+
+  const item = items[current];
+
+  return (
+    <div
+      className="mt-10"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <style>{`
+        @keyframes slide-from-right {
+          from { opacity: 0; transform: translateX(60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slide-from-left {
+          from { opacity: 0; transform: translateX(-60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-right { animation: slide-from-right 0.45s ease-out both; }
+        .animate-slide-left { animation: slide-from-left 0.45s ease-out both; }
+        .animate-fade-up { animation: fade-up 0.4s ease-out both; }
+      `}</style>
+
+      <div className="relative overflow-hidden rounded-xl">
+        <div className="relative w-full overflow-hidden">
+          <button
+            onClick={() => openLightbox(current)}
+            className="metal-panel group relative block w-full text-left"
+          >
+            <div
+              key={current}
+              className={cn(
+                "relative aspect-[16/10] bg-gradient-to-br",
+                direction > 0 ? "animate-slide-right" : "animate-slide-left",
+                item.color,
+              )}
+            >
+              <GalleryPreviewImage project={project} item={item} />
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),transparent_45%,rgba(0,0,0,0.4))]" />
+              <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-black/40 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/80 backdrop-blur">
+                {String(current + 1).padStart(2, "0")} <ArrowUpRight size={11} />
+              </span>
+            </div>
+          </button>
+
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/80 backdrop-blur transition hover:bg-black/70 hover:text-white"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/80 backdrop-blur transition hover:bg-black/70 hover:text-white"
+            aria-label="Next slide"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+
+      <div key={`text-${current}`} className="animate-fade-up p-5" style={{ animationDelay: "0.12s" }}>
+        <p className="font-display text-xl font-semibold">{item.label}</p>
+        <p className="mt-2 text-sm text-muted-foreground">{item.note}</p>
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className={cn(
+              "h-2 rounded-full transition-all duration-300",
+              i === current
+                ? "w-6 bg-primary"
+                : "w-2 bg-white/20 hover:bg-white/40",
+            )}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function GalleryGrid({
   project,
   openLightbox,
@@ -39,29 +160,7 @@ export function GalleryGrid({
 }) {
   const items = project.gallery;
   if (variant === "stack") {
-    return (
-      <div className="thin-x-scrollbar mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4">
-        {items.map((item, i) => (
-          <button
-            key={item.label}
-            onClick={() => openLightbox(i)}
-            className="metal-panel group relative w-[78%] shrink-0 snap-center overflow-hidden text-left md:w-[60%] lg:w-[48%]"
-          >
-            <div className={cn("relative aspect-[16/10] bg-gradient-to-br", item.color)}>
-              <GalleryPreviewImage project={project} item={item} />
-              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),transparent_45%,rgba(0,0,0,0.4))]" />
-              <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-black/40 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/80 backdrop-blur">
-                {String(i + 1).padStart(2, "0")} <ArrowUpRight size={11} />
-              </span>
-            </div>
-            <div className="p-5">
-              <p className="font-display text-xl font-semibold">{item.label}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{item.note}</p>
-            </div>
-          </button>
-        ))}
-      </div>
-    );
+    return <Slideshow items={items} project={project} openLightbox={openLightbox} />;
   }
   if (variant === "documents") {
     return (

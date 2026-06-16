@@ -99,6 +99,7 @@ export function FeaturedProject({
             isBranding && "bg-white",
             aspect,
           )}
+          style={isBranding ? { background: "#fff" } : undefined}
         >
           {isSocial ? (
             <SocialMediaBentoPreview
@@ -107,14 +108,21 @@ export function FeaturedProject({
               className="rounded-[inherit]"
             />
           ) : coverImage ? (
-            <img
-              src={coverImage}
-              alt={`${title} preview`}
-              className={cn(
-                "h-full w-full object-contain transition-transform duration-700 group-hover:scale-105",
-                isBranding && "p-4 sm:p-6",
-              )}
-            />
+            isBranding ? (
+              <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
+                <img
+                  src={coverImage}
+                  alt={`${title} preview`}
+                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            ) : (
+              <img
+                src={coverImage}
+                alt={`${title} preview`}
+                className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+              />
+            )
           ) : null}
 
           {!isBranding ? (
@@ -133,7 +141,7 @@ export function FeaturedProject({
             </a>
           ) : null}
 
-          <TagPill>{pill}</TagPill>
+          <TagPill className={isBranding ? "text-gray-800" : undefined}>{pill}</TagPill>
         </div>
       </div>
     </section>

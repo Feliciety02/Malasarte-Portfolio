@@ -17,10 +17,6 @@ const PROJECT_HERO_THEMES: Record<string, { glow: string; dot: string }> = {
     glow: "from-teal-400/45 via-cyan-500/20 to-transparent",
     dot: "bg-gradient-to-br from-teal-300 to-cyan-600",
   },
-  "pieytl-branding": {
-    glow: "from-teal-400/45 via-cyan-500/20 to-transparent",
-    dot: "bg-gradient-to-br from-teal-300 to-cyan-600",
-  },
   "blue-collar-builders": {
     glow: "from-indigo-500/45 via-sky-400/20 to-transparent",
     dot: "bg-gradient-to-br from-indigo-400 to-sky-400",

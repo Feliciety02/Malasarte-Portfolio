@@ -572,7 +572,7 @@ export const projects: Project[] = [
     cardSize: "medium",
     directoryTitle: "PIEYTL Marketing",
     cat: "Logo & Branding",
-    kind: "branding",
+    kind: "logo",
     tag: "Brand Identity & Logo Design",
     color: "from-cyan-400/55 to-teal-500/30",
     desc: "PIETYL Marketing is an LPG-focused business identity designed for clarity, trust, and strong local brand recognition.",
@@ -775,95 +775,7 @@ export const projects: Project[] = [
         note: "Placeholder for transport and field-use branding mockups.",
       },
     ],
-    nextProjectSlug: "pieytl-branding",
-  },
-  {
-    slug: "pieytl-branding",
-    title: "PIEYTL Marketing",
-    imageTitle: "Pieytl Branding",
-    cardSize: "tall",
-    directoryTitle: "PIEYTL Marketing",
-    cat: "Logo & Branding",
-    kind: "logo",
-    tag: "Logo Design",
-    color: "from-cyan-400/55 to-teal-500/30",
-    desc: "Logo design for PIEYTL Marketing, an LPG-focused business.",
-    role: "Logo Designer • Brand Strategist",
-    tools: ["Figma"],
-    year: "2024",
-    client: "PIEYTL Marketing",
-    overview:
-      "PIEYTL Marketing needed a professional logo that reflects its LPG industry expertise while establishing trust and recognition among customers.",
-    goals: [
-      "Reflect the company's LPG specialization.",
-      "Build instant trust and recognition.",
-      "Stay clear at both small and large scales.",
-      "Work across digital and print platforms.",
-    ],
-    impact: [
-      { value: "1", label: "Primary logo" },
-      { value: "1", label: "Icon mark" },
-      { value: "∞", label: "Surfaces" },
-    ],
-    focusAreas: [],
-    process: [],
-    challenges: [],
-    outcome:
-      "A recognizable and professional logo that strengthens PIEYTL Marketing's brand presence and provides a strong foundation for future marketing materials.",
-    gallery: [
-      {
-        color: "from-cyan-400/55 to-teal-500/30",
-        label: "Primary Logo",
-        ratio: "square",
-        note: "Placeholder for the final PIEYTL Marketing logo mark and lockup.",
-      },
-      {
-        color: "from-teal-500/40 to-sky-500/30",
-        label: "Icon Mark",
-        ratio: "wide",
-        note: "Placeholder for the standalone LPG cylinder + flame icon.",
-      },
-      {
-        color: "from-cyan-500/40 to-blue-500/30",
-        label: "Logo Application",
-        ratio: "tall",
-        note: "Placeholder for business cards, signage, or social header use.",
-      },
-    ],
-    branding: {
-      mode: "logo",
-      challenge:
-        "Create a simple yet memorable identity that clearly represents the company's services and remains effective across digital and print platforms.",
-      solution:
-        "The final logo combines an LPG cylinder and flame symbol with a bold modern wordmark, creating an identity that communicates reliability, energy, and professionalism.",
-      highlights: [
-        "LPG cylinder icon representing the core business",
-        "Flame symbol representing energy and growth",
-        "Clean, modern, and scalable design",
-        "Strong visibility across multiple applications",
-      ],
-      symbol: {
-        title: "Logo mark",
-        image: "/src/assets/projects/covers/Pieytl Branding.svg",
-        items: [
-          {
-            name: "LPG Cylinder",
-            meaning: "Represents the core business and industry.",
-          },
-          {
-            name: "Flame Symbol",
-            meaning: "Stands for energy, fuel, and business growth.",
-          },
-          {
-            name: "Bold Wordmark",
-            meaning: "Communicates reliability and professionalism.",
-          },
-        ],
-      },
-      outcome:
-        "A recognizable and professional logo that strengthens PIEYTL Marketing's brand presence and provides a strong foundation for future marketing materials.",
-    },
-    nextProjectSlug: "blue-collar-builders",
+    nextProjectSlug: "sidlac-co-branding",
   },
   {
     slug: "blue-collar-builders",
@@ -1211,7 +1123,7 @@ export const projects: Project[] = [
     kind: "uiux",
     tag: "Management System",
     color: "from-sky-500/50 to-indigo-500/30",
-    desc: "UI/UX design for Pietyl DigiLPG's internal management system.",
+    desc: "Product design system for Pietyl DigiLPG's internal management dashboard covering records, workflow, and operations monitoring.",
     role: "Product Designer",
     tools: ["Figma", "FigJam"],
     year: "2025",
@@ -1293,25 +1205,35 @@ export const projects: Project[] = [
     gallery: [
       {
         color: "from-sky-500/50 to-indigo-500/30",
-        label: "Dashboard",
+        label: "Landing Page",
         ratio: "wide",
-        note: "Placeholder for the main dashboard view.",
+        note: "Low-fidelity wireframes exploring the main dashboard layout, data hierarchy, and navigation structure for the management system.",
       },
       {
         color: "from-indigo-500/40 to-blue-500/30",
-        label: "Records Module",
+        label: "Admin Product Catalog",
         ratio: "square",
-        note: "Placeholder for the records management interface.",
+        note: "Refined UI mockups for the records module, showing the visual design system, typography, and color application.",
       },
       {
         color: "from-cyan-500/40 to-sky-500/30",
-        label: "Workflow Tracking",
+        label: "Accountant Sales",
         ratio: "square",
-        note: "Placeholder for the workflow monitoring screens.",
+        note: "Connected prototype flows demonstrating how staff navigate between dashboard, records, and workflow monitoring tasks.",
+      },
+      {
+        color: "from-teal-500/40 to-emerald-500/30",
+        label: "Cashier POS",
+        ratio: "square",
+        note: "Point-of-sale wireframes showing order processing and payment flow design.",
+      },
+      {
+        color: "from-amber-400/40 to-orange-500/30",
+        label: "Rider App",
+        ratio: "square",
+        note: "Rider delivery management screen design for dispatch and delivery tracking workflows.",
       },
     ],
-    figmaPreviewUrl:
-      "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331&embed-host=share",
     nextProjectSlug: "pietyl-digilpg-web",
   },
   {
@@ -1324,7 +1246,7 @@ export const projects: Project[] = [
     kind: "frontend",
     tag: "Web Development",
     color: "from-sky-500/50 to-indigo-500/30",
-    desc: "Full-stack web development for Pietyl DigiLPG's landing page and management system, serving a decades-old LPG business.",
+    desc: "Full-stack implementation of Pietyl DigiLPG's landing page and management system, built with Laravel, React, and MySQL.",
     role: "Full-Stack Developer",
     tools: [
       "PHP 8.2",
@@ -1366,19 +1288,19 @@ export const projects: Project[] = [
     ],
     process: [
       {
-        title: "Research",
-        text: "Reviewed the client's existing workflows, store operations, and LPG industry landscape to define requirements.",
+        title: "Requirements",
+        text: "Reviewed the client's existing workflows, store operations, and LPG industry landscape to define technical specifications.",
       },
       {
-        title: "Design",
-        text: "Created clean wireframes and mockups for both the public-facing landing page and the internal management interface.",
+        title: "Architecture",
+        text: "Set up the Laravel backend, database schema, and Inertia.js front-end structure for the landing page and management modules.",
       },
       {
-        title: "Develop",
-        text: "Built the landing page and management system with Laravel, React, Inertia.js, Tailwind CSS 4, and MySQL.",
+        title: "Implementation",
+        text: "Developed the landing page and management system with Laravel, React, Inertia.js, Tailwind CSS 4, and MySQL.",
       },
       {
-        title: "Deliver",
+        title: "Deployment",
         text: "Deployed the project with placeholder assets in sensitive sections to protect client confidentiality.",
       },
     ],
@@ -1403,21 +1325,33 @@ export const projects: Project[] = [
     gallery: [
       {
         color: "from-sky-500/50 to-indigo-500/30",
-        label: "Landing Page Preview",
+        label: "Landing Page",
         ratio: "wide",
-        note: "Placeholder for the Pietyl DigiLPG landing page design.",
+        note: "Implemented landing page with Laravel Blade and Inertia.js, featuring store information, service overview, and customer contact section.",
       },
       {
         color: "from-indigo-500/40 to-blue-500/30",
-        label: "Management Dashboard",
+        label: "Admin Product Catalog",
         ratio: "square",
-        note: "Placeholder for the internal management dashboard view.",
+        note: "Product catalog management screen built with React and Inertia.js for adding, editing, and organizing LPG product listings.",
       },
       {
         color: "from-cyan-500/40 to-sky-500/30",
-        label: "System Module",
+        label: "Accountant Sales",
         ratio: "square",
-        note: "Placeholder for operational module screens.",
+        note: "Sales overview and accounting dashboard showing revenue tracking, transaction summaries, and financial reporting.",
+      },
+      {
+        color: "from-teal-500/40 to-emerald-500/30",
+        label: "Cashier POS",
+        ratio: "square",
+        note: "Point-of-sale interface for processing customer orders, payments, and generating receipts in real time.",
+      },
+      {
+        color: "from-amber-400/40 to-orange-500/30",
+        label: "Rider App",
+        ratio: "square",
+        note: "Rider delivery interface displaying delivery assignments, route information, and order status tracking.",
       },
     ],
     hideLiveWorkspace: true,
@@ -1865,7 +1799,7 @@ export const projects: Project[] = [
         note: "Mobile and desktop implementation comparisons.",
       },
     ],
-    vercelLiveUrl: "https://vercel.com/felicietys-projects/u-munity-organization-management-system-v-2/FpfNGtxF3v9sPGCqzstdpYk5GHEr",
+    vercelLiveUrl: "https://u-munity-organization-management-sy.vercel.app/",
     nextProjectSlug: "umsdc-publication-materials-and-assets",
   },
   {
@@ -2297,17 +2231,127 @@ export const projects: Project[] = [
     year: "2024",
     cardSize: "medium",
   }),
-  createSimpleProject({
+  {
     slug: "the-digital-income",
     title: "The Digital Income",
+    imageTitle: "The Digital Income",
+    cardSize: "medium",
     cat: "Social Media Graphics",
+    kind: "gallery",
     tag: "Social Media Graphics",
+    color: "from-amber-400/45 to-green-500/30",
     desc: "Digital income themed social media graphics and layouts.",
     role: "Social Media Graphic Designer",
-    color: "from-amber-400/45 to-green-500/30",
+    tools: ["Canva"],
     year: "2024",
-    cardSize: "medium",
-  }),
+    client: "The Digital Income",
+    overview:
+      "Social media graphics and visual content for The Digital Income, focused on digital income education, online business growth, and financial literacy themes.",
+    goals: [
+      "Create engaging social media graphics that communicate digital income concepts clearly.",
+      "Develop a consistent visual language for online business and financial literacy content.",
+      "Produce reusable templates for ongoing social media content creation.",
+    ],
+    impact: [
+      { value: "7", label: "Hero graphics" },
+      { value: "1", label: "Visual system" },
+      { value: "1", label: "Content series" },
+    ],
+    focusAreas: [
+      {
+        title: "Visual Direction",
+        text: "Defined a clean, modern aesthetic with warm tones to communicate success, growth, and accessibility.",
+      },
+      {
+        title: "Content Structure",
+        text: "Organized hero images around key digital income themes such as passive income, online business, and financial freedom.",
+      },
+      {
+        title: "Typography",
+        text: "Used bold, headline-driven layouts to make key messages scannable and impactful on social feeds.",
+      },
+    ],
+    process: [
+      {
+        title: "Research",
+        text: "Reviewed digital income content trends and competitor visual styles to define a standout direction.",
+      },
+      {
+        title: "Concept",
+        text: "Developed a visual system around wealth-building imagery paired with clean typography and warm gradients.",
+      },
+      {
+        title: "Design",
+        text: "Created seven hero image layouts covering core digital income topics with consistent branding elements.",
+      },
+      {
+        title: "Deliver",
+        text: "Prepared the series as portfolio-ready assets with room for future content expansion.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Complex Topics Made Simple",
+        challenge:
+          "Digital income concepts like passive income and online business can feel abstract in a single image.",
+        solution:
+          "Used metaphor-driven visuals, clean layouts, and strong headlines to make each concept immediately understandable.",
+      },
+      {
+        title: "Visual Consistency",
+        challenge:
+          "Each hero image had to feel part of the same series while covering different topics.",
+        solution:
+          "Applied a consistent color palette, typography system, and compositional template across all seven graphics.",
+      },
+    ],
+    outcome:
+      "The Digital Income now has a polished visual content series with seven hero graphics built around a consistent system, ready for social media publishing and future campaign expansion.",
+    gallery: [
+      {
+        color: "from-amber-400/45 to-green-500/30",
+        label: "Hero Image 1",
+        ratio: "wide",
+        note: "Hero visual introducing digital income concepts with bold typography and warm gradient treatment.",
+      },
+      {
+        color: "from-green-500/40 to-teal-500/30",
+        label: "Hero Image 2",
+        ratio: "wide",
+        note: "Content graphic focusing on passive income strategies and financial growth messaging.",
+      },
+      {
+        color: "from-amber-400/40 to-orange-500/30",
+        label: "Hero Image 3",
+        ratio: "wide",
+        note: "Online business themed layout with clean composition and motivational headline hierarchy.",
+      },
+      {
+        color: "from-teal-500/40 to-cyan-500/30",
+        label: "Hero Image 4",
+        ratio: "wide",
+        note: "Wealth-building visual combining metaphor-driven imagery with clear call-to-action framing.",
+      },
+      {
+        color: "from-amber-400/40 to-yellow-500/30",
+        label: "Hero Image 5",
+        ratio: "wide",
+        note: "Digital freedom concept graphic with modern typography and aspirational visual language.",
+      },
+      {
+        color: "from-emerald-500/40 to-amber-400/30",
+        label: "Hero Image 6",
+        ratio: "wide",
+        note: "Financial literacy hero highlighting smart money management and income growth principles.",
+      },
+      {
+        color: "from-amber-400/40 to-rose-500/30",
+        label: "Hero Image 7",
+        ratio: "wide",
+        note: "Closing hero reinforcing the digital income journey with motivational messaging and brand consistency.",
+      },
+    ],
+  },
   createSimpleProject({
     slug: "tech-nexus-devcon-philippines",
     title: "Tech Nexus DevCon Philippines",
@@ -2411,21 +2455,142 @@ export const projects: Project[] = [
         note: "Showcase slot for additional layouts and variations.",
       },
     ],
-    vercelLiveUrl: "https://salin-salin-r1sh8lb5c-felicietys-projects.vercel.app/",
+    vercelLiveUrl: "https://salin-salin.vercel.app/",
   },
-  createSimpleProject({
+  {
     slug: "handyman",
     title: "HandyMan",
+    imageTitle: "handyman",
+    cardSize: "medium",
     cat: "Web Development",
     kind: "frontend",
     tag: "Web Development",
-    desc: "Responsive web development project for HandyMan.",
-    role: "Web Developer",
-    tools: ["React", "Tailwind CSS", "TypeScript"],
     color: "from-orange-400/45 to-cyan-500/30",
+    desc: "Java desktop application for booking services, hiring skilled workers, and renting tools.",
+    role: "Java Developer",
+    tools: ["Java", "JavaFX", "MySQL", "XAMPP", "Maven"],
     year: "2025",
-    cardSize: "medium",
-  }),
+    client: "HandyMan",
+    overview:
+      "HandyMan Tools and Services is a Java-based desktop application designed to streamline the process of booking services, hiring skilled workers, and renting tools. Built with JavaFX for a rich user interface and utilizing XAMPP for database management.",
+    goals: [
+      "Streamline service booking and tool rental processes.",
+      "Provide a rich desktop UI experience with JavaFX.",
+      "Manage user profiles, payments, and order history.",
+    ],
+    impact: [
+      { value: "1", label: "Desktop application" },
+      { value: "5+", label: "Core features" },
+      { value: "1", label: "Database system" },
+    ],
+    focusAreas: [
+      {
+        title: "User Interface",
+        text: "Built a rich JavaFX interface with screens for login, signup, profile management, service booking, and tool checkout.",
+      },
+      {
+        title: "Database Management",
+        text: "Designed and integrated a MySQL database via XAMPP to manage users, services, tools, bookings, and transactions.",
+      },
+      {
+        title: "Feature System",
+        text: "Implemented core features including employee directory with search filters, service booking with receipt generation, and tool rental checkout flow.",
+      },
+    ],
+    process: [
+      {
+        title: "Planning",
+        text: "Defined the application requirements, user flows, and database schema for the service booking and tool rental system.",
+      },
+      {
+        title: "Design",
+        text: "Created wireframes for the desktop application screens including login, profile, services, and checkout interfaces.",
+      },
+      {
+        title: "Development",
+        text: "Built the application using Java and JavaFX with MySQL database integration via XAMPP.",
+      },
+      {
+        title: "Deliver",
+        text: "Prepared the project repository with setup instructions and demo images for portfolio presentation.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Desktop UI Complexity",
+        challenge:
+          "Building an intuitive desktop UI that matches modern web application expectations required careful JavaFX layout design.",
+        solution:
+          "Used JavaFX's Scene Builder for visual layout design and implemented custom CSS styling for a polished look.",
+      },
+      {
+        title: "Database Integration",
+        challenge:
+          "Setting up a reliable local database connection and schema that works across different environments.",
+        solution:
+          "Provided clear setup instructions for XAMPP and included the database schema export file in the repository.",
+      },
+    ],
+    outcome:
+      "HandyMan now has a fully functional Java desktop application for service booking and tool rental, with user authentication, profile management, and receipt generation features.",
+    gallery: [
+      {
+        color: "from-orange-400/45 to-cyan-500/30",
+        label: "Home Screen",
+        ratio: "wide",
+        note: "Main application landing page with service categories and quick access to booking features.",
+      },
+      {
+        color: "from-cyan-500/40 to-teal-500/30",
+        label: "About Us",
+        ratio: "square",
+        note: "About page detailing the HandyMan platform mission, vision, and service overview.",
+      },
+      {
+        color: "from-blue-500/40 to-indigo-500/30",
+        label: "Login",
+        ratio: "square",
+        note: "User authentication screen with email and password login for secure account access.",
+      },
+      {
+        color: "from-emerald-500/40 to-teal-500/30",
+        label: "Employee Directory",
+        ratio: "square",
+        note: "Browse skilled workers with search filters for specialization, availability, and location.",
+      },
+      {
+        color: "from-cyan-500/40 to-orange-400/30",
+        label: "Services Catalog",
+        ratio: "square",
+        note: "Service listings displaying available handyman services with pricing and duration details.",
+      },
+      {
+        color: "from-orange-400/40 to-yellow-500/30",
+        label: "Service Booking",
+        ratio: "square",
+        note: "Service booking and cart flow with receipt generation for booking confirmations.",
+      },
+      {
+        color: "from-violet-500/40 to-purple-500/30",
+        label: "Tool Cart",
+        ratio: "square",
+        note: "Tool rental cart with quantity selection, shipping address, and checkout options.",
+      },
+      {
+        color: "from-orange-400/40 to-yellow-500/30",
+        label: "Profile Management",
+        ratio: "square",
+        note: "User profile screen for managing personal information, payment methods, and saved addresses.",
+      },
+      {
+        color: "from-rose-500/40 to-pink-500/30",
+        label: "Order History",
+        ratio: "square",
+        note: "Complete history of past service bookings and tool rentals with status tracking.",
+      },
+    ],
+    hideLiveWorkspace: true,
+  },
 ];
 export const getProject = (slug: string) => projects.find((project) => project.slug === slug);
 
@@ -2436,7 +2601,6 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "odara-management-group",
     "lian-monley",
     "pietyl-lpg",
-    "pieytl-branding",
     "sidlac-co-branding",
     "blue-collar-builders",
     "trichomend-plus",
