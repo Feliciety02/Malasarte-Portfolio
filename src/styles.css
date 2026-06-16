@@ -413,29 +413,6 @@
     opacity: 0.24;
   }
 
-  .metal-page--skills::before {
-    background:
-      radial-gradient(
-        48rem circle at var(--mx) var(--my),
-        rgba(255, 255, 255, 0.095),
-        transparent 42%
-      ),
-      repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 9px),
-      repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 10px),
-      linear-gradient(180deg, #141617, #070809 54%, #050506);
-  }
-
-  .metal-page--skills::after {
-    background:
-      radial-gradient(
-        42rem circle at var(--mx) var(--my),
-        rgba(255, 255, 255, 0.055),
-        transparent 55%
-      ),
-      linear-gradient(115deg, transparent 24%, rgba(255, 255, 255, 0.075), transparent 62%);
-    opacity: 0.28;
-  }
-
   .metal-page--process::before {
     background:
       radial-gradient(

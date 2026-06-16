@@ -4,14 +4,12 @@ export const navLinks = [
   { to: "/", label: "Home" },
   { to: "/works", label: "Works" },
   { to: "/services", label: "Services" },
-  { to: "/skills", label: "Skills" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export const footerExploreLinks = [
   { to: "/works", label: "Works" },
-  { to: "/skills", label: "Skills" },
   { to: "/about", label: "About" },
 ] as const;
 

@@ -149,9 +149,6 @@ const getOptionalEnvUrl = (value: unknown) => {
   return trimmed.length ? trimmed : undefined;
 };
 
-const defaultUmunityLiveUrl = "https://u-munity-organization-management-sy.vercel.app";
-const umunityLiveUrl =
-  getOptionalEnvUrl(import.meta.env.VITE_UMUNITY_LIVE_URL) ?? defaultUmunityLiveUrl;
 const defaultCosmicRemediesLiveUrl = "https://cosmic-remidies-by-sia-website.vercel.app";
 const cosmicRemediesLiveUrl =
   getOptionalEnvUrl(import.meta.env.VITE_COSMIC_REMEDIES_LIVE_URL) ?? defaultCosmicRemediesLiveUrl;
@@ -1211,7 +1208,6 @@ export const projects: Project[] = [
     cardSize: "wide",
     directoryTitle: "Pietyl DigiLPG",
     cat: "UI/UX Design",
-    categories: ["Web Development"],
     kind: "uiux",
     tag: "Management System",
     color: "from-sky-500/50 to-indigo-500/30",
@@ -1316,97 +1312,115 @@ export const projects: Project[] = [
     ],
     figmaPreviewUrl:
       "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=1-12331&embed-host=share",
-    categoryVariants: {
-      "Web Development": {
-        kind: "frontend",
-        tag: "Web Development",
-        role: "Web Developer",
-        tools: ["React", "Tailwind CSS", "TypeScript"],
-        desc: "Landing page and management system development for Pietyl DigiLPG, a long-standing LPG business since the 90s.",
-        overview:
-          "Pietyl DigiLPG, a long-standing LPG business operating since the 90s, needed a stronger digital presence. The project delivered two key pieces: a clean, simple landing page for store publicity and a functional management system to streamline their internal operations. The landing page serves as the public face of the business, while the management system handles records, workflow, and monitoring behind the scenes.",
-        goals: [
-          "Build a simple, professional landing page for store publicity and customer outreach.",
-          "Develop a management system to support the business's long-standing operational needs.",
-          "Create a cohesive digital identity that reflects decades of industry trust.",
-        ],
-        impact: [
-          { value: "1", label: "Landing page" },
-          { value: "1", label: "Management system" },
-          { value: "30+", label: "Years of business legacy" },
-        ],
-        focusAreas: [
-          {
-            title: "Landing Page",
-            text: "Designed a clean, straightforward landing page focused on store publicity and customer trust signals.",
-          },
-          {
-            title: "Management System",
-            text: "Built a back-end interface to digitize workflows, records, and operational monitoring for the LPG business.",
-          },
-          {
-            title: "Placeholder Strategy",
-            text: "Used image placeholders throughout the showcase to protect confidential business data.",
-          },
-        ],
-        process: [
-          {
-            title: "Research",
-            text: "Reviewed the client's existing workflows, store operations, and LPG industry landscape to define requirements.",
-          },
-          {
-            title: "Design",
-            text: "Created clean wireframes and mockups for both the public-facing landing page and the internal management interface.",
-          },
-          {
-            title: "Develop",
-            text: "Built the landing page and management system using React, Tailwind CSS, and TypeScript with reusable components.",
-          },
-          {
-            title: "Deliver",
-            text: "Deployed the project with placeholder assets in sensitive sections to protect client confidentiality.",
-          },
-        ],
-        challenges: [
-          {
-            title: "Confidential Data Handling",
-            challenge:
-              "The management system contains sensitive client and operational data that could not be shown publicly.",
-            solution:
-              "Used placeholders and mock data in the showcase to demonstrate functionality without exposing real business information.",
-          },
-          {
-            title: "Bridging Old and New",
-            challenge:
-              "Transitioning a decades-old business into digital workflows required careful adaptation.",
-            solution:
-              "Focused on simplicity and ease of use, designing interfaces that felt familiar while introducing modern efficiency.",
-          },
-        ],
-        outcome:
-          "Pietyl DigiLPG now has a professional landing page for customer-facing publicity and a streamlined management system to support daily operations, all built on a modern web stack with room to grow.",
-        gallery: [
-          {
-            color: "from-sky-500/50 to-indigo-500/30",
-            label: "Landing Page Preview",
-            ratio: "wide",
-            note: "Placeholder for the Pietyl DigiLPG landing page design.",
-          },
-          {
-            color: "from-indigo-500/40 to-blue-500/30",
-            label: "Management Dashboard",
-            ratio: "square",
-            note: "Placeholder for the internal management dashboard view.",
-          },
-          {
-            color: "from-cyan-500/40 to-sky-500/30",
-            label: "System Module",
-            ratio: "square",
-            note: "Placeholder for operational module screens.",
-          },
-        ],
+    nextProjectSlug: "pietyl-digilpg-web",
+  },
+  {
+    slug: "pietyl-digilpg-web",
+    title: "Pietyl DigiLPG",
+    imageTitle: "pietyl LPG landing page",
+    cardSize: "wide",
+    directoryTitle: "Pietyl DigiLPG",
+    cat: "Web Development",
+    kind: "frontend",
+    tag: "Web Development",
+    color: "from-sky-500/50 to-indigo-500/30",
+    desc: "Full-stack web development for Pietyl DigiLPG's landing page and management system, serving a decades-old LPG business.",
+    role: "Full-Stack Developer",
+    tools: [
+      "PHP 8.2",
+      "Laravel 12",
+      "React 18",
+      "Inertia.js",
+      "Tailwind CSS 4",
+      "Vite 7",
+      "MySQL",
+      "Pest",
+    ],
+    year: "2025",
+    client: "Pietyl DigiLPG",
+    overview:
+      "Pietyl DigiLPG, a long-standing LPG business operating since the 90s, needed a stronger digital presence. This full-stack project delivered two key pieces: a clean landing page for store publicity and a functional management system to streamline internal operations. The landing page serves as the public face of the business, while the management system handles records, workflow, and monitoring behind the scenes.",
+    goals: [
+      "Build a simple, professional landing page for store publicity and customer outreach.",
+      "Develop a management system to support the business's long-standing operational needs.",
+      "Create a cohesive digital identity that reflects decades of industry trust.",
+    ],
+    impact: [
+      { value: "1", label: "Landing page" },
+      { value: "1", label: "Management system" },
+      { value: "30+", label: "Years of business legacy" },
+    ],
+    focusAreas: [
+      {
+        title: "Landing Page",
+        text: "Built a clean, straightforward landing page focused on store publicity and customer trust signals.",
       },
-    },
+      {
+        title: "Management System",
+        text: "Developed a back-end interface to digitize workflows, records, and operational monitoring for the LPG business.",
+      },
+      {
+        title: "Placeholder Strategy",
+        text: "Used image placeholders throughout the showcase to protect confidential business data.",
+      },
+    ],
+    process: [
+      {
+        title: "Research",
+        text: "Reviewed the client's existing workflows, store operations, and LPG industry landscape to define requirements.",
+      },
+      {
+        title: "Design",
+        text: "Created clean wireframes and mockups for both the public-facing landing page and the internal management interface.",
+      },
+      {
+        title: "Develop",
+        text: "Built the landing page and management system with Laravel, React, Inertia.js, Tailwind CSS 4, and MySQL.",
+      },
+      {
+        title: "Deliver",
+        text: "Deployed the project with placeholder assets in sensitive sections to protect client confidentiality.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Confidential Data Handling",
+        challenge:
+          "The management system contains sensitive client and operational data that could not be shown publicly.",
+        solution:
+          "Used placeholders and mock data in the showcase to demonstrate functionality without exposing real business information.",
+      },
+      {
+        title: "Bridging Old and New",
+        challenge:
+          "Transitioning a decades-old business into digital workflows required careful adaptation.",
+        solution:
+          "Focused on simplicity and ease of use, designing interfaces that felt familiar while introducing modern efficiency.",
+      },
+    ],
+    outcome:
+      "Pietyl DigiLPG now has a professional landing page for customer-facing publicity and a streamlined management system to support daily operations, all built on a modern full-stack web stack with room to grow.",
+    gallery: [
+      {
+        color: "from-sky-500/50 to-indigo-500/30",
+        label: "Landing Page Preview",
+        ratio: "wide",
+        note: "Placeholder for the Pietyl DigiLPG landing page design.",
+      },
+      {
+        color: "from-indigo-500/40 to-blue-500/30",
+        label: "Management Dashboard",
+        ratio: "square",
+        note: "Placeholder for the internal management dashboard view.",
+      },
+      {
+        color: "from-cyan-500/40 to-sky-500/30",
+        label: "System Module",
+        ratio: "square",
+        note: "Placeholder for operational module screens.",
+      },
+    ],
+    hideLiveWorkspace: true,
     nextProjectSlug: "dost-laon",
   },
   {
@@ -1631,27 +1645,26 @@ export const projects: Project[] = [
     slug: "umunity",
     title: "UMunity",
     cat: "UI/UX Design",
-    categories: ["Web Development"],
-    kind: "frontend",
+    kind: "uiux",
     cardSize: "wide",
-    tag: "UI/UX + Web System",
+    tag: "Product Design",
     color: "from-cyan-500/50 to-blue-500/30",
-    desc: "A school organization management system shaped in Figma and translated into a responsive web build.",
-    role: "UI/UX Designer and Web Developer",
-    tools: ["Figma", "React", "Tailwind CSS", "TypeScript", "Miro", "Notion"],
+    desc: "Product design system for a school organization management platform covering events, communication, records, and coordination.",
+    role: "UI/UX Designer",
+    tools: ["Figma", "FigJam", "Miro", "Notion"],
     year: "2025",
     client: "UMunity",
     overview:
-      "UMunity is a school organization management system focused on events, communication, records, and coordination. This merged case study covers both the Figma product design and the responsive web implementation for student members and organization officers.",
+      "UMunity is a product design concept focused on school organization management — dashboards, events, records, announcements, and communication flows shaped for both student members and organization officers.",
     goals: [
       "Simplify school organization workflows for members and officers.",
       "Design a dashboard and module system that supports faster task completion.",
-      "Translate the approved interface into a responsive and reusable web system.",
+      "Create a scalable interface system for future modules.",
     ],
     impact: [
       { value: "6", label: "Core modules" },
-      { value: "50+", label: "Designed and built states" },
-      { value: "2", label: "Design and code phases" },
+      { value: "50+", label: "Designed states" },
+      { value: "1", label: "Reusable system" },
     ],
     focusAreas: [
       {
@@ -1664,19 +1677,19 @@ export const projects: Project[] = [
       },
       {
         title: "Figma System",
-        text: "Created the dashboard, modules, reusable components, and prototype logic before implementation.",
+        text: "Created the dashboard, modules, reusable components, and prototype logic.",
       },
       {
-        title: "Web Build",
-        text: "Translated the interface into React, Tailwind CSS, and TypeScript with reusable screen patterns.",
+        title: "Visual Design",
+        text: "Applied a cohesive color system, typography, and spacing to create a trustworthy interface.",
       },
       {
-        title: "Responsive Design",
-        text: "Adjusted navigation, spacing, and card density to preserve usability on smaller screens.",
+        title: "Prototyping",
+        text: "Connected core user flows to demonstrate how users navigate between tasks and modules.",
       },
       {
-        title: "Component Structure",
-        text: "Built repeatable panels, cards, tables, and navigation modules to support future scale.",
+        title: "Design System",
+        text: "Built reusable UI components including tables, cards, forms, and navigation modules for long-term scalability.",
       },
     ],
     process: [
@@ -1690,15 +1703,11 @@ export const projects: Project[] = [
       },
       {
         title: "Design",
-        text: "Built the dashboard, module layouts, reusable interface system, and Figma prototype direction.",
+        text: "Built the dashboard, module layouts, reusable interface system, and Figma prototype.",
       },
       {
-        title: "Implement",
-        text: "Translated the visual system into responsive web screens with reusable components.",
-      },
-      {
-        title: "Refine",
-        text: "Adjusted responsiveness, spacing, and interaction states to keep the system usable across breakpoints.",
+        title: "Deliver",
+        text: "Prepared the case study with structured screens and placeholder areas for future refinement.",
       },
     ],
     challenges: [
@@ -1710,15 +1719,15 @@ export const projects: Project[] = [
           "Built a clearer dashboard and module structure with more readable role-oriented actions.",
       },
       {
-        title: "Design to Development Consistency",
+        title: "Information Density",
         challenge:
-          "The web build needed to preserve the Figma system without creating inconsistent one-off screens.",
+          "Dashboards risk becoming cluttered when serving multiple data sources and user types.",
         solution:
-          "Relied on repeatable layout patterns, reusable components, and responsive rules shared across modules.",
+          "Used progressive disclosure and organized content into focused module views.",
       },
     ],
     outcome:
-      "UMunity now reads as one complete design-to-build case study, showing both the Figma system and the web implementation layer for a student organization management platform.",
+      "UMunity now reads as a complete product design case study, showing the Figma system, user flows, reusable components, and prototype direction for a student organization management platform.",
     gallery: [
       {
         color: "from-cyan-500/50 to-blue-500/30",
@@ -1735,41 +1744,128 @@ export const projects: Project[] = [
       },
       {
         color: "from-indigo-500/40 to-cyan-500/30",
-        label: "Responsive Build",
-        imageTitle: "UMunity School Org Management System",
-        imageLabel: "Responsive Screens",
+        label: "Interface States",
         ratio: "square",
-        note: "Mobile and desktop implementation states from the web phase.",
-      },
-      {
-        color: "from-cyan-500/40 to-sky-500/30",
-        label: "Component Set",
-        imageTitle: "UMunity School Org Management System",
-        ratio: "wide",
-        note: "Reusable tables, cards, forms, and navigation patterns in code.",
+        note: "Various interface states and interaction patterns across the system.",
       },
     ],
     figmaPreviewUrl:
       "https://embed.figma.com/design/zw7EIzr4RSkhabog08oVBK/UMUnuty?node-id=13-350&embed-host=share",
-    vercelLiveUrl: umunityLiveUrl || undefined,
-    categoryVariants: {
-      "UI/UX Design": {
-        tools: ["Figma", "FigJam", "Miro", "Notion"],
-        desc: "Product design system for a school organization management platform covering events, communication, records, and coordination.",
-        overview:
-          "UMunity is a product design concept focused on school organization management — dashboards, events, records, announcements, and communication flows shaped for both student members and organization officers.",
-        outcome:
-          "UMunity now reads as a complete product design case study, showing the Figma system, user flows, reusable components, and prototype direction for a student organization management platform.",
+    nextProjectSlug: "umunity-web",
+  },
+  {
+    slug: "umunity-web",
+    title: "UMunity",
+    directoryTitle: "UMunity",
+    cat: "Web Development",
+    kind: "frontend",
+    cardSize: "wide",
+    tag: "Web Development",
+    color: "from-cyan-500/50 to-blue-500/30",
+    desc: "Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.",
+    role: "Web Developer",
+    tools: ["React", "Tailwind CSS", "TypeScript"],
+    year: "2025",
+    client: "UMunity",
+    overview:
+      "The UMunity web build translates the product design system into a responsive front-end implementation using React, Tailwind CSS, and TypeScript — covering the dashboard, event modules, records, announcements, and navigation structure.",
+    goals: [
+      "Translate the approved Figma system into a responsive web implementation.",
+      "Build reusable components for dashboard, events, records, and communication modules.",
+      "Ensure the interface is usable across desktop and mobile breakpoints.",
+    ],
+    impact: [
+      { value: "6", label: "Core modules" },
+      { value: "50+", label: "Implemented states" },
+      { value: "100%", label: "Responsive coverage" },
+    ],
+    focusAreas: [
+      {
+        title: "Dashboard",
+        text: "Implemented the main dashboard with key metrics, announcements, and quick-action modules.",
       },
-      "Web Development": {
-        tools: ["React", "Tailwind CSS", "TypeScript"],
-        desc: "Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.",
-        overview:
-          "The UMunity web build translates the product design system into a responsive front-end implementation using React, Tailwind CSS, and TypeScript — covering the dashboard, event modules, records, announcements, and navigation structure.",
-        outcome:
-          "UMunity now reads as a complete design-to-build case study, showing both the Figma system and the web implementation layer for a student organization management platform.",
+      {
+        title: "Module System",
+        text: "Built reusable page patterns for events, records, announcements, and communication flows.",
       },
-    },
+      {
+        title: "Responsive Design",
+        text: "Adjusted navigation, spacing, and card density to preserve usability on smaller screens.",
+      },
+      {
+        title: "Component Library",
+        text: "Created repeatable panels, tables, cards, forms, and navigation components for future scale.",
+      },
+    ],
+    process: [
+      {
+        title: "Research",
+        text: "Reviewed the Figma system and component specifications to plan the implementation approach.",
+      },
+      {
+        title: "Design",
+        text: "Set up the component architecture, styling system, and responsive breakpoint strategy.",
+      },
+      {
+        title: "Develop",
+        text: "Built the dashboard and module screens using React, Tailwind CSS, and TypeScript.",
+      },
+      {
+        title: "Deliver",
+        text: "Deployed the web build with placeholder data and prepared it for future backend integration.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Design to Development Consistency",
+        challenge:
+          "The web build needed to preserve the Figma system without creating inconsistent one-off screens.",
+        solution:
+          "Relied on repeatable layout patterns, reusable components, and responsive rules shared across modules.",
+      },
+      {
+        title: "Multi-role Interface",
+        challenge:
+          "The system had to distinguish between member-facing and officer-facing views.",
+        solution:
+          "Created role-aware component variants that adapt content and actions based on user type.",
+      },
+    ],
+    outcome:
+      "UMunity now has a fully implemented web build that faithfully translates the Figma design system into a responsive, component-driven front end.",
+    gallery: [
+      {
+        color: "from-cyan-500/50 to-blue-500/30",
+        label: "Dashboard",
+        imageTitle: "UMunity School Org Management System",
+        imageLabel: "Dashboard",
+        ratio: "wide",
+        note: "Main dashboard implementation with key metrics and announcements.",
+      },
+      {
+        color: "from-blue-500/40 to-indigo-500/30",
+        label: "Module Screens",
+        imageTitle: "UMunity School Org Management System",
+        ratio: "square",
+        note: "Events, records, and announcement module screens.",
+      },
+      {
+        color: "from-indigo-500/40 to-cyan-500/30",
+        label: "Component Library",
+        imageTitle: "UMunity School Org Management System",
+        ratio: "square",
+        note: "Reusable tables, cards, forms, and navigation patterns.",
+      },
+      {
+        color: "from-cyan-500/40 to-sky-500/30",
+        label: "Responsive Build",
+        imageTitle: "UMunity School Org Management System",
+        imageLabel: "Responsive Screens",
+        ratio: "wide",
+        note: "Mobile and desktop implementation comparisons.",
+      },
+    ],
+    vercelLiveUrl: "https://vercel.com/felicietys-projects/u-munity-organization-management-system-v-2/FpfNGtxF3v9sPGCqzstdpYk5GHEr",
     nextProjectSlug: "umsdc-publication-materials-and-assets",
   },
   {
@@ -2277,20 +2373,46 @@ export const projects: Project[] = [
       },
     ],
   }),
-  createSimpleProject({
+  {
     slug: "salin-salin",
     title: "Salin-Salin",
     imageTitle: "salin webpage",
+    cardSize: "medium",
     cat: "Web Development",
     kind: "frontend",
     tag: "Web Development",
+    color: "from-teal-500/45 to-blue-500/30",
     desc: "Responsive web development project for Salin-Salin.",
     role: "Web Developer",
     tools: ["React", "Tailwind CSS", "TypeScript"],
-    color: "from-teal-500/45 to-blue-500/30",
     year: "2025",
-    cardSize: "medium",
-  }),
+    client: "Salin-Salin",
+    overview: "Responsive web development project for Salin-Salin.",
+    goals: ["Build a responsive web experience.", "Ensure cross-device coverage."],
+    impact: [
+      { value: "1", label: "Web build" },
+      { value: "100%", label: "Responsive coverage" },
+    ],
+    focusAreas: [],
+    process: [],
+    challenges: [],
+    outcome: "Salin-Salin now has a responsive web build.",
+    gallery: [
+      {
+        color: "from-teal-500/45 to-blue-500/30",
+        label: "Primary View",
+        ratio: "wide",
+        note: "Showcase slot for Salin-Salin's main visual direction.",
+      },
+      {
+        color: "from-cyan-500/40 to-teal-500/30",
+        label: "Supporting Layout",
+        ratio: "square",
+        note: "Showcase slot for additional layouts and variations.",
+      },
+    ],
+    vercelLiveUrl: "https://salin-salin-r1sh8lb5c-felicietys-projects.vercel.app/",
+  },
   createSimpleProject({
     slug: "handyman",
     title: "HandyMan",
@@ -2323,6 +2445,13 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "umunity-logo",
   ],
   "UI/UX Design": ["umunity", "dost-laon", "pietyl-management-system", "adoptify"],
+  "Web Development": [
+    "cosmic-remedies-by-sia",
+    "umunity-web",
+    "pietyl-digilpg-web",
+    "salin-salin",
+    "handyman",
+  ],
   "Social Media Graphics": [
     "blockchain-campus-conference-2024",
     "sidlac-co-social-media",
@@ -2336,13 +2465,6 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
   ],
   "Creative Assets": ["enigma", "umsdc-publication-materials-and-assets"],
   "Writing / VA": ["eat-well-live-well-nutrition-ebook", "thriving-mind-mental-wellness-ebook"],
-  "Web Development": [
-    "cosmic-remedies-by-sia",
-    "umunity",
-    "pietyl-management-system",
-    "salin-salin",
-    "handyman",
-  ],
 };
 
 const directoryTitleOrder = [

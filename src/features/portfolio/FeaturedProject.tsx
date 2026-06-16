@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { TagPill } from "@/components/site/TagPill";
 import { getProjectCoverImage } from "@/data/projectImages";
@@ -34,6 +34,7 @@ export function FeaturedProject({
   const isSocial =
     project.cat === "Social Media Graphics" ||
     project.categories?.includes("Social Media Graphics");
+  const liveUrl = project.vercelLiveUrl?.trim();
 
   return (
     <section className="relative z-10 mx-auto mt-16 max-w-7xl px-4 sm:mt-20 sm:px-6">
@@ -49,7 +50,7 @@ export function FeaturedProject({
             {project.desc}
           </p>
 
-          <div className="mt-6">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             {isSocial && onSocialClick ? (
               <button
                 type="button"
@@ -63,17 +64,30 @@ export function FeaturedProject({
                 />
               </button>
             ) : (
-              <CaseStudyLink
-                slug={project.slug}
-                routeCategory={getRouteCategoryForProject(project)}
-                className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
-              >
-                View Case Study
-                <ArrowUpRight
-                  size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </CaseStudyLink>
+              <>
+                <CaseStudyLink
+                  slug={project.slug}
+                  routeCategory={getRouteCategoryForProject(project)}
+                  className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
+                >
+                  View Case Study
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </CaseStudyLink>
+                {liveUrl ? (
+                  <a
+                    href={liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-[13px] font-medium text-white/70 transition-all duration-300 hover:border-yellow/20 hover:bg-yellow/[0.06] hover:text-yellow sm:text-sm"
+                  >
+                    <ExternalLink size={15} />
+                    Live Preview
+                  </a>
+                ) : null}
+              </>
             )}
           </div>
         </div>
@@ -105,6 +119,18 @@ export function FeaturedProject({
 
           {!isBranding ? (
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          ) : null}
+
+          {liveUrl ? (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+            >
+              <ExternalLink size={11} />
+              Live
+            </a>
           ) : null}
 
           <TagPill>{pill}</TagPill>

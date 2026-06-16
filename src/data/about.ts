@@ -10,14 +10,24 @@ import logoNotreDame from "@/assets/about/Notre Dame of Esperanza.svg";
 import logoGuihing from "@/assets/about/Guihing Central Elementary School.svg";
 import nstw1 from "@/assets/Events/nstw 1.jpg";
 import nstw2 from "@/assets/Events/nstw 2.jpg";
+import nstw3 from "@/assets/Events/nstw 3.jpg";
+import nstw4 from "@/assets/Events/nstw 4.jpg";
 import caraga1 from "@/assets/Events/caraga 1.jpg";
 import caraga2 from "@/assets/Events/caraga 2.jpg";
+import caraga3 from "@/assets/Events/caraga 3.jpg";
+import caraga4 from "@/assets/Events/caraga 4.jpg";
 import govtech1 from "@/assets/Events/govtech 1.jpg";
 import govtech2 from "@/assets/Events/govtech 2.jpg";
+import govtech3 from "@/assets/Events/govtech 3.jpg";
+import govtech4 from "@/assets/Events/govtech 4.jpg";
 import trichomend1 from "@/assets/Events/trichomend 1.jpg";
 import trichomend2 from "@/assets/Events/trichomend 2.jpg";
+import trichomend3 from "@/assets/Events/trichomend 3.jpg";
+import trichomend4 from "@/assets/Events/trichomend 4.jpg";
 import technovation1 from "@/assets/Events/technovation summit 1.jpg";
 import technovation2 from "@/assets/Events/technovation summit 2.jpg";
+import technovation3 from "@/assets/Events/technovation summit 3.jpg";
+import technovation4 from "@/assets/Events/technovation summit 4.jpg";
 import sui1 from "@/assets/Events/sui 1.jpg";
 import sui2 from "@/assets/Events/sui 2.jpg";
 import psits from "@/assets/Events/PSITS.jpg";
@@ -61,7 +71,7 @@ export const CONFERENCE_GRADIENTS = [
 ];
 
 export const conferenceImages: (string[] | null)[] = [
-  [nstw1, nstw2],
+  [nstw1, nstw2, nstw3, nstw4],
   [dostCamp1, dostCamp2],
   [dostKickstart],
   [designThinking1, designThinking2],
@@ -82,8 +92,8 @@ export const conferenceImages: (string[] | null)[] = [
 
 export const volunteerImages: (string[] | null)[] = [
   null,
-  [govtech1, govtech2],
-  [caraga1, caraga2],
+  [govtech1, govtech2, govtech3, govtech4],
+  [caraga1, caraga2, caraga3, caraga4],
   [buildstation1, buildstation2],
   null,
   [pycon2024],
@@ -94,11 +104,11 @@ export const volunteerImages: (string[] | null)[] = [
 ];
 
 export const awardImages: (string[] | null)[] = [
-  [trichomend1, trichomend2],
-  [technovation1, technovation2],
+  [trichomend1, trichomend2, trichomend3, trichomend4],
+  [technovation1, technovation2, technovation3, technovation4],
   [marketingStrategy],
   [mostActiveVolunteer],
-  null,
+  [dostOrientation1, dostOrientation2],
   [psits],
 ];
 

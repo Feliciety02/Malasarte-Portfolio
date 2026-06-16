@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { getProjectCoverImage } from "@/data/projectImages";
 import { getProjectDisplayTitle } from "@/data/projects";
@@ -50,6 +50,8 @@ export function PortfolioProjectCard({
   const isSocial =
     project.cat === "Social Media Graphics" ||
     project.categories?.includes("Social Media Graphics");
+  const isWebDev = project.cat === "Web Development" || activeCategory === "Web Development";
+  const liveUrl = project.vercelLiveUrl?.trim();
 
   const handleMouse = useCallback((e: React.MouseEvent) => {
     const el = cardRef.current;
@@ -196,6 +198,19 @@ export function PortfolioProjectCard({
                   : "bg-gradient-to-t from-black/30 via-transparent to-transparent",
               )}
             />
+
+            {isWebDev && liveUrl ? (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+              >
+                <ExternalLink size={11} />
+                Live
+              </a>
+            ) : null}
           </div>
 
           <div className="flex flex-col gap-3 p-4 sm:p-5">

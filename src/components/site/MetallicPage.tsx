@@ -6,7 +6,6 @@ type MetallicPageVariant =
   | "works"
   | "project"
   | "services"
-  | "skills"
   | "process"
   | "about"
   | "contact";

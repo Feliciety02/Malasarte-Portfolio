@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { TagPill } from "@/components/site/TagPill";
 import { getProjectCoverImage } from "@/data/projectImages";
@@ -108,6 +108,19 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
       ) : null}
 
       <TagPill>{category}</TagPill>
+
+      {project.vercelLiveUrl?.trim() ? (
+        <a
+          href={project.vercelLiveUrl.trim()}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+        >
+          <ExternalLink size={11} />
+          Live
+        </a>
+      ) : null}
 
       <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
         <div className="flex items-end justify-between gap-4">
