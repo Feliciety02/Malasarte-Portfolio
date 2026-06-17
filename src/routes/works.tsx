@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { projects, matchesProjectCategory, getProjectsByCategoryFrom } from "@/data/projects";
 import type { Project, ProjectCategory } from "@/data/projects";
+import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground";
 import { PortfolioBackground } from "@/features/portfolio/PortfolioBackground";
 import { PortfolioHero } from "@/features/portfolio/PortfolioHero";
 import { CategoryFilterBar } from "@/features/portfolio/CategoryFilterBar";
@@ -160,6 +161,9 @@ function Works() {
 
   return (
     <MetallicPage variant="works" className="relative px-0">
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.4]" aria-hidden>
+        <BrushedMetalBackground />
+      </div>
       <PortfolioBackground hoveredCategory={hoveredCategory} />
       <div className="relative z-10 pt-12 md:pt-20 pb-20 sm:pb-28">
         <PortfolioHero stats={stats} />

@@ -1,4 +1,4 @@
-import { Dribbble, Facebook, Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { Facebook, Github, Instagram, Linkedin, Mail } from "lucide-react";
 
 export const navLinks = [
   { to: "/", label: "Home" },
@@ -14,10 +14,9 @@ export const footerExploreLinks = [
 ] as const;
 
 export const socialLinks = [
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  { icon: Instagram, href: "https://www.instagram.com/feli_ciety/", label: "Instagram" },
   { icon: Facebook, href: "https://www.facebook.com/feanneLM", label: "Facebook" },
-  { icon: Dribbble, href: "https://dribbble.com", label: "Dribbble" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/feanne-malasarte/", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/Feliciety02", label: "GitHub" },
   { icon: Mail, href: "mailto:feannemlsrte@gmail.com", label: "Email" },
 ] as const;

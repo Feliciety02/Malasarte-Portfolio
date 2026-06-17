@@ -20,7 +20,7 @@ export const Route = createFileRoute("/services")({
       { property: "og:title", content: "Fe Anne Malasarte" },
       {
         property: "og:description",
-        content: "How I can help - from product design to brand systems and content.",
+        content: "Core expertise in services from product design to brand systems and content.",
       },
     ],
   }),
@@ -33,9 +33,9 @@ function Services() {
       <section className="mx-auto max-w-7xl pt-12 md:pt-20">
         <Reveal>
           <SectionHeader
-            eyebrow="Services"
-            title="How I can help"
-            description="A focused set of services for founders, studios, and creators - combining design craft, brand thinking, and reliable execution."
+            eyebrow="What I do"
+            title="Services offered"
+            description="A focused set of services for founders, studios, and creators combining design craft, brand thinking, and reliable execution."
             contentClassName="max-w-2xl"
             titleClassName="text-4xl sm:text-5xl md:text-7xl"
             descriptionClassName="leading-7"

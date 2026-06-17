@@ -71,9 +71,9 @@ export function ServicesPreviewSection({ reducedMotion }: ServicesPreviewSection
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <SectionHeader
-            eyebrow="Core expertise"
-            title="Services"
-            description="Specialized capabilities across the full product lifecycle — from conceptual design and user research to development and deployment."
+            eyebrow="What I do"
+            title="Services offered"
+            description="Specialized capabilities across the full product lifecycle from conceptual design and user research to development and deployment."
             action={
               <LinkButton
                 to="/services"

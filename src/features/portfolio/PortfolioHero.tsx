@@ -23,7 +23,7 @@ export function PortfolioHero({ stats }: PortfolioHeroProps) {
 
       <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
         A curated collection of digital products, brands, interfaces, and creative
-        systems — shaped across categories, clients, and disciplines.
+        systems shaped across categories, clients, and disciplines.
       </p>
 
       <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">

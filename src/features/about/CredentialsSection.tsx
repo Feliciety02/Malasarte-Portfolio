@@ -10,7 +10,7 @@ export function CredentialsSection() {
         <SectionHeader
           eyebrow="Credentials"
           title="Licenses & Certifications"
-          description="Verified IT Specialist certifications — click to verify on Credly."
+          description="Verified IT Specialist certifications you can verify on Credly."
         />
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
           <a

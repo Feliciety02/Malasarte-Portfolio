@@ -1,93 +1,125 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { CheckCircle2, Send } from "lucide-react";
+import { CheckCircle2, SendHorizonal } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
+
+const projectTypes = [
+  "Web Development",
+  "Full-Stack Application",
+  "UI/UX Design",
+  "Branding & Identity",
+  "Consultation",
+  "Collaboration",
+] as const;
+
+const CHAR_LIMIT = 500;
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [projectType, setProjectType] = useState("");
+  const [message, setMessage] = useState("");
 
   return (
-    <Reveal delay={0.1} className="md:col-span-3">
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setSent(true);
-          setTimeout(() => setSent(false), 4000);
-          event.currentTarget.reset();
-        }}
-        className="metal-panel space-y-5 p-8 md:p-10"
-      >
-        <div className="grid gap-5 md:grid-cols-2">
-          <Field label="Your name" name="name" placeholder="Jane Doe" required />
-          <Field label="Email" name="email" type="email" placeholder="jane@studio.com" required />
-        </div>
-        <Field label="Subject" name="subject" placeholder="Brand identity for..." />
-        <div>
-          <label
-            htmlFor="message"
-            className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
-          >
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            rows={6}
-            placeholder="Tell me about your project..."
-            className="metal-input mt-2 w-full resize-none px-4 py-3 text-sm outline-none transition-all"
-          />
-        </div>
-        <button
-          type="submit"
-          className="metal-cta group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
+    <Reveal delay={0.1}>
+      <div className="contact-card p-6 sm:p-8 md:p-10">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setSent(true);
+            setTimeout(() => setSent(false), 4000);
+            event.currentTarget.reset();
+            setProjectType("");
+            setMessage("");
+          }}
+          className="space-y-5"
         >
-          Send message
-          <Send size={14} className="transition-transform group-hover:translate-x-0.5" />
-        </button>
-        {sent ? (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-sm text-primary"
-          >
-            <CheckCircle2 size={16} /> Message sent. I&apos;ll get back to you shortly.
-          </motion.div>
-        ) : null}
-      </form>
-    </Reveal>
-  );
-}
+          <div className="relative">
+            <span className="contact-floating-label">Your name</span>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Jane Doe"
+              className="contact-input"
+            />
+          </div>
 
-function Field({
-  label,
-  name,
-  type = "text",
-  placeholder,
-  required,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label
-        htmlFor={name}
-        className="text-xs font-medium uppercase tracking-wider text-muted-foreground"
-      >
-        {label}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        placeholder={placeholder}
-        className="metal-input mt-2 w-full px-4 py-3 text-sm outline-none transition-all"
-      />
-    </div>
+          <div className="relative">
+            <span className="contact-floating-label">Email address</span>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="jane@studio.com"
+              className="contact-input"
+            />
+          </div>
+
+          <div className="relative">
+            <span className="contact-floating-label">Project type</span>
+            <select
+              id="project-type"
+              name="project-type"
+              value={projectType}
+              onChange={(e) => setProjectType(e.target.value)}
+              required
+              className="contact-select"
+            >
+              <option value="" disabled className="bg-[#0a0b0c]">
+                Select a project type
+              </option>
+              {projectTypes.map((type) => (
+                <option key={type} value={type} className="bg-[#0a0b0c]">
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="relative">
+            <span className="contact-floating-label">Message</span>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows={5}
+              maxLength={CHAR_LIMIT}
+              placeholder="Tell me about your project..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="contact-textarea"
+            />
+            <span className="absolute bottom-3 right-4 text-xs text-muted-foreground">
+              {message.length}/{CHAR_LIMIT}
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-cta px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 transition-all duration-300 hover:shadow-purple-500/30 hover:scale-[1.01]"
+          >
+            <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
+            <span className="relative">Start a project</span>
+            <SendHorizonal size={16} className="relative transition-transform group-hover:translate-x-1" />
+          </button>
+
+          <p className="text-center text-xs text-muted-foreground">
+            Your information is safe. No spam, ever.
+          </p>
+
+          {sent ? (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-center gap-2 text-sm text-green-400"
+            >
+              <CheckCircle2 size={16} /> Message sent. I&apos;ll get back to you shortly.
+            </motion.div>
+          ) : null}
+        </form>
+      </div>
+    </Reveal>
   );
 }

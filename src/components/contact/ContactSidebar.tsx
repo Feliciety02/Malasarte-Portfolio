@@ -1,32 +1,50 @@
-import { Dribbble, Instagram, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Facebook, Clock, MapPin, Mail, FileText } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 
 const socials = [
-  { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-  { Icon: Dribbble, href: "https://dribbble.com", label: "Dribbble" },
-  { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { Icon: Github, href: "https://github.com/Feliciety02", label: "GitHub" },
+  { Icon: Linkedin, href: "https://www.linkedin.com/in/feanne-malasarte/", label: "LinkedIn" },
+  { Icon: Facebook, href: "https://www.facebook.com/feanneLM", label: "Facebook" },
+];
+
+const availabilities = [
+  "Freelance Projects",
+  "Collaborations",
+  "Internship Opportunities",
 ] as const;
 
 export function ContactSidebar() {
   return (
-    <Reveal delay={0.2} className="md:col-span-2">
+    <Reveal delay={0.2}>
       <div className="space-y-4">
-        <a
-          href="mailto:feannemlsrte@gmail.com"
-          className="metal-card group flex items-start gap-4 p-6"
-        >
-          <div className="metal-icon h-12 w-12">
-            <Mail size={18} />
+        <div className="contact-card p-5 sm:p-6">
+          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+            Contact Details
+          </h3>
+          <div className="mt-4 space-y-3.5">
+            <a
+              href="mailto:feannemlsrte@gmail.com"
+              className="group flex items-center gap-3 text-sm text-white/80 transition-colors hover:text-white"
+            >
+              <Mail size={16} className="shrink-0 text-muted-foreground transition-colors group-hover:text-yellow" />
+              <span>feannemlsrte@gmail.com</span>
+            </a>
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              <Clock size={16} className="shrink-0" />
+              <span>Usually replies within 24 hours</span>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              <MapPin size={16} className="shrink-0" />
+              <span>Davao City, Philippines</span>
+            </div>
           </div>
-          <div>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Email</div>
-            <div className="mt-0.5 font-display text-lg font-semibold">feannemlsrte@gmail.com</div>
-          </div>
-        </a>
+        </div>
 
-        <div className="metal-panel p-6">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground">Find me on</div>
-          <div className="mt-4 flex gap-3">
+        <div className="contact-card p-5 sm:p-6">
+          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+            Let&apos;s Connect
+          </h3>
+          <div className="mt-4 flex gap-2.5">
             {socials.map(({ Icon, href, label }) => (
               <a
                 key={label}
@@ -34,23 +52,38 @@ export function ContactSidebar() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="metal-icon h-12 w-12 transition-all hover:scale-105 hover:brightness-125"
+                className="contact-social-icon"
               >
-                <Icon size={16} />
+                <Icon size={20} />
               </a>
             ))}
           </div>
         </div>
 
-        <div className="metal-panel p-6">
-          <div className="text-xs uppercase tracking-wider text-muted-foreground">Currently</div>
-          <div className="mt-2 flex items-center gap-2">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
-            </span>
-            <span className="text-sm">Available for new projects</span>
-          </div>
+        <div className="contact-card p-5 sm:p-6">
+          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+            Available For
+          </h3>
+          <ul className="mt-3 space-y-2">
+            {availabilities.map((item) => (
+              <li key={item} className="flex items-center gap-2.5 text-sm text-white/80">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-500/20 text-green-400">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2 text-xs font-medium text-green-400">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+          </span>
+          Currently accepting new projects
         </div>
       </div>
     </Reveal>

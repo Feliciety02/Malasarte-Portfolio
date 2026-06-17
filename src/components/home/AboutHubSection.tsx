@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import aboutFeImage from "@/assets/about/about-fe.png";
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.png";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.png";
 import { GlassDome } from "@/components/site/GlassDome";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { Reveal } from "@/components/site/Reveal";
+import { education } from "@/data/about";
 import { tools, type ToolCategory } from "@/data/home";
 
 type AboutHubSectionProps = {
@@ -170,133 +170,128 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="border-y border-white/10 py-10 sm:py-12">
-          <div className="grid gap-12 lg:grid-cols-[minmax(17rem,0.82fr)_minmax(0,1.18fr)] lg:gap-0">
+        <div className="py-10 sm:py-12">
+          <div className="grid gap-12 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
             <Reveal className="lg:border-r lg:border-white/10 lg:pr-14">
-              <figure className="mx-auto w-full max-w-md">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.025]">
-                  <div
-                    aria-hidden
-                    className="absolute inset-x-[12%] bottom-[8%] h-[58%] rounded-full bg-white/[0.055] blur-3xl"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute left-5 top-5 z-20 text-[11px] font-medium uppercase tracking-[0.18em] text-white/45"
-                  >
-                    Profile / 01
+              <div className="mx-auto w-full max-w-md">
+                <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
+                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
+                    Education
                   </div>
-                  <img
-                    src={aboutFeImage}
-                    alt="Fe Anne Malasarte"
-                    className="satin-photo pointer-events-none absolute bottom-0 left-1/2 z-10 h-[106%] w-auto max-w-none -translate-x-1/2 object-contain drop-shadow-[0_28px_42px_rgba(0,0,0,0.48)]"
-                  />
+                  <div className="space-y-2">
+                    {education.slice(0, 3).map((item, i) => (
+                      <div
+                        key={i}
+                        className="rounded-xl border border-white/[0.05] bg-white/[0.015] p-3.5"
+                      >
+                        {item.logo ? (
+                          <div className="flex gap-3">
+                            <img
+                              src={item.logo}
+                              alt=""
+                              className="mt-0.5 h-10 w-10 shrink-0 object-contain"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                                {item.period}
+                              </span>
+                              <h3 className="mt-0.5 font-display text-sm font-bold text-foreground">
+                                {item.title}
+                              </h3>
+                              <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                              {item.period}
+                            </span>
+                            <h3 className="mt-0.5 font-display text-sm font-bold text-foreground">
+                              {item.title}
+                            </h3>
+                            <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <figcaption className="grid gap-4 border-b border-white/10 py-5 sm:grid-cols-2">
-                  <div>
-                    <p className="font-display text-base font-semibold text-foreground">
-                      Fe Anne Malasarte
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">Designer and developer</p>
+                <div className="mt-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
+                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
+                    Certifications
                   </div>
-                  <div className="sm:border-l sm:border-white/10 sm:pl-5">
-                    <p className="text-sm font-medium text-foreground">BS Computer Science</p>
-                    <p className="mt-1 text-sm text-muted-foreground">University of Mindanao</p>
+                  <div className="space-y-2">
+                    <a
+                      href="https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf962/public_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.015] p-3.5 transition-colors hover:bg-white/[0.04]"
+                    >
+                      <img
+                        src={credentialDatabases}
+                        alt="IT Specialist - Databases"
+                        className="h-9 w-9 shrink-0"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold text-foreground">
+                          IT Specialist - Databases
+                        </p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">Verified on Credly</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://www.credly.com/badges/1f4a95a9-9918-44e9-9073-f81501ed452b/public_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.015] p-3.5 transition-colors hover:bg-white/[0.04]"
+                    >
+                      <img
+                        src={credentialCybersecurity}
+                        alt="IT Specialist - Cybersecurity"
+                        className="h-9 w-9 shrink-0"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold text-foreground">
+                          IT Specialist - Cybersecurity
+                        </p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">Verified on Credly</p>
+                      </div>
+                    </a>
                   </div>
-                </figcaption>
-              </figure>
+                </div>
+              </div>
             </Reveal>
 
             <Reveal delay={0.12} className="lg:pl-14">
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-yellow">About</span>
-                <span aria-hidden className="h-px w-12 bg-yellow/45" />
-              </div>
-              <h2 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-[1.04] tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.4rem]">
-                I design with purpose and build with care.
+              <span className="text-sm font-medium text-yellow">About</span>
+
+              <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.04] tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.4rem]">
+                I design and develop digital products that are clear, functional, and built with intention.
               </h2>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-foreground/80">
-                I turn early ideas into digital products that feel clear, useful, and considered.
+
+              <p className="mt-5 max-w-2xl text-[15px] leading-8 text-muted-foreground sm:text-base">
+                I combine UI/UX design, full-stack development, and community leadership to build products that solve real-world problems. I design for clarity, build for scale, and lead with empathy whether crafting interfaces or architecting back-end systems.
               </p>
 
-              <div className="mt-7 max-w-2xl space-y-4 text-[15px] leading-7 text-muted-foreground sm:text-base">
-                <p>
-                  I&apos;m a Computer Science student and DOST-SEI scholar working across UI/UX, web
-                  development, and brand design. That mix lets me think through both how a product
-                  should work and how it should feel to use.
-                </p>
-                <p>
-                  Beyond project work, I help lead technology communities across Mindanao. I value
-                  thoughtful collaboration, practical decisions, and work that holds up beyond the
-                  first presentation.
-                </p>
-              </div>
-
-              <div className="mt-9 grid border-y border-white/10 sm:grid-cols-3">
+              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[
-                  ["Design", "UI/UX and visual systems"],
-                  ["Development", "Responsive front-end builds"],
-                  ["Leadership", "President, UMSDC"],
-                ].map(([label, value]) => (
+                  ["10+", "Projects Built"],
+                  ["3+", "Years Designing"],
+                  ["5+", "Organizations Led"],
+                  ["2", "Industry Certifications"],
+                ].map(([value, label]) => (
                   <div
                     key={label}
-                    className="border-t border-white/10 py-5 first:border-t-0 sm:border-t-0 sm:px-5 sm:first:pl-0 sm:[&:not(:first-child)]:border-l sm:[&:not(:first-child)]:border-white/10"
+                    className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-4 text-center"
                   >
-                    <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
-                      {label}
-                    </p>
-                    <p className="mt-2 text-sm font-medium leading-5 text-foreground">{value}</p>
+                    <p className="font-display text-2xl font-bold text-foreground">{value}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{label}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8">
-                <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
-                  Selected credentials
-                </p>
-                <div className="mt-2 grid gap-x-6 sm:grid-cols-2">
-                  <a
-                    href="https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf962/public_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 border-b border-white/10 py-4 transition-colors hover:border-white/30"
-                  >
-                    <img
-                      src={credentialDatabases}
-                      alt="IT Specialist - Databases"
-                      className="h-11 w-11 shrink-0"
-                      loading="lazy"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        IT Specialist - Databases
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">Verified on Credly</p>
-                    </div>
-                  </a>
-                  <a
-                    href="https://www.credly.com/badges/1f4a95a9-9918-44e9-9073-f81501ed452b/public_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 border-b border-white/10 py-4 transition-colors hover:border-white/30"
-                  >
-                    <img
-                      src={credentialCybersecurity}
-                      alt="IT Specialist - Cybersecurity"
-                      className="h-11 w-11 shrink-0"
-                      loading="lazy"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        IT Specialist - Cybersecurity
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">Verified on Credly</p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center gap-5">
+              <div className="mt-10 flex flex-wrap items-center gap-5">
                 <Link
                   to="/works"
                   className="metal-cta inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
@@ -315,7 +310,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
         </div>
 
         <div className="mt-20 pt-8">
-          <div className="grid gap-12">
+          <div className="grid gap-24">
             <Reveal>
               <span className="metal-kicker">GitHub</span>
               <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Code Activity</h2>

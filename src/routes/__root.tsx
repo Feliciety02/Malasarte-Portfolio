@@ -38,7 +38,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Portfolio of Fe Anne Malasarte — UI/UX designer, brand identity & visual storyteller crafting premium digital experiences.",
+          "Portfolio of Fe Anne Malasarte, a UI/UX designer, brand identity and visual storyteller crafting premium digital experiences.",
       },
       { name: "author", content: "Fe Anne Malasarte" },
       {

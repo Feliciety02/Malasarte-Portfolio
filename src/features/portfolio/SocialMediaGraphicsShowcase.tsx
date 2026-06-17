@@ -507,19 +507,11 @@ export function SocialMediaGraphicsShowcase({
                       loading="lazy"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70" />
-                    {item ? (
-                      <span className="absolute bottom-2 left-2 right-2 line-clamp-1 text-[9px] font-medium text-white/80 sm:text-[10px]">
-                        {item.label}
-                      </span>
-                    ) : null}
                   </>
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center p-2 text-center">
                     <span className="font-mono text-[9px] text-white/40 sm:text-[10px]">
                       {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-1 line-clamp-2 text-[9px] font-medium text-white/60 sm:text-[10px]">
-                      {item?.label ?? selectedProject.title}
                     </span>
                   </div>
                 )}

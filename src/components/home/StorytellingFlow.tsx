@@ -47,7 +47,7 @@ const stepCopy: Record<string, { description: string; deliverables: string[] }> 
   },
   Concept: {
     description:
-      "Translate insight into direction — moodboards, sketches, and narrative pillars to anchor the work.",
+      "Translate insight into direction using moodboards, sketches, and narrative pillars to anchor the work.",
     deliverables: ["Moodboards", "Lo-fi sketches", "Creative direction"],
   },
   Design: {
@@ -362,7 +362,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
             <SectionHeader
               eyebrow="Workflow"
               title="A focused process that keeps work moving."
-              description="Research, concept, design, deliver — swipe through how each phase lands."
+              description="Research, concept, design, and deliver. Swipe through how each phase lands."
               className="mb-10"
             />
           </div>
@@ -480,7 +480,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
                 <SectionHeader
                   eyebrow="Workflow"
                   title="A focused process that keeps work moving."
-                  description="Scroll to travel through every phase — research, concept, design, deliver."
+                  description="Scroll to travel through every phase from research and concept to design and deliver."
                   className="mb-0"
                   contentClassName="max-w-2xl"
                   titleClassName="md:text-4xl lg:text-5xl"
@@ -558,7 +558,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
                 <SectionHeader
                   eyebrow="What I Do"
                   title="Services designed to elevate your brand."
-                  description="Scroll through each capability — UI/UX, branding, social media graphics, creative assets, development, and content."
+                  description="Scroll through each capability including UI/UX, branding, social media graphics, creative assets, development, and content."
                   className="mb-0"
                   contentClassName="max-w-2xl"
                   titleClassName="md:text-4xl lg:text-5xl"

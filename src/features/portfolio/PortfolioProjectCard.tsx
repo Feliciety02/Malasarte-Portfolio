@@ -42,7 +42,7 @@ export function PortfolioProjectCard({
 
   const isBranding = project.cat === "Logo & Branding";
   const isBrandingRecommendation = activeCategory === "Logo & Branding";
-  const isBook = activeCategory === "Writing / VA";
+  const isBook = activeCategory === "Writing / VA" || project.cat === "Writing / VA";
   const brandingExcluded = ["Miro", "FigJam", "Illustrator", "Photoshop", "Canva"];
   const displayTools = isBranding
     ? project.tools.filter((t) => !brandingExcluded.includes(t))
@@ -166,31 +166,16 @@ export function PortfolioProjectCard({
       ) : (
         <>
           <div className="relative overflow-hidden">
-            <div
-              className={cn(
-                isBranding ? "aspect-square" : imageAspect[size],
-                "w-full",
-                isBranding && "bg-white",
-              )}
-            >
+            <div className={cn("aspect-video w-full", isBranding && "bg-white")}>
               {coverImage ? (
-                isBranding ? (
-                  <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
-                    <img
-                      src={coverImage}
-                      alt={`${title} preview`}
-                      className="max-h-full max-w-full object-contain transition-all duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
+                <div className="flex h-full w-full items-center justify-center p-6 sm:p-8">
                   <img
                     src={coverImage}
                     alt={`${title} preview`}
-                    className="h-full w-full object-contain transition-all duration-700 group-hover:scale-105"
+                    className="max-h-full max-w-full object-contain transition-all duration-700 group-hover:scale-105"
                     loading="lazy"
                   />
-                )
+                </div>
               ) : (
                 <div className="flex h-full items-center justify-center">
                   <span className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
