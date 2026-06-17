@@ -8,9 +8,10 @@ import { PortfolioBackground } from "@/features/portfolio/PortfolioBackground";
 import { PortfolioHero } from "@/features/portfolio/PortfolioHero";
 import { CategoryFilterBar } from "@/features/portfolio/CategoryFilterBar";
 import type { FilterCategory } from "@/features/portfolio/CategoryFilterBar";
-import { FeaturedProject } from "@/features/portfolio/FeaturedProject";
 import { PortfolioGallery } from "@/features/portfolio/PortfolioGallery";
 import { SocialMediaGraphicsShowcase } from "@/features/portfolio/SocialMediaGraphicsShowcase";
+
+
 
 export const Route = createFileRoute("/works")({
   head: () => ({
@@ -161,12 +162,18 @@ function Works() {
 
   return (
     <MetallicPage variant="works" className="relative px-0">
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.4]" aria-hidden>
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.6]" aria-hidden>
         <BrushedMetalBackground />
       </div>
       <PortfolioBackground hoveredCategory={hoveredCategory} />
+
       <div className="relative z-10 pt-12 md:pt-20 pb-20 sm:pb-28">
-        <PortfolioHero stats={stats} />
+        <PortfolioHero
+          stats={stats}
+          featuredProject={featuredProject}
+          activeCategory={active}
+          onSocialClick={handleSocialClick}
+        />
 
         <CategoryFilterBar
           active={active}
@@ -176,14 +183,6 @@ function Works() {
           }}
           onHover={setHoveredCategory}
         />
-
-        {featuredProject ? (
-          <FeaturedProject
-            project={featuredProject}
-            activeCategory={active}
-            onSocialClick={handleSocialClick}
-          />
-        ) : null}
 
         {active === "All" ? (
           <PortfolioGallery

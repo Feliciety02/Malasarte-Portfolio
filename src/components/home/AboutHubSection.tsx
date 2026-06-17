@@ -6,6 +6,7 @@ import credentialDatabases from "@/assets/about/badges/it-specialist-databases.p
 import { GlassDome } from "@/components/site/GlassDome";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { Reveal } from "@/components/site/Reveal";
+import { accentLastWord } from "@/components/site/HeadingAccent";
 import { education } from "@/data/about";
 import { tools, type ToolCategory } from "@/data/home";
 
@@ -313,7 +314,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
           <div className="grid gap-24">
             <Reveal>
               <span className="metal-kicker">GitHub</span>
-              <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Code Activity</h2>
+              <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">{accentLastWord("Code Activity")}</h2>
               <div className="mt-8">
                 <GitHubContributions username="Feliciety02" />
               </div>
@@ -332,7 +333,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                 <div className="lg:col-span-2">
                   <span className="metal-kicker">Tools I use</span>
                   <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
-                    My everyday stack
+                    {accentLastWord("Tech Stack")}
                   </h2>
                   <div className="mt-6 space-y-5">
                     {categoryInfo.map((cat) => {

@@ -382,11 +382,39 @@
   }
 
   .metal-page--works::before {
-    background: linear-gradient(180deg, #141617, #0a0b0c 48%, #050606);
+    background:
+      radial-gradient(
+        58rem circle at var(--mx) var(--my),
+        rgba(180, 160, 255, 0.08) 0%,
+        rgba(255, 215, 0, 0.04) 18%,
+        transparent 44%
+      ),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 22%),
+      linear-gradient(180deg, #0a0b0d, #060708 44%, #020203);
+    opacity: 0.96;
   }
 
   .metal-page--works::after {
-    display: none;
+    mix-blend-mode: screen;
+    opacity: 0.28;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 215, 0, 0.025) 0 1px,
+        transparent 1px 13px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.015) 0 1px,
+        transparent 1px 13px
+      ),
+      linear-gradient(
+        122deg,
+        transparent 14%,
+        rgba(255, 215, 0, 0.045) 30%,
+        rgba(180, 160, 255, 0.03) 44%,
+        transparent 60%
+      );
   }
 
   .metal-page--project::before {

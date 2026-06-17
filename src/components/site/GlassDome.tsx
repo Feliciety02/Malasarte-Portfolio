@@ -1,33 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import burpSuiteLogo from "@/assets/tools/burpsuite.svg";
-import canvaLogo from "@/assets/tools/canva.svg";
-import cssLogo from "@/assets/tools/css3.svg";
-import figjamLogo from "@/assets/tools/figjam.svg";
-import figmaLogo from "@/assets/tools/figma.svg";
-import framerLogo from "@/assets/tools/framer.svg";
-import gitLogo from "@/assets/tools/git.svg";
-import githubLogo from "@/assets/tools/github.svg";
-import googleColabLogo from "@/assets/tools/googlecolab.svg";
-import googleWorkspaceLogo from "@/assets/tools/googleworkspace.svg";
-import htmlLogo from "@/assets/tools/html5.svg";
-import intelliJLogo from "@/assets/tools/intellijidea.svg";
-import javaLogo from "@/assets/tools/java.svg";
-import javascriptLogo from "@/assets/tools/javascript.svg";
-import jupyterLogo from "@/assets/tools/jupyter.svg";
-import laravelLogo from "@/assets/tools/laravel.svg";
-import microsoftOfficeLogo from "@/assets/tools/msoffice.svg";
-import mySqlLogo from "@/assets/tools/mysql.svg";
-import nextJsLogo from "@/assets/tools/nextdotjs.svg";
-import phpLogo from "@/assets/tools/php.svg";
-import phpMyAdminLogo from "@/assets/tools/phpmyadmin.svg";
-import postmanLogo from "@/assets/tools/postman.svg";
-import pythonLogo from "@/assets/tools/python.svg";
-import reactLogo from "@/assets/tools/react.svg";
-import tailwindCssLogo from "@/assets/tools/tailwindcss.svg";
-import typescriptLogo from "@/assets/tools/typescript.svg";
-import vsCodeLogo from "@/assets/tools/vscode.svg";
-import wiresharkLogo from "@/assets/tools/wireshark.svg";
-import xamppLogo from "@/assets/tools/xampp.svg";
+import { TOOL_ICONS } from "@/data/toolIcons";
 
 type Tool = { name: string; slug: string; color: string; category: string };
 
@@ -75,41 +47,7 @@ const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
 
-type ToolIcon = {
-  src: string;
-};
 
-const TOOL_ICONS: Record<string, ToolIcon> = {
-  figma: { src: figmaLogo },
-  figjam: { src: figjamLogo },
-  framer: { src: framerLogo },
-  canva: { src: canvaLogo },
-  vscode: { src: vsCodeLogo },
-  xampp: { src: xamppLogo },
-  git: { src: gitLogo },
-  github: { src: githubLogo },
-  postman: { src: postmanLogo },
-  mysql: { src: mySqlLogo },
-  phpmyadmin: { src: phpMyAdminLogo },
-  jupyter: { src: jupyterLogo },
-  googlecolab: { src: googleColabLogo },
-  msoffice: { src: microsoftOfficeLogo },
-  googleworkspace: { src: googleWorkspaceLogo },
-  wireshark: { src: wiresharkLogo },
-  burpsuite: { src: burpSuiteLogo },
-  html5: { src: htmlLogo },
-  css3: { src: cssLogo },
-  javascript: { src: javascriptLogo },
-  typescript: { src: typescriptLogo },
-  react: { src: reactLogo },
-  nextdotjs: { src: nextJsLogo },
-  tailwindcss: { src: tailwindCssLogo },
-  php: { src: phpLogo },
-  laravel: { src: laravelLogo },
-  java: { src: javaLogo },
-  python: { src: pythonLogo },
-  intellijidea: { src: intelliJLogo },
-};
 
 export function GlassDome({
   tools,

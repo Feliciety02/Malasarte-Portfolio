@@ -1,9 +1,19 @@
+import { useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import logoFe from "@/assets/logo-fe.png";
 import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {
+  const handleMouse = useCallback((e: React.MouseEvent) => {
+    const el = e.currentTarget as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--mx", `${px}%`);
+    el.style.setProperty("--my", `${py}%`);
+  }, []);
+
   return (
     <footer className="relative z-10 -mt-24 isolate overflow-visible bg-transparent px-2 pt-24 sm:px-3 lg:-mt-28 lg:px-4 lg:pt-28">
       <style>{`
@@ -26,7 +36,14 @@ export function Footer() {
           100% { transform: translate(-25px, 15px) scale(0.9); }
         }
       `}</style>
-      <div className="relative left-1/2 w-[calc(100vw+2rem)] -translate-x-1/2 overflow-visible rounded-t-[4rem] border-x border-t border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw+3rem)] sm:rounded-t-[6rem] lg:w-[calc(100vw+4rem)] lg:rounded-t-[7rem]">
+      <div
+        onMouseMove={handleMouse}
+        className="relative left-1/2 w-[calc(100vw+2rem)] -translate-x-1/2 overflow-visible rounded-t-[4rem] border-x border-t border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw+3rem)] sm:rounded-t-[6rem] lg:w-[calc(100vw+4rem)] lg:rounded-t-[7rem]"
+        style={{
+          backgroundImage:
+            "radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.06), transparent 50%)",
+        }}
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-0 rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28)_0.7px,transparent_1.8px)] opacity-[0.08] blur-[0.7px] [background-size:14px_14px] sm:rounded-t-[6rem] lg:rounded-t-[7rem]"
