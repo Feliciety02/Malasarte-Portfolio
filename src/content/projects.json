@@ -1,0 +1,165 @@
+{
+  "projects": [
+    {
+      "slug": "adoptify",
+      "title": "Adoptify",
+      "desc": "UI/UX concept for an adoption-focused digital platform.",
+      "overview": "Adoptify is a product design concept centered on making adoption journeys clearer, friendlier, and easier to trust across mobile and web touchpoints.",
+      "role": "UI/UX Designer",
+      "client": "Concept Project",
+      "year": "2025",
+      "tools": ["Figma", "FigJam", "Notion"],
+      "tags": ["UI/UX", "App Design", "Prototyping", "Full-Stack"],
+      "goals": [
+        "Design a friendlier adoption experience that feels safe and organized.",
+        "Simplify the path from browsing to inquiry and follow-through.",
+        "Create a reusable interface language for listings, profiles, and communication flows."
+      ],
+      "timeline": [
+        { "phase": "Research", "date": "Jan 2025", "description": "Reviewed adoption platform patterns and user frustrations." },
+        { "phase": "Concept", "date": "Feb 2025", "description": "Built content hierarchy around listings and action steps." },
+        { "phase": "Design", "date": "Mar 2025", "description": "Developed end-to-end interface flow and UI patterns." },
+        { "phase": "Deliver", "date": "Apr 2025", "description": "Prepared case study and gallery assets." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "dost-laon",
+      "title": "DOST Laon",
+      "desc": "Crop disease detection dashboard and field reporting system.",
+      "overview": "A mobile-first dashboard that helps farmers identify crop diseases through image recognition and get real-time recommendations.",
+      "role": "UI/UX Designer",
+      "client": "DOST",
+      "year": "2025",
+      "tools": ["Figma", "React", "Python"],
+      "tags": ["UI/UX", "Full-Stack", "Dashboard"],
+      "goals": [
+        "Create an intuitive disease reporting flow for field use.",
+        "Design a dashboard that surfaces actionable insights quickly.",
+        "Ensure accessibility for low-tech environments."
+      ],
+      "timeline": [
+        { "phase": "Research", "date": "Nov 2024", "description": "Field research with farmers and agricultural technicians." },
+        { "phase": "Design", "date": "Dec 2024", "description": "Wireframes and prototype iterations." },
+        { "phase": "Develop", "date": "Jan 2025", "description": "Frontend implementation and dashboard build." },
+        { "phase": "Test", "date": "Feb 2025", "description": "User testing and refinement." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "umunity",
+      "title": "UMunity",
+      "desc": "University community platform connecting students, orgs, and events.",
+      "overview": "A campus-focused social platform designed to centralize event discovery, organization management, and student engagement.",
+      "role": "Product Designer",
+      "client": "University of Mindanao",
+      "year": "2025",
+      "tools": ["Figma", "React", "Node.js", "PostgreSQL"],
+      "tags": ["UI/UX", "Full-Stack", "Social", "Animations"],
+      "goals": [
+        "Centralize campus event listings and organization directories.",
+        "Create a seamless onboarding flow for students and organizations.",
+        "Build a scalable platform architecture for campus-wide adoption."
+      ],
+      "timeline": [
+        { "phase": "Research", "date": "Aug 2024", "description": "Student surveys and stakeholder interviews." },
+        { "phase": "Design", "date": "Sep 2024", "description": "UX flows, wireframes, and high-fidelity mockups." },
+        { "phase": "Develop", "date": "Oct 2024", "description": "Full-stack implementation with real-time features." },
+        { "phase": "Launch", "date": "Jan 2025", "description": "Beta launch with pilot organizations." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "cosmic-remedies-by-sia",
+      "title": "Cosmic Remedies by Sia",
+      "desc": "E-commerce storefront for herbal wellness products.",
+      "overview": "A modern e-commerce experience for a herbal remedies brand, featuring product catalogs, wellness guides, and a streamlined checkout flow.",
+      "role": "Full-Stack Developer",
+      "client": "Cosmic Remedies by Sia",
+      "year": "2025",
+      "tools": ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
+      "tags": ["Full-Stack", "Web Development", "E-Commerce", "Animations"],
+      "goals": [
+        "Build a performant e-commerce platform with modern UX.",
+        "Integrate product management and inventory workflows.",
+        "Optimize for conversions and mobile shopping."
+      ],
+      "timeline": [
+        { "phase": "Planning", "date": "Dec 2024", "description": "Requirements gathering and technical architecture." },
+        { "phase": "Build", "date": "Jan 2025", "description": "Core e-commerce functionality and admin panel." },
+        { "phase": "Polish", "date": "Feb 2025", "description": "Animations, responsiveness, and performance optimization." },
+        { "phase": "Deploy", "date": "Mar 2025", "description": "Production deployment and monitoring setup." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "pietyl-management-system",
+      "title": "Pietyl Management System",
+      "desc": "LPG distribution management platform with real-time tracking.",
+      "overview": "An enterprise management system for LPG distribution including inventory, delivery tracking, and customer management modules.",
+      "role": "Full-Stack Developer",
+      "client": "Pietyl DigiLPG",
+      "year": "2025",
+      "tools": ["React", "Node.js", "MySQL", "Express"],
+      "tags": ["Full-Stack", "Web Development", "Enterprise", "Dashboard"],
+      "goals": [
+        "Digitize LPG distribution workflows from order to delivery.",
+        "Provide real-time inventory and fleet tracking.",
+        "Build role-based dashboards for admins, riders, and customers."
+      ],
+      "timeline": [
+        { "phase": "Analysis", "date": "Oct 2024", "description": "Business process analysis and system design." },
+        { "phase": "Development", "date": "Nov 2024", "description": "Core modules development and database design." },
+        { "phase": "Testing", "date": "Jan 2025", "description": "QA testing and user acceptance testing." },
+        { "phase": "Deployment", "date": "Feb 2025", "description": "Production rollout and training." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "salin-salin",
+      "title": "Salin-Salin",
+      "desc": "Cultural heritage storytelling platform with interactive narratives.",
+      "overview": "A digital storytelling platform that preserves and shares Philippine cultural heritage through interactive narratives, multimedia archives, and community contributions.",
+      "role": "Full-Stack Developer",
+      "client": "Cultural Project",
+      "year": "2025",
+      "tools": ["React", "Node.js", "MongoDB", "Framer Motion"],
+      "tags": ["Full-Stack", "Animations", "Web Development", "UI/UX"],
+      "goals": [
+        "Create immersive storytelling experiences with rich media.",
+        "Build a community-contribution model for cultural preservation.",
+        "Ensure the platform is accessible and performant."
+      ],
+      "timeline": [
+        { "phase": "Concept", "date": "Nov 2024", "description": "Content strategy and narrative structure design." },
+        { "phase": "Design", "date": "Dec 2024", "description": "Visual design system and prototyping." },
+        { "phase": "Develop", "date": "Jan 2025", "description": "Platform development with interactive features." },
+        { "phase": "Launch", "date": "Mar 2025", "description": "Content population and public launch." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "handyman",
+      "title": "HandyMan",
+      "desc": "On-demand home services marketplace mobile app.",
+      "overview": "A mobile marketplace connecting homeowners with vetted service professionals for repairs, maintenance, and home improvement.",
+      "role": "Full-Stack Developer",
+      "client": "Startup Project",
+      "year": "2025",
+      "tools": ["React Native", "Node.js", "PostgreSQL", "Firebase"],
+      "tags": ["Full-Stack", "Mobile", "UI/UX", "Marketplace"],
+      "goals": [
+        "Build a seamless booking and payment experience.",
+        "Implement real-time tracking and status updates.",
+        "Create a trust system with reviews and vetting workflows."
+      ],
+      "timeline": [
+        { "phase": "Research", "date": "Oct 2024", "description": "Market research and competitor analysis." },
+        { "phase": "Design", "date": "Nov 2024", "description": "UX design and prototyping for mobile-first experience." },
+        { "phase": "Development", "date": "Dec 2024", "description": "Full-stack mobile app development." },
+        { "phase": "Launch", "date": "Feb 2025", "description": "Beta testing and marketplace launch." }
+      ],
+      "screenshots": []
+    }
+  ]
+}

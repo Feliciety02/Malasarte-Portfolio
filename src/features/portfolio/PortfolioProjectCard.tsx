@@ -43,7 +43,7 @@ export function PortfolioProjectCard({
   const isBranding = project.cat === "Logo & Branding";
   const isBrandingRecommendation = activeCategory === "Logo & Branding";
   const isBook = activeCategory === "Writing / VA" || project.cat === "Writing / VA";
-  const isUIUX = project.cat === "UI/UX Design";
+  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
   const brandingExcluded = ["Miro", "FigJam", "Illustrator", "Photoshop", "Canva"];
   const displayTools = isBranding
     ? project.tools.filter((t) => !brandingExcluded.includes(t))
@@ -175,7 +175,7 @@ export function PortfolioProjectCard({
                 <div
                   className={cn(
                     "flex h-full w-full items-center justify-center",
-                    isUIUX ? "" : "p-6 sm:p-8",
+                    isCoverFit ? "" : "p-6 sm:p-8",
                   )}
                 >
                   <img
@@ -183,7 +183,7 @@ export function PortfolioProjectCard({
                     alt={`${title} preview`}
                     className={cn(
                       "transition-transform duration-700 group-hover:scale-[1.03]",
-                      isUIUX
+                      isCoverFit
                         ? "h-full w-full object-cover"
                         : "max-h-full max-w-full object-contain",
                     )}

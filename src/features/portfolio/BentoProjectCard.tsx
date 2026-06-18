@@ -38,7 +38,7 @@ function ProjectPreview({
 
   if (!coverImage) return null;
 
-  const isUIUX = project.cat === "UI/UX Design";
+  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
 
   return (
     <>
@@ -53,8 +53,8 @@ function ProjectPreview({
         alt={`${project.title} preview`}
         className={cn(
           "relative h-full w-full transition-transform duration-700 group-hover:scale-[1.025]",
-          isUIUX ? "object-cover" : "object-contain",
-          type === "portrait" && !isUIUX && "p-5 sm:p-7",
+          isCoverFit ? "object-cover" : "object-contain",
+          type === "portrait" && !isCoverFit && "p-5 sm:p-7",
         )}
         loading="lazy"
       />

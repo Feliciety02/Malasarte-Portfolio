@@ -30,7 +30,7 @@ export function FeaturedProject({
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
   const isBranding = activeCategory === "Logo & Branding";
-  const isUIUX = project.cat === "UI/UX Design";
+  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
   const aspect = isBranding ? "aspect-square" : featuredImageAspect[project.cardSize ?? "medium"];
   const isSocial =
     project.cat === "Social Media Graphics" ||
@@ -123,7 +123,7 @@ export function FeaturedProject({
                 alt={`${title} preview`}
                 className={cn(
                   "h-full w-full transition-transform duration-700 group-hover:scale-[1.03]",
-                  isUIUX ? "object-cover" : "object-contain",
+                  isCoverFit ? "object-cover" : "object-contain",
                 )}
               />
             )
