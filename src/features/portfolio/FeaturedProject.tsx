@@ -43,7 +43,7 @@ export function FeaturedProject({
 
       <div className="mt-7 grid gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
         <div className="flex flex-col justify-center">
-          <h2 className="font-display text-3xl font-bold leading-[1.1] tracking-[-0.02em] sm:text-4xl md:text-5xl">
+          <h2 className="font-display text-3xl font-medium leading-[1.1] tracking-[-0.02em] sm:text-4xl md:text-5xl">
             {title}
           </h2>
 

@@ -9,8 +9,8 @@ export function ProblemSection({ project, sectionNumber }: SectionProps) {
     <SectionAnchor id="problem" className="pt-16 md:pt-24">
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Problem" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Challenges and context")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Challenges and <em>context</em>
         </h2>
       </FadeIn>
       <div className="mt-10 grid gap-5 md:grid-cols-2">

@@ -33,8 +33,8 @@ export function IdentitySection({ project, sectionNumber }: SectionProps) {
     <SectionAnchor id="identity">
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Identity" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Visual identity")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Visual <em>identity</em>
         </h2>
       </FadeIn>
       {hasRichBranding ? (

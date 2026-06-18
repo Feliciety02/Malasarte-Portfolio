@@ -99,11 +99,11 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
               <h3 className="line-clamp-2 font-display text-lg font-bold leading-tight sm:text-xl">
                 {title}
               </h3>
-              <p className="mt-2 line-clamp-1 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
+              <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
                 {project.desc}
               </p>
             </div>
-            <div className="flex items-center justify-end pt-2">
+            <div className="mt-auto flex items-center justify-end pt-3">
               <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-yellow/80 transition-colors group-hover:text-yellow">
                 View
                 <ArrowUpRight
@@ -120,10 +120,10 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
             className={cn(
               "relative min-h-0 overflow-hidden",
               type === "featured"
-                ? "aspect-[16/10]"
+                ? "h-[66%] shrink-0"
                 : type === "portrait"
-                  ? "aspect-[4/5]"
-                  : "aspect-[16/10]",
+                  ? "h-[72%] shrink-0"
+                  : "h-[64%] shrink-0",
             )}
           >
             <div className="absolute inset-0 overflow-hidden bg-black/70">
@@ -149,8 +149,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
           </div>
 
           <div className="flex min-h-0 flex-1 flex-col bg-black/80 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
-            <div className="flex items-end justify-between gap-4">
-              <div className="min-w-0">
+            <div className="min-w-0 flex-1">
                 <h3
                   className={cn(
                     "font-display font-bold leading-tight tracking-[-0.02em]",
@@ -166,13 +165,18 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
                 <p
                   className={cn(
                     "mt-2 text-[13px] leading-6 text-white/65",
-                    type === "featured" ? "line-clamp-2 max-w-2xl sm:text-sm" : "line-clamp-1",
+                    type === "featured"
+                      ? "line-clamp-3 max-w-2xl sm:text-sm"
+                      : type === "portrait"
+                        ? "line-clamp-3"
+                        : "line-clamp-2",
                   )}
                 >
                   {project.desc}
                 </p>
-              </div>
+            </div>
 
+            <div className="mt-auto flex items-center justify-end pt-4">
               <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-yellow/80 transition-colors group-hover:text-yellow">
                 View
                 <ArrowUpRight

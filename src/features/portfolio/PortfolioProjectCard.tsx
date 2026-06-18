@@ -81,13 +81,25 @@ export function PortfolioProjectCard({
           </div>
 
           <div className="flex min-h-0 flex-1 flex-col bg-black/80 p-4">
-            <h3 className="line-clamp-2 font-display text-lg font-bold leading-tight sm:text-xl">
-              {title}
-            </h3>
+            <div className="flex-1 min-w-0">
+              <h3 className="line-clamp-2 font-display text-lg font-bold leading-tight sm:text-xl">
+                {title}
+              </h3>
 
-            <p className="mt-2 line-clamp-1 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
-              {project.desc}
-            </p>
+              <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
+                {project.desc}
+              </p>
+            </div>
+
+            <div className="mt-auto flex items-center justify-end pt-3">
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-yellow/70 transition-colors duration-300 group-hover:text-yellow sm:text-sm">
+                View Project
+                <ArrowUpRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
+                />
+              </span>
+            </div>
           </div>
         </div>
       ) : isBook ? (
@@ -114,7 +126,7 @@ export function PortfolioProjectCard({
             />
           </div>
 
-          <div className="flex flex-col gap-2 p-4 sm:w-[75%] sm:p-5">
+          <div className="flex min-h-0 flex-col p-4 sm:w-[75%] sm:p-5">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl">{title}</h3>
               <span className="shrink-0 text-[11px] font-medium uppercase tracking-[0.15em] text-yellow/60 sm:text-xs">
@@ -122,11 +134,11 @@ export function PortfolioProjectCard({
               </span>
             </div>
 
-            <p className="line-clamp-2 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
+            <p className="mt-2 line-clamp-3 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
               {project.desc}
             </p>
 
-            <div className="flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {displayTools.slice(0, 5).map((tool) => (
                 <span
                   key={tool}
@@ -137,7 +149,7 @@ export function PortfolioProjectCard({
               ))}
             </div>
 
-            <div className="flex items-center justify-end">
+            <div className="mt-auto flex items-center justify-end pt-4">
               <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-yellow/70 transition-colors duration-300 group-hover:text-yellow sm:text-sm">
                 View Project
                 <ArrowUpRight
@@ -218,7 +230,7 @@ export function PortfolioProjectCard({
               </span>
             </div>
 
-            <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
+            <p className="mt-2 line-clamp-3 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
               {project.desc}
             </p>
 

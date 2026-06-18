@@ -79,8 +79,8 @@ export function LeadershipSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         <div className="mb-16">
           <span className="metal-kicker">Leadership</span>
-          <h2 className="mt-4 font-display text-5xl font-bold italic tracking-tight md:text-7xl">
-            Organizational Experience
+          <h2 className="mt-4 font-display text-5xl font-medium italic tracking-tight md:text-7xl">
+            Organizational <em>Experience</em>
           </h2>
           <p className="mt-4 max-w-xl text-sm text-white/60">
             Roles that shaped my leadership, collaboration, and community-building skills.

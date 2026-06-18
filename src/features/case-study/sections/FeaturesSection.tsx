@@ -12,8 +12,8 @@ export function FeaturesSection({ project, sectionNumber, openLightbox }: Sectio
     <SectionAnchor id="features">
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Features" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Interface and implementation")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Interface and <em>implementation</em>
         </h2>
       </FadeIn>
       {openLightbox ? (

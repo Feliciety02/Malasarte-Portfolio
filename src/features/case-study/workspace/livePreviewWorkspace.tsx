@@ -20,8 +20,8 @@ export function LivePreviewWorkspace({
         <SectionLabel kicker="02" label="Photo Gallery" />
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="font-display text-2xl font-bold leading-tight md:text-4xl">
-              {accentLastWord("Walkthrough the screenshots")}
+            <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
+              Walkthrough the <em>screenshots</em>
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
               The live build for {project.title} is private or not yet deployed. Browse curated

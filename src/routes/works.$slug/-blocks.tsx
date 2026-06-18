@@ -20,7 +20,7 @@ export function EditorialBlock({
   return (
     <FadeIn>
       <SectionLabel kicker={kicker} label={label} />
-      <h2 className="mt-4 font-display text-3xl font-bold leading-tight md:text-5xl">
+      <h2 className="mt-4 font-display text-3xl font-medium leading-tight md:text-5xl">
         {accentLastWord(title)}
       </h2>
       <p className="mt-6 max-w-3xl text-base leading-8 text-muted-foreground md:text-lg">{body}</p>

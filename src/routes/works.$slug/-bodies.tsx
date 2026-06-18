@@ -17,8 +17,8 @@ export function GalleryOnlyBody({ project, openLightbox }: BodyProps) {
     <SectionAnchor id="showcase" className="pt-16 md:pt-24">
       <FadeIn>
         <SectionLabel kicker="01" label="Gallery" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Visual showcase")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Visual <em>showcase</em>
         </h2>
       </FadeIn>
       <GalleryGrid project={project} openLightbox={openLightbox} variant="masonry" />
@@ -31,8 +31,8 @@ export function ProductBody({ project, openLightbox }: BodyProps) {
     <SectionAnchor id="showcase">
       <FadeIn>
         <SectionLabel kicker="03" label="Showcase" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Screens in motion")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Screens in <em>motion</em>
         </h2>
         <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
           Swipe through high-fidelity surfaces. Tap any frame to open the lightbox.
@@ -52,8 +52,8 @@ export function DevelopmentBody({ project, openLightbox }: BodyProps) {
     <SectionAnchor id="features">
       <FadeIn>
         <SectionLabel kicker="03" label="Features" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Interface and implementation")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Interface and <em>implementation</em>
         </h2>
       </FadeIn>
       <GalleryGrid project={project} openLightbox={openLightbox} variant="grid" />
@@ -86,8 +86,8 @@ export function BrandingBody({ project }: { project: Project }) {
       <SectionAnchor id="identity">
         <FadeIn>
           <SectionLabel kicker="02" label="Identity" />
-          <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-            {accentLastWord("Visual identity")}
+          <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+            Visual <em>identity</em>
           </h2>
         </FadeIn>
         {hasRichBranding ? (
@@ -146,8 +146,8 @@ export function CreativeBody({ project, openLightbox }: BodyProps) {
     <SectionAnchor id="assets">
       <FadeIn>
         <SectionLabel kicker="02" label="Assets" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Magazine-style assembly")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Magazine-style <em>assembly</em>
         </h2>
       </FadeIn>
       <GalleryGrid project={project} openLightbox={openLightbox} variant="masonry" />
@@ -160,8 +160,8 @@ export function WritingBody({ project, openLightbox }: BodyProps) {
     <SectionAnchor id="showcase">
       <FadeIn>
         <SectionLabel kicker="02" label="Preview" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("Document preview")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          Document <em>preview</em>
         </h2>
       </FadeIn>
       {project.flipbookEmbed ? (
@@ -206,8 +206,8 @@ export function ProjectDeliverables({ project }: { project: Project }) {
     <SectionAnchor id="deliverables">
       <FadeIn>
         <SectionLabel kicker={section.number} label="Deliverables" />
-        <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">
-          {accentLastWord("What was handed off")}
+        <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
+          What was <em>handed off</em>
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
           Final outputs prepared for practical use, presentation, and consistent application beyond

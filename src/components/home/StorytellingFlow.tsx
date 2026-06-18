@@ -108,7 +108,7 @@ function ProcessCard({ index, step, copy, isActive, className }: ProcessCardProp
           Phase 0{index + 1}
         </span>
       </div>
-      <h3 className="relative z-10 mt-6 font-display text-4xl font-semibold md:text-5xl">
+      <h3 className="relative z-10 mt-6 font-display text-4xl font-medium md:text-5xl">
         {step.title}
       </h3>
       {copy ? (
@@ -183,7 +183,7 @@ function HServiceCard({
         </span>
       </div>
 
-      <h3 className="relative z-10 mt-5 font-display text-3xl font-semibold md:text-4xl lg:text-5xl">
+      <h3 className="relative z-10 mt-5 font-display text-3xl font-medium md:text-4xl lg:text-5xl">
         {title}
       </h3>
 
