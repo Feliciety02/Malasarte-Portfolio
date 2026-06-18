@@ -1,4 +1,3 @@
-import { useRef, useCallback } from "react";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { getProjectCoverImage } from "@/data/projectImages";
@@ -6,6 +5,7 @@ import { getProjectDisplayTitle } from "@/data/projects";
 import type { Project, ProjectFilter } from "@/data/projects";
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { cn } from "@/lib/utils";
+import { PortfolioAccentCardFrame } from "./PortfolioAccentCardFrame";
 
 export type CardSize = "large" | "tall" | "wide" | "medium";
 
@@ -38,7 +38,6 @@ export function PortfolioProjectCard({
 }: PortfolioProjectCardProps) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
-  const cardRef = useRef<HTMLDivElement>(null);
 
   const isBranding = project.cat === "Logo & Branding";
   const isBrandingRecommendation = activeCategory === "Logo & Branding";
@@ -54,26 +53,8 @@ export function PortfolioProjectCard({
   const isWebDev = project.cat === "Web Development" || activeCategory === "Web Development";
   const liveUrl = project.vercelLiveUrl?.trim();
 
-  const handleMouse = useCallback((e: React.MouseEvent) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    el.style.setProperty("--mx", `${px * 100}%`);
-    el.style.setProperty("--my", `${py * 100}%`);
-  }, []);
-
   const cardContent = (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouse}
-      className={cn(
-        "metal-card group relative h-full overflow-hidden rounded-2xl",
-        "transition-transform duration-500 ease-out will-change-transform",
-        "hover:-translate-y-0.5",
-      )}
-    >
+    <PortfolioAccentCardFrame category={project.cat}>
       {isBrandingRecommendation ? (
         <div className="flex h-full flex-col">
           <div className="relative h-[65%] shrink-0 overflow-hidden bg-white">
@@ -168,7 +149,7 @@ export function PortfolioProjectCard({
           </div>
         </div>
       ) : (
-        <>
+        <div className="flex h-full flex-col">
           <div className="relative overflow-hidden">
             <div className={cn("aspect-video w-full", isBranding && "bg-white")}>
               {coverImage ? (
@@ -206,8 +187,14 @@ export function PortfolioProjectCard({
                 isBranding
                   ? "hidden"
                   : "bg-gradient-to-t from-black/30 via-transparent to-transparent",
-              )}
-            />
+                )}
+              />
+
+            <div className="absolute left-3 top-3 z-10">
+              <span className="metal-ghost inline-flex rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/75">
+                {project.cat}
+              </span>
+            </div>
 
             {isWebDev && liveUrl ? (
               <a
@@ -223,7 +210,7 @@ export function PortfolioProjectCard({
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-3 px-4 pb-4 pt-2 sm:px-5 sm:pb-5">
+          <div className="flex min-h-0 flex-1 flex-col bg-black/80 px-4 pb-4 pt-3 sm:px-5 sm:pb-5">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl">{title}</h3>
               <span className="shrink-0 text-[11px] font-medium uppercase tracking-[0.15em] text-yellow/60 sm:text-xs">
@@ -231,11 +218,11 @@ export function PortfolioProjectCard({
               </span>
             </div>
 
-            <p className="line-clamp-2 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
+            <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
               {project.desc}
             </p>
 
-            <div className="flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {displayTools.slice(0, 5).map((tool) => (
                 <span
                   key={tool}
@@ -246,7 +233,7 @@ export function PortfolioProjectCard({
               ))}
             </div>
 
-            <div className="flex items-center justify-end">
+            <div className="mt-auto flex items-center justify-end pt-4">
               <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-yellow/70 transition-colors duration-300 group-hover:text-yellow sm:text-sm">
                 View Project
                 <ArrowUpRight
@@ -256,17 +243,9 @@ export function PortfolioProjectCard({
               </span>
             </div>
           </div>
-        </>
+        </div>
       )}
-
-      <div
-        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.04), transparent 50%)",
-        }}
-      />
-    </div>
+    </PortfolioAccentCardFrame>
   );
 
   return (

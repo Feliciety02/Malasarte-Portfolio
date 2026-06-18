@@ -1,216 +1,166 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { SectionHeader } from "@/components/site/SectionHeader";
-import { Reveal } from "@/components/site/Reveal";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { leadership } from "@/data/about";
+import type { TimelineItem } from "@/data/about";
 
-const lastIndex = leadership.length - 1;
+const HIGHLIGHT_ITEMS: (TimelineItem & { highlight: string })[] = [
+  {
+    ...leadership[0],
+    highlight:
+      "Leading the University's largest student developer community — driving technical initiatives, events, and partnerships.",
+  },
+  {
+    ...leadership[1],
+    highlight:
+      "Directed marketing strategy, brand presence, and promotional campaigns for the college student government.",
+  },
+  {
+    ...leadership[2],
+    highlight:
+      "Managed documentation, coordination, and communication for DOST scholars across the university.",
+  },
+  {
+    ...leadership[3],
+    highlight:
+      "Represented Computer Science students in the developer community, bridging feedback and initiatives.",
+  },
+  {
+    ...leadership[4],
+    highlight: "Organized data and maintained records for the Data Owls organization.",
+  },
+  {
+    ...leadership[5],
+    highlight:
+      "Contributed creative direction and visual assets for community events and campaigns.",
+  },
+  {
+    ...leadership[6],
+    highlight: "Designed visual materials for UM Enigma's events and initiatives.",
+  },
+  {
+    ...leadership[7],
+    highlight: "Created graphics and branding for JBECP's blockchain education events.",
+  },
+  {
+    ...leadership[8],
+    highlight:
+      "Managed business operations and financial planning for the Student Advisory Council.",
+  },
+];
 
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
-}
+const gradientPairs = [
+  "from-violet-600/40 via-purple-600/20 to-transparent",
+  "from-fuchsia-600/40 via-pink-600/20 to-transparent",
+  "from-blue-600/40 via-indigo-600/20 to-transparent",
+  "from-amber-600/40 via-orange-600/20 to-transparent",
+  "from-emerald-600/40 via-teal-600/20 to-transparent",
+  "from-rose-600/40 via-red-600/20 to-transparent",
+  "from-cyan-600/40 via-sky-600/20 to-transparent",
+  "from-violet-600/40 via-purple-600/20 to-transparent",
+  "from-fuchsia-600/40 via-pink-600/20 to-transparent",
+];
 
 export function LeadershipSection() {
-  const containerRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
-  const trackWidth = useRef(1);
-
-  const rawProgress = useMotionValue(0);
-  const smoothProgress = useSpring(rawProgress, {
-    stiffness: 35,
-    damping: 20,
-    mass: 0.8,
-  });
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const reduce = prefersReducedMotion || isMobile;
-
-  useEffect(() => {
-    if (reduce) return;
-    const el = containerRef.current;
-    if (!el) return;
-
-    el.style.height = "200vh";
-
-    let frame = 0;
-    const tick = () => {
-      frame = 0;
-      const rect = el.getBoundingClientRect();
-      const scrollable = el.offsetHeight - window.innerHeight;
-      const scrolled = -rect.top;
-      const p = clamp(scrolled / scrollable, 0, 1);
-      rawProgress.set(p);
-
-      if (trackRef.current && viewportRef.current) {
-        trackWidth.current = Math.max(
-          1,
-          trackRef.current.scrollWidth - viewportRef.current.clientWidth,
-        );
-      }
-
-      const sp = clamp((p - 0.1) / (0.75 - 0.1), 0, 1);
-      setActiveIndex((c) => {
-        const n = clamp(Math.floor(sp * leadership.length * 0.999), 0, lastIndex);
-        return c === n ? c : n;
-      });
-    };
-
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(tick);
-    };
-
-    tick();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule, { passive: true });
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-    };
-  }, [reduce, rawProgress]);
-
-  const barScale = useTransform(smoothProgress, (v) => {
-    return Math.max(0, Math.min(1, (v - 0.08) / (0.75 - 0.08)));
-  });
-  const trackX = useTransform(smoothProgress, (v) => {
-    const sp = Math.max(0, Math.min(1, (v - 0.08) / (0.75 - 0.08)));
-    return -sp * trackWidth.current;
-  });
+  const [active, setActive] = useState(0);
+  const item = HIGHLIGHT_ITEMS[active];
+  const gradient = gradientPairs[active % gradientPairs.length];
 
   return (
-    <Reveal className="mt-20">
-      {/* Mobile fallback */}
-      <div className={reduce ? "block" : "md:hidden"}>
-        <section className="mx-auto max-w-6xl px-6">
-          <SectionHeader
-            eyebrow="Leadership"
-            title="Organizational Experience"
-            description="Roles that shaped my leadership, collaboration, and community-building skills."
-          />
-          <div className="mobile-thin-x-scrollbar -mx-6 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
-            {leadership.map((item) => (
-              <div
-                key={item.period + item.title}
-                className="metal-panel w-[78vw] shrink-0 snap-center rounded-xl p-6"
-              >
-                <span className="font-mono text-xs uppercase tracking-widest text-primary">
-                  {item.period}
-                </span>
-                <h3 className="mt-2 font-display text-lg font-bold">{item.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{item.subtitle}</p>
-                {item.desc && (
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">
-                    {item.desc}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+    <section className="relative overflow-hidden py-24 md:py-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.02), transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.04), transparent 50%)",
+        }}
+      />
 
-      {/* Desktop: horizontal scroll */}
-      <section
-        ref={containerRef}
-        className={reduce ? "hidden" : "hidden md:block relative"}
-      >
-        <div className="sticky top-0 z-50 flex h-screen flex-col overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#0c0d0e] via-transparent to-[#0c0d0e]" />
-          <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.04),transparent_60%)]" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="mb-16">
+          <span className="metal-kicker">Leadership</span>
+          <h2 className="mt-4 font-display text-5xl font-bold italic tracking-tight md:text-7xl">
+            Organizational Experience
+          </h2>
+          <p className="mt-4 max-w-xl text-sm text-white/60">
+            Roles that shaped my leadership, collaboration, and community-building skills.
+          </p>
+        </div>
 
-          <div className="relative z-10 mx-auto w-full max-w-7xl px-8 pt-[clamp(2.5rem,5vh,3.5rem)]">
-            <div className="flex items-end justify-between gap-8">
-              <SectionHeader
-                eyebrow="Leadership"
-                title="Organizational Experience"
-                description="Roles that shaped my leadership, collaboration, and community-building skills."
-                className="mb-0"
-                contentClassName="max-w-xl"
-                titleClassName="md:text-3xl lg:text-4xl"
-              />
-            </div>
-
-            <div className="mt-[clamp(1.25rem,2.5vh,2rem)] flex items-center gap-4">
-              <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-yellow via-white/70 to-yellow"
-                  style={{ scaleX: barScale, width: "100%" }}
-                />
-              </div>
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
-                <span className="text-white">0{activeIndex + 1}</span>
-                <span className="text-white/40"> / 0{leadership.length}</span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            ref={viewportRef}
-            className="relative mt-[clamp(1.5rem,3vh,2.5rem)] flex-1 overflow-hidden"
-          >
-            <motion.div
-              ref={trackRef}
-              className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
-              style={{ x: trackX }}
-            >
-              {leadership.map((item, i) => (
-                <motion.div
-                  key={item.period + item.title}
-                  className="metal-panel flex h-[clamp(16rem,40vh,24rem)] w-[min(62vw,28rem)] shrink-0 flex-col justify-center rounded-2xl border-t border-white/[0.06] p-8 lg:w-[min(48vw,30rem)] xl:w-[min(42vw,32rem)]"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <span className="mb-6 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
+              Now Highlighting
+            </span>
+            <nav className="space-y-0" role="tablist" aria-label="Leadership roles">
+              {HIGHLIGHT_ITEMS.slice(0, 6).map((item, i) => (
+                <motion.button
+                  key={`${item.period}-${item.title}`}
+                  role="tab"
+                  type="button"
+                  aria-selected={active === i}
+                  onClick={() => setActive(i)}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  whileHover={{ paddingLeft: 24 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                  className={`group flex w-full items-center justify-between border-b border-white/10 py-5 text-left transition-colors ${
+                    active === i ? "text-white" : "text-white/50 hover:text-white/80"
+                  }`}
                 >
-                  <div className="flex items-start gap-5">
-                    {item.logo && (
-                      <div className="mt-1 shrink-0">
-                        <img
-                          src={item.logo}
-                          alt=""
-                          className="h-16 w-16 object-contain lg:h-20 lg:w-20"
-                        />
-                      </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <span className="font-mono text-xs uppercase tracking-widest text-primary">
-                        {item.period}
-                      </span>
-                      <h3 className="mt-2 font-display text-xl font-bold lg:text-2xl">
+                  <div className="flex items-center gap-6 min-w-0">
+                    <span className="w-8 shrink-0 font-mono text-sm text-white/50">0{i + 1}</span>
+                    <div className="min-w-0">
+                      <h3 className="font-display text-2xl font-bold tracking-tight md:text-4xl">
                         {item.title}
                       </h3>
-                      <p className="mt-1 text-sm text-muted-foreground lg:text-base">
-                        {item.subtitle}
-                      </p>
-                      {item.desc && (
-                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">
-                          {item.desc}
-                        </p>
-                      )}
+                      <p className="mt-0.5 text-sm text-white/60">{item.subtitle}</p>
                     </div>
                   </div>
-                </motion.div>
+                  <span className="ml-4 shrink-0 text-lg opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    &rarr;
+                  </span>
+                </motion.button>
               ))}
-            </motion.div>
+            </nav>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="sticky top-32">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className={`aspect-square w-full rounded-3xl bg-gradient-to-b ${gradient} border border-white/10 p-8 flex flex-col justify-end`}
+                >
+                  {item.logo && (
+                    <div className="mb-6">
+                      <img
+                        src={item.logo}
+                        alt={`${item.subtitle} logo`}
+                        className="h-16 w-16 object-contain md:h-20 md:w-20"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <span className="font-mono text-xs uppercase tracking-widest text-white/60">
+                      {item.period}
+                    </span>
+                    <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-white/60">{item.subtitle}</p>
+                    <p className="mt-4 text-sm leading-relaxed text-white/70">{item.highlight}</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-      </section>
-    </Reveal>
+      </div>
+    </section>
   );
 }

@@ -1,5 +1,7 @@
-import { Grid, Palette, Globe, Stamp, Share2, Package, FileText } from "lucide-react";
+import { Grid, Palette, Globe, Stamp, Share2, Package, FileText, Search } from "lucide-react";
+import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
+import { getCategoryAccent } from "./categoryAccents";
 
 const categories = [
   "All",
@@ -23,47 +25,76 @@ const categoryIcons: Record<FilterCategory, LucideIcon> = {
   "Writing / VA": FileText,
 };
 
-const categoryAccentColors: Record<FilterCategory, string> = {
-  All: "rgba(255,255,255,0.15)",
-  "UI/UX Design": "rgba(147, 51, 234, 0.25)",
-  "Web Development": "rgba(59, 130, 246, 0.25)",
-  "Logo & Branding": "rgba(250, 204, 21, 0.25)",
-  "Social Media Graphics": "rgba(236, 72, 153, 0.25)",
-  "Creative Assets": "rgba(45, 212, 191, 0.25)",
-  "Writing / VA": "rgba(52, 211, 153, 0.25)",
-};
-
 type CategoryFilterBarProps = {
   active: FilterCategory;
   onChange: (category: FilterCategory) => void;
   onHover: (category: string | null) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
 };
 
-export function CategoryFilterBar({ active, onChange, onHover }: CategoryFilterBarProps) {
+export function CategoryFilterBar({
+  active,
+  onChange,
+  onHover,
+  search,
+  onSearchChange,
+}: CategoryFilterBarProps) {
+  const [hovered, setHovered] = useState<FilterCategory | null>(null);
+
   return (
-    <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-14 sm:px-6">
-      <div className="mx-auto flex flex-wrap justify-center gap-2.5 sm:gap-3">
+    <section className="relative z-10 mx-auto mt-8 max-w-7xl px-4 sm:mt-10 sm:px-6">
+      <div className="mx-auto max-w-4xl">
+        <div className="relative mb-5">
+          <label htmlFor="works-search" className="sr-only">
+            Search works
+          </label>
+          <Search
+            size={16}
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            id="works-search"
+            type="text"
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            placeholder="Search works..."
+            className="h-14 w-full rounded-full border border-white/10 bg-white/[0.04] py-3 pl-11 pr-5 text-sm text-white placeholder:text-white/30 focus:border-yellow/50 focus:outline-none"
+          />
+        </div>
+
+        <div className="mx-auto flex flex-wrap justify-center gap-2.5 sm:gap-3">
         {categories.map((category) => {
           const Icon = categoryIcons[category];
           const isActive = active === category;
-          const accent = categoryAccentColors[category];
+          const isHovered = hovered === category;
+          const accent = getCategoryAccent(category);
+          const isEmphasized = isActive || isHovered;
 
           return (
             <button
               key={category}
               type="button"
               onClick={() => onChange(category)}
-              onMouseEnter={() => onHover(category === "All" ? null : category)}
-              onMouseLeave={() => onHover(null)}
+              onMouseEnter={() => {
+                setHovered(category);
+                onHover(category === "All" ? null : category);
+              }}
+              onMouseLeave={() => {
+                setHovered(null);
+                onHover(null);
+              }}
               className="group relative flex items-center gap-2 rounded-full px-4 py-2.5 text-left text-sm font-medium transition-colors duration-300 sm:px-4"
               style={{
-                background: isActive
+                background: isEmphasized
                   ? "linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))"
                   : "rgba(255,255,255,0.04)",
-                border: isActive ? `1px solid ${accent}` : "1px solid rgba(255,255,255,0.08)",
-                color: isActive ? "white" : "rgba(255,255,255,0.55)",
-                boxShadow: isActive
-                  ? `0 0 20px ${accent}, 0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.10)`
+                border: isEmphasized
+                  ? `1px solid ${accent.border}`
+                  : "1px solid rgba(255,255,255,0.08)",
+                color: isEmphasized ? "white" : "rgba(255,255,255,0.55)",
+                boxShadow: isEmphasized
+                  ? `0 0 24px ${accent.glow}, 0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.10)`
                   : "0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06)",
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",
@@ -73,13 +104,14 @@ export function CategoryFilterBar({ active, onChange, onHover }: CategoryFilterB
                 size={15}
                 className="shrink-0 transition-all duration-300"
                 style={{
-                  color: isActive ? accent.replace("0.25", "1") : "rgba(255,255,255,0.4)",
+                  color: isEmphasized ? accent.ring : "rgba(255,255,255,0.4)",
                 }}
               />
               <span>{category === "All" ? "All Work" : category}</span>
             </button>
           );
         })}
+        </div>
       </div>
     </section>
   );

@@ -113,6 +113,7 @@
     background-image: var(--gradient-mesh);
     background-attachment: fixed;
     overflow-x: hidden;
+    text-rendering: optimizeLegibility;
   }
   h1,
   h2,
@@ -121,7 +122,9 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    letter-spacing: 0;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    text-wrap: balance;
   }
 
   ::selection {
@@ -789,6 +792,26 @@
 
   .metal-kicker {
     color: var(--yellow);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    opacity: 0.82;
+  }
+
+  .editorial-display {
+    font-family: var(--font-display);
+    font-style: italic;
+    letter-spacing: -0.045em;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .editorial-subtitle {
+    font-size: clamp(0.98rem, 0.9rem + 0.25vw, 1.1rem);
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.68);
+    text-wrap: pretty;
   }
 
   .metal-microcopy {

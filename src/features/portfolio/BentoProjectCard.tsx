@@ -1,4 +1,3 @@
-import { useCallback, useRef } from "react";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { TagPill } from "@/components/site/TagPill";
@@ -7,6 +6,7 @@ import { getProjectCategoryLabel, getProjectDisplayTitle, type Project } from "@
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { cn } from "@/lib/utils";
 import { SocialMediaBentoPreview } from "./SocialMediaBentoPreview";
+import { PortfolioAccentCardFrame } from "./PortfolioAccentCardFrame";
 
 export type BentoCardType = "featured" | "portrait" | "standard" | "gallery";
 
@@ -63,7 +63,6 @@ function ProjectPreview({
 }
 
 export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, "All");
   const category = getProjectCategoryLabel(project, "All");
@@ -72,21 +71,8 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
     project.categories?.includes("Social Media Graphics");
   const isBranding = project.cat === "Logo & Branding";
 
-  const handleMouse = useCallback((event: React.MouseEvent) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
-    card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
-  }, []);
-
   const cardContent = (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouse}
-      className="metal-card group relative h-full overflow-hidden rounded-2xl transition-transform duration-500 ease-out will-change-transform hover:-translate-y-0.5"
-    >
+    <PortfolioAccentCardFrame category={project.cat}>
       {isBranding ? (
         <div className="flex h-full flex-col">
           <div className="relative h-[65%] shrink-0 overflow-hidden bg-white">
@@ -129,33 +115,41 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
           </div>
         </div>
       ) : (
-        <>
-          <div className="absolute inset-0 overflow-hidden bg-black/70">
-            <ProjectPreview project={project} type={type} coverImage={coverImage} />
+        <div className="flex h-full flex-col">
+          <div
+            className={cn(
+              "relative min-h-0 overflow-hidden",
+              type === "featured"
+                ? "aspect-[16/10]"
+                : type === "portrait"
+                  ? "aspect-[4/5]"
+                  : "aspect-[16/10]",
+            )}
+          >
+            <div className="absolute inset-0 overflow-hidden bg-black/70">
+              <ProjectPreview project={project} type={type} coverImage={coverImage} />
+            </div>
+
+            <div className="absolute left-3 top-3 z-10">
+              <TagPill>{category}</TagPill>
+            </div>
+
+            {project.vercelLiveUrl?.trim() ? (
+              <a
+                href={project.vercelLiveUrl.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
+              >
+                <ExternalLink size={11} />
+                Live
+              </a>
+            ) : null}
           </div>
 
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"
-          />
-
-          <TagPill>{category}</TagPill>
-
-          {project.vercelLiveUrl?.trim() ? (
-            <a
-              href={project.vercelLiveUrl.trim()}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
-            >
-              <ExternalLink size={11} />
-              Live
-            </a>
-          ) : null}
-
-          <div className="absolute inset-x-0 bottom-0 z-10 bg-black/80">
-            <div className="flex items-end justify-between gap-4 px-5 pb-5 pt-3 sm:px-6 sm:pb-6">
+          <div className="flex min-h-0 flex-1 flex-col bg-black/80 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
+            <div className="flex items-end justify-between gap-4">
               <div className="min-w-0">
                 <h3
                   className={cn(
@@ -188,17 +182,9 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
               </span>
             </div>
           </div>
-        </>
+        </div>
       )}
-
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.08), transparent 50%)",
-        }}
-      />
-    </div>
+    </PortfolioAccentCardFrame>
   );
 
   return (

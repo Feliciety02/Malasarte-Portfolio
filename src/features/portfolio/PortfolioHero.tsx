@@ -4,6 +4,7 @@ import { getProjectDisplayTitle } from "@/data/projects";
 import type { Project, ProjectFilter } from "@/data/projects";
 import { AccentText } from "@/components/site/HeadingAccent";
 import { SocialMediaBentoPreview } from "./SocialMediaBentoPreview";
+import { PortfolioAccentCardFrame } from "./PortfolioAccentCardFrame";
 
 type StatItem = {
   value: string;
@@ -35,7 +36,7 @@ function FeaturedCard({
   const liveUrl = project.vercelLiveUrl?.trim();
 
   return (
-    <div className="metal-card group relative flex h-full w-full overflow-hidden rounded-2xl bg-white/5">
+    <PortfolioAccentCardFrame category={project.cat} className="flex w-full bg-white/5">
       {isSocial ? (
         <SocialMediaBentoPreview
           project={project}
@@ -75,7 +76,7 @@ function FeaturedCard({
           Live
         </a>
       ) : null}
-    </div>
+    </PortfolioAccentCardFrame>
   );
 }
 
@@ -87,7 +88,7 @@ export function PortfolioHero({ stats, featuredProject, activeCategory, onSocial
           <span className="metal-kicker">Portfolio</span>
 
           <div className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
-            <div>Selected</div>
+            <div>Explore</div>
             <div>
               <AccentText>Works</AccentText>
             </div>

@@ -468,6 +468,7 @@ export function GlassDome({
 function ToolLogo({
   slug,
   name,
+  color,
   isActive,
 }: {
   slug: string;
@@ -502,7 +503,7 @@ function ToolLogo({
         style={{
           opacity: isActive ? 1 : 0.4,
           transition: "opacity 400ms ease",
-          filter: "brightness(0) invert(1)",
+          filter: "none",
         }}
       />
     </span>

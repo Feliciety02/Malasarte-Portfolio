@@ -5,7 +5,6 @@ import { ContactCtaSection } from "@/components/home/ContactCtaSection";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { MarqueeSection } from "@/components/home/MarqueeSection";
 import { ProcessPreviewSection } from "@/components/home/ProcessPreviewSection";
-import { ProjectGallerySection } from "@/components/home/ProjectGallerySection";
 import { MetallicPage } from "@/components/site/MetallicPage";
 
 export const Route = createFileRoute("/")({
@@ -39,7 +38,6 @@ function Home() {
         <MarqueeSection reducedMotion={reducedMotion} />
       </div>
       <AboutHubSection reducedMotion={reducedMotion} />
-      <ProjectGallerySection />
       <ProcessPreviewSection />
       <ContactCtaSection />
     </MetallicPage>

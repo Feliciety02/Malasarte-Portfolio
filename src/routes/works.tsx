@@ -84,6 +84,7 @@ function Works() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const sourceProjects = projects;
   const [active, setActive] = useState<FilterCategory>("All");
+  const [search, setSearch] = useState("");
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [socialSelectionRequest, setSocialSelectionRequest] = useState<{
@@ -104,13 +105,32 @@ function Works() {
   };
   const { stats } = useMemo(() => computePortfolioStats(sourceProjects), [sourceProjects]);
   const [randomizedAllProjects, setRandomizedAllProjects] = useState<Project[]>([]);
+  const searchedProjects = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    if (!query) return sourceProjects;
+
+    return sourceProjects.filter((project) => {
+      const searchableFields = [
+        project.title,
+        project.desc,
+        project.client,
+        project.year,
+        project.cat,
+        ...(project.categories ?? []),
+        ...project.tools,
+      ];
+
+      return searchableFields.some((value) => value.toLowerCase().includes(query));
+    });
+  }, [sourceProjects, search]);
   const filtered = useMemo(
-    () => getProjectsByCategoryFrom(sourceProjects, active),
-    [sourceProjects, active],
+    () => getProjectsByCategoryFrom(searchedProjects, active),
+    [searchedProjects, active],
   );
   const allProjects = useMemo(
-    () => getProjectsByCategoryFrom(sourceProjects, "All"),
-    [sourceProjects],
+    () => getProjectsByCategoryFrom(searchedProjects, "All"),
+    [searchedProjects],
   );
 
   useEffect(() => {
@@ -182,6 +202,8 @@ function Works() {
             if (category !== "Social Media Graphics") setSocialSelectionRequest(null);
           }}
           onHover={setHoveredCategory}
+          search={search}
+          onSearchChange={setSearch}
         />
 
         {active === "All" ? (
