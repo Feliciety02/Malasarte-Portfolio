@@ -1122,7 +1122,7 @@ export const projects: Project[] = [
   {
     slug: "pietyl-management-system",
     title: "Pietyl DigiLPG",
-    imageTitle: "pietyl LPG landing page",
+    imageTitle: "Pietyl ui ux card",
     cardSize: "wide",
     directoryTitle: "Pietyl DigiLPG",
     cat: "UI/UX Design",
@@ -1240,6 +1240,8 @@ export const projects: Project[] = [
         note: "Rider delivery management screen design for dispatch and delivery tracking workflows.",
       },
     ],
+    figmaPreviewUrl:
+      "https://embed.figma.com/design/7bbWU9ch4rwaouInhEarZ6/Pietyl-DigiLPG?node-id=534-2&embed-host=share",
     nextProjectSlug: "pietyl-digilpg-web",
   },
   {
@@ -1584,6 +1586,7 @@ export const projects: Project[] = [
   {
     slug: "umunity",
     title: "UMunity",
+    imageTitle: "UMunity ui ux card",
     cat: "UI/UX Design",
     kind: "uiux",
     cardSize: "wide",

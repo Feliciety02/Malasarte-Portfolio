@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ZoomIn } from "lucide-react";
+import { Lightbox, type LightboxItem } from "@/components/site/Lightbox";
 import { getProjectGalleryImage, getSocialMediaProjectImages } from "@/data/projectImages";
 import { getProjectDisplayTitle } from "@/data/projects";
 import type { Project, ProjectGalleryItem } from "@/data/projects";
@@ -333,6 +335,11 @@ export function SocialMediaGraphicsShowcase({
 }: SocialMediaGraphicsShowcaseProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [selectedSlug, setSelectedSlug] = useState(projects[0]?.slug ?? "");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setLightboxIndex(null);
+  }, [selectedSlug]);
 
   useEffect(() => {
     if (!requestedSlug || !projects.some((project) => project.slug === requestedSlug)) return;
@@ -439,87 +446,116 @@ export function SocialMediaGraphicsShowcase({
     };
   });
   const bento = getSmartBento(measuredTiles);
+  const lightboxItems: LightboxItem[] = measuredTiles.map(({ item, image }, index) => ({
+    color: item?.color ?? selectedProject.color,
+    label: item?.label ?? `${getProjectDisplayTitle(selectedProject, "Social Media Graphics")} asset ${index + 1}`,
+    note: item?.note ?? "Click outside or press Esc to close.",
+    src: image,
+  }));
 
   return (
-    <section
-      ref={sectionRef}
-      id="social-media-showcase"
-      className="relative z-10 mx-auto mt-12 max-w-7xl scroll-mt-24 px-4 sm:mt-16 sm:px-6"
-    >
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.5fr)]">
-        <div className="max-h-[52rem] space-y-3 overflow-y-auto pr-2">
-          {projects.map((project) => {
-            const isSelected = project.slug === selectedProject.slug;
+    <>
+      <section
+        ref={sectionRef}
+        id="social-media-showcase"
+        className="relative z-10 mx-auto mt-14 max-w-7xl scroll-mt-24 px-4 sm:mt-16 sm:px-6"
+      >
+        <div className="grid items-start gap-5 sm:gap-6 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.5fr)]">
+          <div className="max-h-[52rem] space-y-3.5 overflow-y-auto pr-1 sm:pr-2">
+            {projects.map((project) => {
+              const isSelected = project.slug === selectedProject.slug;
 
-            return (
-              <button
-                key={project.slug}
-                type="button"
-                data-project-slug={project.slug}
-                aria-pressed={isSelected}
-                onClick={() => setSelectedSlug(project.slug)}
-                className={cn(
-                  "metal-panel w-full rounded-xl p-4 text-left transition-all duration-200",
-                  isSelected ? "ring-2 ring-primary" : "hover:bg-white/5",
-                )}
-              >
-                <p className="font-display text-sm font-bold">
-                  {getProjectDisplayTitle(project, "Social Media Graphics")}
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {project.tag} / {project.year}
-                </p>
-              </button>
-            );
-          })}
-        </div>
+              return (
+                <button
+                  key={project.slug}
+                  type="button"
+                  data-project-slug={project.slug}
+                  aria-pressed={isSelected}
+                  onClick={() => setSelectedSlug(project.slug)}
+                  className={cn(
+                    "metal-panel w-full rounded-xl p-4 text-left transition-colors duration-200",
+                    isSelected ? "ring-2 ring-primary" : "hover:bg-white/[0.06]",
+                  )}
+                >
+                  <p className="font-display text-sm font-bold">
+                    {getProjectDisplayTitle(project, "Social Media Graphics")}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {project.tag} / {project.year}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
 
-        <div
-          className="grid min-h-[24rem] gap-2 overflow-hidden lg:min-h-0"
-          style={{
-            aspectRatio: `${bento.layout.columns} / ${bento.layout.rows}`,
-            gridTemplateColumns: `repeat(${bento.layout.columns}, minmax(0, 1fr))`,
-            gridTemplateRows: `repeat(${bento.layout.rows}, minmax(0, 1fr))`,
-          }}
-        >
-          {bento.tiles.map(({ item, image, sourceIndex }, index) => {
-            const layoutSlot = bento.layout.slots[index];
+          <div
+            className="grid min-h-[24rem] gap-2.5 overflow-hidden lg:min-h-0"
+            style={{
+              aspectRatio: `${bento.layout.columns} / ${bento.layout.rows}`,
+              gridTemplateColumns: `repeat(${bento.layout.columns}, minmax(0, 1fr))`,
+              gridTemplateRows: `repeat(${bento.layout.rows}, minmax(0, 1fr))`,
+            }}
+          >
+            {bento.tiles.map(({ item, image, sourceIndex }, index) => {
+              const layoutSlot = bento.layout.slots[index];
 
-            return (
-              <div
-                key={`${selectedProject.slug}-${image ?? item?.label ?? sourceIndex}`}
-                className={cn(
-                  "metal-panel group relative min-h-0 overflow-hidden rounded-lg",
-                  !image && "bg-gradient-to-br",
-                  !image ? (item?.color ?? selectedProject.color) : "",
-                )}
-                style={{
-                  gridColumn: `${layoutSlot.column} / span ${layoutSlot.columnSpan}`,
-                  gridRow: `${layoutSlot.row} / span ${layoutSlot.rowSpan}`,
-                }}
-              >
-                {image ? (
-                  <>
-                    <img
-                      src={image}
-                      alt={`${selectedProject.title} - ${item?.label ?? `asset ${index + 1}`}`}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      loading="lazy"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70" />
-                  </>
-                ) : (
-                  <div className="flex h-full flex-col items-center justify-center p-2 text-center">
-                    <span className="font-mono text-[9px] text-white/40 sm:text-[10px]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+              const tileClassName = cn(
+                "metal-panel group relative min-h-0 overflow-hidden rounded-lg text-left",
+                !image && "bg-gradient-to-br",
+                !image ? (item?.color ?? selectedProject.color) : "",
+              );
+              const tileStyle = {
+                gridColumn: `${layoutSlot.column} / span ${layoutSlot.columnSpan}`,
+                gridRow: `${layoutSlot.row} / span ${layoutSlot.rowSpan}`,
+              };
+
+              if (!image) {
+                return (
+                  <div
+                    key={`${selectedProject.slug}-${item?.label ?? sourceIndex}`}
+                    className={tileClassName}
+                    style={tileStyle}
+                  >
+                    <div className="flex h-full flex-col items-center justify-center p-2 text-center">
+                      <span className="font-mono text-[9px] text-white/40 sm:text-[10px]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
                   </div>
-                )}
-              </div>
-            );
-          })}
+                );
+              }
+
+              return (
+                <button
+                  key={`${selectedProject.slug}-${image ?? item?.label ?? sourceIndex}`}
+                  type="button"
+                  onClick={() => setLightboxIndex(index)}
+                  className={tileClassName}
+                  style={tileStyle}
+                  aria-label={`Open ${lightboxItems[index]?.label ?? `asset ${index + 1}`}`}
+                >
+                  <img
+                    src={image}
+                    alt={`${selectedProject.title} - ${item?.label ?? `asset ${index + 1}`}`}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    loading="lazy"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70" />
+                  <div className="pointer-events-none absolute right-3 top-3 rounded-full border border-white/12 bg-black/40 p-2 text-white/80 backdrop-blur-sm">
+                    <ZoomIn size={14} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Lightbox
+        items={lightboxItems}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={setLightboxIndex}
+      />
+    </>
   );
 }

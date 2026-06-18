@@ -69,7 +69,7 @@ function FeaturedCard({
           href={liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+          className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
         >
           <ExternalLink size={11} />
           Live
@@ -82,7 +82,7 @@ function FeaturedCard({
 export function PortfolioHero({ stats, featuredProject, activeCategory, onSocialClick }: PortfolioHeroProps) {
   return (
     <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+      <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
         <div>
           <span className="metal-kicker">Portfolio</span>
 
@@ -98,7 +98,7 @@ export function PortfolioHero({ stats, featuredProject, activeCategory, onSocial
             systems shaped across categories, clients, and disciplines.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 sm:gap-x-8">
             {stats.map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
                 <span className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">

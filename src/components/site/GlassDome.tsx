@@ -500,8 +500,9 @@ function ToolLogo({
         aria-hidden
         className="h-[70%] w-[70%] object-contain"
         style={{
-          opacity: isActive ? 1 : 0.35,
+          opacity: isActive ? 1 : 0.4,
           transition: "opacity 400ms ease",
+          filter: "brightness(0) invert(1)",
         }}
       />
     </span>

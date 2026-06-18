@@ -5,7 +5,11 @@ import { Footer } from "@/components/site/Footer";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import logoFe from "@/assets/logo-fe.png";
+import socialPreviewImage from "@/assets/social-preview.png";
 // WebGL background removed in favour of a clean monochrome canvas.
+
+const siteUrl = import.meta.env.VITE_SITE_URL?.replace(/\/$/, "");
+const socialPreviewUrl = siteUrl ? `${siteUrl}${socialPreviewImage}` : socialPreviewImage;
 
 function NotFoundComponent() {
   return (
@@ -30,24 +34,26 @@ function NotFoundComponent() {
 }
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
+  head: () => {
+    const meta = [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Fe Anne Malasarte" },
       {
         name: "description",
         content:
-          "Portfolio of Fe Anne Malasarte, a UI/UX designer, brand identity and visual storyteller crafting premium digital experiences.",
+          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
       },
       { name: "author", content: "Fe Anne Malasarte" },
+      { property: "og:site_name", content: "Fe Anne Malasarte" },
       {
         property: "og:title",
         content: "Fe Anne Malasarte",
       },
       {
         property: "og:description",
-        content: "Premium portfolio of UI/UX, branding and creative design work.",
+        content:
+          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -56,43 +62,48 @@ export const Route = createRootRoute({
         content: "Fe Anne Malasarte",
       },
       {
-        name: "description",
-        content:
-          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
-      },
-      {
-        property: "og:description",
-        content:
-          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
-      },
-      {
         name: "twitter:description",
         content:
           "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
       },
       {
         property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png",
+        content: socialPreviewUrl,
       },
       {
         name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/888519ae-2e06-4f57-84c2-9fe2047040b7/id-preview-7a223f7a--e8546078-2501-4d7f-8590-21a2875e1ad0.lovable.app-1780419188418.png",
+        content: socialPreviewUrl,
       },
-    ],
-    links: [
-      { rel: "icon", type: "image/png", href: logoFe },
-      { rel: "apple-touch-icon", href: logoFe },
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap",
+        property: "og:image:alt",
+        content: "Preview card for Fe Anne Malasarte's portfolio.",
       },
-    ],
-  }),
+      {
+        name: "twitter:image:alt",
+        content: "Preview card for Fe Anne Malasarte's portfolio.",
+      },
+    ];
+
+    if (siteUrl) {
+      meta.push({ property: "og:url", content: siteUrl });
+    }
+
+    return {
+      meta,
+      links: [
+        { rel: "icon", type: "image/png", href: logoFe },
+        { rel: "apple-touch-icon", href: logoFe },
+        { rel: "stylesheet", href: appCss },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap",
+        },
+        ...(siteUrl ? [{ rel: "canonical", href: siteUrl }] : []),
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

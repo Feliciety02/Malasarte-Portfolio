@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { ArrowRight, Check, Star, type LucideIcon } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
 type ServiceCardProps = {
   icon: LucideIcon;
@@ -58,8 +57,7 @@ export function ServiceCard({
       style={reducedMotion ? undefined : { y: index % 3 === 1 ? -10 : 0 }}
       className="h-full"
     >
-      <Link
-        to="/services"
+      <div
         className="group block h-full rounded-xl border border-white/[0.07] bg-white/[0.03] p-6 shadow-lg backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.14] hover:bg-white/[0.06] md:p-7"
       >
         <ServiceHeader Icon={Icon} title={title} />
@@ -72,9 +70,9 @@ export function ServiceCard({
           </div>
         ) : null}
         <div className="relative z-10 mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-foreground">
-          Explore service <ArrowRight size={12} />
+          Capability highlight <ArrowRight size={12} />
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

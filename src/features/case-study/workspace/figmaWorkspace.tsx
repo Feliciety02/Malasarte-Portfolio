@@ -10,6 +10,7 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
   const { tabs, defaultTabId } = useMemo(() => resolveWorkspace(project), [project]);
   const [activeTabId, setActiveTabId] = useState<"live" | "design">(defaultTabId);
   const activeTab = tabs.find((tab) => tab.id === activeTabId) ?? tabs[0];
+  const isUxWorkspace = project.cat === "UI/UX Design";
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [embedKey, setEmbedKey] = useState(0);
@@ -108,28 +109,103 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
       <FadeIn delay={0.08}>
         <div
           ref={containerRef}
-          className="relative mt-6 overflow-hidden rounded-xl border border-white/8 bg-[#060708]"
+          className={cn(
+            "relative mt-6 overflow-hidden rounded-xl border",
+            isUxWorkspace
+              ? "border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),rgba(7,7,9,0.96)_48%,rgba(4,4,5,1))]"
+              : "border-white/8 bg-[#060708]",
+          )}
         >
+          {isUxWorkspace ? (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(255,178,0,0.12),rgba(255,255,255,0)_72%)]"
+            />
+          ) : null}
           <div
-            className="relative h-[72vh] min-h-[28rem] max-h-[48rem] overflow-auto invisible-scrollbar"
-            style={{
-              backgroundImage:
-                "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01) 38%), repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 44px), repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 44px)",
-            }}
+            className={cn(
+              "relative overflow-auto invisible-scrollbar",
+              isUxWorkspace ? "min-h-[32rem]" : "h-[72vh] min-h-[28rem] max-h-[48rem]",
+            )}
+            style={
+              isUxWorkspace
+                ? undefined
+                : {
+                    backgroundImage:
+                      "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01) 38%), repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 44px), repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 44px)",
+                  }
+            }
           >
             {activeTab ? (
-              <div className={cn("relative h-full", activeTab.minWidthClassName)}>
-                {!isLoaded ? (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white/70" />
+              <div
+                className={cn(
+                  "relative",
+                  isUxWorkspace
+                    ? "grid gap-6 p-4 md:grid-cols-[minmax(0,0.32fr)_minmax(0,0.68fr)] md:p-6"
+                    : "h-full",
+                  activeTab.minWidthClassName,
+                )}
+              >
+                {isUxWorkspace ? (
+                  <div className="flex flex-col justify-between rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-5 backdrop-blur-sm">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary/80">
+                        Design Canvas
+                      </p>
+                      <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-white">
+                        Figma showcase for {project.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-white/65">
+                        A dedicated preview surface for flows, interface structure, and visual
+                        system details. This stays design-first and does not reuse the web app
+                        presentation.
+                      </p>
+                    </div>
+                    <div className="mt-6 grid gap-3 text-sm text-white/70">
+                      <div className="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
+                        Embedded Figma preview remains active for direct exploration.
+                      </div>
+                      <div className="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
+                        Use fullscreen for a larger canvas and reset if the embed drifts.
+                      </div>
+                    </div>
                   </div>
                 ) : null}
-                <div className="h-full overflow-hidden">
+                <div
+                  className={cn(
+                    "relative overflow-hidden",
+                    isUxWorkspace
+                      ? "rounded-[1.5rem] border border-white/10 bg-[#07080b] shadow-[0_24px_80px_rgba(0,0,0,0.4)]"
+                      : "h-full",
+                  )}
+                >
+                  {isUxWorkspace ? (
+                    <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.035] px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                      </div>
+                      <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
+                        Figma Embed
+                      </span>
+                    </div>
+                  ) : null}
+                  {!isLoaded ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white/70" />
+                    </div>
+                  ) : null}
                   <iframe
                     key={`${project.slug}-${activeTab.id}-${embedKey}`}
                     title={`${activeTab.title} workspace`}
                     src={activeTab.src}
-                    className="pointer-events-auto h-full w-[calc(100%+20px)] border-0"
+                    className={cn(
+                      "pointer-events-auto border-0",
+                      isUxWorkspace
+                        ? "h-[70vh] min-h-[34rem] w-full"
+                        : "h-full w-[calc(100%+20px)]",
+                    )}
                     style={{ marginRight: "-20px" }}
                     allow={activeTab.allow}
                     allowFullScreen

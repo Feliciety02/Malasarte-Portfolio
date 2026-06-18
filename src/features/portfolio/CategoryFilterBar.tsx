@@ -41,8 +41,8 @@ type CategoryFilterBarProps = {
 
 export function CategoryFilterBar({ active, onChange, onHover }: CategoryFilterBarProps) {
   return (
-    <section className="relative z-10 mx-auto mt-10 max-w-7xl px-4 sm:mt-14 sm:px-6">
-      <div className="mx-auto flex flex-wrap justify-center gap-2 sm:gap-2.5">
+    <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-14 sm:px-6">
+      <div className="mx-auto flex flex-wrap justify-center gap-2.5 sm:gap-3">
         {categories.map((category) => {
           const Icon = categoryIcons[category];
           const isActive = active === category;
@@ -55,7 +55,7 @@ export function CategoryFilterBar({ active, onChange, onHover }: CategoryFilterB
               onClick={() => onChange(category)}
               onMouseEnter={() => onHover(category === "All" ? null : category)}
               onMouseLeave={() => onHover(null)}
-              className="group relative flex items-center gap-2 rounded-full px-3.5 py-2.5 text-left text-sm font-medium transition-all duration-300 sm:px-4"
+              className="group relative flex items-center gap-2 rounded-full px-4 py-2.5 text-left text-sm font-medium transition-colors duration-300 sm:px-4"
               style={{
                 background: isActive
                   ? "linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))"

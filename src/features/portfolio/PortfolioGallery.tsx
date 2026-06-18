@@ -32,6 +32,8 @@ type PortfolioGalleryProps = {
 
 const twoColumnCats: ProjectCategory[] = ["UI/UX Design", "Web Development"];
 const singleColumnCats: ProjectCategory[] = ["Writing / VA"];
+const gallerySectionClass = "relative z-10 mx-auto mt-14 max-w-7xl px-4 sm:mt-16 sm:px-6";
+const galleryGridClass = "grid grid-flow-dense gap-5 sm:gap-6";
 
 function getBentoCardType(project: Project): BentoCardType {
   if (
@@ -81,8 +83,8 @@ export function PortfolioGallery({
     const bentoProjects = getBentoProjects(projects);
 
     return (
-      <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-16 sm:px-6">
-        <div className="grid grid-flow-dense gap-5 md:auto-rows-[26rem] md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <section className={gallerySectionClass}>
+        <div className={cn(galleryGridClass, "md:auto-rows-[26rem] md:grid-cols-2 lg:grid-cols-3")}>
           {bentoProjects.map(({ project, type }) => (
             <BentoProjectCard
               key={project.slug}
@@ -98,8 +100,8 @@ export function PortfolioGallery({
 
   if (activeCategory === "Logo & Branding") {
     return (
-      <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-16 sm:px-6">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <section className={gallerySectionClass}>
+        <div className={cn(galleryGridClass, "md:grid-cols-2 lg:grid-cols-3")}>
           {projects.map((project, index) => (
             <PortfolioProjectCard
               key={project.slug}
@@ -117,10 +119,10 @@ export function PortfolioGallery({
   const singleCol = singleColumnCats.includes(activeCategory);
   const twoCol = !singleCol && twoColumnCats.includes(activeCategory);
   return (
-    <section className="relative z-10 mx-auto mt-12 max-w-7xl px-4 sm:mt-16 sm:px-6">
+    <section className={gallerySectionClass}>
       <div
         className={cn(
-          "grid gap-6 grid-flow-dense",
+          galleryGridClass,
           singleCol
             ? "md:grid-cols-2"
             : twoCol

@@ -23,7 +23,7 @@ export function SocialMediaBentoPreview({
         src={image}
         alt={`${project.title} preview`}
         className={cn(
-          "h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]",
+          "h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]",
           className,
         )}
         loading="lazy"
@@ -37,7 +37,7 @@ export function SocialMediaBentoPreview({
         <img
           src={images[0]}
           alt={`${project.title} preview 1`}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
           loading="lazy"
         />
       </div>
@@ -51,8 +51,8 @@ export function SocialMediaBentoPreview({
               className={cn(
                 "h-full w-full object-cover transition-transform duration-700",
                 index === 0
-                  ? "group-hover:-translate-x-1 group-hover:scale-[1.05]"
-                  : "group-hover:translate-x-1 group-hover:scale-[1.05]",
+                  ? "group-hover:-translate-x-0.5 group-hover:scale-[1.03]"
+                  : "group-hover:translate-x-0.5 group-hover:scale-[1.03]",
               )}
               loading="lazy"
             />

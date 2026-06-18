@@ -3,7 +3,6 @@ import { Facebook, Github, Instagram, Linkedin, Mail } from "lucide-react";
 export const navLinks = [
   { to: "/", label: "Home" },
   { to: "/works", label: "Works" },
-  { to: "/services", label: "Services" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;

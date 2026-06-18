@@ -38,6 +38,8 @@ function ProjectPreview({
 
   if (!coverImage) return null;
 
+  const isUIUX = project.cat === "UI/UX Design";
+
   return (
     <>
       <img
@@ -50,8 +52,9 @@ function ProjectPreview({
         src={coverImage}
         alt={`${project.title} preview`}
         className={cn(
-          "relative h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.025]",
-          type === "portrait" && "p-5 sm:p-7",
+          "relative h-full w-full transition-transform duration-700 group-hover:scale-[1.025]",
+          isUIUX ? "object-cover" : "object-contain",
+          type === "portrait" && !isUIUX && "p-5 sm:p-7",
         )}
         loading="lazy"
       />
@@ -82,7 +85,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
     <div
       ref={cardRef}
       onMouseMove={handleMouse}
-      className="metal-card group relative h-full overflow-hidden rounded-2xl transition-all duration-500 ease-out hover:-translate-y-1"
+      className="metal-card group relative h-full overflow-hidden rounded-2xl transition-transform duration-500 ease-out will-change-transform hover:-translate-y-0.5"
     >
       {isBranding ? (
         <div className="flex h-full flex-col">
@@ -92,7 +95,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
                 <img
                   src={coverImage}
                   alt={`${title} preview`}
-                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
               ) : (
@@ -119,7 +122,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
                 View
                 <ArrowUpRight
                   size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
                 />
               </span>
             </div>
@@ -128,11 +131,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
       ) : (
         <>
           <div className="absolute inset-0 overflow-hidden bg-black/70">
-            <ProjectPreview
-              project={project}
-              type={type}
-              coverImage={coverImage}
-            />
+            <ProjectPreview project={project} type={type} coverImage={coverImage} />
           </div>
 
           <div
@@ -148,7 +147,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+              className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
             >
               <ExternalLink size={11} />
               Live
@@ -184,7 +183,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
                 View
                 <ArrowUpRight
                   size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
                 />
               </span>
             </div>

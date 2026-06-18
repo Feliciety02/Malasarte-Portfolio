@@ -10,11 +10,11 @@ export function AboutHeroSection() {
     <section className="mx-auto max-w-6xl pt-12 md:pt-20">
       <div className="grid gap-14 md:grid-cols-5 md:items-end">
         <Reveal className="md:col-span-2">
-          <div className="metal-panel relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden md:max-w-xs">
+          <div className="metal-panel relative mx-auto aspect-[558/622] w-full max-w-md overflow-hidden md:max-w-sm">
             <img
               src={aboutFeImage}
               alt="Fe Anne Malasarte portrait"
-              className="satin-photo h-full w-full object-cover"
+              className="satin-photo h-full w-full scale-[1.08] object-contain object-bottom"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/42 via-transparent to-white/8" />
             <div className="absolute bottom-5 left-5 right-5 border-t border-white/12 pt-4">

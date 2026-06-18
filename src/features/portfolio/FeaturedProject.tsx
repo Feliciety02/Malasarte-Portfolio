@@ -30,6 +30,7 @@ export function FeaturedProject({
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
   const isBranding = activeCategory === "Logo & Branding";
+  const isUIUX = project.cat === "UI/UX Design";
   const aspect = isBranding ? "aspect-square" : featuredImageAspect[project.cardSize ?? "medium"];
   const isSocial =
     project.cat === "Social Media Graphics" ||
@@ -40,7 +41,7 @@ export function FeaturedProject({
     <section className="relative z-10 mx-auto mt-16 max-w-7xl px-4 sm:mt-20 sm:px-6">
       <span className="metal-kicker">Featured Project</span>
 
-      <div className="mt-6 grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+      <div className="mt-7 grid gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
         <div className="flex flex-col justify-center">
           <h2 className="font-display text-3xl font-bold leading-[1.1] tracking-[-0.02em] sm:text-4xl md:text-5xl">
             {title}
@@ -55,12 +56,12 @@ export function FeaturedProject({
               <button
                 type="button"
                 onClick={() => onSocialClick(project.slug)}
-                className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
+                className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-[background-color,color,box-shadow] duration-300 hover:bg-yellow/10 hover:shadow-[0_0_24px_-10px_rgba(255,215,0,0.28)] sm:text-sm"
               >
                 View Project
                 <ArrowUpRight
                   size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
                 />
               </button>
             ) : (
@@ -68,12 +69,12 @@ export function FeaturedProject({
                 <CaseStudyLink
                   slug={project.slug}
                   routeCategory={getRouteCategoryForProject(project)}
-                  className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-all duration-300 hover:bg-yellow/10 hover:shadow-[0_0_30px_-8px_rgba(255,215,0,0.3)] sm:text-sm"
+                  className="group inline-flex items-center gap-2 rounded-xl border border-yellow/30 bg-yellow/5 px-5 py-2.5 text-[13px] font-medium text-yellow transition-[background-color,color,box-shadow] duration-300 hover:bg-yellow/10 hover:shadow-[0_0_24px_-10px_rgba(255,215,0,0.28)] sm:text-sm"
                 >
                   View Case Study
                   <ArrowUpRight
                     size={15}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    className="transition-transform duration-300 group-hover:translate-x-px group-hover:-translate-y-px"
                   />
                 </CaseStudyLink>
                 {liveUrl ? (
@@ -81,7 +82,7 @@ export function FeaturedProject({
                     href={liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-[13px] font-medium text-white/70 transition-all duration-300 hover:border-yellow/20 hover:bg-yellow/[0.06] hover:text-yellow sm:text-sm"
+                    className="group inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-[13px] font-medium text-white/70 transition-[background-color,border-color,color] duration-300 hover:border-yellow/20 hover:bg-yellow/[0.06] hover:text-yellow sm:text-sm"
                   >
                     <ExternalLink size={15} />
                     Live Preview
@@ -113,14 +114,17 @@ export function FeaturedProject({
                 <img
                   src={coverImage}
                   alt={`${title} preview`}
-                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
             ) : (
               <img
                 src={coverImage}
                 alt={`${title} preview`}
-                className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                className={cn(
+                  "h-full w-full transition-transform duration-700 group-hover:scale-[1.03]",
+                  isUIUX ? "object-cover" : "object-contain",
+                )}
               />
             )
           ) : null}
@@ -134,7 +138,7 @@ export function FeaturedProject({
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-all hover:bg-yellow/20 hover:text-yellow"
+              className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
             >
               <ExternalLink size={11} />
               Live

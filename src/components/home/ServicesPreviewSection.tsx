@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { LinkButton } from "@/components/site/LinkButton";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { ServiceCard } from "@/components/site/ServiceCard";
@@ -74,15 +73,6 @@ export function ServicesPreviewSection({ reducedMotion }: ServicesPreviewSection
             eyebrow="What I do"
             title="Services offered"
             description="Specialized capabilities across the full product lifecycle from conceptual design and user research to development and deployment."
-            action={
-              <LinkButton
-                to="/services"
-                variant="text"
-                className="hidden items-center md:inline-flex"
-              >
-                View all capabilities <ArrowRight size={14} />
-              </LinkButton>
-            }
             className="mb-12"
             contentClassName="max-w-xl"
           />

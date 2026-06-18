@@ -399,22 +399,13 @@ export function StorytellingFlow({ reducedMotion }: Props) {
           />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.24)_28%,rgba(0,0,0,0.62)_100%)]" />
           <div className="relative z-10 mx-auto max-w-7xl">
-            <SectionHeader
-              eyebrow="What I do"
-              title="Services preview"
-              description="A compact technical grid of the services I design, build, and shape."
-              action={
-                <LinkButton
-                  to="/services"
-                  variant="text"
-                  className="hidden items-center md:inline-flex"
-                >
-                  All services <ArrowRight size={14} />
-                </LinkButton>
-              }
-              className="mb-12"
-              contentClassName="max-w-xl"
-            />
+                <SectionHeader
+                  eyebrow="What I do"
+                  title="Services preview"
+                  description="A compact technical grid of the services I design, build, and shape."
+                  className="mb-12"
+                  contentClassName="max-w-xl"
+                />
           </div>
         </section>
       </>
@@ -563,13 +554,6 @@ export function StorytellingFlow({ reducedMotion }: Props) {
                   contentClassName="max-w-2xl"
                   titleClassName="md:text-4xl lg:text-5xl"
                 />
-                <LinkButton
-                  to="/services"
-                  variant="text"
-                  className="hidden shrink-0 items-center pb-2 lg:inline-flex"
-                >
-                  All services <ArrowRight size={14} />
-                </LinkButton>
               </div>
 
               <div className="mt-[clamp(1.75rem,4vh,2.75rem)] flex items-center gap-4">
