@@ -24,7 +24,7 @@ export function ConferencesSection() {
           description="Continuous learning through workshops, meetups, and national programs."
         />
         <div className="mt-10 grid items-start gap-6 md:grid-cols-2">
-          <div className="aspect-[1/1] space-y-3 overflow-y-auto pr-2">
+          <div className="space-y-3 md:max-h-[34rem] md:overflow-y-auto md:pr-2">
             {conferenceEntries.map((c, i) => (
               <button
                 key={c.originalIndex}
@@ -37,8 +37,10 @@ export function ConferencesSection() {
                   {c.date}
                   {c.location ? ` • ${c.location}` : ""}
                 </span>
-                <h3 className="mt-1 font-display text-base font-bold">{c.event}</h3>
-                {c.org && <p className="mt-0.5 text-sm text-muted-foreground">{c.org}</p>}
+                <h3 className="mt-1 font-display text-base font-bold leading-snug text-balance">
+                  {c.event}
+                </h3>
+                {c.org && <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.org}</p>}
               </button>
             ))}
           </div>

@@ -19,7 +19,7 @@ export function RelatedProjectsSection({ project, sectionNumber }: SectionProps)
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Next" />
         <h2 className="mt-4 font-display text-3xl font-medium leading-tight md:text-5xl">
-          Explore other <em>projects</em>
+          {accentLastWord("Explore other projects")}
         </h2>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

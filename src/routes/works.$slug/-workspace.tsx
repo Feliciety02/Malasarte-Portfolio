@@ -69,7 +69,9 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
-              {activeTab?.id === "live" ? <>Explore the live <em>build</em></> : <>Explore the <em>design</em></>}
+              {accentLastWord(
+                activeTab?.id === "live" ? "Explore the live build" : "Explore the design",
+              )}
             </h2>
             {activeTab?.note ? (
               <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -225,7 +227,7 @@ export function WorkspacePhotoGallery({
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
-              Walkthrough the <em>screenshots</em>
+              {accentLastWord("Walkthrough the screenshots")}
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
               The live build for {project.title} is private or not yet deployed. Browse curated

@@ -10,7 +10,7 @@ export function ProcessSection({ project, sectionNumber }: SectionProps) {
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Process" />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          Design and development <em>process</em>
+          {accentLastWord("Design and development process")}
         </h2>
       </FadeIn>
       <ProcessTimeline steps={project.process} />

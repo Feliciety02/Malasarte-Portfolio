@@ -13,7 +13,7 @@ export function FeaturesSection({ project, sectionNumber, openLightbox }: Sectio
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Features" />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          Interface and <em>implementation</em>
+          {accentLastWord("Interface and implementation")}
         </h2>
       </FadeIn>
       {openLightbox ? (

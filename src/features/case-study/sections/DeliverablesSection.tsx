@@ -12,7 +12,7 @@ export function DeliverablesSection({ project, sectionNumber }: SectionProps) {
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Deliverables" />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          What was <em>handed off</em>
+          {accentLastWord("What was handed off")}
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
           Final outputs prepared for practical use, presentation, and consistent application beyond

@@ -34,7 +34,7 @@ export function IdentitySection({ project, sectionNumber }: SectionProps) {
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Identity" />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          Visual <em>identity</em>
+          {accentLastWord("Visual identity")}
         </h2>
       </FadeIn>
       {hasRichBranding ? (

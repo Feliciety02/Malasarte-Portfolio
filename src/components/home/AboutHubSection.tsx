@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowRight,
-  ArrowUpRight,
   BadgeCheck,
   BriefcaseBusiness,
   GraduationCap,
@@ -12,11 +11,15 @@ import {
 } from "lucide-react";
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.png";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.png";
+import cceCsgLogo from "@/assets/about/CCE CSG.svg";
+import dostAgilasAssociationLogo from "@/assets/about/DOST Agilas Association.svg";
+import notreDameOfEsperanzaLogo from "@/assets/about/Notre Dame of Esperanza.svg";
+import umsdcLogo from "@/assets/about/UM Student Developers Community (UMSDC).svg";
+import universityOfMindanaoLogo from "@/assets/about/University of Mindanao.svg";
 import { GlassDome } from "@/components/site/GlassDome";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { Reveal } from "@/components/site/Reveal";
 import { accentLastWord } from "@/components/site/HeadingAccent";
-import { education } from "@/data/about";
 import { tools, type ToolCategory } from "@/data/home";
 
 type AboutHubSectionProps = {
@@ -26,28 +29,17 @@ type AboutHubSectionProps = {
 type AboutItem = {
   id: "experience" | "leadership" | "expertise" | "education" | "certifications";
   label: string;
-  eyebrow: string;
+  summary: string;
   blurb: string;
-  accent: string;
-  glow: string;
-  surface: string;
-  stats: [string, string];
-  meta: string;
   icon: typeof Sparkles;
 };
 
-type ExperienceEntry = {
-  year: string;
-  role: string;
-  place: string;
-  note: string;
-};
-
-type LeadershipEntry = {
+type TimelineEntry = {
   period: string;
   title: string;
-  org: string;
-  desc: string;
+  subtitle: string;
+  description?: string;
+  logo?: string;
 };
 
 const categoryInfo: { label: string; key: ToolCategory }[] = [
@@ -60,135 +52,122 @@ const aboutItems: AboutItem[] = [
   {
     id: "experience",
     label: "Experience",
-    eyebrow: "Career Journey",
-    blurb: "A layered timeline of product, visual, and freelance work across creative and technical roles.",
-    accent: "rgba(186, 132, 255, 0.92)",
-    glow: "rgba(148, 93, 255, 0.22)",
-    surface: "from-[rgba(66,34,128,0.34)] via-[rgba(14,14,22,0.96)] to-[rgba(7,8,12,0.98)]",
-    stats: ["3+ Years Building", "Product + Visual Design"],
-    meta: "Career Path",
+    summary: "3+ Years Building",
+    blurb: "A focused timeline of product, freelance, and visual work across creative and technical roles.",
     icon: BriefcaseBusiness,
   },
   {
     id: "leadership",
     label: "Leadership",
-    eyebrow: "Community Leadership",
-    blurb: "Programs, promotion, partnerships, and people-first initiatives shaped through collaboration and momentum.",
-    accent: "rgba(174, 127, 255, 0.9)",
-    glow: "rgba(126, 100, 255, 0.2)",
-    surface: "from-[rgba(54,31,122,0.32)] via-[rgba(14,16,24,0.96)] to-[rgba(7,8,12,0.98)]",
-    stats: ["5+ Org Roles", "Events + Partnerships"],
-    meta: "Community Work",
+    summary: "5+ Organizations",
+    blurb: "Community leadership shaped through strategy, partnerships, promotions, and student development.",
     icon: Users,
   },
   {
     id: "expertise",
     label: "Expertise",
-    eyebrow: "Creative + Technical",
-    blurb: "A systems-level mix of design craft, front-end execution, strategy, and people-facing leadership.",
-    accent: "rgba(202, 125, 255, 0.9)",
-    glow: "rgba(189, 108, 255, 0.18)",
-    surface: "from-[rgba(75,34,124,0.34)] via-[rgba(16,14,24,0.96)] to-[rgba(8,8,12,0.98)]",
-    stats: ["Design to Code", "Strategy to Execution"],
-    meta: "Capability Map",
+    summary: "Design + Development",
+    blurb: "Core strengths across interface design, implementation, and people-facing execution.",
     icon: Sparkles,
   },
   {
     id: "education",
     label: "Education",
-    eyebrow: "Academic Roadmap",
-    blurb: "Formal study and continuous learning that sharpened both systems thinking and interface instincts.",
-    accent: "rgba(181, 132, 255, 0.9)",
-    glow: "rgba(155, 108, 255, 0.18)",
-    surface: "from-[rgba(63,34,116,0.32)] via-[rgba(15,15,23,0.96)] to-[rgba(8,8,12,0.98)]",
-    stats: ["Academic Foundation", "Continuous Learning"],
-    meta: "Learning Track",
+    summary: "Academic Journey",
+    blurb: "Formal study and milestones that support both systems thinking and product craft.",
     icon: GraduationCap,
   },
   {
     id: "certifications",
     label: "Certifications",
-    eyebrow: "Verified Skills",
-    blurb: "Industry credentials that support hands-on work in databases, cybersecurity, and technical systems.",
-    accent: "rgba(168, 124, 255, 0.9)",
-    glow: "rgba(136, 104, 255, 0.18)",
-    surface: "from-[rgba(56,31,110,0.32)] via-[rgba(14,14,20,0.96)] to-[rgba(8,8,12,0.98)]",
-    stats: ["Credly Verified", "Technical Credentials"],
-    meta: "Verification Layer",
+    summary: "2 Credentials",
+    blurb: "Technical credentials that support practical work in databases and cybersecurity.",
     icon: BadgeCheck,
   },
 ];
 
-const experienceEntries: ExperienceEntry[] = [
+const experienceEntries: TimelineEntry[] = [
   {
-    year: "2024 - Now",
-    role: "Freelance Designer & VA",
-    place: "Remote",
-    note: "Handling design systems, client visuals, and operations support across creative and technical workflows.",
+    period: "2024 - Present",
+    title: "Freelance Designer & VA",
+    subtitle: "Remote",
+    description: "Handling design systems, client visuals, and operations support across creative and technical workflows.",
   },
   {
-    year: "2022 - 2024",
-    role: "UI/UX & Social Media Graphics Lead",
-    place: "Technology Organization",
-    note: "Led interface design and digital campaigns for student-facing initiatives with a stronger product mindset.",
+    period: "2022 - 2024",
+    title: "UI/UX & Social Media Graphics Lead",
+    subtitle: "Technology Organization",
+    description: "Led interface design and digital campaigns for student-facing initiatives with a stronger product mindset.",
   },
   {
-    year: "2020 - 2022",
-    role: "Junior Designer",
-    place: "Creative Collective",
-    note: "Built early branding, layouts, and visual assets across multiple formats while sharpening execution craft.",
+    period: "2020 - 2022",
+    title: "Junior Designer",
+    subtitle: "Creative Collective",
+    description: "Built early branding, layouts, and visual assets across multiple formats while sharpening execution craft.",
   },
 ];
 
-const leadershipEntries: LeadershipEntry[] = [
+const leadershipEntries: TimelineEntry[] = [
   {
-    title: "President",
-    org: "UM Student Developers Community (UMSDC)",
     period: "2025 - Present",
-    desc: "Leading community programs, technical initiatives, partnerships, and student development with a systems view.",
+    title: "President",
+    subtitle: "UM Student Developers Community",
+    logo: umsdcLogo,
   },
   {
+    period: "2024 - 2025",
     title: "Chief of Marketing and Promotions",
-    org: "CCE-CSG",
-    period: "2024 - 2025",
-    desc: "Oversaw marketing strategy and promotional campaigns for the college student government.",
+    subtitle: "CCE-CSG",
+    logo: cceCsgLogo,
   },
   {
-    title: "Secretary",
-    org: "DOST Agilas Association - UM",
     period: "2024 - 2025",
-    desc: "Managed documentation and coordination for DOST scholars at University of Mindanao.",
+    title: "Secretary",
+    subtitle: "DOST Agilas Association - UM",
+    logo: dostAgilasAssociationLogo,
   },
 ];
 
-const expertiseGroups = [
+const expertiseColumns = [
   {
-    label: "Design Systems",
-    count: "05",
-    items: ["UI/UX Design", "Brand Identity", "Social Media Graphics", "Prototyping", "UX Research"],
+    title: "Design",
+    items: ["UI/UX Design", "Brand Identity", "User Research", "Prototyping"],
   },
   {
-    label: "Build Layer",
-    count: "05",
-    items: ["Front-End", "React / TypeScript", "Tailwind CSS", "PHP / MySQL", "Responsive Web"],
+    title: "Development",
+    items: ["React", "Next.js", "Tailwind CSS", "PHP", "MySQL"],
   },
   {
-    label: "Leadership Layer",
-    count: "05",
-    items: ["Student Leadership", "Event Management", "Community Building", "Marketing Strategy", "Public Speaking"],
+    title: "Leadership",
+    items: ["Project Management", "Community Building", "Marketing Strategy", "Public Speaking"],
+  },
+];
+
+const educationGroups = [
+  {
+    institution: "University of Mindanao",
+    program: "BS Computer Science",
+    period: "2023 - Present",
+    logo: universityOfMindanaoLogo,
+    achievements: ["Dean's Lister (A.Y. 2023 - 2024)", "Dean's Lister (A.Y. 2024 - 2025)"],
+  },
+  {
+    institution: "Notre Dame of Esperanza",
+    program: "STEM Strand",
+    period: "2021 - 2023",
+    logo: notreDameOfEsperanzaLogo,
+    achievements: [],
   },
 ];
 
 const certificationCards = [
   {
     title: "IT Specialist - Databases",
-    note: "Verified on Credly",
     href: "https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf462/public_url",
     image: credentialDatabases,
   },
   {
     title: "IT Specialist - Cybersecurity",
-    note: "Verified on Credly",
     href: "https://www.credly.com/badges/1f4a95a9-9918-44e9-9073-f81501ed452b/public_url",
     image: credentialCybersecurity,
   },
@@ -196,215 +175,151 @@ const certificationCards = [
 
 const transitionEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const contentTransition = { duration: 0.5, ease: transitionEase };
-const staggerParent = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.05,
-    },
-  },
-};
-const staggerChild = {
-  hidden: { opacity: 0, y: 18, filter: "blur(10px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: contentTransition },
-};
 
-function ExperienceContent() {
+function TimelineBlock({ entries }: { entries: TimelineEntry[] }) {
   return (
-    <motion.div variants={staggerParent} initial="hidden" animate="show" className="space-y-5">
-      {experienceEntries.map((item, index) => (
-        <motion.div
-          key={`${item.year}-${item.role}`}
-          variants={staggerChild}
-          className="relative grid gap-3 pl-10"
+    <div className="space-y-8">
+      {entries.map((entry, index) => (
+        <motion.article
+          key={`${entry.period}-${entry.title}`}
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ ...contentTransition, delay: index * 0.12 }}
+          className="relative pl-9"
         >
-          <div className="absolute left-0 top-1.5 flex h-full flex-col items-center">
-            <motion.span
-              className="h-3.5 w-3.5 rounded-full border border-[rgba(199,154,255,0.92)] bg-[rgba(161,101,255,0.2)] shadow-[0_0_24px_rgba(146,94,255,0.35)]"
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.12, duration: 0.35, ease: transitionEase }}
-            />
-            {index < experienceEntries.length - 1 ? (
-              <motion.span
-                className="mt-2 w-px flex-1 bg-gradient-to-b from-[rgba(188,140,255,0.72)] via-white/18 to-transparent"
-                initial={{ opacity: 0, scaleY: 0 }}
-                animate={{ opacity: 1, scaleY: 1 }}
-                transition={{ delay: index * 0.12 + 0.08, duration: 0.42, ease: transitionEase }}
-                style={{ transformOrigin: "top" }}
-              />
+          <div className="absolute left-0 top-1 h-full">
+            <span className="absolute left-0 top-1.5 h-3 w-3 rounded-full bg-[rgba(182,138,255,0.9)] shadow-[0_0_18px_rgba(156,102,255,0.4)]" />
+            {index < entries.length - 1 ? (
+              <span className="absolute left-[5px] top-6 h-[calc(100%-0.5rem)] w-px bg-gradient-to-b from-[rgba(182,138,255,0.7)] via-white/18 to-transparent" />
             ) : null}
           </div>
 
-          <div className="rounded-[1.55rem] border border-white/8 bg-white/[0.03] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[rgba(213,189,255,0.86)]">
-                  {item.year}
-                </span>
-                <h4 className="mt-2 font-display text-[1.45rem] leading-tight tracking-[-0.03em] text-white">
-                  {item.role}
-                </h4>
-                <p className="mt-1 text-sm text-white/52">{item.place}</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)]">
+            {entry.period}
+          </p>
+          <div className="mt-3 flex items-start gap-4">
+            {entry.logo ? (
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.04] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <img src={entry.logo} alt={`${entry.subtitle} logo`} className="max-h-full max-w-full object-contain" />
               </div>
-              <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-white/42">
-                0{index + 1}
-              </span>
-            </div>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-white/68">{item.note}</p>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-}
-
-function LeadershipContent() {
-  return (
-    <motion.div variants={staggerParent} initial="hidden" animate="show" className="grid gap-4">
-      {leadershipEntries.map((item, index) => (
-        <motion.div
-          key={`${item.period}-${item.title}`}
-          variants={staggerChild}
-          className="relative overflow-hidden rounded-[1.6rem] border border-white/8 bg-[linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5"
-        >
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-[rgba(190,145,255,0.75)] via-white/20 to-transparent" />
-          <span className="pointer-events-none absolute right-5 top-4 font-mono text-[2.8rem] text-white/[0.06]">
-            0{index + 1}
-          </span>
-          <div className="relative pl-4">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[rgba(213,189,255,0.86)]">
-                  {item.period}
-                </span>
-                <h4 className="mt-2 font-display text-[1.35rem] leading-tight tracking-[-0.03em] text-white">
-                  {item.title}
-                </h4>
-                <p className="mt-1 text-sm text-white/52">{item.org}</p>
-              </div>
-              <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-white/46">
-                Lead
-              </span>
-            </div>
-            <p className="mt-4 text-sm leading-7 text-white/68">{item.desc}</p>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-}
-
-function ExpertiseContent() {
-  return (
-    <motion.div variants={staggerParent} initial="hidden" animate="show" className="grid gap-4 lg:grid-cols-3">
-      {expertiseGroups.map((group, index) => (
-        <motion.div
-          key={group.label}
-          variants={staggerChild}
-          className="relative overflow-hidden rounded-[1.6rem] border border-white/8 bg-white/[0.03] p-5"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(181,124,255,0.18),transparent_48%)]" />
-          <div className="relative">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/42">
-                {group.label}
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(213,189,255,0.84)]">
-                {group.count} Skills
-              </span>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              {group.items.map((item, itemIndex) => (
-                <motion.span
-                  key={item}
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: index * 0.08 + itemIndex * 0.04,
-                    duration: 0.32,
-                    ease: transitionEase,
-                  }}
-                  whileHover={{ y: -3, scale: 1.03 }}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
-                >
-                  {item}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-}
-
-function EducationContent() {
-  return (
-    <motion.div variants={staggerParent} initial="hidden" animate="show" className="space-y-4">
-      {education.slice(0, 4).map((item, index) => (
-        <motion.div
-          key={`${item.period}-${item.title}`}
-          variants={staggerChild}
-          className="relative rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-5 pl-16"
-        >
-          <div className="absolute left-6 top-5 flex flex-col items-center">
-            <span className="grid h-8 w-8 place-items-center rounded-full border border-[rgba(196,149,255,0.86)] bg-[rgba(170,109,255,0.16)] font-mono text-[10px] text-[rgba(213,189,255,0.95)]">
-              0{index + 1}
-            </span>
-            {index < 3 ? (
-              <span className="mt-2 h-16 w-px bg-gradient-to-b from-[rgba(188,140,255,0.72)] via-white/20 to-transparent" />
             ) : null}
+            <div className="min-w-0">
+              <h4 className="font-display text-[1.7rem] leading-tight tracking-[-0.03em] text-white">
+                {entry.title}
+              </h4>
+              <p className="mt-1 text-[15px] text-white/52">{entry.subtitle}</p>
+              {entry.description ? (
+                <p className="mt-4 max-w-xl text-[15px] leading-8 text-white/66">{entry.description}</p>
+              ) : null}
+            </div>
           </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[rgba(213,189,255,0.86)]">
-            {item.period}
-          </span>
-          <h4 className="mt-2 font-display text-[1.2rem] leading-tight tracking-[-0.03em] text-white">
-            {item.title}
+
+          {index < entries.length - 1 ? (
+            <div className="mt-8 h-px bg-gradient-to-r from-white/10 via-white/6 to-transparent" />
+          ) : null}
+        </motion.article>
+      ))}
+    </div>
+  );
+}
+
+function ExpertiseBlock() {
+  return (
+    <div className="grid gap-10 md:grid-cols-3">
+      {expertiseColumns.map((column, index) => (
+        <motion.div
+          key={column.title}
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ ...contentTransition, delay: index * 0.1 }}
+        >
+          <h4 className="font-display text-[1.55rem] leading-tight tracking-[-0.03em] text-white">
+            {column.title}
           </h4>
-          <p className="mt-2 text-sm leading-7 text-white/65">{item.subtitle}</p>
+          <ul className="mt-6 space-y-4 text-[15px] leading-8 text-white/66">
+            {column.items.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span className="mt-[0.55rem] h-1.5 w-1.5 rounded-full bg-[rgba(188,144,255,0.88)]" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 }
 
-function CertificationsContent() {
+function EducationBlock() {
   return (
-    <motion.div variants={staggerParent} initial="hidden" animate="show" className="grid gap-4 sm:grid-cols-2">
-      {certificationCards.map((card) => (
+    <div className="space-y-10">
+      {educationGroups.map((group, index) => (
+        <motion.article
+          key={group.institution}
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ ...contentTransition, delay: index * 0.12 }}
+        >
+          <div className="flex items-start gap-4">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.04] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+              <img src={group.logo} alt={`${group.institution} logo`} className="max-h-full max-w-full object-contain" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="font-display text-[1.7rem] leading-tight tracking-[-0.03em] text-white">
+                {group.institution}
+              </h4>
+              <p className="mt-3 text-lg text-white/82">{group.program}</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)]">
+                {group.period}
+              </p>
+            </div>
+          </div>
+
+          {group.achievements.length > 0 ? (
+            <div className="mt-6 pl-[4.5rem]">
+              <p className="text-[15px] font-medium text-white/78">Achievements</p>
+              <ul className="mt-4 space-y-3 text-[15px] leading-8 text-white/66">
+                {group.achievements.map((achievement) => (
+                  <li key={achievement} className="flex items-start gap-3">
+                    <span className="mt-[0.55rem] h-1.5 w-1.5 rounded-full bg-[rgba(188,144,255,0.88)]" />
+                    <span>{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {index < educationGroups.length - 1 ? (
+            <div className="mt-8 h-px bg-gradient-to-r from-white/10 via-white/6 to-transparent" />
+          ) : null}
+        </motion.article>
+      ))}
+    </div>
+  );
+}
+
+function CertificationsBlock() {
+  return (
+    <div className="space-y-5">
+      {certificationCards.map((card, index) => (
         <motion.a
           key={card.title}
-          variants={staggerChild}
           href={card.href}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ y: -4 }}
-          className="group relative overflow-hidden rounded-[1.65rem] border border-white/8 bg-[linear-gradient(165deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5 shadow-[0_18px_40px_rgba(0,0,0,0.24)]"
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ ...contentTransition, delay: index * 0.1 }}
+          whileHover={{ x: 4 }}
+          className="flex items-center gap-5 rounded-[1.45rem] border border-white/8 bg-white/[0.03] px-5 py-5 transition-colors hover:bg-white/[0.05]"
         >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(176,125,255,0.2),transparent_42%)] opacity-70" />
-          <div className="relative flex h-full flex-col items-start">
-            <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[rgba(213,189,255,0.84)]">
-              Credential
-            </span>
-            <img
-              src={card.image}
-              alt={card.title}
-              className="mt-6 h-24 w-24 object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-            />
-            <h4 className="mt-6 font-display text-xl leading-tight tracking-[-0.03em] text-white">
-              {card.title}
-            </h4>
-            <p className="mt-2 text-sm text-white/60">{card.note}</p>
-            <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[rgba(220,192,255,0.9)]">
-              View Credential <ArrowUpRight size={14} />
-            </span>
+          <img src={card.image} alt={card.title} className="h-[4.5rem] w-[4.5rem] shrink-0 object-contain" />
+          <div className="min-w-0">
+            <p className="font-display text-[1.9rem] leading-tight tracking-[-0.03em] text-white">{card.title}</p>
           </div>
         </motion.a>
       ))}
-    </motion.div>
+    </div>
   );
 }
 
@@ -422,23 +337,19 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
 
   const activeItem = aboutItems[active];
   const ActiveIcon = activeItem.icon;
-  const navIndicatorTop = useMemo(
-    () => `${(active / Math.max(aboutItems.length - 1, 1)) * 100}%`,
-    [active],
-  );
 
   const activeContent = useMemo(() => {
     switch (activeItem.id) {
       case "experience":
-        return <ExperienceContent />;
+        return <TimelineBlock entries={experienceEntries} />;
       case "leadership":
-        return <LeadershipContent />;
+        return <TimelineBlock entries={leadershipEntries} />;
       case "expertise":
-        return <ExpertiseContent />;
+        return <ExpertiseBlock />;
       case "education":
-        return <EducationContent />;
+        return <EducationBlock />;
       case "certifications":
-        return <CertificationsContent />;
+        return <CertificationsBlock />;
       default:
         return null;
     }
@@ -496,7 +407,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
           <span className="font-mono text-xs uppercase tracking-[0.28em] text-yellow/80">About</span>
 
           <h2 className="mt-5 max-w-4xl font-display text-5xl font-semibold italic leading-[0.98] tracking-[-0.05em] text-foreground sm:text-6xl lg:text-[5.1rem]">
-            I <em>design</em> and <em>develop</em> digital products that are clear, functional, and built with <em>intention</em>.
+            I design and develop digital products that are clear, functional, and built with intention.
           </h2>
 
           <p className="mt-6 max-w-2xl text-[15px] leading-8 text-muted-foreground sm:text-base">
@@ -516,161 +427,124 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                 key={label}
                 className="rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-4 text-center"
               >
-                <p className="font-display text-2xl font-medium italic text-foreground">{value}</p>
+                <p className="font-display text-2xl font-bold italic text-foreground">{value}</p>
                 <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 grid items-stretch gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:gap-8">
-            <div className="min-w-0">
-              <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4">
-                <h3 className="font-display text-3xl italic tracking-[-0.04em] text-white sm:text-5xl">
-                  Exploring <em>layers</em>.
-                </h3>
-                <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/45">
-                  0{aboutItems.length} sections
-                </span>
-              </div>
+          <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
+            <div className="h-[46rem] overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-6 py-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-7">
+              <div className="flex h-full flex-col">
+                <div className="border-b border-white/8 pb-5">
+                  <h3 className="font-display text-[2.4rem] italic tracking-[-0.05em] text-white sm:text-[4.4rem]">
+                    Exploring layers.
+                  </h3>
+                </div>
 
-              <nav className="relative" role="tablist" aria-label="About sections">
-                <div className="pointer-events-none absolute bottom-6 left-[1.18rem] top-6 w-px bg-gradient-to-b from-white/10 via-white/12 to-transparent" />
-                <motion.div
-                  aria-hidden
-                  className="pointer-events-none absolute left-[0.64rem] z-[1] h-5 w-5 -translate-y-1/2 rounded-full border border-[rgba(191,147,255,0.74)] bg-[rgba(148,94,255,0.22)] shadow-[0_0_24px_rgba(148,94,255,0.4)]"
-                  animate={{ top: navIndicatorTop }}
-                  transition={{ duration: 0.55, ease: transitionEase }}
-                />
+                <nav className="mt-7 space-y-3" role="tablist" aria-label="About sections">
+                  {aboutItems.map((item, index) => {
+                    const isActive = active === index;
 
-                {aboutItems.map((item, i) => {
-                  const isActive = active === i;
-
-                  return (
-                    <motion.button
-                      key={item.id}
-                      role="tab"
-                      type="button"
-                      aria-selected={isActive}
-                      onClick={() => setActive(i)}
-                      onMouseEnter={() => setActive(i)}
-                      onFocus={() => setActive(i)}
-                      animate={{ y: isActive ? -2 : 0, scale: isActive ? 1.01 : 1 }}
-                      whileHover={reducedMotion ? undefined : { y: -4 }}
-                      transition={{ duration: 0.5, ease: transitionEase }}
-                      className={`group relative mb-4 flex w-full items-center gap-4 overflow-hidden rounded-[1.7rem] border px-5 py-5 text-left md:px-6 md:py-6 ${
-                        isActive
-                          ? "border-white/12 bg-white/[0.06] text-white shadow-[0_24px_50px_rgba(0,0,0,0.28),0_0_36px_rgba(123,84,255,0.18)]"
-                          : "border-white/[0.05] bg-transparent text-white/42"
-                      }`}
-                      style={{
-                        backdropFilter: isActive ? "blur(20px)" : "blur(0px)",
-                        WebkitBackdropFilter: isActive ? "blur(20px)" : "blur(0px)",
-                      }}
-                    >
-                      <motion.div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-0 rounded-[inherit]"
-                        animate={{ opacity: isActive ? 1 : 0 }}
+                    return (
+                      <motion.button
+                        key={item.id}
+                        role="tab"
+                        type="button"
+                        aria-selected={isActive}
+                        onClick={() => setActive(index)}
+                        onMouseEnter={() => setActive(index)}
+                        onFocus={() => setActive(index)}
+                        whileHover={reducedMotion ? undefined : { y: -4 }}
+                        animate={{ y: isActive ? -2 : 0 }}
                         transition={{ duration: 0.45, ease: transitionEase }}
-                        style={{
-                          background:
-                            "linear-gradient(135deg, rgba(166,102,255,0.16), rgba(255,255,255,0.02) 35%, rgba(255,255,255,0.01) 100%)",
-                          boxShadow: isActive ? `inset 0 0 0 1px ${item.accent}` : "none",
-                        }}
-                      />
+                        className={`group relative w-full overflow-hidden rounded-[1.6rem] border px-6 py-6 text-left ${
+                          isActive
+                            ? "border-[rgba(181,138,255,0.3)] bg-[rgba(255,255,255,0.06)] shadow-[0_18px_40px_rgba(0,0,0,0.24),0_0_28px_rgba(143,92,255,0.16)]"
+                            : "border-transparent bg-transparent hover:border-white/8 hover:bg-white/[0.03]"
+                        }`}
+                      >
+                        <motion.div
+                          aria-hidden
+                          className="pointer-events-none absolute inset-0 rounded-[inherit]"
+                          animate={{ opacity: isActive ? 1 : 0 }}
+                          transition={{ duration: 0.45, ease: transitionEase }}
+                          style={{
+                            background:
+                              "linear-gradient(135deg, rgba(161,102,255,0.14), rgba(255,255,255,0.02) 42%, rgba(255,255,255,0.01) 100%)",
+                          }}
+                        />
 
-                      <div className="relative z-[1] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/62">
-                          0{i + 1}
-                        </span>
-                      </div>
-
-                      <div className="relative z-[1] min-w-0 flex-1">
-                        <div className="flex items-center gap-3">
-                          <item.icon size={16} className={isActive ? "text-[rgb(214,187,255)]" : "text-white/32"} />
-                          <div className="font-display text-2xl tracking-[-0.04em] sm:text-[2rem]"><em>{item.label}</em></div>
+                        <div className="relative flex items-start justify-between gap-4">
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-3">
+                              <item.icon size={18} className={isActive ? "text-[rgb(211,188,255)]" : "text-white/36"} />
+                              <span
+                                className={`font-display text-[2rem] tracking-[-0.045em] sm:text-[2.2rem] ${
+                                  isActive ? "text-white" : "text-white/74"
+                                }`}
+                              >
+                                {item.label}
+                              </span>
+                            </div>
+                            <p className="mt-3 pl-8 text-[15px] text-white/52 sm:text-base">{item.summary}</p>
+                          </div>
+                          <motion.span
+                            initial={false}
+                            animate={{ x: isActive ? 0 : -8, opacity: isActive ? 1 : 0 }}
+                            transition={{ duration: 0.4, ease: transitionEase }}
+                            className="pt-1 text-white/64"
+                          >
+                            <ArrowRight size={18} />
+                          </motion.span>
                         </div>
-                        <p className="mt-1 pl-7 text-sm text-white/52">{item.eyebrow}</p>
-                      </div>
-
-                      <motion.div
-                        className="relative z-[1] ml-auto hidden text-right md:block"
-                        initial={false}
-                        animate={{ x: isActive ? 0 : 12, opacity: isActive ? 1 : 0.55 }}
-                        transition={{ duration: 0.45, ease: transitionEase }}
-                      >
-                        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/42">{item.stats[0]}</div>
-                        <div className="mt-1 text-xs text-white/34">{item.stats[1]}</div>
-                      </motion.div>
-
-                      <motion.span
-                        className="relative z-[1] text-xl text-white/74"
-                        initial={false}
-                        animate={{ x: isActive ? 0 : -6, opacity: isActive ? 1 : 0 }}
-                        transition={{ duration: 0.4, ease: transitionEase }}
-                      >
-                        <ArrowUpRight size={18} />
-                      </motion.span>
-                    </motion.button>
-                  );
-                })}
-              </nav>
+                      </motion.button>
+                    );
+                  })}
+                </nav>
+              </div>
             </div>
 
-            <div className="min-w-0">
-              <div className="h-full lg:sticky lg:top-32">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active}
-                    initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -28, filter: "blur(14px)" }}
-                    transition={contentTransition}
-                    className={`relative h-full min-h-[40rem] overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br ${activeItem.surface}`}
-                  >
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,117,255,0.2),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.06),transparent_26%)]" />
-                    <div
-                      className="pointer-events-none absolute inset-0 opacity-[0.08]"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)",
-                        backgroundSize: "22px 22px",
-                      }}
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-0 opacity-[0.045]"
-                      style={{
-                        backgroundImage: "radial-gradient(rgba(255,255,255,0.6) 0.7px, transparent 0.7px)",
-                        backgroundSize: "8px 8px",
-                      }}
-                    />
-                    <span className="pointer-events-none absolute right-6 top-6 font-display text-[8rem] italic leading-none tracking-[-0.08em] text-white/[0.06] sm:text-[10rem]">
-                      0{active + 1}
-                    </span>
+            <div className="h-[46rem] overflow-hidden rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(158,105,255,0.18),transparent_30%),linear-gradient(165deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+              <div className="relative flex h-full flex-col">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-[0.045]"
+                  style={{
+                    backgroundImage: "radial-gradient(rgba(255,255,255,0.65) 0.7px, transparent 0.7px)",
+                    backgroundSize: "8px 8px",
+                  }}
+                />
+                <span className="pointer-events-none absolute right-6 top-5 font-display text-[9rem] italic leading-none tracking-[-0.08em] text-white/[0.05]">
+                  {String(active + 1).padStart(2, "0")}
+                </span>
 
-                    <div className="relative flex h-full flex-col p-6 sm:p-8">
-                      <div className="min-h-[14rem]">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[rgba(212,186,255,0.82)]">
-                          <ActiveIcon size={12} />
-                          {activeItem.meta}
-                        </span>
-                        <h3 className="mt-6 max-w-xl font-display text-4xl italic leading-[0.94] tracking-[-0.05em] text-white sm:text-[3.7rem]">
-                          {activeItem.label}
-                        </h3>
-                        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.24em] text-white/55">
-                          {activeItem.stats[0]}
-                        </p>
-                        <p className="mt-8 max-w-xl text-sm leading-7 text-white/62 sm:text-[15px]">
-                          {activeItem.blurb}
-                        </p>
-                      </div>
+                <div className="relative border-b border-white/8 px-7 py-7 sm:px-9 sm:py-8">
+                  <span className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.26em] text-[rgba(211,188,255,0.82)]">
+                    <ActiveIcon size={14} />
+                    {activeItem.label}
+                  </span>
+                  <h3 className="mt-7 max-w-xl font-display text-[3.3rem] italic leading-[0.92] tracking-[-0.055em] text-white sm:text-[4.35rem]">
+                    {activeItem.summary}
+                  </h3>
+                  <p className="mt-6 max-w-2xl text-[15px] leading-8 text-white/62 sm:text-[1.05rem]">
+                    {activeItem.blurb}
+                  </p>
+                </div>
 
-                      <div className="mt-8 h-px bg-gradient-to-r from-white/12 via-white/6 to-transparent" />
-
-                      <div className="mt-8 flex-1">{activeContent}</div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+                <div className="relative min-h-0 flex-1 overflow-y-auto px-7 py-7 sm:px-9">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeItem.id}
+                      initial={{ opacity: 0, y: 22, filter: "blur(10px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -18, filter: "blur(10px)" }}
+                      transition={contentTransition}
+                    >
+                      {activeContent}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ export function GitHubActivitySection() {
       <section className="mx-auto max-w-6xl">
         <span className="metal-kicker">GitHub</span>
         <h2 className="mt-3 font-display text-3xl font-medium md:text-4xl">
-          Code <em>Activity</em>
+          {accentLastWord("Code Activity")}
         </h2>
         <div className="mt-8">
           <GitHubContributions username="Feliciety02" />

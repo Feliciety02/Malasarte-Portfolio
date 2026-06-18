@@ -26,7 +26,7 @@ export function ContactCtaSection() {
         </span>
 
         <h2 className="mx-auto mt-5 max-w-3xl font-display text-4xl font-medium leading-tight tracking-[-0.03em] sm:text-5xl lg:text-6xl">
-          Let&apos;s create something <em>thoughtful.</em>
+          Let&apos;s create something <AccentText>thoughtful.</AccentText>
         </h2>
 
         <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted-foreground">

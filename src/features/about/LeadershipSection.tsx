@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { SectionHeader } from "@/components/site/SectionHeader";
 import { leadership } from "@/data/about";
 import type { TimelineItem } from "@/data/about";
 
@@ -77,17 +78,15 @@ export function LeadershipSection() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
-        <div className="mb-16">
-          <span className="metal-kicker">Leadership</span>
-          <h2 className="mt-4 font-display text-5xl font-medium italic tracking-tight md:text-7xl">
-            Organizational <em>Experience</em>
-          </h2>
-          <p className="mt-4 max-w-xl text-sm text-white/60">
-            Roles that shaped my leadership, collaboration, and community-building skills.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Leadership"
+          title="Organizational Experience"
+          description="Roles that shaped my leadership, collaboration, and community-building skills."
+          titleClassName="italic"
+          descriptionClassName="max-w-xl text-white/60 md:text-lg"
+        />
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <span className="mb-6 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
               Now Highlighting
@@ -130,30 +129,32 @@ export function LeadershipSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className={`aspect-square w-full rounded-3xl bg-gradient-to-b ${gradient} border border-white/10 p-8 flex flex-col justify-end`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                  className={`aspect-square w-full rounded-3xl border border-white/10 bg-gradient-to-b ${gradient} p-8 md:p-10`}
                 >
-                  {item.logo && (
-                    <div className="mb-6">
-                      <img
-                        src={item.logo}
-                        alt={`${item.subtitle} logo`}
-                        className="h-16 w-16 object-contain md:h-20 md:w-20"
-                      />
+                  <div className="flex h-full flex-col items-center justify-center text-center">
+                    {item.logo && (
+                      <div className="mb-8">
+                        <img
+                          src={item.logo}
+                          alt={`${item.subtitle} logo`}
+                          className="h-24 w-24 object-contain md:h-32 md:w-32"
+                        />
+                      </div>
+                    )}
+                    <div className="max-w-sm">
+                      <span className="font-mono text-xs uppercase tracking-widest text-white/60">
+                        {item.period}
+                      </span>
+                      <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-white/60">{item.subtitle}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-white/70">{item.highlight}</p>
                     </div>
-                  )}
-                  <div>
-                    <span className="font-mono text-xs uppercase tracking-widest text-white/60">
-                      {item.period}
-                    </span>
-                    <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-white/60">{item.subtitle}</p>
-                    <p className="mt-4 text-sm leading-relaxed text-white/70">{item.highlight}</p>
                   </div>
                 </motion.div>
               </AnimatePresence>

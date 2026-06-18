@@ -24,7 +24,7 @@ export function VolunteerSection() {
           description="Contributing time and skills to tech events, communities, and meaningful causes."
         />
         <div className="mt-10 grid items-start gap-6 md:grid-cols-2">
-          <div className="aspect-[1/1] space-y-3 overflow-y-auto pr-2">
+          <div className="space-y-3 md:max-h-[34rem] md:overflow-y-auto md:pr-2">
             {volunteerEntries.map((v, i) => (
               <button
                 key={v.originalIndex}
@@ -36,8 +36,10 @@ export function VolunteerSection() {
                 <span className="font-mono text-sm uppercase tracking-widest text-primary">
                   {v.date}
                 </span>
-                <h3 className="mt-1 font-display text-base font-bold">{v.event}</h3>
-                <p className="mt-0.5 text-sm text-muted-foreground">{v.role}</p>
+                <h3 className="mt-1 font-display text-base font-bold leading-snug text-balance">
+                  {v.event}
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{v.role}</p>
               </button>
             ))}
           </div>

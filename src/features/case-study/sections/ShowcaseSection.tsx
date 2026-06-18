@@ -11,7 +11,7 @@ export function ShowcaseSection({ project, sectionNumber, openLightbox }: Sectio
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label={isWriting ? "Preview" : "Showcase"} />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          {isWriting ? <>Document <em>preview</em></> : <>Visual <em>showcase</em></>}
+          {accentLastWord(isWriting ? "Document preview" : "Visual showcase")}
         </h2>
       </FadeIn>
       {isWriting && project.flipbookEmbed ? (

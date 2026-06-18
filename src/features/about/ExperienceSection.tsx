@@ -10,7 +10,7 @@ export function ExperienceSection() {
         <div>
           <span className="metal-kicker">Experience</span>
           <h2 className="mt-3 font-display text-3xl font-medium md:text-5xl">
-            Recent <em>roles</em>
+            {accentLastWord("Recent roles")}
           </h2>
         </div>
         <p className="max-w-md text-base leading-6 text-muted-foreground">

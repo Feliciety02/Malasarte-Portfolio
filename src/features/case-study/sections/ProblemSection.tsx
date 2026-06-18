@@ -10,7 +10,7 @@ export function ProblemSection({ project, sectionNumber }: SectionProps) {
       <FadeIn>
         <SectionLabel kicker={sectionNumber} label="Problem" />
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
-          Challenges and <em>context</em>
+          {accentLastWord("Challenges and context")}
         </h2>
       </FadeIn>
       <div className="mt-10 grid gap-5 md:grid-cols-2">

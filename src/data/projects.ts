@@ -52,6 +52,27 @@ export type ProjectFlipbookEmbed = {
   title: string;
 };
 
+export type ProjectCaseStudyOutcome = {
+  value: string;
+  label: string;
+};
+
+export type ProjectCaseStudyModule = {
+  title: string;
+  desc: string;
+};
+
+export type ProjectCaseStudyContent = {
+  duration?: string;
+  team?: string;
+  problem?: string;
+  approach?: string;
+  contributions?: string[];
+  outcomes?: ProjectCaseStudyOutcome[];
+  modules?: ProjectCaseStudyModule[];
+  nextLabel?: string;
+};
+
 export type ProjectBrandColor = {
   name: string;
   hex: string;
@@ -137,6 +158,7 @@ export type Project = {
   flipbookEmbed?: ProjectFlipbookEmbed;
   vercelLiveUrl?: string;
   hideLiveWorkspace?: boolean;
+  caseStudy?: ProjectCaseStudyContent;
   branding?: ProjectBranding;
   missionVisionValues?: ProjectMissionValues;
   nextProjectSlug?: string;
@@ -2840,4 +2862,86 @@ export const getProjectBySlugAndCategory = (
   if (cat === "UI/UX Design") merged.vercelLiveUrl = undefined;
 
   return merged;
+};
+
+const createCaseStudySummary = (project: Project) =>
+  `This project focused on improving how ${project.title} communicates its value and works in practice.`;
+
+const createCaseStudyApproach = (project: Project) =>
+  `The solution centered on a clearer structure, stronger visual direction, and a presentation that fits the goals of ${project.title}.`;
+
+const createCaseStudyContribution = (project: Project) =>
+  `Supported the core direction and delivery of ${project.title}.`;
+
+const normalizeCaseStudyProcessTitle = (step: ProjectProcessStep, index: number) =>
+  step.title?.trim() || `Phase ${String(index + 1).padStart(2, "0")}`;
+
+export const getProjectCaseStudyDuration = (project: Project) =>
+  project.caseStudy?.duration?.trim() || "Timeline to be finalized";
+
+export const getProjectCaseStudyTeam = (project: Project) =>
+  project.caseStudy?.team?.trim() || "Team details to be updated";
+
+export const getProjectCaseStudyProblem = (project: Project) =>
+  project.caseStudy?.problem?.trim() ||
+  project.challenges[0]?.challenge?.trim() ||
+  createCaseStudySummary(project);
+
+export const getProjectCaseStudyApproach = (project: Project) =>
+  project.caseStudy?.approach?.trim() ||
+  project.challenges[0]?.solution?.trim() ||
+  createCaseStudyApproach(project);
+
+export const getProjectCaseStudyContributions = (project: Project) => {
+  const explicitContributions = project.caseStudy?.contributions?.filter(Boolean) ?? [];
+  if (explicitContributions.length > 0) return explicitContributions;
+
+  const focusAreaContributions = project.focusAreas
+    .map((item) => item.title.trim())
+    .filter(Boolean)
+    .slice(0, 5);
+  if (focusAreaContributions.length > 0) return focusAreaContributions;
+
+  return [createCaseStudyContribution(project)];
+};
+
+export const getProjectCaseStudyOutcomes = (project: Project): ProjectCaseStudyOutcome[] => {
+  const explicitOutcomes = project.caseStudy?.outcomes?.filter(
+    (item) => item?.label?.trim() && item?.value?.trim(),
+  );
+  if (explicitOutcomes && explicitOutcomes.length > 0) return explicitOutcomes;
+
+  if (project.impact.length > 0) {
+    return project.impact.map((item) => ({ value: item.value, label: item.label }));
+  }
+
+  return [{ value: "In progress", label: "Final metrics" }];
+};
+
+export const getProjectCaseStudyModules = (project: Project): ProjectCaseStudyModule[] => {
+  const explicitModules = project.caseStudy?.modules?.filter(
+    (item) => item?.title?.trim() && item?.desc?.trim(),
+  );
+  if (explicitModules && explicitModules.length > 0) return explicitModules.slice(0, 4);
+
+  if (project.gallery.length > 0) {
+    return project.gallery.slice(0, 4).map((item) => ({
+      title: item.label,
+      desc: item.note,
+    }));
+  }
+
+  if (project.process.length > 0) {
+    return project.process.slice(0, 4).map((step, index) => ({
+      title: normalizeCaseStudyProcessTitle(step, index),
+      desc: step.text,
+    }));
+  }
+
+  return [
+    {
+      title: "Overview screen",
+      desc: `Introduces the primary structure and value of ${project.title}.`,
+    },
+  ];
 };

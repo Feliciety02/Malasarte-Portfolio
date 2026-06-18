@@ -62,7 +62,7 @@ export function ProjectGallerySection() {
             <Grid3X3 size={22} className="text-yellow/80" />
           </div>
           <h2 className="font-display text-3xl font-medium sm:text-4xl">
-            Explore <em>Projects</em>
+            Explore <span className="text-gradient">Projects</span>
           </h2>
           <p className="mt-3 text-sm text-muted-foreground max-w-lg mx-auto">
             Browse through case studies by category, technology, or type of work.

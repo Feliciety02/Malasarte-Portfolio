@@ -24,7 +24,7 @@ export function RecognitionSection() {
           description="Academic, leadership, and competitive achievements."
         />
         <div className="mt-10 grid items-start gap-6 md:grid-cols-2">
-          <div className="aspect-[1/1] space-y-3 overflow-y-auto pr-2">
+          <div className="space-y-3 md:max-h-[34rem] md:overflow-y-auto md:pr-2">
             {awardEntries.map((a, i) => (
               <button
                 key={a.originalIndex}
@@ -33,8 +33,8 @@ export function RecognitionSection() {
                   selectedAward === i ? "ring-2 ring-primary" : "hover:bg-white/5"
                 }`}
               >
-                <p className="font-display text-sm font-bold">{a.title}</p>
-                <p className="mt-0.5 text-sm text-muted-foreground">{a.detail}</p>
+                <p className="font-display text-base font-bold leading-snug text-balance">{a.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{a.detail}</p>
               </button>
             ))}
           </div>

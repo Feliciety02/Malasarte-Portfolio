@@ -27,7 +27,7 @@ export function AboutHeroSection() {
         <Reveal delay={0.12} className="md:col-span-3">
           <span className="metal-kicker">About</span>
           <h1 className="mt-4 font-display text-4xl font-medium leading-tight sm:text-5xl md:text-6xl">
-            Who is <em>Fe Anne?</em>
+            {accentLastWord("Who is Fe Anne?")}
           </h1>
           <div className="mt-7 space-y-5 text-base leading-7 text-muted-foreground">
             <p>

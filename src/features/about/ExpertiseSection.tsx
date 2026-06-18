@@ -11,17 +11,17 @@ export function ExpertiseSection() {
           title="Areas of Expertise"
           description="The disciplines and tools I work with daily."
         />
-        <div className="mt-8 grid gap-5 sm:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {Object.entries(expertiseAreas).map(([category, skills]) => (
-            <div key={category}>
+            <div key={category} className="min-w-0">
               <h3 className="font-display text-sm font-semibold uppercase tracking-widest text-primary">
                 {category}
               </h3>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-3 flex flex-wrap gap-2.5">
                 {skills.map((s) => (
                   <span
                     key={s}
-                    className="rounded-full border border-white/10 px-4 py-1.5 text-sm text-muted-foreground"
+                    className="inline-flex max-w-full items-center rounded-full border border-white/10 px-4 py-2 text-sm leading-snug text-muted-foreground whitespace-normal break-words"
                   >
                     {s}
                   </span>
