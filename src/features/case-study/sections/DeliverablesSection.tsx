@@ -14,24 +14,24 @@ export function DeliverablesSection({ project, sectionNumber }: SectionProps) {
         <h2 className="mt-4 font-display text-3xl font-medium md:text-5xl">
           {accentLastWord("What was handed off")}
         </h2>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+        <p className="mt-4 max-w-2xl editorial-body">
           Final outputs prepared for practical use, presentation, and consistent application beyond
           the case study.
         </p>
       </FadeIn>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {deliverables.map((deliverable, index) => (
           <FadeIn key={deliverable.title} delay={index * 0.05}>
-            <article className="metal-card flex h-full gap-5 p-5 sm:p-6">
-              <span className="font-mono text-xs text-primary">
+            <article className="flex gap-5 border-b border-white/[0.04] pb-6">
+              <span className="font-mono text-xs text-primary/60">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div>
-                <h3 className="font-display text-lg font-semibold text-white/90">
+                <h3 className="font-display text-xl font-medium text-white/90">
                   {deliverable.title}
                 </h3>
-                <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                <p className="mt-2 text-base leading-7 text-muted-foreground">
                   {deliverable.description}
                 </p>
               </div>

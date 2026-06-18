@@ -65,12 +65,25 @@ export type ProjectCaseStudyModule = {
 export type ProjectCaseStudyContent = {
   duration?: string;
   team?: string;
+  overview?: string;
   problem?: string;
   approach?: string;
   contributions?: string[];
   outcomes?: ProjectCaseStudyOutcome[];
   modules?: ProjectCaseStudyModule[];
   nextLabel?: string;
+};
+
+export type ResolvedProjectCaseStudyContent = {
+  duration: string;
+  team: string;
+  overview: string;
+  problem: string;
+  approach: string;
+  contributions: string[];
+  outcomes: ProjectCaseStudyOutcome[];
+  modules: ProjectCaseStudyModule[];
+  nextLabel: string;
 };
 
 export type ProjectBrandColor = {
@@ -1039,65 +1052,86 @@ export const projects: Project[] = [
     kind: "uiux",
     tag: "App Design",
     color: "from-violet-500/50 to-indigo-500/30",
-    desc: "UI/UX concept for an adoption-focused digital platform.",
+    desc: "UI/UX concept for a pet adoption platform designed to connect shelters, rescuers, and adopters through a more transparent and accessible adoption experience.",
     role: "UI/UX Designer",
     tools: ["Figma", "FigJam", "Notion"],
     year: "2025",
     client: "Concept Project",
     overview:
-      "Adoptify is a product design concept centered on making adoption journeys clearer, friendlier, and easier to trust across mobile and web touchpoints.",
+      "Adoptify is a pet adoption platform concept that helps potential adopters discover pets, understand adoption requirements, and navigate the adoption process with greater confidence. The experience prioritizes trust, accessibility, and meaningful connections between animals and their future homes.",
     goals: [
       "Design a friendlier adoption experience that feels safe and organized.",
       "Simplify the path from browsing to inquiry and follow-through.",
       "Create a reusable interface language for listings, profiles, and communication flows.",
     ],
     impact: [
-      { value: "45+", label: "Screens designed" },
-      { value: "5", label: "Core flows" },
-      { value: "1", label: "Reusable system" },
+      { value: "45+", label: "Interface Screens" },
+      { value: "5", label: "End-to-End Adoption Journeys" },
+      { value: "1", label: "Unified Design System" },
     ],
+    caseStudy: {
+      contributions: [
+        "Research",
+        "User Journey Mapping",
+        "Information Architecture",
+        "Wireframing",
+        "UI Design",
+        "Interactive Prototyping",
+        "Usability Evaluation",
+      ],
+      modules: [
+        { title: "Progressive Disclosure", desc: "Information revealed step by step to reduce cognitive load during the adoption flow." },
+        { title: "Trust Signals", desc: "Visual cues and status indicators that reinforce process legitimacy and next-step clarity." },
+        { title: "Guided Adoption Flow", desc: "A structured pathway from browsing to application with clear progress awareness." },
+        { title: "Accessible Navigation", desc: "Keyboard‑friendly interactions, readable contrast, and screen‑reader support throughout." },
+      ],
+    },
     focusAreas: [
       {
         title: "Research",
         text: "Mapped emotional and practical pain points in adoption journeys to inform tone and interface decisions.",
       },
       {
-        title: "User Flow",
-        text: "Connected browse, filter, profile review, inquiry, and status-tracking flows into one clearer system.",
+        title: "User Journey Mapping",
+        text: "Charted the full adopter and shelter journey across browse, inquiry, application, and follow-up stages.",
       },
       {
-        title: "Wireframes",
+        title: "Information Architecture",
+        text: "Organized pet profiles, shelter data, and adoption requirements into clear, scannable information hierarchies.",
+      },
+      {
+        title: "Wireframing",
         text: "Validated the listing and profile structure before introducing polished UI treatments.",
       },
       {
-        title: "Final UI",
+        title: "UI Design",
         text: "Built a softer and more human interface system focused on trust, readability, and supportive pacing.",
       },
       {
-        title: "Prototype",
-        text: "Linked the critical adoption steps into a realistic experience for review and testing.",
+        title: "Interactive Prototyping",
+        text: "Linked critical adoption steps into a realistic clickable experience for usability review and stakeholder feedback.",
       },
       {
-        title: "Components",
-        text: "Created reusable cards, status indicators, and messaging patterns for future growth.",
+        title: "Usability Evaluation",
+        text: "Conducted feedback sessions to refine navigation, clarify CTAs, and improve overall adoption flow confidence.",
       },
     ],
     process: [
       {
         title: "Research",
-        text: "Reviewed adoption platform patterns and user frustrations to identify trust gaps and navigation pain points.",
+        text: "Analyzed existing adoption platforms, user expectations, and common barriers faced by shelters, rescuers, and adopters throughout the adoption journey.",
       },
       {
-        title: "Concept",
-        text: "Built a simpler content hierarchy around listings, eligibility cues, and action steps.",
+        title: "Strategy",
+        text: "Defined user flows, adoption pathways, information priorities, and trust-building mechanisms to reduce uncertainty and improve engagement.",
       },
       {
         title: "Design",
-        text: "Developed the end-to-end interface flow, reusable UI patterns, and polished screen designs.",
+        text: "Created end-to-end mobile and web experiences covering pet discovery, detailed pet profiles, adoption applications, shelter communication, and account management.",
       },
       {
-        title: "Deliver",
-        text: "Prepared a structured case study and placeholder gallery areas for future production visuals.",
+        title: "Validation",
+        text: "Refined the interface through iterative feedback, improved accessibility considerations, and prepared a complete design system and prototype for presentation.",
       },
     ],
     challenges: [
@@ -2945,3 +2979,17 @@ export const getProjectCaseStudyModules = (project: Project): ProjectCaseStudyMo
     },
   ];
 };
+
+export const getProjectCaseStudyContent = (
+  project: Project,
+): ResolvedProjectCaseStudyContent => ({
+  duration: getProjectCaseStudyDuration(project),
+  team: getProjectCaseStudyTeam(project),
+  overview: project.caseStudy?.overview?.trim() || project.overview,
+  problem: getProjectCaseStudyProblem(project),
+  approach: getProjectCaseStudyApproach(project),
+  contributions: getProjectCaseStudyContributions(project),
+  outcomes: getProjectCaseStudyOutcomes(project),
+  modules: getProjectCaseStudyModules(project),
+  nextLabel: project.caseStudy?.nextLabel?.trim() || "Next project",
+});

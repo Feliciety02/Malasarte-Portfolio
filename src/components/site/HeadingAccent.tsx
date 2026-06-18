@@ -7,7 +7,7 @@ type AccentTextProps = {
 };
 
 export function AccentText({ children, className }: AccentTextProps) {
-  return <span className={cn("text-gradient", className)}>{children}</span>;
+  return <span className={cn("text-gradient inline-block pe-[0.12em] pb-[0.08em] pt-[0.04em]", className)}>{children}</span>;
 }
 
 export function accentLastWord(text: string): ReactNode {

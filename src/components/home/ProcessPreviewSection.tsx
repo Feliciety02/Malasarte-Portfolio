@@ -14,8 +14,6 @@ const featuredProjects = featuredSlugs
 
 const lastProjectIndex = featuredProjects.length - 1;
 
-const processMarquee = ["Research", "Concept", "Design", "Deliver"] as const;
-
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
@@ -96,23 +94,20 @@ export function ProcessPreviewSection() {
     return -sp * procWidth.current;
   });
 
-  const marqueeX = useTransform(smoothProgress, (v) => `${(v * -8).toFixed(1)}%`);
-  const marqueeRX = useTransform(smoothProgress, (v) => `${(-8 + v * 8).toFixed(1)}%`);
-
   return (
-    <section ref={containerRef} className="relative bg-[#0c0d0e]">
+    <section ref={containerRef} className="relative">
       {/* Mobile / reduced-motion fallback */}
       <div className={reduce ? "block" : "md:hidden"}>
         <div className="relative overflow-hidden px-6 py-20">
           <div className="absolute inset-0 z-0 bg-[#141516]" />
-          <div className="absolute inset-0 z-0 opacity-60">
+          <div className="absolute inset-0 z-0 opacity-40">
             <BrushedMetalBackground interactiveTargetRef={containerRef} />
           </div>
           <div className="relative z-10 mx-auto max-w-2xl">
             <SectionHeader
               eyebrow="Selected Work"
               title="Featured projects"
-              description="A curated selection of recent projects spanning UI/UX design, web development, and brand identity."
+              description="A selection of products, platforms, and digital experiences spanning UI/UX, development, branding, and research."
               className="mb-10"
             />
           </div>
@@ -131,52 +126,17 @@ export function ProcessPreviewSection() {
         </div>
       </div>
 
-      {/* Desktop: sticky overlay bridges Hero → About */}
+      {/* Desktop: scroll-driven carousel */}
       <div
         className={
           reduce
             ? "hidden"
-            : "hidden md:block sticky top-0 z-50 h-screen flex-col overflow-hidden bg-[#0c0d0e]"
+            : "hidden md:block sticky top-0 z-50 h-screen flex-col overflow-hidden"
         }
       >
         <div className="absolute inset-0 z-0 bg-[#141516]" />
-        <div aria-hidden className="absolute inset-0 z-0">
+        <div aria-hidden className="absolute inset-0 z-0 opacity-40">
           <BrushedMetalBackground interactiveTargetRef={containerRef} />
-        </div>
-
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/45 to-transparent" />
-        </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-20 z-0 overflow-hidden text-nowrap font-display text-6xl font-bold uppercase tracking-[0.18em] text-white/[0.035]"
-        >
-          <motion.div className="flex w-max gap-16" style={{ x: marqueeX }}>
-            {Array.from({ length: 6 }).map((_, g) => (
-              <div key={g} className="flex gap-16">
-                {processMarquee.map((item) => (
-                  <span key={`${g}-${item}`}>{item}</span>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-16 z-0 overflow-hidden text-nowrap font-display text-5xl font-bold uppercase tracking-[0.18em] text-white/[0.028]"
-        >
-          <motion.div className="flex w-max gap-16" style={{ x: marqueeRX }}>
-            {Array.from({ length: 6 }).map((_, g) => (
-              <div key={g} className="flex gap-16">
-                {processMarquee.map((item) => (
-                  <span key={`${g}-${item}`}>{item}</span>
-                ))}
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         <motion.div className="relative z-10 flex h-full flex-col" style={{ opacity: 1 }}>
@@ -185,10 +145,9 @@ export function ProcessPreviewSection() {
               <SectionHeader
                 eyebrow="Selected Work"
                 title="Featured projects"
-                description="Scroll through a curated selection of recent projects across UI/UX, web development, and branding."
+                description="A selection of products, platforms, and digital experiences spanning UI/UX, development, branding, and research."
                 className="mb-0"
                 contentClassName="max-w-xl"
-                titleClassName="md:text-3xl lg:text-4xl"
               />
               <LinkButton
                 to="/works"
@@ -200,15 +159,15 @@ export function ProcessPreviewSection() {
             </div>
 
             <div className="mt-[clamp(1.25rem,2.5vh,2rem)] flex items-center gap-4">
-              <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="relative h-px flex-1 overflow-hidden rounded-full bg-white/8">
                 <motion.div
-                  className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-yellow via-white/70 to-yellow"
+                  className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-yellow/60 via-white/40 to-yellow/60"
                   style={{ scaleX: barScale, width: "100%" }}
                 />
               </div>
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-white/60">
-                <span className="text-white">0{activeIndex + 1}</span>
-                <span className="text-white/40"> / 0{featuredProjects.length}</span>
+              <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/35">
+                <span className="text-white/60">0{activeIndex + 1}</span>
+                <span className="text-white/20"> / 0{featuredProjects.length}</span>
               </div>
             </div>
           </div>

@@ -203,7 +203,7 @@ export function PortfolioProjectCard({
               />
 
             <div className="absolute left-3 top-3 z-10">
-              <span className="metal-ghost inline-flex rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/75">
+              <span className="metal-ghost inline-flex whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/75">
                 {project.cat}
               </span>
             </div>

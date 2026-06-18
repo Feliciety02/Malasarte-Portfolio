@@ -13,7 +13,7 @@ export function SectionAnchor({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={cn("scroll-mt-28 pt-20 md:pt-28", className)}>
+    <section id={id} className={cn("case-study-section scroll-mt-28", className)}>
       {children}
     </section>
   );

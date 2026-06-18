@@ -44,7 +44,7 @@ export function SectionHeader({
         <span className="metal-kicker">{eyebrow}</span>
         <TitleTag
           className={cn(
-            "editorial-display mt-4 text-[clamp(2.9rem,7vw,5.25rem)] font-medium leading-[0.94] tracking-tight text-balance",
+            "section-title mt-4",
             titleClassName,
           )}
         >
@@ -53,7 +53,7 @@ export function SectionHeader({
         {description ? (
           <p
             className={cn(
-              "editorial-subtitle mt-5 max-w-2xl text-base leading-relaxed text-pretty md:text-xl",
+              "editorial-subtitle section-subtitle mt-5 max-w-2xl",
               descriptionClassName,
             )}
           >

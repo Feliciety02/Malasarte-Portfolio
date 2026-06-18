@@ -88,9 +88,6 @@ export function LeadershipSection() {
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <span className="mb-6 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
-              Now Highlighting
-            </span>
             <nav className="space-y-0" role="tablist" aria-label="Leadership roles">
               {HIGHLIGHT_ITEMS.slice(0, 6).map((item, i) => (
                 <motion.button
@@ -124,8 +121,8 @@ export function LeadershipSection() {
             </nav>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="sticky top-32">
+          <div className="lg:col-span-5 lg:flex lg:items-center lg:justify-center">
+            <div className="sticky top-40 mx-auto w-full max-w-[28rem]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
@@ -141,7 +138,7 @@ export function LeadershipSection() {
                         <img
                           src={item.logo}
                           alt={`${item.subtitle} logo`}
-                          className="h-24 w-24 object-contain md:h-32 md:w-32"
+                          className="h-28 w-28 object-contain md:h-40 md:w-40"
                         />
                       </div>
                     )}

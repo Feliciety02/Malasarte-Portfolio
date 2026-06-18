@@ -60,6 +60,29 @@ function getProjectHeroTheme(project: Project) {
   );
 }
 
+function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
+  const words = text.split(" ");
+  return (
+    <span className="inline-flex flex-wrap">
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 0.6,
+            delay: delay + i * 0.04,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="mr-[0.3em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
 export function CaseStudyHero({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -67,7 +90,7 @@ export function CaseStudyHero({ project }: { project: Project }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
   return (
     <section ref={ref} className="relative isolate overflow-hidden border-b border-white/8">
@@ -79,33 +102,50 @@ export function CaseStudyHero({ project }: { project: Project }) {
           theme.glow,
         )}
       />
-      <div className="mx-auto max-w-7xl px-6 pb-20 pt-24 md:pb-28 md:pt-36">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-wrap items-center"
-        >
-          <TagPill className="static" dotClassName={theme.dot}>
-            {project.cat}
-          </TagPill>
-        </motion.div>
+      <div className="mx-auto max-w-4xl px-6 pb-24 pt-28 md:pb-36 md:pt-44">
+        {/* Tags */}
+        <div className="flex flex-wrap items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <TagPill className="static" dotClassName={theme.dot}>
+              {project.cat}
+            </TagPill>
+          </motion.div>
+          <motion.span
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/35"
+          >
+            {project.year}
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/25"
+          >
+            {project.role}
+          </motion.span>
+        </div>
 
+        {/* Title - word by word */}
         <motion.h1
           style={prefersReducedMotion ? undefined : { y: titleY }}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mt-8 max-w-5xl font-display text-3xl font-bold leading-[1.06] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+          className="mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
         >
-          {project.title}
+          <WordReveal text={project.title} delay={0.2} />
         </motion.h1>
 
+        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="mt-8 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg"
+          transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl md:leading-9"
         >
           {project.desc}
         </motion.p>

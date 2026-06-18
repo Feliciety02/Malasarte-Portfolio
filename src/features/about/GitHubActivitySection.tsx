@@ -7,7 +7,7 @@ export function GitHubActivitySection() {
     <Reveal className="mt-20 pb-10">
       <section className="mx-auto max-w-6xl">
         <span className="metal-kicker">GitHub</span>
-        <h2 className="mt-3 font-display text-3xl font-medium md:text-4xl">
+        <h2 className="section-title mt-4 font-medium">
           {accentLastWord("Code Activity")}
         </h2>
         <div className="mt-8">

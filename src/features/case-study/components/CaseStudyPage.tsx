@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import type { Project, ProjectCategory } from "@/data/projects";
 import { getProjectGalleryImage } from "@/data/projectImages";
 import { MetallicPage } from "@/components/site/MetallicPage";
+import { CursorGlow } from "@/components/site/CursorGlow";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { Lightbox, type LightboxItem } from "@/components/site/Lightbox";
 import type { SectionComponentDef, RouteCategory } from "../types/templates";
 import { getTemplateByRouteCategory } from "../templates/templateRegistry";
@@ -52,8 +54,10 @@ export function CaseStudyPage({ project, routeCategory }: CaseStudyPageProps) {
   }, [project.slug]);
 
   return (
-    <MetallicPage variant="project" className="px-0 pb-24">
+    <MetallicPage variant="project" className="case-study-page px-0 pb-24">
       <FloatingCatalogBackLink />
+      <CursorGlow />
+      <ScrollProgress />
 
       <CaseStudyHero project={project} />
 

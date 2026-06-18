@@ -91,19 +91,16 @@ const experienceEntries: TimelineEntry[] = [
     period: "2024 - Present",
     title: "Freelance Designer & VA",
     subtitle: "Remote",
-    description: "Handling design systems, client visuals, and operations support across creative and technical workflows.",
   },
   {
     period: "2022 - 2024",
     title: "UI/UX & Social Media Graphics Lead",
     subtitle: "Technology Organization",
-    description: "Led interface design and digital campaigns for student-facing initiatives with a stronger product mindset.",
   },
   {
     period: "2020 - 2022",
     title: "Junior Designer",
     subtitle: "Creative Collective",
-    description: "Built early branding, layouts, and visual assets across multiple formats while sharpening execution craft.",
   },
 ];
 
@@ -178,45 +175,43 @@ const contentTransition = { duration: 0.5, ease: transitionEase };
 
 function TimelineBlock({ entries }: { entries: TimelineEntry[] }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-16">
       {entries.map((entry, index) => (
         <motion.article
           key={`${entry.period}-${entry.title}`}
           initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ ...contentTransition, delay: index * 0.12 }}
-          className="relative pl-9"
+          className="relative pl-8"
         >
           <div className="absolute left-0 top-1 h-full">
-            <span className="absolute left-0 top-1.5 h-3 w-3 rounded-full bg-[rgba(182,138,255,0.9)] shadow-[0_0_18px_rgba(156,102,255,0.4)]" />
+            <span className="absolute left-0 top-1.5 h-4 w-4 rounded-full border border-[rgba(187,145,255,0.65)] bg-[rgba(187,145,255,0.2)]">
+              <span className="absolute inset-[3px] rounded-full bg-[rgba(187,145,255,0.95)]" />
+            </span>
             {index < entries.length - 1 ? (
-              <span className="absolute left-[5px] top-6 h-[calc(100%-0.5rem)] w-px bg-gradient-to-b from-[rgba(182,138,255,0.7)] via-white/18 to-transparent" />
+              <span className="absolute left-[7px] top-7 h-[calc(100%+2.75rem)] w-px bg-[rgba(154,111,255,0.65)]" />
             ) : null}
           </div>
 
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)]">
-            {entry.period}
-          </p>
-          <div className="mt-3 flex items-start gap-4">
-            {entry.logo ? (
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.04] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                <img src={entry.logo} alt={`${entry.subtitle} logo`} className="max-h-full max-w-full object-contain" />
-              </div>
-            ) : null}
-            <div className="min-w-0">
-              <h4 className="font-display text-[1.7rem] leading-tight tracking-[-0.03em] text-white">
-                {entry.title}
-              </h4>
-              <p className="mt-1 text-[15px] text-white/52">{entry.subtitle}</p>
-              {entry.description ? (
-                <p className="mt-4 max-w-xl text-[15px] leading-8 text-white/66">{entry.description}</p>
+          <div className="mt-4 flex items-start gap-5">
+              {entry.logo ? (
+                <img src={entry.logo} alt={`${entry.subtitle} logo`} className="h-14 w-14 shrink-0 object-contain" />
               ) : null}
+              <div className="min-w-0 flex-1">
+                <h4 className="font-display text-[1.45rem] leading-tight tracking-[-0.03em] text-white sm:text-[1.6rem]">
+                  {entry.title}
+                </h4>
+                <div className="mt-1 flex w-full flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                  <p className="text-[14px] text-white/52 sm:text-[15px]">{entry.subtitle}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)] sm:ml-auto sm:text-right">
+                    {entry.period}
+                  </p>
+                </div>
+                {entry.description ? (
+                  <p className="mt-3 max-w-xl text-[14px] leading-7 text-white/66 sm:text-[15px]">{entry.description}</p>
+                ) : null}
             </div>
           </div>
-
-          {index < entries.length - 1 ? (
-            <div className="mt-8 h-px bg-gradient-to-r from-white/10 via-white/6 to-transparent" />
-          ) : null}
         </motion.article>
       ))}
     </div>
@@ -264,21 +259,22 @@ function EducationBlock() {
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.04] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
               <img src={group.logo} alt={`${group.institution} logo`} className="max-h-full max-w-full object-contain" />
             </div>
-            <div className="min-w-0">
-              <h4 className="font-display text-[1.7rem] leading-tight tracking-[-0.03em] text-white">
-                {group.institution}
-              </h4>
+            <div className="min-w-0 flex-1">
+              <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                <h4 className="font-display text-[1.7rem] leading-tight tracking-[-0.03em] text-white">
+                  {group.institution}
+                </h4>
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)] sm:ml-auto sm:pt-1 sm:text-right">
+                  {group.period}
+                </p>
+              </div>
               <p className="mt-3 text-lg text-white/82">{group.program}</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.78)]">
-                {group.period}
-              </p>
             </div>
           </div>
 
           {group.achievements.length > 0 ? (
             <div className="mt-6 pl-[4.5rem]">
-              <p className="text-[15px] font-medium text-white/78">Achievements</p>
-              <ul className="mt-4 space-y-3 text-[15px] leading-8 text-white/66">
+              <ul className="space-y-3 text-[15px] leading-8 text-white/66">
                 {group.achievements.map((achievement) => (
                   <li key={achievement} className="flex items-start gap-3">
                     <span className="mt-[0.55rem] h-1.5 w-1.5 rounded-full bg-[rgba(188,144,255,0.88)]" />
@@ -404,19 +400,36 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="py-10 sm:py-12">
-          <span className="font-mono text-xs uppercase tracking-[0.28em] text-yellow/80">About</span>
+          <span className="metal-kicker">About</span>
 
-          <h2 className="mt-5 max-w-4xl font-display text-5xl font-semibold italic leading-[0.98] tracking-[-0.05em] text-foreground sm:text-6xl lg:text-[5.1rem]">
-            I design and develop digital products that are clear, functional, and built with intention.
+          <h2 className="section-title mt-5 max-w-4xl font-semibold text-foreground">
+            {accentLastWord(
+              "I design and develop digital products that are clear, functional, and built with intention.",
+            )}
           </h2>
 
-          <p className="mt-6 max-w-2xl text-[15px] leading-8 text-muted-foreground sm:text-base">
+          <p className="mt-5 max-w-2xl text-[14px] leading-7 text-muted-foreground sm:text-[15px]">
             I combine UI/UX design, full-stack development, and community leadership to build products that solve
             real-world problems. I design for clarity, build for scale, and lead with empathy whether crafting
             interfaces or architecting back-end systems.
           </p>
 
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-8 flex flex-wrap items-center gap-5">
+            <Link
+              to="/works"
+              className="metal-cta inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+            >
+              Explore works <ArrowRight size={14} />
+            </Link>
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              More about me <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
               ["10+", "Projects Built"],
               ["3+", "Years Designing"],
@@ -425,24 +438,24 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
             ].map(([value, label]) => (
               <div
                 key={label}
-                className="rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-4 text-center"
+                className="rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-3 text-center"
               >
-                <p className="font-display text-2xl font-bold italic text-foreground">{value}</p>
+                <p className="font-display text-xl font-bold italic text-foreground">{value}</p>
                 <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
-            <div className="h-[46rem] overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-6 py-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-7">
+          <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:items-stretch">
+            <div className="overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-5 py-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-6 lg:h-[40rem]">
               <div className="flex h-full flex-col">
-                <div className="border-b border-white/8 pb-5">
-                  <h3 className="font-display text-[2.4rem] italic tracking-[-0.05em] text-white sm:text-[4.4rem]">
+                <div className="border-b border-white/8 pb-4">
+                  <h3 className="font-display text-[2rem] italic tracking-[-0.05em] text-white sm:text-[3.5rem]">
                     Exploring layers.
                   </h3>
                 </div>
 
-                <nav className="mt-7 space-y-3" role="tablist" aria-label="About sections">
+                <nav className="mt-6 space-y-2.5" role="tablist" aria-label="About sections">
                   {aboutItems.map((item, index) => {
                     const isActive = active === index;
 
@@ -458,7 +471,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                         whileHover={reducedMotion ? undefined : { y: -4 }}
                         animate={{ y: isActive ? -2 : 0 }}
                         transition={{ duration: 0.45, ease: transitionEase }}
-                        className={`group relative w-full overflow-hidden rounded-[1.6rem] border px-6 py-6 text-left ${
+                        className={`group relative w-full overflow-hidden rounded-[1.35rem] border px-5 py-5 text-left ${
                           isActive
                             ? "border-[rgba(181,138,255,0.3)] bg-[rgba(255,255,255,0.06)] shadow-[0_18px_40px_rgba(0,0,0,0.24),0_0_28px_rgba(143,92,255,0.16)]"
                             : "border-transparent bg-transparent hover:border-white/8 hover:bg-white/[0.03]"
@@ -480,20 +493,19 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                             <div className="flex items-center gap-3">
                               <item.icon size={18} className={isActive ? "text-[rgb(211,188,255)]" : "text-white/36"} />
                               <span
-                                className={`font-display text-[2rem] tracking-[-0.045em] sm:text-[2.2rem] ${
+                                className={`font-display text-[1.6rem] tracking-[-0.045em] sm:text-[1.85rem] ${
                                   isActive ? "text-white" : "text-white/74"
                                 }`}
                               >
                                 {item.label}
                               </span>
                             </div>
-                            <p className="mt-3 pl-8 text-[15px] text-white/52 sm:text-base">{item.summary}</p>
                           </div>
                           <motion.span
                             initial={false}
                             animate={{ x: isActive ? 0 : -8, opacity: isActive ? 1 : 0 }}
                             transition={{ duration: 0.4, ease: transitionEase }}
-                            className="pt-1 text-white/64"
+                            className="self-center text-white/64"
                           >
                             <ArrowRight size={18} />
                           </motion.span>
@@ -505,7 +517,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
               </div>
             </div>
 
-            <div className="h-[46rem] overflow-hidden rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(158,105,255,0.18),transparent_30%),linear-gradient(165deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div className="overflow-hidden rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top_left,rgba(158,105,255,0.18),transparent_30%),linear-gradient(165deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] lg:h-[40rem]">
               <div className="relative flex h-full flex-col">
                 <div
                   aria-hidden
@@ -515,24 +527,24 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                     backgroundSize: "8px 8px",
                   }}
                 />
-                <span className="pointer-events-none absolute right-6 top-5 font-display text-[9rem] italic leading-none tracking-[-0.08em] text-white/[0.05]">
+                <span className="pointer-events-none absolute right-6 top-5 font-display text-[7rem] italic leading-none tracking-[-0.08em] text-white/[0.05]">
                   {String(active + 1).padStart(2, "0")}
                 </span>
 
-                <div className="relative border-b border-white/8 px-7 py-7 sm:px-9 sm:py-8">
+                <div className="relative border-b border-white/8 px-6 py-6 sm:px-8 sm:py-6">
                   <span className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.26em] text-[rgba(211,188,255,0.82)]">
                     <ActiveIcon size={14} />
                     {activeItem.label}
                   </span>
-                  <h3 className="mt-7 max-w-xl font-display text-[3.3rem] italic leading-[0.92] tracking-[-0.055em] text-white sm:text-[4.35rem]">
+                  <h3 className="mt-5 max-w-xl font-display text-[2.55rem] italic leading-[0.94] tracking-[-0.055em] text-white sm:text-[3.35rem]">
                     {activeItem.summary}
                   </h3>
-                  <p className="mt-6 max-w-2xl text-[15px] leading-8 text-white/62 sm:text-[1.05rem]">
+                  <p className="mt-4 max-w-2xl text-[14px] leading-6 text-white/62 sm:text-[15px]">
                     {activeItem.blurb}
                   </p>
                 </div>
 
-                <div className="relative min-h-0 flex-1 overflow-y-auto px-7 py-7 sm:px-9">
+                <div className="relative flex-1 overflow-hidden px-6 py-5 sm:px-8 sm:py-6">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeItem.id}
@@ -540,6 +552,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       exit={{ opacity: 0, y: -18, filter: "blur(10px)" }}
                       transition={contentTransition}
+                      className="h-full"
                     >
                       {activeContent}
                     </motion.div>
@@ -549,27 +562,13 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-5">
-            <Link
-              to="/works"
-              className="metal-cta inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
-            >
-              Explore works <ArrowRight size={14} />
-            </Link>
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              More about me <ArrowRight size={14} />
-            </Link>
-          </div>
         </div>
 
         <div className="mt-20 pt-8">
           <div className="grid gap-24">
             <Reveal>
               <span className="metal-kicker">GitHub</span>
-              <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">{accentLastWord("Code Activity")}</h2>
+              <h2 className="section-title mt-4 font-medium text-foreground">{accentLastWord("Code Activity")}</h2>
               <div className="mt-8">
                 <GitHubContributions username="Feliciety02" />
               </div>
@@ -587,7 +586,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                 </div>
                 <div className="lg:col-span-2">
                   <span className="metal-kicker">Tools I use</span>
-                  <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+                  <h2 className="section-title mt-4 font-medium text-foreground">
                     {accentLastWord("Tech Stack")}
                   </h2>
                   <div className="mt-6 space-y-5">

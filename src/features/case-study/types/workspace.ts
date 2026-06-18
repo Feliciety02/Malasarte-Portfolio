@@ -1,4 +1,4 @@
-export type WorkspaceTabId = "live" | "design";
+export type WorkspaceTabId = "live" | "design" | "flipbook";
 
 export type WorkspaceTab = {
   id: WorkspaceTabId;

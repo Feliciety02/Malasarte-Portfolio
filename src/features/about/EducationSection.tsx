@@ -15,21 +15,24 @@ function AnimatedTimelineItem({
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <div ref={ref} className="relative pb-8 last:pb-0">
+    <div ref={ref} className="relative grid grid-cols-[1.9rem_minmax(0,1fr)] gap-4 pb-4 last:pb-0">
       <motion.div
-        className="absolute left-0 top-0 w-px bg-gradient-to-b from-primary to-transparent"
-        initial={{ height: 0 }}
-        animate={isInView ? { height: "100%" } : { height: 0 }}
+        className="absolute bottom-0 left-[0.95rem] top-3 w-px bg-primary/55"
+        initial={{ opacity: 0, scaleY: 0 }}
+        animate={isInView ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
+        style={{ transformOrigin: "top" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       />
       <motion.div
-        className="absolute left-0 top-[5px] h-3 w-3 -translate-x-1/2 rounded-full border-2 border-primary bg-background shadow-[0_0_12px_rgba(255,255,255,0.15)]"
+        className="relative z-10 mt-5 flex h-4 w-4 justify-self-center rounded-full border border-primary/55 bg-primary/20"
         initial={{ scale: 0, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 0.4, delay: 0.15, ease: "backOut" }}
-      />
+      >
+        <span className="m-auto h-2 w-2 rounded-full bg-primary" />
+      </motion.div>
       <motion.div
-        className="ml-8 flex gap-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:bg-white/[0.04]"
+        className="flex gap-4 rounded-[1.35rem] border border-white/[0.07] bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.018))] p-5 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] transition-colors hover:bg-white/[0.04]"
         initial={{ opacity: 0, x: -30 }}
         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
         transition={{ duration: 0.5, delay: 0.1 + index * 0.05, ease: "easeOut" }}
@@ -63,7 +66,7 @@ export function EducationSection() {
           title="Academic Background"
           description="A journey from special science education to a degree in computer science."
         />
-        <div className="relative mt-10 pl-6">
+        <div className="relative mt-10">
           {education.map((item, i) => (
             <AnimatedTimelineItem key={i} item={item} index={i} />
           ))}

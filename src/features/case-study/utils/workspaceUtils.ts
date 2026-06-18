@@ -1,4 +1,5 @@
 import type { Project } from "@/data/projects";
+import { resolveWorkspace } from "../workspace/workspaceResolver";
 
 export function canShowProjectWorkspace(
   project: Pick<
@@ -11,6 +12,10 @@ export function canShowProjectWorkspace(
 
   const cats = [project.cat, ...(project.categories ?? [])];
   return cats.some((c) => c === "UI/UX Design" || c === "Web Development");
+}
+
+export function hasProjectScreenEmbeds(project: Project) {
+  return resolveWorkspace(project).tabs.length > 0;
 }
 
 export function shouldSwapToGallery(project: Project): boolean {

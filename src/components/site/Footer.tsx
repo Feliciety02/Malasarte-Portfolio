@@ -15,7 +15,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative z-10 -mt-24 isolate overflow-visible bg-transparent px-2 pt-24 sm:px-3 lg:-mt-28 lg:px-4 lg:pt-28">
+    <footer className="relative z-10 -mb-6 -mx-3 px-3 pb-0 pt-6 sm:-mb-8 sm:-mx-4 sm:px-4 sm:pt-8">
       <style>{`
         @keyframes footerOrbA {
           0% { transform: translate(0, 0) scale(1); }
@@ -30,64 +30,72 @@ export function Footer() {
           75% { transform: translate(-40px, 10px) scale(1.1); }
           100% { transform: translate(10px, -30px) scale(0.95); }
         }
-        @keyframes footerOrbC {
-          0% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(25px, -25px) scale(1.2); }
-          100% { transform: translate(-25px, 15px) scale(0.9); }
-        }
       `}</style>
       <div
         onMouseMove={handleMouse}
-        className="relative left-1/2 w-[calc(100vw+2rem)] -translate-x-1/2 overflow-visible rounded-t-[4rem] border-x border-t border-white/8 bg-[oklch(0.075_0_0/0.985)] shadow-[0_32px_90px_rgba(0,0,0,0.52)] sm:w-[calc(100vw+3rem)] sm:rounded-t-[6rem] lg:w-[calc(100vw+4rem)] lg:rounded-t-[7rem]"
+        className="relative mx-auto overflow-hidden rounded-t-[2rem] border border-white/8 bg-[#060708] shadow-[0_-10px_40px_rgba(0,0,0,0.28),0_30px_80px_rgba(0,0,0,0.38)] sm:rounded-t-[2.5rem]"
         style={{
           backgroundImage:
-            "radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.06), transparent 50%)",
+            "radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.04), transparent 50%)",
         }}
       >
+        {/* Thin horizontal divider */}
+        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+
+        {/* Gradient fade from previous section */}
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-28 bg-gradient-to-b from-[#060708] via-[#060708]/70 to-transparent" />
+
+        {/* Vertical grid matching page background */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 rounded-t-[4rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28)_0.7px,transparent_1.8px)] opacity-[0.08] blur-[0.7px] [background-size:14px_14px] sm:rounded-t-[6rem] lg:rounded-t-[7rem]"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 9px)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 30%, black, transparent 65%)",
+            maskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 30%, black, transparent 65%)",
+          }}
         />
+
+        {/* Subtle glow orbs */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-t-[4rem] sm:rounded-t-[6rem] lg:rounded-t-[7rem]"
+          className="pointer-events-none absolute inset-0 overflow-hidden"
         >
           <div
-            className="absolute -left-10 -top-10 h-80 w-80 rounded-full opacity-25 blur-[100px]"
+            className="absolute -left-16 -top-16 h-60 w-60 rounded-full opacity-[0.05] blur-[100px]"
             style={{
-              background: "radial-gradient(circle, rgba(255,215,0,0.6), transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(168,85,247,0.6), transparent 70%)",
               animation: "footerOrbA 14s ease-in-out infinite alternate",
             }}
           />
           <div
-            className="absolute -bottom-16 -right-8 h-72 w-72 rounded-full opacity-20 blur-[90px]"
+            className="absolute -bottom-20 -right-12 h-60 w-60 rounded-full opacity-[0.04] blur-[100px]"
             style={{
-              background: "radial-gradient(circle, rgba(255,215,0,0.5), transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(255,215,0,0.5), transparent 70%)",
               animation: "footerOrbB 18s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute bottom-1/3 left-1/3 h-56 w-56 rounded-full opacity-15 blur-[80px]"
-            style={{
-              background: "radial-gradient(circle, rgba(255,200,50,0.5), transparent 70%)",
-              animation: "footerOrbC 12s ease-in-out infinite alternate",
             }}
           />
         </div>
 
+        {/* Logo badge - smaller, sits inside */}
         <Link
           to="/"
           aria-label="Fe Anne Malasarte home"
-          className="metal-ghost absolute left-1/2 top-0 z-10 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full p-3 backdrop-blur-xl transition-transform hover:-translate-y-[54%]"
+          className="relative z-10 mx-auto flex w-fit pt-10"
         >
           <img
             src={logoFe}
             alt="Fe Anne logo"
-            className="h-20 w-20 object-contain drop-shadow-[0_16px_34px_rgba(255,255,255,0.16)] sm:h-24 sm:w-24"
+            className="h-12 w-12 object-contain opacity-80 transition-opacity hover:opacity-100 sm:h-14 sm:w-14"
           />
         </Link>
 
-        <div className="relative z-[1] mx-auto w-full max-w-7xl px-6 pb-6 pt-20 sm:px-10 sm:pb-8 md:px-12 lg:px-14 lg:pb-8 lg:pt-20 xl:px-16">
+        <div className="relative z-[1] mx-auto w-full max-w-7xl px-6 pb-6 pt-2 sm:px-10 sm:pb-8 md:px-12 lg:px-14 lg:pb-8 xl:px-16">
           <div className="lg:hidden">
             <div className="mx-auto max-w-sm text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
@@ -122,7 +130,7 @@ export function Footer() {
                 to="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
               >
-                Let's talk <ArrowRight size={15} />
+                Let&apos;s talk <ArrowRight size={15} />
               </Link>
             </div>
 
@@ -223,7 +231,7 @@ export function Footer() {
                   to="/contact"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/6 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
                 >
-                  Let's talk <ArrowRight size={15} />
+                  Let&apos;s talk <ArrowRight size={15} />
                 </Link>
               </div>
             </div>
@@ -266,7 +274,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="relative mt-8 flex flex-col items-center gap-3 border-t border-white/8 pt-5 text-center text-xs text-muted-foreground sm:flex-row sm:justify-between sm:text-left lg:mt-8">
+          <div className="relative mt-6 flex flex-col items-center gap-3 border-t border-white/8 pt-5 text-center text-xs text-muted-foreground sm:flex-row sm:justify-between sm:text-left">
             <p>&copy; {new Date().getFullYear()} Fe Anne Malasarte. Designed with care.</p>
             <p className="rounded-full bg-accent px-3 py-1.5 font-medium text-accent-foreground">
               Crafted with creativity and code.

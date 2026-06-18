@@ -1,8 +1,10 @@
 import type { TemplateConfig } from "../types/templates";
-import { SnapshotSection } from "../sections/SnapshotSection";
+import { OverviewSection } from "../sections/OverviewSection";
+import { ProblemApproachSection } from "../sections/ProblemApproachSection";
 import { WorkspaceSection } from "../sections/WorkspaceSection";
-import { ShowcaseSection } from "../sections/ShowcaseSection";
-import { DeliverablesSection } from "../sections/DeliverablesSection";
+import { ContributionsSection } from "../sections/ContributionsSection";
+import { ProcessArcSection } from "../sections/ProcessArcSection";
+import { OutcomesSection } from "../sections/OutcomesSection";
 import { RelatedProjectsSection } from "../sections/RelatedProjectsSection";
 
 export const uiuxTemplate: TemplateConfig = {
@@ -14,10 +16,12 @@ export const uiuxTemplate: TemplateConfig = {
   galleryVariant: "stack",
   workspace: "figma",
   sections: [
-    { id: "snapshot", label: "Snapshot", component: SnapshotSection },
-    { id: "workspace", label: "Workspace", component: WorkspaceSection },
-    { id: "showcase", label: "Showcase", component: ShowcaseSection },
-    { id: "deliverables", label: "Deliverables", component: DeliverablesSection },
+    { id: "overview", label: "Overview", component: OverviewSection },
+    { id: "problem", label: "Problem / Approach", component: ProblemApproachSection },
+    { id: "screens", label: "Screens", component: WorkspaceSection },
+    { id: "contributions", label: "Contributions", component: ContributionsSection },
+    { id: "process", label: "Process", component: ProcessArcSection },
+    { id: "outcomes", label: "Outcomes", component: OutcomesSection },
     { id: "next", label: "Next", component: RelatedProjectsSection },
   ],
 };
