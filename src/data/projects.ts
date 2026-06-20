@@ -1371,6 +1371,11 @@ export const projects: Project[] = [
       { value: "1", label: "Management system" },
       { value: "30+", label: "Years of business legacy" },
     ],
+    collaborators: [
+      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
+      "Fe Anne Malasarte | Full Stack Developer | /placeholders/collaborators/collab-02.png",
+      "Jorge Macabenta",
+    ],
     focusAreas: [
       {
         title: "Landing Page",
