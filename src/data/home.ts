@@ -12,7 +12,7 @@ export const featuredSlugs = [
 
 export const marqueeItems = [
   "UI/UX Design",
-  "Web Development",
+  "Software Development",
   "Social Media Graphics",
   "Brand Identity",
   "Visual Storytelling",
@@ -21,7 +21,7 @@ export const marqueeItems = [
 
 export const skillHighlights = [
   { name: "UI/UX Design", level: 95 },
-  { name: "Web Development", level: 88 },
+  { name: "Software Development", level: 88 },
   { name: "Social Media Graphics", level: 90 },
   { name: "Brand Identity", level: 86 },
 ];
@@ -45,7 +45,7 @@ export const experienceTimeline = [
 export const servicePreviews = [
   {
     icon: Globe,
-    title: "Web Development",
+    title: "Software Development",
     desc: "Full-stack development of responsive, performant web applications using modern frameworks and industry best practices — from system architecture through deployment and optimization.",
     stars: 5 as const,
   },

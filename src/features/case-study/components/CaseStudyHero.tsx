@@ -102,7 +102,8 @@ export function CaseStudyHero({ project }: { project: Project }) {
           theme.glow,
         )}
       />
-      <div className="mx-auto max-w-4xl px-6 pb-24 pt-28 md:pb-36 md:pt-44">
+      <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 md:pb-36 md:pt-44">
+        <div className="max-w-6xl">
         {/* Tags */}
         <div className="flex flex-wrap items-center gap-3">
           <motion.div
@@ -145,10 +146,11 @@ export function CaseStudyHero({ project }: { project: Project }) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl md:leading-9"
+          className="mt-8 max-w-4xl text-lg leading-8 text-muted-foreground md:text-xl md:leading-9"
         >
           {project.desc}
         </motion.p>
+        </div>
       </div>
     </section>
   );

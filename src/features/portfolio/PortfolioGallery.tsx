@@ -14,7 +14,7 @@ function getCardSize(
   if (activeCategory === "Writing / VA") {
     return "wide";
   }
-  if (activeCategory === "UI/UX Design" || activeCategory === "Web Development") {
+  if (activeCategory === "UI/UX Design" || activeCategory === "Software Development") {
     return "medium";
   }
   if (activeCategory === "Logo & Branding") {
@@ -30,7 +30,7 @@ type PortfolioGalleryProps = {
   onBackToProjects?: () => void;
 };
 
-const twoColumnCats: ProjectCategory[] = ["UI/UX Design", "Web Development"];
+const twoColumnCats: ProjectCategory[] = ["UI/UX Design", "Software Development"];
 const singleColumnCats: ProjectCategory[] = ["Writing / VA"];
 const gallerySectionClass = "relative z-10 mx-auto mt-14 max-w-7xl px-4 sm:mt-16 sm:px-6";
 const galleryGridClass = "grid grid-flow-dense gap-5 sm:gap-6";
@@ -39,9 +39,9 @@ function getBentoCardType(project: Project): BentoCardType {
   if (
     project.kind === "frontend" ||
     project.kind === "uiux" ||
-    project.cat === "Web Development" ||
+    project.cat === "Software Development" ||
     project.cat === "UI/UX Design" ||
-    project.categories?.includes("Web Development") ||
+    project.categories?.includes("Software Development") ||
     project.categories?.includes("UI/UX Design")
   ) {
     return "featured";

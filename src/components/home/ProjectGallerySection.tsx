@@ -13,14 +13,14 @@ const tagIcons: Record<string, typeof Search> = {
   "UI/UX": Palette,
   "Full-Stack": Code,
   Animations: Sparkles,
-  "Web Development": Globe,
+  "Software Development": Globe,
 };
 
 const tagColors: Record<string, string> = {
   "UI/UX": "from-violet-500/30 to-purple-500/20",
   "Full-Stack": "from-blue-500/30 to-cyan-500/20",
   Animations: "from-amber-500/30 to-rose-500/20",
-  "Web Development": "from-emerald-500/30 to-teal-500/20",
+  "Software Development": "from-emerald-500/30 to-teal-500/20",
 };
 
 export function ProjectGallerySection() {

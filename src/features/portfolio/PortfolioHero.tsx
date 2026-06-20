@@ -1,7 +1,9 @@
 import { ExternalLink } from "lucide-react";
+import { CaseStudyLink } from "@/components/site/CaseStudyLink";
 import { getProjectCoverImage } from "@/data/projectImages";
 import { getProjectDisplayTitle } from "@/data/projects";
 import type { Project, ProjectFilter } from "@/data/projects";
+import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
 import { AccentText } from "@/components/site/HeadingAccent";
 import { SocialMediaBentoPreview } from "./SocialMediaBentoPreview";
 import { PortfolioAccentCardFrame } from "./PortfolioAccentCardFrame";
@@ -35,7 +37,7 @@ function FeaturedCard({
     project.categories?.includes("Social Media Graphics");
   const liveUrl = project.vercelLiveUrl?.trim();
 
-  return (
+  const cardContent = (
     <PortfolioAccentCardFrame category={project.cat} className="flex w-full bg-white/5">
       {isSocial ? (
         <SocialMediaBentoPreview
@@ -66,17 +68,37 @@ function FeaturedCard({
       ) : null}
 
       {liveUrl ? (
-        <a
-          href={liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(liveUrl, "_blank", "noopener,noreferrer");
+          }}
           className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
         >
           <ExternalLink size={11} />
           Live
-        </a>
+        </button>
       ) : null}
     </PortfolioAccentCardFrame>
+  );
+
+  return isSocial && onSocialClick ? (
+    <button
+      type="button"
+      onClick={() => onSocialClick(project.slug)}
+      className="block h-full w-full text-left"
+    >
+      {cardContent}
+    </button>
+  ) : (
+    <CaseStudyLink
+      slug={project.slug}
+      routeCategory={getRouteCategoryForProject(project)}
+      className="block h-full"
+    >
+      {cardContent}
+    </CaseStudyLink>
   );
 }
 

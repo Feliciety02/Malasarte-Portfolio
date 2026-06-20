@@ -1,4 +1,5 @@
-import { Calendar, Star, User, Wrench } from "lucide-react";
+import { Calendar, Star, User, Users, Wrench } from "lucide-react";
+import { supportsProjectCollaborators } from "@/data/projects";
 import { SectionAnchor, SectionLabel, FadeIn } from "./SectionWrappers";
 import type { SectionProps } from "../types/templates";
 
@@ -7,8 +8,18 @@ export function SnapshotSection({ project, sectionNumber }: SectionProps) {
     { Icon: User, label: "Role", value: project.role },
     { Icon: Star, label: "Client", value: project.client },
     { Icon: Calendar, label: "Year", value: project.year },
+    ...(supportsProjectCollaborators(project) && project.collaborators?.length
+      ? [
+          {
+            Icon: Users,
+            label: "Collaborators",
+            value: project.collaborators.join(" · "),
+          },
+        ]
+      : []),
     { Icon: Wrench, label: "Tools", value: project.tools.join(" · ") },
   ];
+
   return (
     <SectionAnchor id="snapshot">
       <FadeIn>

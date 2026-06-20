@@ -11,22 +11,44 @@ import { SpeakingSection } from "@/features/about/SpeakingSection";
 import { VolunteerSection } from "@/features/about/VolunteerSection";
 import { ConferencesSection } from "@/features/about/ConferencesSection";
 import { GitHubActivitySection } from "@/features/about/GitHubActivitySection";
+import {
+  buildBreadcrumbSchema,
+  buildCanonicalLinks,
+  buildPageSchema,
+  buildPersonSchema,
+  buildSeoMeta,
+} from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
-    meta: [
-      { title: "Fe Anne Malasarte" },
-      {
-        name: "description",
-        content:
-          "Meet Fe Anne - a creative designer with roots in tech orgs, branding, and storytelling.",
-      },
-      { property: "og:title", content: "Fe Anne Malasarte" },
-      {
-        property: "og:description",
-        content: "A short, honest introduction to a designer who loves quiet details.",
-      },
-    ],
+    meta: buildSeoMeta({
+      title: "About",
+      description:
+        "Learn more about Fe Anne Malasarte, a designer and developer with experience in UI/UX, branding, student leadership, community work, and creative storytelling.",
+      path: "/about",
+      type: "profile",
+      keywords: [
+        "about Fe Anne Malasarte",
+        "designer developer profile",
+        "UI UX designer Davao",
+        "creative portfolio about page",
+      ],
+      schemas: [
+        buildPageSchema({
+          type: "AboutPage",
+          name: "About Fe Anne Malasarte",
+          description:
+            "Learn more about Fe Anne Malasarte, a designer and developer with experience in UI/UX, branding, student leadership, community work, and creative storytelling.",
+          path: "/about",
+        }),
+        buildPersonSchema(),
+        buildBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ]),
+      ],
+    }),
+    links: buildCanonicalLinks("/about"),
   }),
   component: About,
 });

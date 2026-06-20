@@ -457,32 +457,11 @@
 
   .case-study-page {
     --case-study-section-gap: clamp(5rem, 8vw, 8rem);
-    --case-study-shell-width: 56rem;
-  }
-
-  .case-study-shell {
-    max-width: var(--case-study-shell-width);
   }
 
   .case-study-section {
     position: relative;
     padding-top: var(--case-study-section-gap);
-  }
-
-  .case-study-section::before {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    inset: 0 0 auto;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.04) 16%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.04) 84%,
-      transparent 100%
-    );
   }
 
   .metal-page--services::before {

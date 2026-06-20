@@ -11,7 +11,7 @@ export function resolveWorkspace(project: Project): WorkspaceResolution {
   const vercelUrl = project.vercelLiveUrl?.trim();
   const flipbookUrl = project.flipbookEmbed?.src?.trim();
   const isUxProject = project.cat === "UI/UX Design";
-  const isDevProject = project.cat === "Web Development";
+  const isDevProject = project.cat === "Software Development";
   const isWritingProject = project.kind === "writing";
   const tabs: WorkspaceTab[] = [];
 

@@ -5,11 +5,14 @@ import { Footer } from "@/components/site/Footer";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import logoFe from "@/assets/logo-fe.png";
-import socialPreviewImage from "@/assets/social-preview.png";
+import {
+  buildPersonSchema,
+  buildWebsiteSchema,
+  defaultSocialImageUrl,
+  DEFAULT_DESCRIPTION,
+  SITE_NAME,
+} from "@/lib/seo";
 // WebGL background removed in favour of a clean monochrome canvas.
-
-const siteUrl = import.meta.env.VITE_SITE_URL?.replace(/\/$/, "");
-const socialPreviewUrl = siteUrl ? `${siteUrl}${socialPreviewImage}` : socialPreviewImage;
 
 function NotFoundComponent() {
   return (
@@ -38,42 +41,24 @@ export const Route = createRootRoute({
     const meta = [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Fe Anne Malasarte" },
+      { title: SITE_NAME },
       {
         name: "description",
-        content:
-          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
+        content: DEFAULT_DESCRIPTION,
       },
-      { name: "author", content: "Fe Anne Malasarte" },
-      { property: "og:site_name", content: "Fe Anne Malasarte" },
-      {
-        property: "og:title",
-        content: "Fe Anne Malasarte",
-      },
-      {
-        property: "og:description",
-        content:
-          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
-      },
+      { name: "author", content: SITE_NAME },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "theme-color", content: "#090a0c" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: SITE_NAME },
+      { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_PH" },
       { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:title",
-        content: "Fe Anne Malasarte",
-      },
-      {
-        name: "twitter:description",
-        content:
-          "A modern, animated portfolio website showcasing designer Fe Anne Malasarte's creative work and skills.",
-      },
-      {
-        property: "og:image",
-        content: socialPreviewUrl,
-      },
-      {
-        name: "twitter:image",
-        content: socialPreviewUrl,
-      },
+      { name: "twitter:title", content: SITE_NAME },
+      { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+      { property: "og:image", content: defaultSocialImageUrl },
+      { name: "twitter:image", content: defaultSocialImageUrl },
       {
         property: "og:image:alt",
         content: "Preview card for Fe Anne Malasarte's portfolio.",
@@ -82,11 +67,9 @@ export const Route = createRootRoute({
         name: "twitter:image:alt",
         content: "Preview card for Fe Anne Malasarte's portfolio.",
       },
+      { "script:ld+json": buildWebsiteSchema() },
+      { "script:ld+json": buildPersonSchema() },
     ];
-
-    if (siteUrl) {
-      meta.push({ property: "og:url", content: siteUrl });
-    }
 
     return {
       meta,
@@ -100,7 +83,6 @@ export const Route = createRootRoute({
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap",
         },
-        ...(siteUrl ? [{ rel: "canonical", href: siteUrl }] : []),
       ],
     };
   },
@@ -111,7 +93,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-PH">
       <head>
         <HeadContent />
       </head>

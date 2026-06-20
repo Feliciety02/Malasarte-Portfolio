@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malasarte-portfolio.vercel.app/sitemap.xml

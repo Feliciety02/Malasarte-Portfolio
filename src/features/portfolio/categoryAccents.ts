@@ -26,7 +26,7 @@ const accentMap: Record<FilterCategory, AccentConfig> = {
     text: "rgba(221,214,254,0.95)",
     ring: "rgba(167,139,250,1)",
   },
-  "Web Development": {
+  "Software Development": {
     accent: "59,130,246",
     glow: "rgba(59,130,246,0.22)",
     border: "rgba(96,165,250,0.56)",

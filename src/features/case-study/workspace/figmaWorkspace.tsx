@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowUpRight, BookOpen, Maximize2, Monitor, Palette, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowUpRight, BookOpen, Monitor, Palette } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { resolveWorkspace } from "./workspaceResolver";
@@ -49,6 +49,30 @@ function MagneticButton({
   );
 }
 
+function MacWindow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mx-auto max-w-[72rem]">
+      <div className="overflow-hidden rounded-[28px] border border-white/[0.06] bg-[#15161b] shadow-[0_32px_80px_rgba(0,0,0,0.45)] transition-shadow duration-500 hover:shadow-[0_40px_100px_rgba(0,0,0,0.55)]">
+        <div className="flex h-12 items-center gap-2 border-b border-white/[0.06] px-4">
+          <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+          <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+          <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+          <span className="ml-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white/45">
+            {label}
+          </span>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function InteractiveWorkspace({ project }: { project: Project }) {
   const { tabs, defaultTabId } = useMemo(() => resolveWorkspace(project), [project]);
   const [activeTabId, setActiveTabId] = useState<"live" | "design" | "flipbook">(defaultTabId);
@@ -57,20 +81,21 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [embedKey, setEmbedKey] = useState(0);
-  const [zoom, setZoom] = useState(0.88);
 
   useEffect(() => {
     setIsLoaded(false);
-    setEmbedKey(0);
-    setZoom(activeTab?.id === "design" ? 0.88 : 1);
+    setEmbedKey((c) => c + 1);
   }, [activeTab?.id, activeTab?.src]);
 
-  const enterFullscreen = () => {
-    if (!activeTab) return;
-    containerRef.current?.requestFullscreen?.();
-  };
-
   if (tabs.length === 0) return null;
+
+  const tabIcon = (id: string) => {
+    switch (id) {
+      case "live": return <Monitor size={13} />;
+      case "flipbook": return <BookOpen size={13} />;
+      default: return <Palette size={13} />;
+    }
+  };
 
   return (
     <motion.div
@@ -81,7 +106,7 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
       className="mt-6"
     >
       {/* Action bar */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           {tabs.length > 1 ? (
             <div className="flex rounded-full border border-white/10 bg-white/[0.03] p-0.5">
@@ -100,13 +125,7 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
                     )}
                     aria-pressed={isActive}
                   >
-                    {tab.id === "live" ? (
-                      <Monitor size={13} />
-                    ) : tab.id === "flipbook" ? (
-                      <BookOpen size={13} />
-                    ) : (
-                      <Palette size={13} />
-                    )}
+                    {tabIcon(tab.id)}
                     {tab.label}
                   </button>
                 );
@@ -121,30 +140,17 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
               <ArrowUpRight size={13} /> {isDesignTab ? "Open in Figma" : "Open"}
             </MagneticButton>
           ) : null}
-          {isDesignTab ? (
-            <>
-              <MagneticButton onClick={() => setZoom((c) => Math.max(0.72, Number((c - 0.08).toFixed(2))))}>
-                <ZoomOut size={13} />
-              </MagneticButton>
-              <MagneticButton onClick={() => setZoom((c) => Math.min(1.08, Number((c + 0.08).toFixed(2))))}>
-                <ZoomIn size={13} />
-              </MagneticButton>
-            </>
-          ) : null}
-          <MagneticButton onClick={enterFullscreen}>
-            <Maximize2 size={13} /> Fullscreen
-          </MagneticButton>
         </div>
       </div>
 
-      {/* Figma embed container */}
+      {/* Preview window */}
       <div
         ref={containerRef}
-        className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#07080b] shadow-[0_24px_80px_rgba(0,0,0,0.35)] transition-shadow duration-500 hover:shadow-[0_32px_100px_rgba(124,58,237,0.08)]"
+        className="relative"
       >
         {/* Loading spinner */}
         {!isLoaded ? (
-          <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#07080b]">
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/15 border-t-white/60" />
           </div>
         ) : null}
@@ -152,73 +158,51 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
         {activeTab ? (
           <div className={cn(activeTab.minWidthClassName)}>
             {isDesignTab ? (
-              <div className="bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.1),transparent_42%)] px-4 py-5 md:px-6">
-                <div className="mx-auto max-w-[72rem]">
-                  <div
-                    className="rounded-[1.6rem] border border-white/10 bg-[#15161b] p-3 shadow-[0_22px_60px_rgba(0,0,0,0.35)] transition-shadow duration-500 group-hover:shadow-[0_26px_70px_rgba(0,0,0,0.45)]"
-                  >
-                    <div className="mb-3 flex items-center gap-2 px-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                      <span className="ml-3 font-mono text-[10px] uppercase tracking-[0.18em] text-white/38">
-                        laptop preview
-                      </span>
-                    </div>
-                    <div className="overflow-hidden rounded-[1rem] border border-white/8 bg-[#0d0e12]">
-                      <div className="relative mx-auto aspect-[16/10] max-w-[68rem] overflow-hidden bg-[#111216]">
-                        <div
-                          className="absolute left-1/2 top-0 h-full transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                          style={{
-                            width: `${100 / zoom}%`,
-                            transform: `translateX(-50%) scale(${zoom})`,
-                            transformOrigin: "top center",
-                          }}
-                        >
-                          <iframe
-                            key={`${project.slug}-${activeTab.id}-${embedKey}`}
-                            title={`${activeTab.title} workspace`}
-                            src={activeTab.src}
-                            className="h-full w-full border-0"
-                            allow={activeTab.allow}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            onLoad={() => setIsLoaded(true)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="px-2 pb-1 pt-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-white/32">
-                      zoom {Math.round(zoom * 100)}%
-                    </div>
+              <MacWindow label={activeTab.label}>
+                <div className="overflow-hidden bg-[#0d0e12]">
+                  <div className="relative mx-auto aspect-[16/10] overflow-hidden bg-[#111216]">
+                    <iframe
+                      key={`${project.slug}-${activeTab.id}-${embedKey}`}
+                      title={`${activeTab.title} workspace`}
+                      src={activeTab.src}
+                      className="h-full w-full border-0"
+                      allow={activeTab.allow}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      onLoad={() => setIsLoaded(true)}
+                    />
                   </div>
                 </div>
-              </div>
+              </MacWindow>
             ) : activeTab.id === "flipbook" ? (
-              <iframe
-                key={`${project.slug}-${activeTab.id}-${embedKey}`}
-                title={`${activeTab.title} workspace`}
-                src={activeTab.src}
-                className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
-                allow={activeTab.allow}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                onLoad={() => setIsLoaded(true)}
-              />
+              <MacWindow label={activeTab.label}>
+                <iframe
+                  key={`${project.slug}-${activeTab.id}-${embedKey}`}
+                  title={`${activeTab.title} workspace`}
+                  src={activeTab.src}
+                  className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
+                  allow={activeTab.allow}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  onLoad={() => setIsLoaded(true)}
+                />
+              </MacWindow>
             ) : (
-              <iframe
-                key={`${project.slug}-${activeTab.id}-${embedKey}`}
-                title={`${activeTab.title} workspace`}
-                src={activeTab.src}
-                className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
-                allow={activeTab.allow}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                onLoad={() => setIsLoaded(true)}
-              />
+              <MacWindow label={activeTab.label}>
+                <iframe
+                  key={`${project.slug}-${activeTab.id}-${embedKey}`}
+                  title={`${activeTab.title} workspace`}
+                  src={activeTab.src}
+                  className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
+                  allow={activeTab.allow}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  onLoad={() => setIsLoaded(true)}
+                />
+              </MacWindow>
             )}
           </div>
         ) : (

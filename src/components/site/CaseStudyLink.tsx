@@ -7,7 +7,7 @@ export type ProjectCategory =
   | "Social Media Graphics"
   | "Creative Assets"
   | "Logo & Branding"
-  | "Web Development"
+  | "Software Development"
   | "Writing / VA";
 
 type CaseStudyLinkProps = {

@@ -1,6 +1,7 @@
 import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 import {
   getProject,
+  projects,
   type Project,
   type ProjectCategory,
   type ProjectGalleryItem,
@@ -32,6 +33,7 @@ type PortfolioProjectRow = {
   tag: string | null;
   description: string | null;
   role: string | null;
+  collaborators: string[] | null;
   tools: string[] | null;
   year: string | null;
   client: string | null;
@@ -51,6 +53,7 @@ const portfolioSelect = `
   tag,
   description,
   role,
+  collaborators,
   tools,
   year,
   client,
@@ -102,6 +105,7 @@ function makeFallbackProject(row: PortfolioProjectRow): Project {
     color: "from-fuchsia-500/50 to-violet-500/30",
     desc: row.description ?? row.overview ?? row.title,
     role: row.role ?? "Designer",
+    collaborators: row.collaborators ?? [],
     tools: row.tools ?? [],
     year: row.year ?? "",
     client: row.client ?? row.directory_title ?? row.title,
@@ -151,6 +155,7 @@ function mapProject(row: PortfolioProjectRow): Project {
     tag: useLocalIdentity ? base.tag : (row.tag ?? base.tag),
     desc: useLocalIdentity ? base.desc : (row.description ?? base.desc),
     role: row.role ?? base.role,
+    collaborators: row.collaborators ?? base.collaborators,
     tools: row.tools ?? base.tools,
     year: row.year ?? base.year,
     client: useLocalIdentity ? base.client : (row.client ?? base.client),
@@ -182,9 +187,18 @@ export async function fetchPortfolioProjectsFromSupabase() {
     if (error) throw error;
     if (!data?.length) return undefined;
 
-    return (data as PortfolioProjectRow[])
-      .filter((item) => !hiddenProjectSlugs.has(item.slug))
-      .map(mapProject);
+    const mergedProjects = new Map(
+      projects
+        .filter((project) => !hiddenProjectSlugs.has(project.slug))
+        .map((project) => [project.slug, project] as const),
+    );
+
+    for (const row of data as PortfolioProjectRow[]) {
+      if (hiddenProjectSlugs.has(row.slug)) continue;
+      mergedProjects.set(row.slug, mapProject(row));
+    }
+
+    return Array.from(mergedProjects.values());
   } catch (error) {
     console.warn("Unable to load Supabase portfolio projects.", error);
     return undefined;

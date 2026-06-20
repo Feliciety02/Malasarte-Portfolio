@@ -7,6 +7,13 @@ import type { Project, ProjectCategory } from "@/data/projects";
 import { isValidRouteCategory } from "@/features/case-study/utils/routeUtils";
 import { getTemplateByRouteCategory } from "@/features/case-study/templates/templateRegistry";
 import type { RouteCategory } from "@/features/case-study/types/templates";
+import {
+  buildBreadcrumbSchema,
+  buildCanonicalLinks,
+  buildProjectSchema,
+  buildSeoMeta,
+} from "@/lib/seo";
+import { getProjectPath } from "@/features/case-study/routes/getProjectPath";
 
 function CaseStudyError({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
@@ -49,13 +56,29 @@ export const Route = createFileRoute("/works/$category/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: loaderData
-      ? [
-          { title: "Fe Anne Malasarte" },
-          { name: "description", content: loaderData.overview },
-          { property: "og:title", content: "Fe Anne Malasarte" },
-          { property: "og:description", content: loaderData.desc },
-        ]
-      : [{ title: "Fe Anne Malasarte" }],
+      ? buildSeoMeta({
+          title: loaderData.title,
+          description: loaderData.overview || loaderData.desc,
+          path: getProjectPath(loaderData),
+          type: "article",
+          keywords: [
+            loaderData.title,
+            loaderData.cat,
+            ...(loaderData.categories ?? []),
+            loaderData.tag,
+            ...loaderData.tools,
+          ],
+          schemas: [
+            buildProjectSchema(loaderData),
+            buildBreadcrumbSchema([
+              { name: "Home", path: "/" },
+              { name: "Works", path: "/works" },
+              { name: loaderData.title, path: getProjectPath(loaderData) },
+            ]),
+          ],
+        })
+      : [{ title: "Work | Fe Anne Malasarte" }],
+    links: loaderData ? buildCanonicalLinks(getProjectPath(loaderData)) : undefined,
   }),
   component: CaseStudyRoute,
   errorComponent: CaseStudyError,

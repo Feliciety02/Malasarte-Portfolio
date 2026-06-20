@@ -30,7 +30,8 @@ export function FeaturedProject({
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
   const isBranding = activeCategory === "Logo & Branding";
-  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
+  const isCoverFit =
+    project.cat === "UI/UX Design" || project.cat === "Software Development";
   const aspect = isBranding ? "aspect-square" : featuredImageAspect[project.cardSize ?? "medium"];
   const isSocial =
     project.cat === "Social Media Graphics" ||

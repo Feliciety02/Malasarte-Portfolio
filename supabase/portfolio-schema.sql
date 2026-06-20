@@ -8,6 +8,7 @@ create table if not exists public.portfolio_projects (
   tag text,
   description text,
   role text,
+  collaborators text[] not null default '{}',
   tools text[] not null default '{}',
   year text,
   client text,

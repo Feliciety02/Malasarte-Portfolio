@@ -11,7 +11,7 @@ export function canShowProjectWorkspace(
   if (!project.vercelLiveUrl?.trim() && !project.figmaPreviewUrl?.trim()) return false;
 
   const cats = [project.cat, ...(project.categories ?? [])];
-  return cats.some((c) => c === "UI/UX Design" || c === "Web Development");
+  return cats.some((c) => c === "UI/UX Design" || c === "Software Development");
 }
 
 export function hasProjectScreenEmbeds(project: Project) {
@@ -21,7 +21,7 @@ export function hasProjectScreenEmbeds(project: Project) {
 export function shouldSwapToGallery(project: Project): boolean {
   return (
     !canShowProjectWorkspace(project) &&
-    project.cat === "Web Development" &&
+    project.cat === "Software Development" &&
     project.gallery.length > 0
   );
 }

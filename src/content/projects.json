@@ -78,7 +78,7 @@
       "client": "Cosmic Remedies by Sia",
       "year": "2025",
       "tools": ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
-      "tags": ["Full-Stack", "Web Development", "E-Commerce", "Animations"],
+      "tags": ["Full-Stack", "Software Development", "E-Commerce", "Animations"],
       "goals": [
         "Build a performant e-commerce platform with modern UX.",
         "Integrate product management and inventory workflows.",
@@ -101,7 +101,7 @@
       "client": "Pietyl DigiLPG",
       "year": "2025",
       "tools": ["React", "Node.js", "MySQL", "Express"],
-      "tags": ["Full-Stack", "Web Development", "Enterprise", "Dashboard"],
+      "tags": ["Full-Stack", "Software Development", "Enterprise", "Dashboard"],
       "goals": [
         "Digitize LPG distribution workflows from order to delivery.",
         "Provide real-time inventory and fleet tracking.",
@@ -124,7 +124,7 @@
       "client": "Cultural Project",
       "year": "2025",
       "tools": ["React", "Node.js", "MongoDB", "Framer Motion"],
-      "tags": ["Full-Stack", "Animations", "Web Development", "UI/UX"],
+      "tags": ["Full-Stack", "Animations", "Software Development", "UI/UX"],
       "goals": [
         "Create immersive storytelling experiences with rich media.",
         "Build a community-contribution model for cultural preservation.",

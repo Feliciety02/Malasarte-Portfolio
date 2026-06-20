@@ -8,6 +8,7 @@ create table if not exists public.portfolio_projects (
   tag text,
   description text,
   role text,
+  collaborators text[] not null default '{}',
   tools text[] not null default '{}',
   year text,
   client text,
@@ -318,6 +319,38 @@ insert into public.portfolio_projects (
   outcome,
   sort_order
 ) values (
+  'pietyl-digilpg-web',
+  'Pietyl DigiLPG',
+  'Pietyl DigiLPG',
+  'Software Development',
+  'frontend',
+  'Software Development',
+  'Full-stack implementation of Pietyl DigiLPG''s landing page and management system, built with Laravel, React, and MySQL.',
+  'Full-Stack Developer',
+  array['PHP 8.2', 'Laravel 12', 'React 18', 'Inertia.js', 'Tailwind CSS 4', 'Vite 7', 'MySQL', 'Pest']::text[],
+  '2025',
+  'Pietyl DigiLPG',
+  'Pietyl DigiLPG, a long-standing LPG business operating since the 90s, needed a stronger digital presence. This full-stack project delivered two key pieces: a clean landing page for store publicity and a functional management system to streamline internal operations.',
+  'Pietyl DigiLPG now has a professional landing page for customer-facing publicity and a streamlined management system to support daily operations.',
+  7
+);
+
+insert into public.portfolio_projects (
+  slug,
+  title,
+  directory_title,
+  primary_category,
+  kind,
+  tag,
+  description,
+  role,
+  tools,
+  year,
+  client,
+  overview,
+  outcome,
+  sort_order
+) values (
   'dost-laon',
   'DOST Laon',
   'DOST Laon',
@@ -386,16 +419,48 @@ insert into public.portfolio_projects (
   'UMunity',
   'UMunity',
   'UI/UX Design',
-  'frontend',
-  'UI/UX + Web System',
-  'A school organization management system shaped in Figma and translated into a responsive web build.',
-  'UI/UX Designer and Web Developer',
-  array['Figma', 'React', 'Tailwind CSS', 'TypeScript', 'Miro', 'Notion']::text[],
+  'uiux',
+  'Product Design',
+  'Product design system for a school organization management platform covering events, communication, records, and coordination.',
+  'UI/UX Designer',
+  array['Figma', 'FigJam', 'Miro', 'Notion']::text[],
   '2025',
   'UMunity',
-  'UMunity is a school organization management system focused on events, communication, records, and coordination. This merged case study covers both the Figma product design and the responsive web implementation for student members and organization officers.',
-  'UMunity now reads as one complete design-to-build case study, showing both the Figma system and the web implementation layer for a student organization management platform.',
-  9
+  'UMunity is a product design concept focused on school organization management — dashboards, events, records, announcements, and communication flows shaped for both student members and organization officers.',
+  'UMunity now reads as a complete product design case study, showing the Figma system, user flows, reusable components, and prototype direction for a student organization management platform.',
+  10
+);
+
+insert into public.portfolio_projects (
+  slug,
+  title,
+  directory_title,
+  primary_category,
+  kind,
+  tag,
+  description,
+  role,
+  tools,
+  year,
+  client,
+  overview,
+  outcome,
+  sort_order
+) values (
+  'umunity-web',
+  'UMunity',
+  'UMunity',
+  'Software Development',
+  'frontend',
+  'Software Development',
+  'Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.',
+  'Web Developer',
+  array['React', 'Tailwind CSS', 'TypeScript']::text[],
+  '2025',
+  'UMunity',
+  'The UMunity web build translates the product design system into a responsive front-end implementation using React, Tailwind CSS, and TypeScript — covering the dashboard, event modules, records, announcements, and navigation structure.',
+  'UMunity now has a responsive software implementation of the product design system.',
+  11
 );
 
 insert into public.portfolio_projects (
@@ -897,15 +962,15 @@ insert into public.portfolio_projects (
   'salin-salin',
   'Salin-Salin',
   'Salin-Salin',
-  'Web Development',
+  'Software Development',
   'frontend',
-  'Web Development',
-  'Responsive web development project for Salin-Salin.',
+  'Software Development',
+  'Responsive software development project for Salin-Salin.',
   'Web Developer',
   array['React', 'Tailwind CSS', 'TypeScript']::text[],
   '2025',
   'Salin-Salin',
-  'Responsive web development project for Salin-Salin.',
+  'Responsive software development project for Salin-Salin.',
   'Salin-Salin now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
   27
 );
@@ -929,17 +994,49 @@ insert into public.portfolio_projects (
   'handyman',
   'HandyMan',
   'HandyMan',
-  'Web Development',
+  'Software Development',
   'frontend',
-  'Web Development',
-  'Responsive web development project for HandyMan.',
+  'Software Development',
+  'Responsive software development project for HandyMan.',
   'Web Developer',
   array['React', 'Tailwind CSS', 'TypeScript']::text[],
   '2025',
   'HandyMan',
-  'Responsive web development project for HandyMan.',
+  'Responsive software development project for HandyMan.',
   'HandyMan now has a cleaner portfolio entry ready for a richer gallery or case study when final assets are added.',
   28
+);
+
+insert into public.portfolio_projects (
+  slug,
+  title,
+  directory_title,
+  primary_category,
+  kind,
+  tag,
+  description,
+  role,
+  tools,
+  year,
+  client,
+  overview,
+  outcome,
+  sort_order
+) values (
+  'sakuragi-tailoring-shop-management-system',
+  'Sakuragi Tailoring Shop Management System',
+  'Sakuragi Tailoring Shop Management System',
+  'Software Development',
+  'frontend',
+  'Software Development',
+  'Management system for tailoring shop operations, customer records, job orders, and production tracking.',
+  'Software Developer',
+  array['Java', 'JavaFX', 'MySQL', 'Scene Builder', 'XAMPP']::text[],
+  '2025',
+  'Sakuragi Tailoring Shop',
+  'Sakuragi Tailoring Shop Management System centralizes customer records, measurements, job orders, fitting schedules, and production tracking for day-to-day tailoring operations.',
+  'Sakuragi Tailoring Shop now has a more structured software workflow for managing customer records, tailoring jobs, and production status in one system.',
+  29
 );
 
 insert into public.portfolio_project_categories (
@@ -1047,9 +1144,9 @@ insert into public.portfolio_project_categories (
   title_override,
   sort_order
 ) values (
-  (select id from public.portfolio_projects where slug = 'pietyl-management-system'),
-  'Web Development',
-  'Web Development',
+  (select id from public.portfolio_projects where slug = 'pietyl-digilpg-web'),
+  'Software Development',
+  'Software Development',
   null,
   4
 );
@@ -1090,8 +1187,8 @@ insert into public.portfolio_project_categories (
   sort_order
 ) values (
   (select id from public.portfolio_projects where slug = 'cosmic-remedies-by-sia'),
-  'Web Development',
-  'Web Development',
+  'Software Development',
+  'Software Development',
   null,
   4
 );
@@ -1117,9 +1214,9 @@ insert into public.portfolio_project_categories (
   title_override,
   sort_order
 ) values (
-  (select id from public.portfolio_projects where slug = 'umunity'),
-  'Web Development',
-  'Web Development',
+  (select id from public.portfolio_projects where slug = 'umunity-web'),
+  'Software Development',
+  'Software Development',
   null,
   4
 );
@@ -1370,8 +1467,8 @@ insert into public.portfolio_project_categories (
   sort_order
 ) values (
   (select id from public.portfolio_projects where slug = 'salin-salin'),
-  'Web Development',
-  'Web Development',
+  'Software Development',
+  'Software Development',
   null,
   4
 );
@@ -1384,8 +1481,22 @@ insert into public.portfolio_project_categories (
   sort_order
 ) values (
   (select id from public.portfolio_projects where slug = 'handyman'),
-  'Web Development',
-  'Web Development',
+  'Software Development',
+  'Software Development',
+  null,
+  4
+);
+
+insert into public.portfolio_project_categories (
+  project_id,
+  category,
+  pill_label,
+  title_override,
+  sort_order
+) values (
+  (select id from public.portfolio_projects where slug = 'sakuragi-tailoring-shop-management-system'),
+  'Software Development',
+  'Software Development',
   null,
   4
 );

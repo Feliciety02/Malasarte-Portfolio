@@ -38,7 +38,8 @@ function ProjectPreview({
 
   if (!coverImage) return null;
 
-  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
+  const isCoverFit =
+    project.cat === "UI/UX Design" || project.cat === "Software Development";
 
   return (
     <>
@@ -99,7 +100,7 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
               <h3 className="line-clamp-2 font-display text-lg font-bold leading-tight sm:text-xl">
                 {title}
               </h3>
-              <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
+              <p className="mt-2 line-clamp-1 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
                 {project.desc}
               </p>
             </div>
@@ -135,16 +136,17 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
             </div>
 
             {project.vercelLiveUrl?.trim() ? (
-              <a
-                href={project.vercelLiveUrl.trim()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.vercelLiveUrl!.trim(), "_blank", "noopener,noreferrer");
+                }}
                 className="absolute right-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
               >
                 <ExternalLink size={11} />
                 Live
-              </a>
+              </button>
             ) : null}
           </div>
 
@@ -164,12 +166,8 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
                 </h3>
                 <p
                   className={cn(
-                    "mt-2 text-[13px] leading-6 text-white/65",
-                    type === "featured"
-                      ? "line-clamp-3 max-w-2xl sm:text-sm"
-                      : type === "portrait"
-                        ? "line-clamp-3"
-                        : "line-clamp-2",
+                    "mt-2 line-clamp-1 text-[13px] leading-6 text-white/65",
+                    type === "featured" ? "max-w-2xl sm:text-sm" : undefined,
                   )}
                 >
                   {project.desc}

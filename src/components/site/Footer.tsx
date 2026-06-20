@@ -15,7 +15,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative z-10 -mb-6 -mx-3 px-3 pb-0 pt-6 sm:-mb-8 sm:-mx-4 sm:px-4 sm:pt-8">
+    <footer className="relative z-10 -mt-10 -mb-10 px-3 pb-0 pt-0 sm:-mt-12 sm:-mb-12 sm:px-4">
       <style>{`
         @keyframes footerOrbA {
           0% { transform: translate(0, 0) scale(1); }
@@ -33,7 +33,7 @@ export function Footer() {
       `}</style>
       <div
         onMouseMove={handleMouse}
-        className="relative mx-auto overflow-hidden rounded-t-[2rem] border border-white/8 bg-[#060708] shadow-[0_-10px_40px_rgba(0,0,0,0.28),0_30px_80px_rgba(0,0,0,0.38)] sm:rounded-t-[2.5rem]"
+        className="relative -mx-3 overflow-hidden rounded-t-[3.5rem] border border-white/8 bg-[#060708] shadow-[0_-10px_40px_rgba(0,0,0,0.28),0_30px_80px_rgba(0,0,0,0.38)] sm:-mx-4 sm:rounded-t-[4.25rem]"
         style={{
           backgroundImage:
             "radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 215, 0, 0.04), transparent 50%)",
@@ -86,12 +86,12 @@ export function Footer() {
         <Link
           to="/"
           aria-label="Fe Anne Malasarte home"
-          className="relative z-10 mx-auto flex w-fit pt-10"
+          className="relative z-10 mx-auto flex w-fit pt-12 sm:pt-14"
         >
           <img
             src={logoFe}
             alt="Fe Anne logo"
-            className="h-12 w-12 object-contain opacity-80 transition-opacity hover:opacity-100 sm:h-14 sm:w-14"
+            className="h-16 w-16 object-contain opacity-80 transition-opacity hover:opacity-100 sm:h-20 sm:w-20"
           />
         </Link>
 

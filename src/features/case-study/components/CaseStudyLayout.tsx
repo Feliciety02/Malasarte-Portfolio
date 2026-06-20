@@ -13,10 +13,10 @@ export function CaseStudyLayout({
   return (
     <div
       className={cn(
-        "case-study-shell relative mx-auto max-w-4xl px-6",
+        "case-study-shell relative mx-auto w-full max-w-7xl px-4 sm:px-6",
       )}
     >
-      <div className="min-w-0">{children}</div>
+      <div className="min-w-0 w-full max-w-none">{children}</div>
     </div>
   );
 }

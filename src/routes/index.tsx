@@ -6,21 +6,40 @@ import { HeroBanner } from "@/components/home/HeroBanner";
 import { MarqueeSection } from "@/components/home/MarqueeSection";
 import { ProcessPreviewSection } from "@/components/home/ProcessPreviewSection";
 import { MetallicPage } from "@/components/site/MetallicPage";
+import {
+  buildBreadcrumbSchema,
+  buildCanonicalLinks,
+  buildPageSchema,
+  buildPersonSchema,
+  buildSeoMeta,
+} from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Fe Anne Malasarte" },
-      {
-        name: "description",
-        content: "Portfolio home of Fe Anne Malasarte - UI/UX, branding, and creative design.",
-      },
-      { property: "og:title", content: "Fe Anne Malasarte" },
-      {
-        property: "og:description",
-        content: "Crafting meaningful, beautifully animated digital experiences.",
-      },
-    ],
+    meta: buildSeoMeta({
+      title: "Portfolio",
+      description:
+        "Portfolio of Fe Anne Malasarte, showcasing UI/UX design, branding, web development, social media graphics, and selected creative work.",
+      path: "/",
+      keywords: [
+        "Fe Anne Malasarte portfolio",
+        "UI UX designer Philippines",
+        "branding designer portfolio",
+        "web developer portfolio",
+      ],
+      schemas: [
+        buildPageSchema({
+          type: "WebPage",
+          name: "Fe Anne Malasarte Portfolio",
+          description:
+            "Portfolio of Fe Anne Malasarte, showcasing UI/UX design, branding, web development, social media graphics, and selected creative work.",
+          path: "/",
+        }),
+        buildPersonSchema(),
+        buildBreadcrumbSchema([{ name: "Home", path: "/" }]),
+      ],
+    }),
+    links: buildCanonicalLinks("/"),
   }),
   component: Home,
 });

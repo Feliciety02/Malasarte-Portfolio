@@ -42,7 +42,8 @@ export function PortfolioProjectCard({
   const isBranding = project.cat === "Logo & Branding";
   const isBrandingRecommendation = activeCategory === "Logo & Branding";
   const isBook = activeCategory === "Writing / VA" || project.cat === "Writing / VA";
-  const isCoverFit = project.cat === "UI/UX Design" || project.cat === "Web Development";
+  const isCoverFit =
+    project.cat === "UI/UX Design" || project.cat === "Software Development";
   const brandingExcluded = ["Miro", "FigJam", "Illustrator", "Photoshop", "Canva"];
   const displayTools = isBranding
     ? project.tools.filter((t) => !brandingExcluded.includes(t))
@@ -50,7 +51,8 @@ export function PortfolioProjectCard({
   const isSocial =
     project.cat === "Social Media Graphics" ||
     project.categories?.includes("Social Media Graphics");
-  const isWebDev = project.cat === "Web Development" || activeCategory === "Web Development";
+  const isWebDev =
+    project.cat === "Software Development" || activeCategory === "Software Development";
   const liveUrl = project.vercelLiveUrl?.trim();
 
   const cardContent = (
@@ -86,7 +88,7 @@ export function PortfolioProjectCard({
                 {title}
               </h3>
 
-              <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
+              <p className="mt-2 line-clamp-1 text-[12px] leading-5 text-muted-foreground sm:text-[13px]">
                 {project.desc}
               </p>
             </div>
@@ -134,7 +136,7 @@ export function PortfolioProjectCard({
               </span>
             </div>
 
-            <p className="mt-2 line-clamp-3 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
+            <p className="mt-2 line-clamp-1 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
               {project.desc}
             </p>
 
@@ -209,16 +211,17 @@ export function PortfolioProjectCard({
             </div>
 
             {isWebDev && liveUrl ? (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(liveUrl, "_blank", "noopener,noreferrer");
+                }}
                 className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-yellow/90 backdrop-blur-sm transition-colors duration-300 hover:bg-yellow/20 hover:text-yellow"
               >
                 <ExternalLink size={11} />
                 Live
-              </a>
+              </button>
             ) : null}
           </div>
 
@@ -230,7 +233,7 @@ export function PortfolioProjectCard({
               </span>
             </div>
 
-            <p className="mt-2 line-clamp-3 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
+            <p className="mt-2 line-clamp-1 text-[13px] leading-6 text-muted-foreground sm:text-[14px] sm:leading-7">
               {project.desc}
             </p>
 

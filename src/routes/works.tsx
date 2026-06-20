@@ -10,24 +10,60 @@ import { CategoryFilterBar } from "@/features/portfolio/CategoryFilterBar";
 import type { FilterCategory } from "@/features/portfolio/CategoryFilterBar";
 import { PortfolioGallery } from "@/features/portfolio/PortfolioGallery";
 import { SocialMediaGraphicsShowcase } from "@/features/portfolio/SocialMediaGraphicsShowcase";
-
-
+import {
+  buildBreadcrumbSchema,
+  buildCanonicalLinks,
+  buildCollectionSchema,
+  buildPageSchema,
+  buildSeoMeta,
+} from "@/lib/seo";
+import { getProjectPath } from "@/features/case-study/routes/getProjectPath";
+import { fetchPortfolioProjectsFromSupabase } from "@/data/supabaseProjects";
 
 export const Route = createFileRoute("/works")({
+  loader: async () => {
+    const remoteProjects = await fetchPortfolioProjectsFromSupabase();
+    return {
+      projects: remoteProjects ?? projects,
+    };
+  },
   head: () => ({
-    meta: [
-      { title: "Fe Anne Malasarte" },
-      {
-        name: "description",
-        content:
-          "Selected works across UI/UX, branding, social media graphics, creative assets, web development, and writing.",
-      },
-      { property: "og:title", content: "Fe Anne Malasarte" },
-      {
-        property: "og:description",
-        content: "A curated portfolio of designs, brand systems, and creative work.",
-      },
-    ],
+    meta: buildSeoMeta({
+      title: "Works",
+      description:
+        "Browse case studies and selected works by Fe Anne Malasarte across UI/UX design, branding, social media graphics, creative assets, software development, and writing.",
+      path: "/works",
+      keywords: [
+        "design portfolio case studies",
+        "UI UX case studies",
+        "branding portfolio",
+        "social media graphics portfolio",
+      ],
+      schemas: [
+        buildPageSchema({
+          type: "CollectionPage",
+          name: "Works",
+          description:
+            "Browse case studies and selected works by Fe Anne Malasarte across UI/UX design, branding, social media graphics, creative assets, software development, and writing.",
+          path: "/works",
+        }),
+        buildCollectionSchema({
+          name: "Selected Works by Fe Anne Malasarte",
+          description:
+            "A collection of portfolio case studies covering UI/UX design, branding, software development, creative assets, and writing.",
+          path: "/works",
+          items: projects.map((project) => ({
+            name: project.title,
+            path: getProjectPath(project),
+          })),
+        }),
+        buildBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Works", path: "/works" },
+        ]),
+      ],
+    }),
+    links: buildCanonicalLinks("/works"),
   }),
   component: Works,
 });
@@ -81,8 +117,9 @@ function computePortfolioStats(projects: Project[]) {
 }
 
 function Works() {
+  const loaderData = Route.useLoaderData();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const sourceProjects = projects;
+  const sourceProjects = loaderData.projects;
   const [active, setActive] = useState<FilterCategory>("All");
   const [search, setSearch] = useState("");
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);

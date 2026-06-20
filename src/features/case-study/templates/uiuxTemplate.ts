@@ -6,6 +6,8 @@ import { ContributionsSection } from "../sections/ContributionsSection";
 import { ProcessArcSection } from "../sections/ProcessArcSection";
 import { OutcomesSection } from "../sections/OutcomesSection";
 import { RelatedProjectsSection } from "../sections/RelatedProjectsSection";
+import { CollaboratorsSection } from "../sections/CollaboratorsSection";
+import { supportsProjectCollaborators } from "@/data/projects";
 
 export const uiuxTemplate: TemplateConfig = {
   key: "uiux",
@@ -22,6 +24,12 @@ export const uiuxTemplate: TemplateConfig = {
     { id: "contributions", label: "Contributions", component: ContributionsSection },
     { id: "process", label: "Process", component: ProcessArcSection },
     { id: "outcomes", label: "Outcomes", component: OutcomesSection },
+    {
+      id: "collaborators",
+      label: "Collaborators",
+      component: CollaboratorsSection,
+      condition: (project) => supportsProjectCollaborators(project),
+    },
     { id: "next", label: "Next", component: RelatedProjectsSection },
   ],
 };

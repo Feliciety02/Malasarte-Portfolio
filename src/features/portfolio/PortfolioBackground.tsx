@@ -5,7 +5,7 @@ const glowColors: Record<string, { strong: string; weak: string }> = {
     strong: "rgba(147, 51, 234, 0.12)",
     weak: "rgba(147, 51, 234, 0.06)",
   },
-  "Web Development": {
+  "Software Development": {
     strong: "rgba(59, 130, 246, 0.10)",
     weak: "rgba(59, 130, 246, 0.05)",
   },

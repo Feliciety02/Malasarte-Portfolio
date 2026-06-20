@@ -6,7 +6,7 @@ import { getCategoryAccent } from "./categoryAccents";
 const categories = [
   "All",
   "UI/UX Design",
-  "Web Development",
+  "Software Development",
   "Logo & Branding",
   "Social Media Graphics",
   "Creative Assets",
@@ -18,7 +18,7 @@ type FilterCategory = (typeof categories)[number];
 const categoryIcons: Record<FilterCategory, LucideIcon> = {
   All: Grid,
   "UI/UX Design": Palette,
-  "Web Development": Globe,
+  "Software Development": Globe,
   "Logo & Branding": Stamp,
   "Social Media Graphics": Share2,
   "Creative Assets": Package,

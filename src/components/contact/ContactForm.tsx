@@ -4,7 +4,7 @@ import { CheckCircle2, SendHorizonal } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 
 const projectTypes = [
-  "Web Development",
+  "Software Development",
   "Full-Stack Application",
   "UI/UX Design",
   "Branding & Identity",
@@ -21,7 +21,7 @@ export function ContactForm() {
 
   return (
     <Reveal delay={0.1}>
-      <div className="contact-card p-6 sm:p-8 md:p-10">
+      <div className="metal-panel rounded-[1.75rem] p-6 sm:p-8 md:p-10">
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -33,6 +33,15 @@ export function ContactForm() {
           }}
           className="space-y-5"
         >
+          <div className="border-b border-white/8 pb-5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[rgba(211,188,255,0.76)]">
+              Project Brief
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-white/58">
+              Share the core details and I&apos;ll reply with scope, timing, and a clear next step.
+            </p>
+          </div>
+
           <div className="relative">
             <span className="contact-floating-label">Your name</span>
             <input
@@ -98,9 +107,8 @@ export function ContactForm() {
 
           <button
             type="submit"
-            className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-cta px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 transition-all duration-300 hover:shadow-purple-500/30 hover:scale-[1.01]"
+            className="metal-cta group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl px-8 py-4 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.01]"
           >
-            <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
             <span className="relative">Start a project</span>
             <SendHorizonal size={16} className="relative transition-transform group-hover:translate-x-1" />
           </button>

@@ -17,8 +17,8 @@ export function ContactSidebar() {
   return (
     <Reveal delay={0.2}>
       <div className="space-y-4">
-        <div className="contact-card p-5 sm:p-6">
-          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+        <div className="metal-panel rounded-[1.5rem] p-5 sm:p-6">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.72)]">
             Contact Details
           </h3>
           <div className="mt-4 space-y-3.5">
@@ -40,8 +40,8 @@ export function ContactSidebar() {
           </div>
         </div>
 
-        <div className="contact-card p-5 sm:p-6">
-          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+        <div className="metal-panel rounded-[1.5rem] p-5 sm:p-6">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.72)]">
             Let&apos;s Connect
           </h3>
           <div className="mt-4 flex gap-2.5">
@@ -60,8 +60,8 @@ export function ContactSidebar() {
           </div>
         </div>
 
-        <div className="contact-card p-5 sm:p-6">
-          <h3 className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+        <div className="metal-panel rounded-[1.5rem] p-5 sm:p-6">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(211,188,255,0.72)]">
             Available For
           </h3>
           <ul className="mt-3 space-y-2">
@@ -78,7 +78,7 @@ export function ContactSidebar() {
           </ul>
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2 text-xs font-medium text-green-400">
+        <div className="metal-panel inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-green-400">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />

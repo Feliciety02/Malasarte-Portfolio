@@ -3,7 +3,7 @@ export type ProjectCategory =
   | "Social Media Graphics"
   | "Creative Assets"
   | "Logo & Branding"
-  | "Web Development"
+  | "Software Development"
   | "Writing / VA";
 
 export type ProjectKind =
@@ -156,6 +156,7 @@ export type Project = {
   color: string;
   desc: string;
   role: string;
+  collaborators?: string[];
   tools: string[];
   year: string;
   client: string;
@@ -178,6 +179,40 @@ export type Project = {
   categoryVariants?: Partial<Record<ProjectCategory, Partial<Project>>>;
 };
 
+export type ProjectCollaborator = {
+  name: string;
+  role?: string;
+  imageUrl?: string;
+};
+
+const defaultProjectCollaborators: ProjectCollaborator[] = [
+  {
+    name: "Joevan Capote",
+    role: "Software Developer",
+    imageUrl: "/placeholders/collaborators/collab-01.svg",
+  },
+  {
+    name: "Fe Anne Malasarte",
+    role: "UI/UX Designer",
+    imageUrl: "/placeholders/collaborators/collab-02.png",
+  },
+  {
+    name: "Janelle Santos",
+    role: "Product Researcher",
+    imageUrl: "/placeholders/collaborators/collab-03.svg",
+  },
+  {
+    name: "Kevin Flores",
+    role: "Full-Stack Developer",
+    imageUrl: "/placeholders/collaborators/collab-04.svg",
+  },
+  {
+    name: "Mika Tan",
+    role: "Project Coordinator",
+    imageUrl: "/placeholders/collaborators/collab-05.svg",
+  },
+];
+
 const getOptionalEnvUrl = (value: unknown) => {
   if (typeof value !== "string") return undefined;
   const trimmed = value.trim();
@@ -198,8 +233,8 @@ export const categoryDescriptions: Record<"All" | ProjectCategory, string> = {
     "Reusable visual assets, campaign kits, event graphics, templates, and digital collateral for fast-moving teams.",
   "Logo & Branding":
     "Logos, brand boards, identity systems, mockups, palettes, and typography-led brand work.",
-  "Web Development":
-    "Responsive page builds, interface implementation, and web systems translated from design into working screens.",
+  "Software Development":
+    "Responsive web builds, desktop systems, and application interfaces translated from product goals into working software.",
   "Writing / VA":
     "Writing systems, content deliverables, support workflows, organization processes, and virtual assistant tasks.",
 };
@@ -1306,9 +1341,9 @@ export const projects: Project[] = [
     imageTitle: "pietyl LPG landing page",
     cardSize: "wide",
     directoryTitle: "Pietyl DigiLPG",
-    cat: "Web Development",
+    cat: "Software Development",
     kind: "frontend",
-    tag: "Web Development",
+    tag: "Software Development",
     color: "from-sky-500/50 to-indigo-500/30",
     desc: "Full-stack implementation of Pietyl DigiLPG's landing page and management system, built with Laravel, React, and MySQL.",
     role: "Full-Stack Developer",
@@ -1532,10 +1567,10 @@ export const projects: Project[] = [
   {
     slug: "cosmic-remedies-by-sia",
     title: "Cosmic Remedies by Sia",
-    cat: "Web Development",
+    cat: "Software Development",
     kind: "frontend",
     cardSize: "wide",
-    tag: "Web Development",
+    tag: "Software Development",
     color: "from-violet-500/50 to-cyan-500/30",
     desc: "A responsive web build of the Cosmic Remedies by Sia digital product experience.",
     role: "Web Developer",
@@ -1665,6 +1700,11 @@ export const projects: Project[] = [
       { value: "50+", label: "Designed states" },
       { value: "1", label: "Reusable system" },
     ],
+    collaborators: [
+      "Joevan Capote | Project Leader / QA Engineer | /placeholders/collaborators/collab-01.svg",
+      "Fe Anne Malasarte | UI/UX Designer | /placeholders/collaborators/collab-02.png",
+      "Jaymark Burlado | Project Member | /placeholders/collaborators/collab-03.svg",
+    ],
     focusAreas: [
       {
         title: "Research",
@@ -1756,10 +1796,10 @@ export const projects: Project[] = [
     slug: "umunity-web",
     title: "UMunity",
     directoryTitle: "UMunity",
-    cat: "Web Development",
+    cat: "Software Development",
     kind: "frontend",
     cardSize: "wide",
-    tag: "Web Development",
+    tag: "Software Development",
     color: "from-cyan-500/50 to-blue-500/30",
     desc: "Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.",
     role: "Web Developer",
@@ -1777,6 +1817,11 @@ export const projects: Project[] = [
       { value: "6", label: "Core modules" },
       { value: "50+", label: "Implemented states" },
       { value: "100%", label: "Responsive coverage" },
+    ],
+    collaborators: [
+      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
+      "Fe Anne Malasarte | Full Stack Developer | /placeholders/collaborators/collab-02.png",
+      "Jaymark Burlado | Project Member | /placeholders/collaborators/collab-03.svg",
     ],
     focusAreas: [
       {
@@ -2587,16 +2632,16 @@ export const projects: Project[] = [
     title: "Salin-Salin",
     imageTitle: "salin webpage",
     cardSize: "medium",
-    cat: "Web Development",
+    cat: "Software Development",
     kind: "frontend",
-    tag: "Web Development",
+    tag: "Software Development",
     color: "from-teal-500/45 to-blue-500/30",
-    desc: "Responsive web development project for Salin-Salin.",
+    desc: "Responsive software development project for Salin-Salin.",
     role: "Web Developer",
     tools: ["React 19", "TanStack Start", "TypeScript", "Vite 7", "Supabase"],
     year: "2025",
     client: "Salin-Salin",
-    overview: "Responsive web development project for Salin-Salin.",
+    overview: "Responsive software development project for Salin-Salin.",
     goals: ["Build a responsive web experience.", "Ensure cross-device coverage."],
     impact: [
       { value: "1", label: "Web build" },
@@ -2623,13 +2668,111 @@ export const projects: Project[] = [
     vercelLiveUrl: "https://salin-salin.vercel.app/",
   },
   {
+    slug: "sakuragi-tailoring-shop-management-system",
+    title: "Sakuragi Tailoring Shop Management System",
+    imageTitle: "Sakuragi Tailoring Shop Management System",
+    cardSize: "medium",
+    cat: "Software Development",
+    kind: "frontend",
+    tag: "Software Development",
+    color: "from-amber-500/45 to-red-500/30",
+    desc: "Management system for tailoring shop operations, customer records, job orders, and production tracking.",
+    role: "Software Developer",
+    tools: ["Java", "JavaFX", "MySQL", "Scene Builder", "XAMPP"],
+    year: "2025",
+    client: "Sakuragi Tailoring Shop",
+    overview:
+      "Sakuragi Tailoring Shop Management System is built to organize tailoring workflows in one place, covering customer information, measurements, job orders, fitting schedules, and order status tracking for day-to-day shop operations.",
+    goals: [
+      "Centralize tailoring shop records, measurements, and active job orders.",
+      "Make order tracking easier for staff from intake through release.",
+      "Reduce manual errors in scheduling, customer lookup, and production monitoring.",
+    ],
+    impact: [
+      { value: "1", label: "Management system" },
+      { value: "4+", label: "Core workflow modules" },
+      { value: "100%", label: "Order visibility" },
+    ],
+    focusAreas: [
+      {
+        title: "Customer Records",
+        text: "Organized customer profiles, measurements, and contact details for faster repeat transactions.",
+      },
+      {
+        title: "Order Workflow",
+        text: "Structured the tailoring process around job order creation, status tracking, and scheduled fittings.",
+      },
+      {
+        title: "Shop Operations",
+        text: "Improved visibility over pending, in-progress, and completed tailoring requests.",
+      },
+    ],
+    process: [
+      {
+        title: "Planning",
+        text: "Defined the shop's recurring workflow around customer intake, measurements, fitting schedules, and release.",
+      },
+      {
+        title: "System Design",
+        text: "Mapped the data structure and screens needed for records, orders, and progress monitoring.",
+      },
+      {
+        title: "Development",
+        text: "Built the software interface and database-backed modules for day-to-day tailoring operations.",
+      },
+      {
+        title: "Refinement",
+        text: "Adjusted the flows to make searching, updating, and tracking orders faster for staff.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Manual Recordkeeping",
+        challenge:
+          "Tailoring shops often rely on handwritten notes or scattered files, which slows down retrieval and status tracking.",
+        solution:
+          "Moved the workflow into a single system with structured records for customers, measurements, and orders.",
+      },
+      {
+        title: "Production Visibility",
+        challenge:
+          "Staff needed a clearer way to see what was pending, in progress, for fitting, or ready for release.",
+        solution:
+          "Added a status-driven order flow so progress could be monitored at a glance.",
+      },
+    ],
+    outcome:
+      "Sakuragi Tailoring Shop now has a more structured software workflow for managing customer records, tailoring jobs, and production status in one system.",
+    gallery: [
+      {
+        color: "from-amber-500/45 to-red-500/30",
+        label: "Dashboard",
+        ratio: "wide",
+        note: "Overview screen for order counts, current workload, and tailoring progress.",
+      },
+      {
+        color: "from-orange-500/40 to-amber-500/30",
+        label: "Customer Records",
+        ratio: "square",
+        note: "Customer information and measurement management for repeat tailoring transactions.",
+      },
+      {
+        color: "from-rose-500/40 to-orange-500/30",
+        label: "Job Orders",
+        ratio: "square",
+        note: "Tailoring order management with fitting dates, status updates, and release tracking.",
+      },
+    ],
+    hideLiveWorkspace: true,
+  },
+  {
     slug: "handyman",
     title: "HandyMan",
     imageTitle: "handyman",
     cardSize: "medium",
-    cat: "Web Development",
+    cat: "Software Development",
     kind: "frontend",
-    tag: "Web Development",
+    tag: "Software Development",
     color: "from-orange-400/45 to-cyan-500/30",
     desc: "Java desktop application for booking services, hiring skilled workers, and renting tools.",
     role: "Java Developer",
@@ -2774,11 +2917,12 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "umunity-logo",
   ],
   "UI/UX Design": ["umunity", "dost-laon", "pietyl-management-system", "adoptify"],
-  "Web Development": [
+  "Software Development": [
     "cosmic-remedies-by-sia",
     "umunity-web",
     "pietyl-digilpg-web",
     "salin-salin",
+    "sakuragi-tailoring-shop-management-system",
     "handyman",
   ],
   "Social Media Graphics": [
@@ -2819,6 +2963,7 @@ const directoryTitleOrder = [
   "Eat Well, Live Well: Your Complete Food & Nutrition Guide",
   "Thriving Minds: Understanding Your Mental Health Journey",
   "Salin-Salin",
+  "Sakuragi Tailoring Shop Management System",
   "HandyMan",
 ] as const;
 
@@ -2892,10 +3037,50 @@ export const getProjectBySlugAndCategory = (
   const variant = base.categoryVariants?.[cat];
   const merged: Project = variant ? { ...base, ...variant } : { ...base };
 
-  if (cat === "Web Development") merged.figmaPreviewUrl = undefined;
+  if (cat === "Software Development") merged.figmaPreviewUrl = undefined;
   if (cat === "UI/UX Design") merged.vercelLiveUrl = undefined;
 
   return merged;
+};
+
+export const supportsProjectCollaborators = (project: {
+  cat: string;
+  categories?: string[];
+}) =>
+  project.cat === "Software Development" ||
+  project.cat === "Web Development" ||
+  project.cat === "UI/UX Design" ||
+  project.categories?.includes("Software Development") === true ||
+  project.categories?.includes("Web Development") === true ||
+  project.categories?.includes("UI/UX Design") === true;
+
+export const parseProjectCollaborator = (value: string): ProjectCollaborator | null => {
+  const [name, role, imageUrl] = value
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!name) return null;
+
+  return {
+    name,
+    role,
+    imageUrl,
+  };
+};
+
+export const getProjectCollaborators = (project: Pick<Project, "collaborators">) =>
+  (project.collaborators ?? [])
+    .map(parseProjectCollaborator)
+    .filter((item): item is ProjectCollaborator => Boolean(item));
+
+export const getProjectCollaboratorShowcase = (
+  project: Pick<Project, "cat" | "categories" | "collaborators">,
+) => {
+  const collaborators = getProjectCollaborators(project);
+  if (collaborators.length > 0) return collaborators;
+  if (!supportsProjectCollaborators(project)) return [];
+  return defaultProjectCollaborators;
 };
 
 const createCaseStudySummary = (project: Project) =>

@@ -369,7 +369,7 @@ export function SocialMediaGraphicsShowcase({
 
     const resolvedGalleryTiles = selectedProject.gallery.flatMap((item, sourceIndex) => {
       const image = getProjectGalleryImage(selectedProject, item);
-      return image ? [{ image, item, sourceIndex }] : [];
+      return image ? [{ image, item, sourceIndex, fromFolder: false }] : [];
     });
 
     if (resolvedGalleryTiles.length > 0) {
@@ -382,6 +382,7 @@ export function SocialMediaGraphicsShowcase({
             image,
             item: null,
             sourceIndex: selectedProject.gallery.length + index,
+            fromFolder: true,
           })),
       ];
     }
@@ -391,6 +392,7 @@ export function SocialMediaGraphicsShowcase({
         image,
         item: selectedProject.gallery[sourceIndex] ?? null,
         sourceIndex,
+        fromFolder: true,
       }));
     }
 
@@ -398,6 +400,7 @@ export function SocialMediaGraphicsShowcase({
       image: undefined,
       item,
       sourceIndex,
+      fromFolder: false,
     }));
   }, [folderImages, selectedProject]);
 
@@ -496,7 +499,7 @@ export function SocialMediaGraphicsShowcase({
               gridTemplateRows: `repeat(${bento.layout.rows}, minmax(0, 1fr))`,
             }}
           >
-            {bento.tiles.map(({ item, image, sourceIndex }, index) => {
+            {bento.tiles.map(({ item, image, sourceIndex, fromFolder }, index) => {
               const layoutSlot = bento.layout.slots[index];
 
               const tileClassName = cn(
@@ -534,12 +537,17 @@ export function SocialMediaGraphicsShowcase({
                   style={tileStyle}
                   aria-label={`Open ${lightboxItems[index]?.label ?? `asset ${index + 1}`}`}
                 >
-                  <img
-                    src={image}
-                    alt={`${selectedProject.title} - ${item?.label ?? `asset ${index + 1}`}`}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
+                  <div className={cn("h-full w-full", fromFolder && "pt-3")}>
+                    <img
+                      src={image}
+                      alt={`${selectedProject.title} - ${item?.label ?? `asset ${index + 1}`}`}
+                      className={cn(
+                        "transition-transform duration-500 group-hover:scale-[1.02]",
+                        fromFolder ? "h-[calc(100%-0.75rem)] w-full object-contain" : "h-full w-full object-cover",
+                      )}
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70" />
                   <div className="pointer-events-none absolute right-3 top-3 rounded-full border border-white/12 bg-black/40 p-2 text-white/80 backdrop-blur-sm">
                     <ZoomIn size={14} />

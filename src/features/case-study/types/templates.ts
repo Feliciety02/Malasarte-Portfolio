@@ -21,7 +21,7 @@ export const ROUTE_CATEGORIES: RouteCategory[] = [
 ];
 
 export const ROUTE_CATEGORY_LABELS: Record<RouteCategory, string> = {
-  "web-development": "Web Development",
+  "web-development": "Software Development",
   "ui-ux-design": "UI/UX Design",
   branding: "Branding",
   "logo-design": "Logo Design",

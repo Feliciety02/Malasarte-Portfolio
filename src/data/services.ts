@@ -24,7 +24,7 @@ export const serviceCategories = [
   },
   {
     icon: Globe,
-    title: "Web Development",
+    title: "Software Development",
     color: "from-cyan-400/40 to-blue-500/30",
     desc: "Responsive web builds that turn polished UI into structured, maintainable screens.",
     bullets: ["Responsive interfaces", "Component-based builds", "Design-to-code execution"],
