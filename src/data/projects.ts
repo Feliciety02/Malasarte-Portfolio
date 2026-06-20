@@ -196,21 +196,6 @@ const defaultProjectCollaborators: ProjectCollaborator[] = [
     role: "UI/UX Designer",
     imageUrl: "/placeholders/collaborators/collab-02.png",
   },
-  {
-    name: "Janelle Santos",
-    role: "Product Researcher",
-    imageUrl: "/placeholders/collaborators/collab-03.svg",
-  },
-  {
-    name: "Kevin Flores",
-    role: "Full-Stack Developer",
-    imageUrl: "/placeholders/collaborators/collab-04.svg",
-  },
-  {
-    name: "Mika Tan",
-    role: "Project Coordinator",
-    imageUrl: "/placeholders/collaborators/collab-05.svg",
-  },
 ];
 
 const getOptionalEnvUrl = (value: unknown) => {
@@ -1373,8 +1358,8 @@ export const projects: Project[] = [
     ],
     collaborators: [
       "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Full Stack Developer | /placeholders/collaborators/collab-02.png",
-      "Jorge Macabenta",
+      "Fe Anne Malasarte | Front End Developer | /placeholders/collaborators/collab-02.png",
+      "Jorge Macabenta | Backend Developer",
     ],
     focusAreas: [
       {
@@ -1708,7 +1693,6 @@ export const projects: Project[] = [
     collaborators: [
       "Joevan Capote | Project Leader / QA Engineer | /placeholders/collaborators/collab-01.svg",
       "Fe Anne Malasarte | UI/UX Designer | /placeholders/collaborators/collab-02.png",
-      "Jaymark Burlado | Project Member | /placeholders/collaborators/collab-03.svg",
     ],
     focusAreas: [
       {
@@ -1826,7 +1810,6 @@ export const projects: Project[] = [
     collaborators: [
       "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
       "Fe Anne Malasarte | Full Stack Developer | /placeholders/collaborators/collab-02.png",
-      "Jaymark Burlado | Project Member | /placeholders/collaborators/collab-03.svg",
     ],
     focusAreas: [
       {
