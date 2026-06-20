@@ -252,7 +252,6 @@ export function FlipbookEmbed({ embed }: { embed: ProjectFlipbookEmbed }) {
           title={embed.title}
           src={embed.src}
           allow="clipboard-write"
-          allowFullScreen
           scrolling="no"
           loading="lazy"
           className="fp-iframe block h-[600px] w-full border-0 xl:h-[680px]"

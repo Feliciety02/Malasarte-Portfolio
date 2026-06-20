@@ -167,7 +167,6 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
                       src={activeTab.src}
                       className="h-full w-full border-0"
                       allow={activeTab.allow}
-                      allowFullScreen
                       loading="lazy"
                       referrerPolicy="strict-origin-when-cross-origin"
                       onLoad={() => setIsLoaded(true)}
@@ -183,7 +182,6 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
                   src={activeTab.src}
                   className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
                   allow={activeTab.allow}
-                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="strict-origin-when-cross-origin"
                   onLoad={() => setIsLoaded(true)}
@@ -197,7 +195,6 @@ export function InteractiveWorkspace({ project }: { project: Project }) {
                   src={activeTab.src}
                   className="h-[580px] w-full border-0 max-lg:h-[460px] max-md:h-[380px]"
                   allow={activeTab.allow}
-                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="strict-origin-when-cross-origin"
                   onLoad={() => setIsLoaded(true)}

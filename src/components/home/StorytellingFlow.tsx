@@ -504,7 +504,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
             >
               <motion.div
                 ref={processTrackRef}
-                className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
+                className="relative flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
                 style={{ x: processTrackX }}
               >
                 {PROCESS_STEPS.map((step, i) => (
@@ -574,7 +574,7 @@ export function StorytellingFlow({ reducedMotion }: Props) {
             >
               <motion.div
                 ref={servicesTrackRef}
-                className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
+                className="relative flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
                 style={{ x: servicesTrackX }}
               >
                 {serviceCardData.map((svc, i) => (

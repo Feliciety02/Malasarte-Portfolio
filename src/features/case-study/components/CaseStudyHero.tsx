@@ -136,7 +136,7 @@ export function CaseStudyHero({ project }: { project: Project }) {
         {/* Title - word by word */}
         <motion.h1
           style={prefersReducedMotion ? undefined : { y: titleY }}
-          className="mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+          className="relative mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
         >
           <WordReveal text={project.title} delay={0.2} />
         </motion.h1>

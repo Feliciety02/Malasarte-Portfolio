@@ -50,6 +50,9 @@ export function Nav() {
 
       if (isAtEnd) {
         setOpen(false);
+        if (document.activeElement && document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
       }
     };
 

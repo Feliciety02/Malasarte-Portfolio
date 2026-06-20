@@ -36,56 +36,44 @@ function NotFoundComponent() {
   );
 }
 
-export const Route = createRootRoute({
-  head: () => {
-    const meta = [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SITE_NAME },
-      {
-        name: "description",
-        content: DEFAULT_DESCRIPTION,
-      },
-      { name: "author", content: SITE_NAME },
-      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
-      { name: "theme-color", content: "#090a0c" },
-      { property: "og:site_name", content: SITE_NAME },
-      { property: "og:title", content: SITE_NAME },
-      { property: "og:description", content: DEFAULT_DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "en_PH" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: SITE_NAME },
-      { name: "twitter:description", content: DEFAULT_DESCRIPTION },
-      { property: "og:image", content: defaultSocialImageUrl },
-      { name: "twitter:image", content: defaultSocialImageUrl },
-      {
-        property: "og:image:alt",
-        content: "Preview card for Fe Anne Malasarte's portfolio.",
-      },
-      {
-        name: "twitter:image:alt",
-        content: "Preview card for Fe Anne Malasarte's portfolio.",
-      },
-      { "script:ld+json": buildWebsiteSchema() },
-      { "script:ld+json": buildPersonSchema() },
-    ];
+const rootMeta = [
+  { charSet: "utf-8" },
+  { name: "viewport", content: "width=device-width, initial-scale=1" },
+  { title: SITE_NAME },
+  { name: "description", content: DEFAULT_DESCRIPTION },
+  { name: "author", content: SITE_NAME },
+  { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+  { name: "theme-color", content: "#090a0c" },
+  { property: "og:site_name", content: SITE_NAME },
+  { property: "og:title", content: SITE_NAME },
+  { property: "og:description", content: DEFAULT_DESCRIPTION },
+  { property: "og:type", content: "website" },
+  { property: "og:locale", content: "en_PH" },
+  { name: "twitter:card", content: "summary_large_image" },
+  { name: "twitter:title", content: SITE_NAME },
+  { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+  { property: "og:image", content: defaultSocialImageUrl },
+  { name: "twitter:image", content: defaultSocialImageUrl },
+  { property: "og:image:alt", content: "Preview card for Fe Anne Malasarte's portfolio." },
+  { name: "twitter:image:alt", content: "Preview card for Fe Anne Malasarte's portfolio." },
+  { "script:ld+json": buildWebsiteSchema() },
+  { "script:ld+json": buildPersonSchema() },
+];
 
-    return {
-      meta,
-      links: [
-        { rel: "icon", type: "image/png", href: logoFe },
-        { rel: "apple-touch-icon", href: logoFe },
-        { rel: "stylesheet", href: appCss },
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap",
-        },
-      ],
-    };
-  },
+const rootLinks = [
+  { rel: "icon", type: "image/png", href: logoFe },
+  { rel: "apple-touch-icon", href: logoFe },
+  { rel: "stylesheet", href: appCss },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap" },
+];
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: rootMeta,
+    links: rootLinks,
+  }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

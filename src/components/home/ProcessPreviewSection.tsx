@@ -180,7 +180,7 @@ export function ProcessPreviewSection() {
             <motion.div
               ref={trackRef}
               data-process-track
-              className="flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
+              className="relative flex h-full w-max items-center gap-[clamp(1.25rem,2vw,2rem)] px-[clamp(2rem,7vw,8rem)] will-change-transform"
               style={{ x: trackX }}
             >
               {featuredProjects.map((project, i) => (
