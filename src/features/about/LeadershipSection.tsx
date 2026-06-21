@@ -121,7 +121,7 @@ export function LeadershipSection() {
                 >
                   <div className="flex items-center justify-between gap-6">
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-[1.95rem] font-bold leading-[0.95] tracking-tight md:text-[2.7rem]">
+                      <h3 className="font-display text-[1.56rem] font-bold leading-[0.95] tracking-tight md:text-[2.16rem]">
                         {entry.title}
                       </h3>
                       <p className="mt-2 text-sm leading-6 text-white/60 md:text-[0.96rem]">
@@ -162,8 +162,8 @@ export function LeadershipSection() {
                           alt={`${item.brand} logo`}
                           className={
                             isUmsdcHighlight
-                              ? "h-20 w-20 object-contain md:h-24 md:w-24"
-                              : "h-[4.5rem] w-[4.5rem] object-contain md:h-20 md:w-20"
+                              ? "h-[8.45rem] w-[8.45rem] object-contain md:h-[10.14rem] md:w-[10.14rem]"
+                              : "h-[5.85rem] w-[5.85rem] object-contain md:h-[6.5rem] md:w-[6.5rem]"
                           }
                         />
                       </motion.div>
