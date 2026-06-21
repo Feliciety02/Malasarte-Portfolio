@@ -1,4 +1,12 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  Scripts,
+  Asset,
+  useRouter,
+  useTags,
+} from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
@@ -83,7 +91,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PH" className="relative" suppressHydrationWarning>
       <head>
-        <HeadContent />
+        <StableHeadContent />
       </head>
       <body>
         {children}
@@ -102,6 +110,20 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+    </>
+  );
+}
+
+function StableHeadContent() {
+  const tags = useTags();
+  const router = useRouter();
+  const nonce = router.options.ssr?.nonce;
+
+  return (
+    <>
+      {tags.map((tag) => (
+        <Asset {...tag} key={`tsr-meta-${JSON.stringify(tag)}`} nonce={nonce} />
+      ))}
     </>
   );
 }
