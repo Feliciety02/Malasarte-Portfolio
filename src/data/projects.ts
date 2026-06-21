@@ -1,3 +1,14 @@
+import adoptifyLogoCover from "@/assets/projects/covers/Adoptify Logo.svg";
+import blueCollarBuildersLogoCover from "@/assets/projects/covers/Blue Collar Builders Logo.svg";
+import dostLaonLogoCover from "@/assets/projects/covers/DOST Laon Logo.svg";
+import lianMonleyBrandKitCover from "@/assets/projects/covers/Lian Monley Brand Kit.svg";
+import lianMonleyLogoIterationsCover from "@/assets/projects/covers/Lian Monley Logo Iterations.png";
+import odaraBrandKitCover from "@/assets/projects/covers/Odara Brand Kit.png";
+import pietylDigiLpgLogoCover from "@/assets/projects/covers/Pietyl DigiLPG Logo.svg";
+import sidlacCoLogoCover from "@/assets/projects/covers/Sidlac Co Logo.svg";
+import trichomendBrandKitCover from "@/assets/projects/covers/Trichomend Brand Kit.png";
+import umunityLogoCover from "@/assets/projects/covers/UMunity Logo.svg";
+
 export type ProjectCategory =
   | "UI/UX Design"
   | "Social Media Graphics"
@@ -197,6 +208,14 @@ const defaultProjectCollaborators: ProjectCollaborator[] = [
     imageUrl: "/placeholders/collaborators/collab-02.png",
   },
 ];
+
+const brandingCoverBySlug: Partial<Record<string, string>> = {
+  "sidlac-co-branding": sidlacCoLogoCover,
+  "adoptify-logo": adoptifyLogoCover,
+  "dost-laon-logo": dostLaonLogoCover,
+  "umunity-logo": umunityLogoCover,
+  "blue-collar-builders": blueCollarBuildersLogoCover,
+};
 
 const getOptionalEnvUrl = (value: unknown) => {
   if (typeof value !== "string") return undefined;
@@ -453,7 +472,7 @@ export const projects: Project[] = [
       mode: "full",
       symbol: {
         title: "Odara Management brand identity",
-        image: "/src/assets/projects/covers/Odara Brand Kit.png",
+        image: odaraBrandKitCover,
         items: [],
       },
     },
@@ -577,14 +596,14 @@ export const projects: Project[] = [
       mode: "full",
       identityImages: [
         {
-          src: "/src/assets/projects/covers/Lian Monley Logo Iterations.svg",
+          src: lianMonleyLogoIterationsCover,
           alt: "Six commissioned logo concepts explored for Lian Monley",
           title: "Commissioned logo explorations",
           description:
             "Six distinct directions were presented to compare monogram structures, organic forms, typography, and wellness symbolism before selecting the final route.",
         },
         {
-          src: "/src/assets/projects/covers/Lian Monley Brand Kit.svg",
+          src: lianMonleyBrandKitCover,
           alt: "Final Lian Monley holistic gut health expert brand kit",
           title: "Selected identity system",
           description:
@@ -749,7 +768,7 @@ export const projects: Project[] = [
       },
       symbol: {
         title: "Symbol meaning",
-        image: "/src/assets/projects/covers/Pieytl Branding.svg",
+        image: pietylDigiLpgLogoCover,
         items: [
           {
             name: "LPG Cylinder",
@@ -1036,7 +1055,7 @@ export const projects: Project[] = [
       mode: "full",
       symbol: {
         title: "Trichomend+ brand identity",
-        image: "/src/assets/projects/covers/Trichomend Brand Kit.png",
+        image: trichomendBrandKitCover,
         items: [],
       },
     },
@@ -2897,6 +2916,8 @@ export const projects: Project[] = [
   },
 ];
 export const getProject = (slug: string) => projects.find((project) => project.slug === slug);
+
+export const getBrandingCoverImage = (project: Pick<Project, "slug">) => brandingCoverBySlug[project.slug];
 
 export type ProjectFilter = "All" | ProjectCategory;
 

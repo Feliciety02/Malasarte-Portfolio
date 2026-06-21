@@ -1,9 +1,10 @@
 import type { TemplateConfig } from "../types/templates";
 import { OverviewSection } from "../sections/OverviewSection";
 import { ProblemApproachSection } from "../sections/ProblemApproachSection";
-import { WorkspaceSection } from "../sections/WorkspaceSection";
+import { IdentitySection } from "../sections/IdentitySection";
 import { ContributionsSection } from "../sections/ContributionsSection";
 import { ProcessArcSection } from "../sections/ProcessArcSection";
+import { DeliverablesSection } from "../sections/DeliverablesSection";
 import { OutcomesSection } from "../sections/OutcomesSection";
 import { RelatedProjectsSection } from "../sections/RelatedProjectsSection";
 
@@ -18,9 +19,10 @@ export const brandingTemplate: TemplateConfig = {
   sections: [
     { id: "overview", label: "Overview", component: OverviewSection },
     { id: "problem", label: "Problem / Approach", component: ProblemApproachSection },
-    { id: "screens", label: "Screens", component: WorkspaceSection },
+    { id: "identity", label: "Identity", component: IdentitySection },
     { id: "contributions", label: "Contributions", component: ContributionsSection },
     { id: "process", label: "Process", component: ProcessArcSection },
+    { id: "deliverables", label: "Deliverables", component: DeliverablesSection },
     { id: "outcomes", label: "Outcomes", component: OutcomesSection },
     { id: "next", label: "Next", component: RelatedProjectsSection },
   ],

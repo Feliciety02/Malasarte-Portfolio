@@ -1,5 +1,6 @@
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { getProjectCoverImage } from "@/data/projectImages";
+import { getBrandingCoverImage } from "@/data/projects";
 import { SectionAnchor, SectionLabel, FadeIn } from "./SectionWrappers";
 import {
   BrandSymbolBlock,
@@ -11,7 +12,8 @@ import type { SectionProps } from "../types/templates";
 
 export function IdentitySection({ project, sectionNumber }: SectionProps) {
   const branding = project.branding;
-  const identityImage = branding?.symbol?.image ?? getProjectCoverImage(project);
+  const identityImage =
+    branding?.symbol?.image ?? getBrandingCoverImage(project) ?? getProjectCoverImage(project);
   const identityImages = branding?.identityImages?.length
     ? branding.identityImages
     : identityImage

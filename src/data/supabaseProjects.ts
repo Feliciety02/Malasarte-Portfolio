@@ -83,6 +83,10 @@ const hiddenProjectSlugs = new Set([
 const localIdentitySlugs = new Set(["pietyl-lpg"]);
 const localGallerySlugs = new Set(["enigma", "umsdc-publication-materials-and-assets"]);
 
+function canReadPortfolioFromSupabase() {
+  return import.meta.env.SSR && isSupabaseConfigured;
+}
+
 const sortBySortOrder = <T extends { sort_order: number | null }>(items: T[] = []) =>
   [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 
@@ -176,7 +180,7 @@ function mapProject(row: PortfolioProjectRow): Project {
 }
 
 export async function fetchPortfolioProjectsFromSupabase() {
-  if (!isSupabaseConfigured) return undefined;
+  if (!canReadPortfolioFromSupabase()) return undefined;
 
   try {
     const { data, error } = await getSupabaseClient()
@@ -206,7 +210,7 @@ export async function fetchPortfolioProjectsFromSupabase() {
 }
 
 export async function fetchPortfolioProjectFromSupabase(slug: string) {
-  if (!isSupabaseConfigured) return undefined;
+  if (!canReadPortfolioFromSupabase()) return undefined;
   if (hiddenProjectSlugs.has(slug)) return undefined;
 
   try {
