@@ -1,9 +1,17 @@
 import adoptifyLogoCover from "@/assets/projects/covers/Adoptify Logo.svg";
 import blueCollarBuildersLogoCover from "@/assets/projects/covers/Blue Collar Builders Logo.svg";
+import blueCollarBrandKit01 from "@/assets/projects/covers/blue collar brandkit01.svg";
+import blueCollarBrandKit02 from "@/assets/projects/covers/blue collar brandkit02.svg";
+import blueCollarMockup01 from "@/assets/projects/mockups/blue collars mockup 01.png";
+import blueCollarMockup02 from "@/assets/projects/mockups/blue collars mockup 02.png";
+import blueCollarMockup03 from "@/assets/projects/mockups/blue collars mockup 03.png";
+import blueCollarMockup04 from "@/assets/projects/mockups/blue collars mockup 04.png";
+import blueCollarMockup05 from "@/assets/projects/mockups/blue collars mockup 05.png";
 import dostLaonLogoCover from "@/assets/projects/covers/DOST Laon Logo.svg";
 import lianMonleyBrandKitCover from "@/assets/projects/covers/Lian Monley Brand Kit.svg";
 import lianMonleyLogoIterationsCover from "@/assets/projects/covers/Lian Monley Logo Iterations.png";
 import odaraBrandKitCover from "@/assets/projects/covers/Odara Brand Kit.png";
+import pietylBrandStripCover from "@/assets/projects/covers/Pieytl Branding.svg";
 import pietylDigiLpgLogoCover from "@/assets/projects/covers/Pietyl DigiLPG Logo.svg";
 import sidlacCoLogoCover from "@/assets/projects/covers/Sidlac Co Logo.svg";
 import trichomendBrandKitCover from "@/assets/projects/covers/Trichomend Brand Kit.png";
@@ -49,7 +57,7 @@ export type ProjectGalleryItem = {
   imageLabel?: string;
   imageUrl?: string;
   assetPath?: string;
-  ratio: "square" | "wide" | "tall";
+  ratio: "square" | "wide" | "tall" | "featured";
   note: string;
 };
 
@@ -194,6 +202,7 @@ export type ProjectCollaborator = {
   name: string;
   role?: string;
   imageUrl?: string;
+  url?: string;
 };
 
 const defaultProjectCollaborators: ProjectCollaborator[] = [
@@ -264,6 +273,7 @@ type SimpleProjectInput = {
   imageTitle?: string;
   cardSize?: "large" | "tall" | "wide" | "medium";
   nextProjectSlug?: string;
+  branding?: ProjectBranding;
 };
 
 const defaultGallery = (
@@ -326,6 +336,7 @@ const createSimpleProject = ({
   imageTitle,
   cardSize,
   nextProjectSlug,
+  branding,
 }: SimpleProjectInput): Project => ({
   slug,
   title,
@@ -345,6 +356,7 @@ const createSimpleProject = ({
   year,
   client,
   overview,
+  branding,
   goals: [
     `Create a clear ${tag.toLowerCase()} direction for ${title}.`,
     "Keep the output flexible enough for portfolio and client presentation.",
@@ -354,8 +366,8 @@ const createSimpleProject = ({
     { value: "1", label: "Project direction" },
     { value: "3+", label: "Showcase pieces" },
     { value: "1", label: "Reusable system" },
-  ],
-  focusAreas: [
+    ],
+    focusAreas: [
     {
       title: "Visual Direction",
       text: "Defined the mood, hierarchy, and composition system for the work.",
@@ -475,6 +487,10 @@ export const projects: Project[] = [
         image: odaraBrandKitCover,
         items: [],
       },
+      colors: [
+        { name: "Navy Blue", hex: "#3A566B", meaning: ["Authority", "Professionalism", "Trust"] },
+        { name: "Gold", hex: "#FFC400", meaning: ["Premium quality", "Leadership", "Excellence"] },
+      ],
     },
     gallery: [
       {
@@ -619,6 +635,9 @@ export const projects: Project[] = [
         "Mini brand identity guide",
         "Digital-ready logo export package",
       ],
+      colors: [
+        { name: "Navy Blue", hex: "#304A6F", meaning: ["Trust", "Calm", "Professional guidance"] },
+      ],
     },
     gallery: [
       {
@@ -659,7 +678,7 @@ export const projects: Project[] = [
     year: "2024",
     client: "PIEYTL Marketing",
     overview:
-      "PIEYTL Marketing is an LPG-focused business that required a professional visual identity capable of establishing trust, improving brand recognition, and creating consistency across both digital and physical touchpoints. The project involved designing the company's logo, defining its visual language, and creating a complete branding system that would serve as the foundation for future marketing materials and digital products.",
+      "An LPG-focused business that needed a professional visual identity to build trust, recognition, and consistency across digital and physical touchpoints. The project delivered a logo, visual language, and complete branding system as the foundation for future marketing and products.",
     goals: [
       "Reflect the LPG industry.",
       "Build customer trust.",
@@ -761,6 +780,15 @@ export const projects: Project[] = [
     },
     branding: {
       mode: "full",
+      identityImages: [
+        {
+          src: pietylBrandStripCover,
+          alt: "Complete Pietyl brand identity system showing logo, color palette, typography, and applications",
+          title: "Pietyl brand kit strip",
+          description:
+            "A complete brand identity guide encompassing the logo lockup, Canary and Federal Blue color system, Poppins typography, and application samples across digital and print surfaces.",
+        },
+      ],
       research: {
         title: "Opportunity",
         body: "Industry analysis revealed that most LPG businesses rely heavily on generic logos and inconsistent branding. The opportunity was to create a recognizable identity that immediately communicates energy, reliability, professionalism, safety, and modernization.",
@@ -941,24 +969,72 @@ export const projects: Project[] = [
     ],
     outcome:
       "The identity now feels more established and durable, with clearer real-world applications across construction-related touchpoints.",
+    branding: {
+      identityImages: [
+        {
+          src: blueCollarBrandKit01,
+          alt: "Blue Collar Builders logo exploration",
+          title: "Logo exploration",
+          description:
+            "One logo concept was explored to capture the right balance of durability, professionalism, and construction identity.",
+        },
+        {
+          src: blueCollarBrandKit02,
+          alt: "Final Blue Collar Builders brand kit system",
+          title: "Selected identity system",
+          description:
+            "The approved mark was developed into a full identity system with primary and secondary lockups, color palette, typography, and real-world application mockups.",
+        },
+      ],
+      deliverables: [
+        "Logo system with primary and secondary lockups",
+        "Brand color palette and typography direction",
+        "On-site and equipment branding mockups",
+        "Uniform and apparel brand applications",
+        "Stationery and document templates",
+        "Digital-ready logo export package",
+      ],
+      colors: [
+        { name: "Dark Blue", hex: "#1A3C5A", meaning: ["Strength", "Dependability", "Professionalism"] },
+        { name: "Orange", hex: "#D5591C", meaning: ["Energy", "Durability", "Warmth"] },
+        { name: "Slate", hex: "#42474B", meaning: ["Practical", "Grounded", "Industrial"] },
+      ],
+    },
     gallery: [
       {
         color: "from-indigo-500/50 to-sky-500/30",
-        label: "Brand Mark",
-        ratio: "square",
-        note: "Placeholder for primary builder identity and supporting lockups.",
+        label: "Storefront",
+        ratio: "featured",
+        note: "Building signage and storefront brand application.",
+        imageUrl: blueCollarMockup01,
+      },
+      {
+        color: "from-amber-500/40 to-orange-500/30",
+        label: "Outdoor Advertising",
+        ratio: "wide",
+        note: "Billboard and outdoor media placement.",
+        imageUrl: blueCollarMockup04,
       },
       {
         color: "from-sky-500/40 to-slate-500/30",
-        label: "Equipment Branding",
-        ratio: "wide",
-        note: "Placeholder for on-site and vehicle branding.",
+        label: "Apparel",
+        ratio: "tall",
+        note: "Polo uniform and workwear branding system.",
+        imageUrl: blueCollarMockup02,
       },
       {
         color: "from-slate-400/40 to-indigo-500/30",
-        label: "Uniform System",
-        ratio: "tall",
-        note: "Placeholder for apparel and contractor-facing brand use.",
+        label: "Signage",
+        ratio: "square",
+        note: "Hanging sign and interior wayfinding.",
+        imageUrl: blueCollarMockup03,
+      },
+      {
+        color: "from-emerald-500/40 to-teal-500/30",
+        label: "Brand Collateral",
+        ratio: "square",
+        note: "Mug, stationery, and day-to-day brand touchpoints.",
+        imageUrl: blueCollarMockup05,
       },
     ],
     nextProjectSlug: "trichomend-plus",
@@ -1058,6 +1134,10 @@ export const projects: Project[] = [
         image: trichomendBrandKitCover,
         items: [],
       },
+      colors: [
+        { name: "Yellow", hex: "#FFF600", meaning: ["Energy", "Vitality", "Optimism"] },
+        { name: "Green", hex: "#6BBF59", meaning: ["Natural", "Health", "Wellness"] },
+      ],
     },
     gallery: [
       {
@@ -1125,6 +1205,9 @@ export const projects: Project[] = [
         { title: "Accessible Navigation", desc: "Keyboard‑friendly interactions, readable contrast, and screen‑reader support throughout." },
       ],
     },
+    collaborators: [
+      "Jay Lao III | Backend Developer | | https://blackhole-jay.vercel.app",
+    ],
     focusAreas: [
       {
         title: "Research",
@@ -1378,7 +1461,7 @@ export const projects: Project[] = [
     collaborators: [
       "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
       "Fe Anne Malasarte | Front End Developer | /placeholders/collaborators/collab-02.png",
-      "Jorge Macabenta | Backend Developer",
+      "Jorge Macabenta | Backend Developer | | https://portfolio-school-fawn.vercel.app/#projects",
     ],
     focusAreas: [
       {
@@ -2262,6 +2345,11 @@ export const projects: Project[] = [
     color: "from-amber-400/45 to-orange-500/30",
     year: "2025",
     cardSize: "medium",
+    branding: {
+      colors: [
+        { name: "Gold", hex: "#D4A040", meaning: ["Premium", "Trust", "Professionalism"] },
+      ],
+    },
   }),
   createSimpleProject({
     slug: "adoptify-logo",
@@ -2278,6 +2366,12 @@ export const projects: Project[] = [
     color: "from-violet-500/50 to-indigo-500/30",
     year: "2025",
     cardSize: "medium",
+    branding: {
+      colors: [
+        { name: "Violet", hex: "#8B5CF6", meaning: ["Creativity", "Compassion", "Trust"] },
+        { name: "Indigo", hex: "#6366F1", meaning: ["Reliability", "Warmth", "Safety"] },
+      ],
+    },
   }),
   createSimpleProject({
     slug: "dost-laon-logo",
@@ -2294,6 +2388,13 @@ export const projects: Project[] = [
     color: "from-blue-500/50 to-cyan-500/30",
     year: "2025",
     cardSize: "tall",
+    branding: {
+      colors: [
+        { name: "Green", hex: "#0B773D", meaning: ["Growth", "Agriculture", "Sustainability"] },
+        { name: "Orange", hex: "#F67810", meaning: ["Innovation", "Energy", "Progress"] },
+        { name: "Lime", hex: "#A5D13E", meaning: ["Freshness", "Vitality", "Renewal"] },
+      ],
+    },
   }),
   createSimpleProject({
     slug: "umunity-logo",
@@ -2310,6 +2411,12 @@ export const projects: Project[] = [
     color: "from-cyan-500/50 to-blue-500/30",
     year: "2025",
     cardSize: "medium",
+    branding: {
+      colors: [
+        { name: "Cyan", hex: "#06B6D4", meaning: ["Connection", "Community", "Clarity"] },
+        { name: "Blue", hex: "#3B82F6", meaning: ["Trust", "Collaboration", "Unity"] },
+      ],
+    },
   }),
   createSimpleProject({
     slug: "blockchain-campus-conference-2024",
@@ -2708,6 +2815,9 @@ export const projects: Project[] = [
       { value: "4+", label: "Core workflow modules" },
       { value: "100%", label: "Order visibility" },
     ],
+    collaborators: [
+      "Jay Lao III | Backend Developer | | https://blackhole-jay.vercel.app",
+    ],
     focusAreas: [
       {
         title: "Customer Records",
@@ -3072,17 +3182,16 @@ export const supportsProjectCollaborators = (project: {
   project.categories?.includes("UI/UX Design") === true;
 
 export const parseProjectCollaborator = (value: string): ProjectCollaborator | null => {
-  const [name, role, imageUrl] = value
-    .split("|")
-    .map((item) => item.trim())
-    .filter(Boolean);
+  const parts = value.split("|").map((item) => item.trim());
+  const [name, role, imageUrl, url] = parts;
 
   if (!name) return null;
 
   return {
     name,
-    role,
-    imageUrl,
+    role: role || undefined,
+    imageUrl: imageUrl || undefined,
+    url: url || undefined,
   };
 };
 

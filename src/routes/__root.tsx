@@ -3,9 +3,7 @@ import {
   Link,
   createRootRoute,
   Scripts,
-  Asset,
-  useRouter,
-  useTags,
+  HeadContent,
 } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Nav } from "@/components/site/Nav";
@@ -91,7 +89,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PH" className="relative" suppressHydrationWarning>
       <head>
-        <StableHeadContent />
+        <HeadContent />
       </head>
       <body>
         {children}
@@ -110,20 +108,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-    </>
-  );
-}
-
-function StableHeadContent() {
-  const tags = useTags();
-  const router = useRouter();
-  const nonce = router.options.ssr?.nonce;
-
-  return (
-    <>
-      {tags.map((tag) => (
-        <Asset {...tag} key={`tsr-meta-${JSON.stringify(tag)}`} nonce={nonce} />
-      ))}
     </>
   );
 }

@@ -65,7 +65,7 @@ export function PortfolioProjectCard({
                 <img
                   src={coverImage}
                   alt={`${title} preview`}
-                  className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                  className="max-h-36 max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
               </div>

@@ -11,18 +11,18 @@ export function BrandSymbolBlock({
 }) {
   if (!symbol) return null;
   return (
-    <div className="mt-10 space-y-6">
+    <div className="space-y-6">
       <FadeIn>
-        <div className="flex min-h-[28rem] items-center justify-center overflow-hidden rounded-2xl border border-black/10 bg-white p-6 shadow-sm md:min-h-[40rem] md:p-10">
+        <div className="flex items-center justify-center rounded-2xl border border-black/10 bg-white p-4 shadow-sm sm:p-6">
           {symbol.image ? (
             <img
               src={symbol.image}
               alt={symbol.title}
-              className="h-full w-full object-contain"
+              className="max-h-48 w-full object-contain sm:max-h-64 md:max-h-72"
               loading="lazy"
             />
           ) : (
-            <div className="grid h-full w-full place-items-center text-center text-sm text-black/60">
+            <div className="py-12 text-center text-sm text-black/60">
               {symbol.title}
             </div>
           )}

@@ -1,6 +1,7 @@
 import type { TemplateConfig } from "../types/templates";
 import { OverviewSection } from "../sections/OverviewSection";
 import { ProblemApproachSection } from "../sections/ProblemApproachSection";
+import { ShowcaseSection } from "../sections/ShowcaseSection";
 import { IdentitySection } from "../sections/IdentitySection";
 import { ContributionsSection } from "../sections/ContributionsSection";
 import { ProcessArcSection } from "../sections/ProcessArcSection";
@@ -14,11 +15,12 @@ export const brandingTemplate: TemplateConfig = {
   routeBase: "/works/branding",
   routeCategory: "branding",
   accent: "from-amber-400/40 via-rose-500/20 to-transparent",
-  galleryVariant: "grid",
+  galleryVariant: "masonry",
   workspace: "none",
   sections: [
     { id: "overview", label: "Overview", component: OverviewSection },
     { id: "problem", label: "Problem / Approach", component: ProblemApproachSection },
+    { id: "showcase", label: "Showcase", component: ShowcaseSection },
     { id: "identity", label: "Identity", component: IdentitySection },
     { id: "contributions", label: "Contributions", component: ContributionsSection },
     { id: "process", label: "Process", component: ProcessArcSection },

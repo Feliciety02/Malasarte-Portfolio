@@ -197,25 +197,26 @@ export function GalleryGrid({
   }
   if (variant === "masonry") {
     return (
-      <div className="mt-10 grid auto-rows-[10rem] grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="mt-10 grid auto-rows-[12rem] grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
         {items.map((item, i) => {
           const span =
-            item.ratio === "tall"
-              ? "row-span-3 col-span-1"
-              : item.ratio === "wide"
-                ? "row-span-2 col-span-2"
-                : "row-span-2 col-span-1";
+            item.ratio === "featured"
+              ? "row-span-2 col-span-2"
+              : item.ratio === "tall"
+                ? "row-span-2 col-span-1"
+                : item.ratio === "wide"
+                  ? "row-span-1 col-span-2"
+                  : "row-span-1 col-span-1";
           return (
             <FadeIn key={item.label} delay={i * 0.06} className={span}>
               <button
                 onClick={() => openLightbox(i)}
-                className="metal-panel group relative h-full w-full overflow-hidden text-left"
+                className="group relative h-full w-full overflow-hidden rounded-[20px] border border-white/[0.06] bg-black shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)]"
               >
-                <GalleryPreviewImage project={project} item={item} />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05),rgba(0,0,0,0.55))]" />
-                <div className="relative z-10 flex h-full flex-col justify-end p-4">
-                  <p className="font-display text-sm font-semibold">{item.label}</p>
+                <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110">
+                  <GalleryPreviewImage project={project} item={item} />
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </button>
             </FadeIn>
           );

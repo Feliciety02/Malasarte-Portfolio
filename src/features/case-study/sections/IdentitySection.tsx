@@ -3,10 +3,10 @@ import { getProjectCoverImage } from "@/data/projectImages";
 import { getBrandingCoverImage } from "@/data/projects";
 import { SectionAnchor, SectionLabel, FadeIn } from "./SectionWrappers";
 import {
-  BrandSymbolBlock,
   BrandColorPalette,
   BrandTypographyBlock,
   BrandPersonalityList,
+  BrandSymbolBlock,
 } from "./blocks/BrandBlocks";
 import type { SectionProps } from "../types/templates";
 
@@ -40,43 +40,55 @@ export function IdentitySection({ project, sectionNumber }: SectionProps) {
         </h2>
       </FadeIn>
       {hasRichBranding ? (
-        <div className="mt-8 space-y-14">
+        <div className="mt-8 space-y-10">
+          {branding?.symbol?.image ? (
+            <FadeIn>
+              <div className="flex items-center justify-center rounded-2xl border border-black/10 bg-white p-4 shadow-sm sm:p-6">
+                <img
+                  src={branding.symbol.image}
+                  alt={branding.symbol.title ?? `${project.title} logo symbol`}
+                  className="max-h-48 w-full object-contain sm:max-h-64 md:max-h-72"
+                  loading="lazy"
+                />
+              </div>
+            </FadeIn>
+          ) : null}
           {identityImages.map((image, index) => (
             <FadeIn key={image.src} delay={index * 0.06}>
-              <figure>
-                {image.title || image.description ? (
-                  <figcaption className="mb-5 max-w-3xl">
-                    {image.title ? (
-                      <h3 className="font-display text-xl font-semibold text-white/90 md:text-2xl">
-                        {image.title}
-                      </h3>
-                    ) : null}
-                    {image.description ? (
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        {image.description}
-                      </p>
-                    ) : null}
-                  </figcaption>
-                ) : null}
-                <div className="flex min-h-[28rem] items-center justify-center overflow-hidden rounded-2xl border border-black/10 bg-white p-3 shadow-sm sm:p-5 md:min-h-[40rem] md:p-8">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="h-full w-full object-contain"
-                    loading="lazy"
-                  />
+              {image.title || image.description ? (
+                <div className="mb-4 max-w-3xl">
+                  {image.title ? (
+                    <h3 className="font-display text-xl font-semibold text-white/90 md:text-2xl">
+                      {image.title}
+                    </h3>
+                  ) : null}
+                  {image.description ? (
+                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                      {image.description}
+                    </p>
+                  ) : null}
                 </div>
-              </figure>
+              ) : null}
+              <div className="flex items-center justify-center rounded-2xl border border-black/10 bg-white p-4 shadow-sm sm:p-6">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
             </FadeIn>
           ))}
-          {branding?.symbol && !identityImages.length ? (
-            <BrandSymbolBlock symbol={branding.symbol} />
-          ) : null}
-          {branding?.colors?.length ? <BrandColorPalette colors={branding.colors} /> : null}
-          {branding?.typography ? <BrandTypographyBlock typography={branding.typography} /> : null}
-          {branding?.personality?.length ? (
-            <BrandPersonalityList personality={branding.personality} />
-          ) : null}
+          {!identityImages.length && (
+            <>
+              {branding?.symbol ? <BrandSymbolBlock symbol={branding.symbol} /> : null}
+              {branding?.colors?.length ? <BrandColorPalette colors={branding.colors} /> : null}
+              {branding?.typography ? <BrandTypographyBlock typography={branding.typography} /> : null}
+              {branding?.personality?.length ? (
+                <BrandPersonalityList personality={branding.personality} />
+              ) : null}
+            </>
+          )}
         </div>
       ) : null}
     </SectionAnchor>

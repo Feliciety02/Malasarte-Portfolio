@@ -79,10 +79,16 @@ export function CollaboratorsSection({ project, sectionNumber }: SectionProps) {
                 <motion.button
                   key={item.name}
                   type="button"
-                  onClick={() => setActive(index)}
+                  onClick={() => {
+                    if (center && item.url) {
+                      window.open(item.url, "_blank", "noopener noreferrer");
+                    } else if (!center) {
+                      setActive(index);
+                    }
+                  }}
                   className={cn(
                     "absolute left-1/2 top-1/2 w-[10.5rem] -translate-x-1/2 -translate-y-1/2 rounded-[1.8rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04))] text-left shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:w-[13rem] lg:w-[16rem]",
-                    center ? "cursor-default" : "cursor-pointer",
+                    center ? (item.url ? "cursor-pointer" : "cursor-default") : "cursor-pointer",
                   )}
                   animate={{
                     x: getCardX(normalizedOffset, isVisible, isCompact),
@@ -105,7 +111,13 @@ export function CollaboratorsSection({ project, sectionNumber }: SectionProps) {
                     zIndex: isVisible ? 30 - depth : 0,
                     transformStyle: "preserve-3d",
                   }}
-                  aria-label={center ? `${item.name} is centered` : `Focus ${item.name}`}
+                  aria-label={
+                    center && item.url
+                      ? `Open ${item.name}'s portfolio`
+                      : center
+                        ? `${item.name} is centered`
+                        : `Focus ${item.name}`
+                  }
                 >
                   <div
                     className={cn(

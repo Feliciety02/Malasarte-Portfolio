@@ -2,6 +2,7 @@ import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.png";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.png";
+import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.png";
 
 export function CredentialsSection() {
   return (
@@ -10,9 +11,26 @@ export function CredentialsSection() {
         <SectionHeader
           eyebrow="Credentials"
           title="Licenses & Certifications"
-          description="Verified IT Specialist certifications you can verify on Credly."
+          description="Verified credentials you can verify on Credly."
         />
-        <div className="mt-10 grid gap-8 sm:grid-cols-2">
+        <div className="mt-10 grid gap-8 sm:grid-cols-3">
+          <a
+            href="https://www.credly.com/badges/f3f47c04-f607-4740-9b08-1131f9c2a77f/public_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="metal-panel group flex flex-col items-center gap-5 rounded-xl p-6 text-center transition-all duration-300 hover:scale-[1.02] sm:p-8"
+          >
+            <img
+              src={credentialAiSkillsFest}
+              alt="AI Skills Fest 2026"
+              className="h-56 w-56 shrink-0"
+              loading="lazy"
+            />
+            <div>
+              <p className="font-display text-lg font-bold">AI Skills Fest 2026</p>
+              <p className="mt-1 text-sm text-muted-foreground">Click to verify on Credly</p>
+            </div>
+          </a>
           <a
             href="https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf962/public_url"
             target="_blank"

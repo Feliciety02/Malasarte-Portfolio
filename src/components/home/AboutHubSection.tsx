@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.png";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.png";
+import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.png";
 import cceCsgLogo from "@/assets/about/CCE CSG.svg";
 import dostAgilasAssociationLogo from "@/assets/about/DOST Agilas Association.svg";
 import notreDameOfEsperanzaLogo from "@/assets/about/Notre Dame of Esperanza.svg";
@@ -80,8 +81,8 @@ const aboutItems: AboutItem[] = [
   {
     id: "certifications",
     label: "Certifications",
-    summary: "2 Credentials",
-    blurb: "Technical credentials that support practical work in databases and cybersecurity.",
+    summary: "3 Credentials",
+    blurb: "Technical credentials in databases, cybersecurity, and AI skills.",
     icon: BadgeCheck,
   },
 ];
@@ -158,6 +159,11 @@ const educationGroups = [
 ];
 
 const certificationCards = [
+  {
+    title: "AI Skills Fest 2026",
+    href: "https://www.credly.com/badges/f3f47c04-f607-4740-9b08-1131f9c2a77f/public_url",
+    image: credentialAiSkillsFest,
+  },
   {
     title: "IT Specialist - Databases",
     href: "https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf462/public_url",
