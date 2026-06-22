@@ -165,17 +165,17 @@ function mapProject(row: PortfolioProjectRow): Project {
     client: useLocalIdentity ? base.client : (row.client ?? base.client),
     overview: useLocalIdentity ? base.overview : (row.overview ?? base.overview),
     outcome: useLocalIdentity ? base.outcome : (row.outcome ?? base.outcome),
-    gallery:
-      !useLocalGallery && galleryRows.length
-        ? galleryRows.map((item, index) => ({
-            ...base.gallery[index],
-            color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
-            label: item.label,
-            imageUrl: item.image_url ?? undefined,
-            ratio: item.ratio ?? "square",
-            note: item.note ?? "",
-          }))
-        : base.gallery,
+      gallery:
+        !useLocalGallery && galleryRows.length
+          ? galleryRows.map((item, index) => ({
+              ...base.gallery[index],
+              color: item.color ?? "from-fuchsia-500/50 to-violet-500/30",
+              label: item.label,
+              imageUrl: item.image_url ?? base.gallery[index]?.imageUrl,
+              ratio: item.ratio ?? "square",
+              note: item.note ?? "",
+            }))
+          : base.gallery,
   };
 }
 

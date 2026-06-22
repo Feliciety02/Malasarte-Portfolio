@@ -1482,7 +1482,7 @@ export const projects: Project[] = [
     ],
     collaborators: [
       "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Front End Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
       "Jorge Macabenta | Backend Developer | | https://portfolio-school-fawn.vercel.app/#projects",
     ],
     focusAreas: [
@@ -1823,8 +1823,8 @@ export const projects: Project[] = [
       { value: "1", label: "Reusable system" },
     ],
     collaborators: [
-      "Joevan Capote | Project Leader / QA Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | UI/UX Designer | /placeholders/collaborators/collab-02.png",
+      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
+      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
     ],
     focusAreas: [
       {
@@ -1941,7 +1941,7 @@ export const projects: Project[] = [
     ],
     collaborators: [
       "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Full Stack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
     ],
     focusAreas: [
       {

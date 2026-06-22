@@ -299,11 +299,7 @@ function BentoCard({ tile, slot, tileRatio, isLoaded, onClick }: BentoCardProps)
           <div className="pointer-events-none absolute right-2 top-2 rounded-full border border-white/10 bg-black/50 p-1.5 text-white/70 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 sm:right-3 sm:top-3 sm:p-2">
             <ZoomIn size={14} />
           </div>
-          <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-4">
-            <p className="truncate text-left text-xs font-medium text-white/90 drop-shadow-lg sm:text-sm">
-              {tile.item.label}
-            </p>
-          </div>
+
           <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
         </button>
       )}
