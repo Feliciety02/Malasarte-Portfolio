@@ -38,7 +38,7 @@ export type TemplateConfig = {
   routeBase: string;
   routeCategory: RouteCategory;
   accent: string;
-  galleryVariant: "grid" | "masonry" | "stack" | "documents";
+  galleryVariant: "grid" | "masonry" | "stack" | "documents" | "bento";
   workspace: WorkspaceVariant;
   sections: SectionComponentDef[];
 };

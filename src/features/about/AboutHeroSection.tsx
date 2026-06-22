@@ -15,7 +15,7 @@ export function AboutHeroSection() {
               <img
                 src={aboutFeImage}
                 alt="Fe Anne Malasarte portrait"
-                className="satin-photo absolute inset-x-0 bottom-0 mx-auto h-[108%] w-auto max-w-none object-contain object-bottom"
+                className="satin-photo absolute inset-0 h-full w-full max-w-none object-cover object-[center_22%]"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-background/42 via-transparent to-white/8" />

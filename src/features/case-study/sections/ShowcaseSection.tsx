@@ -5,6 +5,14 @@ import type { SectionProps } from "../types/templates";
 
 export function ShowcaseSection({ project, sectionNumber, openLightbox }: SectionProps) {
   const isWriting = project.kind === "writing";
+  const isBranding = project.kind === "branding";
+
+  let variant: "grid" | "masonry" | "stack" | "documents" | "bento" = "grid";
+  if (isWriting) {
+    variant = "documents";
+  } else if (isBranding) {
+    variant = "bento";
+  }
 
   return (
     <SectionAnchor id="showcase">
@@ -17,11 +25,7 @@ export function ShowcaseSection({ project, sectionNumber, openLightbox }: Sectio
       {isWriting && project.flipbookEmbed ? (
         <FlipbookEmbed embed={project.flipbookEmbed} />
       ) : openLightbox ? (
-        <GalleryGrid
-          project={project}
-          openLightbox={openLightbox}
-          variant={isWriting ? "documents" : "grid"}
-        />
+        <GalleryGrid project={project} openLightbox={openLightbox} variant={variant} />
       ) : null}
     </SectionAnchor>
   );

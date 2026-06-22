@@ -104,39 +104,21 @@ export function CaseStudyHero({ project }: { project: Project }) {
       />
       <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 md:pb-36 md:pt-44">
         <div className="max-w-6xl">
-        {/* Tags */}
-        <div className="flex flex-wrap items-center gap-3">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <TagPill className="static" dotClassName={theme.dot}>
-              {project.cat}
-            </TagPill>
-          </motion.div>
-          <motion.span
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/35"
-          >
-            {project.year}
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/25"
-          >
-            {project.role}
-          </motion.span>
-        </div>
+        {/* Category pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <TagPill className="static" dotClassName={theme.dot}>
+            {project.cat}
+          </TagPill>
+        </motion.div>
 
         {/* Title - word by word */}
         <motion.h1
           style={prefersReducedMotion ? undefined : { y: titleY }}
-          className="relative mt-8 max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+          className="relative mt-12 max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
         >
           <WordReveal text={project.title} delay={0.2} />
         </motion.h1>
@@ -146,7 +128,7 @@ export function CaseStudyHero({ project }: { project: Project }) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 max-w-4xl text-lg leading-8 text-muted-foreground md:text-xl md:leading-9"
+          className="mt-10 max-w-4xl text-lg leading-8 text-muted-foreground md:text-xl md:leading-9"
         >
           {project.desc}
         </motion.p>

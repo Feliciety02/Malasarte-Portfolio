@@ -4,6 +4,7 @@ import type { Project, ProjectFlipbookEmbed, ProjectGalleryItem } from "@/data/p
 import { getProjectGalleryImage } from "@/data/projectImages";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "./SectionWrappers";
+import { BentoShowcase } from "./BentoShowcase";
 
 function GalleryPreviewImage({ project, item }: { project: Project; item: ProjectGalleryItem }) {
   const image = getProjectGalleryImage(project, item);
@@ -156,9 +157,12 @@ export function GalleryGrid({
 }: {
   project: Project;
   openLightbox: (i: number) => void;
-  variant?: "grid" | "masonry" | "stack" | "documents";
+  variant?: "grid" | "masonry" | "stack" | "documents" | "bento";
 }) {
   const items = project.gallery;
+  if (variant === "bento") {
+    return <BentoShowcase project={project} openLightbox={openLightbox} />;
+  }
   if (variant === "stack") {
     return <Slideshow items={items} project={project} openLightbox={openLightbox} />;
   }

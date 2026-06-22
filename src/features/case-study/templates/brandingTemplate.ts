@@ -15,7 +15,7 @@ export const brandingTemplate: TemplateConfig = {
   routeBase: "/works/branding",
   routeCategory: "branding",
   accent: "from-amber-400/40 via-rose-500/20 to-transparent",
-  galleryVariant: "masonry",
+  galleryVariant: "bento",
   workspace: "none",
   sections: [
     { id: "overview", label: "Overview", component: OverviewSection },

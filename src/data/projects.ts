@@ -7,6 +7,11 @@ import blueCollarMockup02 from "@/assets/projects/mockups/blue collars mockup 02
 import blueCollarMockup03 from "@/assets/projects/mockups/blue collars mockup 03.png";
 import blueCollarMockup04 from "@/assets/projects/mockups/blue collars mockup 04.png";
 import blueCollarMockup05 from "@/assets/projects/mockups/blue collars mockup 05.png";
+import lianMonleyMockup01 from "@/assets/projects/mockups/lianmonley01.png";
+import lianMonleyMockup02 from "@/assets/projects/mockups/lianmonley02.png";
+import lianMonleyMockup03 from "@/assets/projects/mockups/lianmonley03.png";
+import lianMonleyMockup04 from "@/assets/projects/mockups/lianmonley04.png";
+import lianMonleyMockup05 from "@/assets/projects/mockups/lianmonley05.png";
 import dostLaonLogoCover from "@/assets/projects/covers/DOST Laon Logo.svg";
 import lianMonleyBrandKitCover from "@/assets/projects/covers/Lian Monley Brand Kit.svg";
 import lianMonleyLogoIterationsCover from "@/assets/projects/covers/Lian Monley Logo Iterations.png";
@@ -642,21 +647,38 @@ export const projects: Project[] = [
     gallery: [
       {
         color: "from-rose-500/50 to-pink-500/30",
-        label: "Identity Mark",
-        ratio: "square",
-        note: "Placeholder for primary logo and personal monogram.",
+        label: "Brand Kit Overview",
+        ratio: "featured",
+        note: "Complete brand identity system with monogram, palette, and typography.",
+        imageUrl: lianMonleyMockup01,
       },
       {
         color: "from-pink-500/40 to-fuchsia-500/30",
-        label: "Profile System",
+        label: "Social Media Presence",
         ratio: "wide",
-        note: "Placeholder for social headers and branded profile assets.",
+        note: "Profile visuals and branded content templates for social platforms.",
+        imageUrl: lianMonleyMockup02,
       },
       {
         color: "from-amber-300/30 to-rose-400/30",
-        label: "Presentation Cover",
+        label: "Brand Collateral",
         ratio: "tall",
-        note: "Placeholder for deck and personal introduction layouts.",
+        note: "Business cards, stationery, and consultation materials.",
+        imageUrl: lianMonleyMockup03,
+      },
+      {
+        color: "from-violet-500/40 to-pink-500/30",
+        label: "Digital Presentation",
+        ratio: "square",
+        note: "Deck covers and personal introduction layouts.",
+        imageUrl: lianMonleyMockup04,
+      },
+      {
+        color: "from-sky-400/40 to-rose-500/30",
+        label: "Wellness Content",
+        ratio: "square",
+        note: "Educational content and consultation touchpoints.",
+        imageUrl: lianMonleyMockup05,
       },
     ],
     nextProjectSlug: "pietyl-lpg",
@@ -908,7 +930,7 @@ export const projects: Project[] = [
     impact: [
       { value: "1", label: "Identity system" },
       { value: "5", label: "Brand mockups" },
-      { value: "3", label: "Logo explorations" },
+      { value: "1", label: "Logo exploration" },
     ],
     focusAreas: [
       {
@@ -2792,7 +2814,7 @@ export const projects: Project[] = [
   {
     slug: "sakuragi-tailoring-shop-management-system",
     title: "Sakuragi Tailoring Shop Management System",
-    imageTitle: "Sakuragi Tailoring Shop Management System",
+    imageTitle: "sakuragi tailoring shop hero page",
     cardSize: "medium",
     cat: "Software Development",
     kind: "frontend",
