@@ -1,7 +1,7 @@
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, type Easing, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import logoFe from "@/assets/logo-fe.png";
+import logoFe from "@/assets/logo.webp";
 
 const ROUTE_SHOW_DELAY_MS = 220;
 const MIN_VISIBLE_MS = 450;

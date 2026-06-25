@@ -1,26 +1,51 @@
-import adoptifyLogoCover from "@/assets/projects/covers/Adoptify Logo.svg";
-import blueCollarBuildersLogoCover from "@/assets/projects/covers/Blue Collar Builders Logo.svg";
-import blueCollarBrandKit01 from "@/assets/projects/covers/blue collar brandkit01.svg";
-import blueCollarBrandKit02 from "@/assets/projects/covers/blue collar brandkit02.svg";
-import blueCollarMockup01 from "@/assets/projects/mockups/blue collars mockup 01.png";
-import blueCollarMockup02 from "@/assets/projects/mockups/blue collars mockup 02.png";
-import blueCollarMockup03 from "@/assets/projects/mockups/blue collars mockup 03.png";
-import blueCollarMockup04 from "@/assets/projects/mockups/blue collars mockup 04.png";
-import blueCollarMockup05 from "@/assets/projects/mockups/blue collars mockup 05.png";
-import lianMonleyMockup01 from "@/assets/projects/mockups/lianmonley01.png";
-import lianMonleyMockup02 from "@/assets/projects/mockups/lianmonley02.png";
-import lianMonleyMockup03 from "@/assets/projects/mockups/lianmonley03.png";
-import lianMonleyMockup04 from "@/assets/projects/mockups/lianmonley04.png";
-import lianMonleyMockup05 from "@/assets/projects/mockups/lianmonley05.png";
-import dostLaonLogoCover from "@/assets/projects/covers/DOST Laon Logo.svg";
-import lianMonleyBrandKitCover from "@/assets/projects/covers/Lian Monley Brand Kit.svg";
-import lianMonleyLogoIterationsCover from "@/assets/projects/covers/Lian Monley Logo Iterations.png";
-import odaraBrandKitCover from "@/assets/projects/covers/Odara Brand Kit.png";
-import pietylBrandStripCover from "@/assets/projects/covers/Pieytl Branding.svg";
-import pietylDigiLpgLogoCover from "@/assets/projects/covers/Pietyl DigiLPG Logo.svg";
-import sidlacCoLogoCover from "@/assets/projects/covers/Sidlac Co Logo.svg";
-import trichomendBrandKitCover from "@/assets/projects/covers/Trichomend Brand Kit.png";
-import umunityLogoCover from "@/assets/projects/covers/UMunity Logo.svg";
+import adoptifyLogoCover from "@/assets/projects/covers/adoptify-logo.svg";
+import blueCollarBuildersLogoCover from "@/assets/projects/covers/blue-collar-builders-logo.svg";
+import blueCollarBrandKit01 from "@/assets/projects/covers/blue-collar-brandkit01.svg";
+import blueCollarBrandKit02 from "@/assets/projects/covers/blue-collar-brandkit02.svg";
+import blueCollarMockup01 from "@/assets/projects/mockups/blue-collars-mockup-01.webp";
+import blueCollarMockup02 from "@/assets/projects/mockups/blue-collars-mockup-02.webp";
+import blueCollarMockup03 from "@/assets/projects/mockups/blue-collars-mockup-03.webp";
+import blueCollarMockup04 from "@/assets/projects/mockups/blue-collars-mockup-04.webp";
+import blueCollarMockup05 from "@/assets/projects/mockups/blue-collars-mockup-05.webp";
+import lianMonleyMockup01 from "@/assets/projects/mockups/lianmonley01.webp";
+import lianMonleyMockup02 from "@/assets/projects/mockups/lianmonley02.webp";
+import lianMonleyMockup03 from "@/assets/projects/mockups/lianmonley03.webp";
+import lianMonleyMockup04 from "@/assets/projects/mockups/lianmonley04.webp";
+import lianMonleyMockup05 from "@/assets/projects/mockups/lianmonley05.webp";
+import pietylMockup01 from "@/assets/projects/mockups/pietyl-mockup-01.webp";
+import pietylMockup02 from "@/assets/projects/mockups/pietyl-mockup-02.webp";
+import pietylMockup03 from "@/assets/projects/mockups/pietyl-mockup-03.webp";
+import pietylMockup04 from "@/assets/projects/mockups/pietyl-mockup-04.webp";
+import pietylMockup05 from "@/assets/projects/mockups/pietyl-mockup-05.webp";
+import dostLaonLogoCover from "@/assets/projects/covers/dost-laon-logo.svg";
+import lianMonleyBrandKitCover from "@/assets/projects/covers/lian-monley-brand-kit.svg";
+import lianMonleyLogoIterationsCover from "@/assets/projects/covers/lian-monley-logo-iterations.webp";
+import odaraBrandKitCover from "@/assets/projects/covers/odara-brand-kit.webp";
+import pietylBrandStripCover from "@/assets/projects/covers/pieytl-branding.svg";
+import pietylDigiLpgLogoCover from "@/assets/projects/covers/pietyl-digilpg-logo.svg";
+import sidlacCoLogoCover from "@/assets/projects/covers/sidlac-co-logo.svg";
+import trichomendBrandKitCover from "@/assets/projects/covers/trichomend-brand-kit.webp";
+import umunityLogoCover from "@/assets/projects/covers/umunity-logo.svg";
+import joevanCapoteImg from "@/assets/collaborators/joevan-capote.svg";
+import feAnneMalasarteImg from "@/assets/collaborators/fe-anne-malasarte.webp";
+import jaymarkBurladoImg from "@/assets/collaborators/jaymark-burlado.webp";
+import jayLaoIiiImg from "@/assets/collaborators/jay-lao-iii.webp";
+
+const collaboratorImageMap: Record<string, string> = {
+  "joevan-capote.svg": joevanCapoteImg,
+  "fe-anne-malasarte.webp": feAnneMalasarteImg,
+  "jaymark-burlado.webp": jaymarkBurladoImg,
+  "jay-lao-iii.webp": jayLaoIiiImg,
+};
+
+function resolveCollaboratorImageUrl(imageUrl: string | undefined): string | undefined {
+  if (!imageUrl) return undefined;
+  const filename = imageUrl.split("/").pop();
+  if (filename && collaboratorImageMap[filename]) {
+    return collaboratorImageMap[filename];
+  }
+  return imageUrl;
+}
 
 export type ProjectCategory =
   | "UI/UX Design"
@@ -212,14 +237,9 @@ export type ProjectCollaborator = {
 
 const defaultProjectCollaborators: ProjectCollaborator[] = [
   {
-    name: "Joevan Capote",
-    role: "Software Developer",
-    imageUrl: "/placeholders/collaborators/collab-01.svg",
-  },
-  {
     name: "Fe Anne Malasarte",
     role: "UI/UX Designer",
-    imageUrl: "/placeholders/collaborators/collab-02.png",
+    imageUrl: feAnneMalasarteImg,
   },
 ];
 
@@ -888,19 +908,36 @@ export const projects: Project[] = [
         color: "from-cyan-400/55 to-teal-500/30",
         label: "Primary Identity",
         ratio: "square",
-        note: "Placeholder for the LPG cylinder + flame mark and full lockup.",
+        note: "LPG cylinder + flame mark and full brand lockup on digital display.",
+        imageUrl: pietylMockup01,
       },
       {
         color: "from-teal-500/40 to-sky-500/30",
-        label: "Color System",
+        label: "Brand Collateral",
         ratio: "wide",
-        note: "Placeholder for Canary, Federal Blue, and White palette applications.",
+        note: "Mockup of branded merchandise and packaging applications.",
+        imageUrl: pietylMockup02,
       },
       {
         color: "from-cyan-500/40 to-blue-500/30",
-        label: "Vehicle & Signage",
+        label: "Stationery",
         ratio: "tall",
-        note: "Placeholder for transport and field-use branding mockups.",
+        note: "Business card, letterhead, and envelope branding mockup.",
+        imageUrl: pietylMockup03,
+      },
+      {
+        color: "from-teal-500/40 to-cyan-500/30",
+        label: "Digital Presence",
+        ratio: "square",
+        note: "Website and mobile interface brand application.",
+        imageUrl: pietylMockup04,
+      },
+      {
+        color: "from-cyan-400/40 to-sky-500/30",
+        label: "Vehicle & Signage",
+        ratio: "wide",
+        note: "Transport and field-use branding mockup.",
+        imageUrl: pietylMockup05,
       },
     ],
     nextProjectSlug: "sidlac-co-branding",
@@ -1228,7 +1265,8 @@ export const projects: Project[] = [
       ],
     },
     collaborators: [
-      "Jay Lao III | Backend Developer | | https://blackhole-jay.vercel.app",
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Jay Lao III | Backend Developer | /assets/collaborators/jay-lao-iii.webp | https://blackhole-jay.vercel.app",
     ],
     focusAreas: [
       {
@@ -1345,6 +1383,9 @@ export const projects: Project[] = [
       { value: "1", label: "System design" },
       { value: "6+", label: "Interface modules" },
       { value: "30+", label: "Years of business legacy" },
+    ],
+    collaborators: [
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
     focusAreas: [
       {
@@ -1481,8 +1522,7 @@ export const projects: Project[] = [
       { value: "30+", label: "Years of business legacy" },
     ],
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | Fullstack Developer | /assets/collaborators/fe-anne-malasarte.webp",
       "Jorge Macabenta | Backend Developer | | https://portfolio-school-fawn.vercel.app/#projects",
     ],
     focusAreas: [
@@ -1595,6 +1635,9 @@ export const projects: Project[] = [
       { value: "1", label: "Core platform concept" },
       { value: "40+", label: "Interface layouts" },
       { value: "3", label: "Primary user flows" },
+    ],
+    collaborators: [
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
     focusAreas: [
       {
@@ -1823,8 +1866,7 @@ export const projects: Project[] = [
       { value: "1", label: "Reusable system" },
     ],
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
     focusAreas: [
       {
@@ -1940,8 +1982,7 @@ export const projects: Project[] = [
       { value: "100%", label: "Responsive coverage" },
     ],
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
     focusAreas: [
       {
@@ -2121,28 +2162,28 @@ export const projects: Project[] = [
       {
         color: "from-pink-500/50 to-orange-400/30",
         label: "UMSDC Brand Graphic",
-        assetPath: "umsdc-publication-materials-and-assets/umsdc 1",
+        assetPath: "umsdc-publication-materials-and-assets/umsdc-1",
         ratio: "square",
         note: "Organization graphic introducing the UMSDC visual identity.",
       },
       {
         color: "from-rose-500/40 to-pink-500/30",
         label: "Leadership Profile Frame",
-        assetPath: "umsdc-publication-materials-and-assets/umsdc 2",
+        assetPath: "umsdc-publication-materials-and-assets/umsdc-2",
         ratio: "tall",
         note: "Portrait profile template for organization leadership features.",
       },
       {
         color: "from-orange-400/40 to-amber-400/30",
         label: "Exam Campaign Post",
-        assetPath: "umsdc-publication-materials-and-assets/umsdc 3",
+        assetPath: "umsdc-publication-materials-and-assets/umsdc-3",
         ratio: "square",
         note: "Student-focused social post for the examination period.",
       },
       {
         color: "from-cyan-500/40 to-blue-500/30",
         label: "Who Knows Wednesday",
-        assetPath: "umsdc-publication-materials-and-assets/umsdc 4",
+        assetPath: "umsdc-publication-materials-and-assets/umsdc-4",
         ratio: "square",
         note: "Interactive weekly quiz template for community engagement.",
       },
@@ -2564,49 +2605,49 @@ export const projects: Project[] = [
       "The Digital Income now has a polished visual content series with seven hero graphics built around a consistent system, ready for social media publishing and future campaign expansion.",
     gallery: [
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 1",
+        assetPath: "the-digital-income/the-digital-income-hero-image-1",
         color: "from-amber-400/45 to-green-500/30",
         label: "Hero Image 1",
         ratio: "wide",
         note: "Hero visual introducing digital income concepts with bold typography and warm gradient treatment.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 2",
+        assetPath: "the-digital-income/the-digital-income-hero-image-2",
         color: "from-green-500/40 to-teal-500/30",
         label: "Hero Image 2",
         ratio: "square",
         note: "Content graphic focusing on passive income strategies and financial growth messaging.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 3",
+        assetPath: "the-digital-income/the-digital-income-hero-image-3",
         color: "from-amber-400/40 to-orange-500/30",
         label: "Hero Image 3",
         ratio: "wide",
         note: "Online business themed layout with clean composition and motivational headline hierarchy.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 4",
+        assetPath: "the-digital-income/the-digital-income-hero-image-4",
         color: "from-teal-500/40 to-cyan-500/30",
         label: "Hero Image 4",
         ratio: "square",
         note: "Wealth-building visual combining metaphor-driven imagery with clear call-to-action framing.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 5",
+        assetPath: "the-digital-income/the-digital-income-hero-image-5",
         color: "from-amber-400/40 to-yellow-500/30",
         label: "Hero Image 5",
         ratio: "wide",
         note: "Digital freedom concept graphic with modern typography and aspirational visual language.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 6",
+        assetPath: "the-digital-income/the-digital-income-hero-image-6",
         color: "from-emerald-500/40 to-amber-400/30",
         label: "Hero Image 6",
         ratio: "square",
         note: "Financial literacy hero highlighting smart money management and income growth principles.",
       },
       {
-        assetPath: "the-digital-income/The Digital Income - Hero Image 7",
+        assetPath: "the-digital-income/the-digital-income-hero-image-7",
         color: "from-amber-400/40 to-rose-500/30",
         label: "Hero Image 7",
         ratio: "square",
@@ -2637,21 +2678,21 @@ export const projects: Project[] = [
     cardSize: "medium",
     gallery: [
       {
-        assetPath: "pyconf-mini-davao-2024/Community Partner ACCESS",
+        assetPath: "pyconf-mini-davao-2024/community-partner-access",
         color: "from-yellow-400/40 to-blue-500/30",
         label: "Community Partner",
         ratio: "wide",
         note: "Community partner acknowledgment graphic for the PyConF Mini event.",
       },
       {
-        assetPath: "pyconf-mini-davao-2024/Group 256",
+        assetPath: "pyconf-mini-davao-2024/group-256",
         color: "from-yellow-400/40 to-blue-500/30",
         label: "Event Graphic 1",
         ratio: "square",
         note: "Social media graphic for PyConF Mini Davao 2024.",
       },
       {
-        assetPath: "pyconf-mini-davao-2024/Group 257",
+        assetPath: "pyconf-mini-davao-2024/group-257",
         color: "from-yellow-400/40 to-blue-500/30",
         label: "Event Graphic 2",
         ratio: "square",
@@ -2665,14 +2706,14 @@ export const projects: Project[] = [
         note: "Branded frame template for PyConF Mini social content.",
       },
       {
-        assetPath: "pyconf-mini-davao-2024/Group 258",
+        assetPath: "pyconf-mini-davao-2024/group-258",
         color: "from-yellow-400/40 to-blue-500/30",
         label: "Event Graphic 3",
         ratio: "square",
         note: "Additional event graphic for the PyConF Mini series.",
       },
       {
-        assetPath: "pyconf-mini-davao-2024/pyconf davao",
+        assetPath: "pyconf-mini-davao-2024/pyconf-davao",
         color: "from-yellow-400/40 to-blue-500/30",
         label: "PyConF Davao",
         ratio: "wide",
@@ -2692,35 +2733,35 @@ export const projects: Project[] = [
     cardSize: "medium",
     gallery: [
       {
-        assetPath: "google-io-extended-2025/google extend io 2025 1",
+        assetPath: "google-io-extended-2025/google-extend-io-2025-1",
         color: "from-blue-400/50 to-cyan-500/30",
         label: "Hero Graphic",
         ratio: "wide",
         note: "Hero graphic for Google I/O Extended 2025.",
       },
       {
-        assetPath: "google-io-extended-2025/google extend io 2025 2",
+        assetPath: "google-io-extended-2025/google-extend-io-2025-2",
         color: "from-cyan-500/40 to-teal-500/30",
         label: "Speaker Announcement",
         ratio: "square",
         note: "Speaker announcement graphic.",
       },
       {
-        assetPath: "google-io-extended-2025/google extend io 2025 3",
+        assetPath: "google-io-extended-2025/google-extend-io-2025-3",
         color: "from-sky-400/40 to-blue-500/30",
         label: "Schedule Poster",
         ratio: "square",
         note: "Event schedule poster graphic.",
       },
       {
-        assetPath: "google-io-extended-2025/google extend io 2025 4",
+        assetPath: "google-io-extended-2025/google-extend-io-2025-4",
         color: "from-indigo-400/40 to-violet-500/30",
         label: "Registration",
         ratio: "square",
         note: "Registration call-to-action graphic.",
       },
       {
-        assetPath: "google-io-extended-2025/google io 5",
+        assetPath: "google-io-extended-2025/google-io-5",
         color: "from-blue-500/40 to-purple-500/30",
         label: "Social Post",
         ratio: "wide",
@@ -2744,28 +2785,28 @@ export const projects: Project[] = [
       {
         color: "from-purple-500/50 to-pink-500/30",
         label: "Speaker Spotlight",
-        assetPath: "enigma/Group 406",
+        assetPath: "enigma/group-406",
         ratio: "wide",
         note: "Speaker feature graphic for the Figma Portfolio Masterclass.",
       },
       {
         color: "from-cyan-500/40 to-blue-500/30",
         label: "Event Announcement",
-        assetPath: "enigma/Figma Masterclass _ Event Posting",
+        assetPath: "enigma/figma-masterclass-event-posting",
         ratio: "square",
         note: "Main event announcement for the Webvember masterclass.",
       },
       {
         color: "from-violet-500/40 to-fuchsia-500/30",
         label: "Feedback Form",
-        assetPath: "enigma/Figma Masterclass _ Feedback Form",
+        assetPath: "enigma/figma-masterclass-feedback-form",
         ratio: "square",
         note: "Post-event feedback form graphic.",
       },
       {
         color: "from-blue-500/40 to-violet-500/30",
         label: "Program Flow",
-        assetPath: "enigma/Program Flow",
+        assetPath: "enigma/program-flow",
         ratio: "square",
         note: "Program schedule for the Figma Portfolio Masterclass.",
       },
@@ -2838,7 +2879,7 @@ export const projects: Project[] = [
       { value: "100%", label: "Order visibility" },
     ],
     collaborators: [
-      "Jay Lao III | Backend Developer | | https://blackhole-jay.vercel.app",
+      "Jay Lao III | Backend Developer | /assets/collaborators/jay-lao-iii.webp | https://blackhole-jay.vercel.app",
     ],
     focusAreas: [
       {
@@ -3212,7 +3253,7 @@ export const parseProjectCollaborator = (value: string): ProjectCollaborator | n
   return {
     name,
     role: role || undefined,
-    imageUrl: imageUrl || undefined,
+    imageUrl: resolveCollaboratorImageUrl(imageUrl || undefined),
     url: url || undefined,
   };
 };

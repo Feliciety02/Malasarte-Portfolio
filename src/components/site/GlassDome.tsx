@@ -32,7 +32,8 @@ type DragState = {
   lastTime: number;
 };
 
-const MOBILE_TOKEN_SIZE = 64;
+const MAX_TOKEN_SIZE = 64;
+const MIN_TOKEN_SIZE = 44;
 const GLOBE_PADDING = 14;
 const COLLISION_PADDING = 2;
 const POSITION_ITERATIONS = 12;
@@ -46,6 +47,8 @@ const GRAVITY = 2600;
 const SLEEP_SPEED = 6;
 const SLEEP_ANGULAR_SPEED = 0.012;
 const WAKE_SPEED = 14;
+const MAX_DOME_SIZE = 1200;
+const GLOBE_RADIUS_RATIO = 0.44;
 
 
 
@@ -78,30 +81,32 @@ export function GlassDome({
     if (!el) return;
 
     const ro = new ResizeObserver(() => {
-      const nextWidth = el.clientWidth;
-      setSize(Math.min(nextWidth, 860));
+      setSize(Math.min(el.clientWidth, MAX_DOME_SIZE));
     });
 
+    setSize(Math.min(el.clientWidth, MAX_DOME_SIZE));
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  const globeRadius = size * 0.41;
-  const isCompact = size < 640;
+  const globeRadius = size * GLOBE_RADIUS_RATIO;
+  const isCompact = size < 680;
+  const tokenSize = clamp(size * 0.1, MIN_TOKEN_SIZE, MAX_TOKEN_SIZE);
+  const iconSize = clamp(tokenSize * 0.62, 28, 40);
 
   const baseBodies = useMemo<Body[]>(
     () =>
       tools.map((tool, index) => {
-        const pillSize = MOBILE_TOKEN_SIZE;
+        const pillSize = tokenSize;
         const capRadius = pillSize * 0.5 - 1 + COLLISION_PADDING * 0.5;
         const halfLength = 0;
-        const itemsPerRow = 6;
+        const itemsPerRow = isCompact ? 4 : 6;
         const column = index % itemsPerRow;
         const row = Math.floor(index / itemsPerRow);
         const columnCenter = (itemsPerRow - 1) * 0.5;
-        const rowOffset = row % 2 === 0 ? 0 : 24;
-        const x = (column - columnCenter) * (isCompact ? 70 : 78) + rowOffset * 0.7;
-        const y = -globeRadius * 0.7 - row * 62;
+        const rowOffset = row % 2 === 0 ? 0 : tokenSize * 0.32;
+        const x = (column - columnCenter) * tokenSize * (isCompact ? 1.12 : 1.22) + rowOffset * 0.7;
+        const y = -globeRadius * 0.7 - row * tokenSize * 0.96;
 
         return {
           id: tool.slug,
@@ -123,7 +128,7 @@ export function GlassDome({
           asleep: false,
         };
       }),
-    [globeRadius, isCompact, tools],
+    [globeRadius, isCompact, tokenSize, tools],
   );
 
   const particles = useMemo(
@@ -240,7 +245,7 @@ export function GlassDome({
       ref={containerRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handleDomeLeave}
-      className="relative mx-auto aspect-square w-full"
+      className="relative mx-auto aspect-square w-full max-w-full"
       style={{ perspective: 1400 }}
     >
       <div
@@ -322,144 +327,193 @@ export function GlassDome({
           />
         </div>
 
-        <div className="absolute inset-[7%] overflow-hidden rounded-full">
-          {bodies.map((body) => {
-            const isDragging = dragRef.current?.id === body.id;
-            const isRevealed = revealedId === body.id;
+        {isCompact ? (
+          <div className="scrollbar-dome absolute inset-[7%] overflow-y-auto overflow-x-hidden rounded-full p-[clamp(0.45rem,2vw,0.9rem)]">
+            <div className="flex flex-wrap justify-center gap-[clamp(0.35rem,1.8vw,0.6rem)]">
+              {tools.map((tool) => {
+                const hasActiveCategory = activeCategory !== null;
+                const hasActiveTool = !!activeToolSlug;
+                const isInCategory = activeCategory === tool.category;
+                const isActiveTool = activeToolSlug === tool.slug;
+                const showAsActive = hasActiveCategory
+                  ? isInCategory
+                  : hasActiveTool
+                    ? isActiveTool
+                    : false;
+                const isDimmed = (hasActiveCategory || hasActiveTool) && !showAsActive;
 
-            const startLongPress = () => {
-              if (longPressTimer.current) clearTimeout(longPressTimer.current);
-              longPressTimer.current = setTimeout(() => {
-                setRevealedId(body.id);
-              }, 400);
-            };
-
-            const cancelLongPress = () => {
-              if (longPressTimer.current) {
-                clearTimeout(longPressTimer.current);
-                longPressTimer.current = null;
-              }
-              setRevealedId(null);
-            };
-
-            const hasActiveCategory = activeCategory !== null;
-            const hasActiveTool = !!activeToolSlug;
-            const isInCategory = activeCategory === body.category;
-            const isActiveTool = activeToolSlug === body.slug;
-
-            const showAsActive = hasActiveCategory
-              ? isInCategory
-              : hasActiveTool
-                ? isActiveTool
-                : false;
-            const isDimmed = (hasActiveCategory || hasActiveTool) && !showAsActive;
-
-            return (
-              <button
-                key={body.id}
-                type="button"
-                aria-label={`${body.name} tool`}
-                onPointerDown={(event) => {
-                  const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
-                  if (!local) return;
-
-                  event.currentTarget.setPointerCapture(event.pointerId);
-                  dragRef.current = {
-                    id: body.id,
-                    offsetX: local.x - body.x,
-                    offsetY: local.y - body.y,
-                    lastX: body.x,
-                    lastY: body.y,
-                    lastTime: performance.now(),
-                  };
-                  body.asleep = false;
-                  startLongPress();
-                }}
-                onPointerUp={() => {
-                  cancelLongPress();
-                }}
-                onPointerLeave={(event) => {
-                  cancelLongPress();
-                  if (onDomeToolHover && dragRef.current?.id !== body.id) {
-                    onDomeToolHover(null);
-                  }
-                }}
-                onPointerEnter={() => {
-                  if (onDomeToolHover && !dragRef.current) {
-                    onDomeToolHover(body.slug);
-                  }
-                }}
-                className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
-                style={{
-                  width: body.width,
-                  height: body.height,
-                  transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad) scale(${showAsActive ? 1.1 : 1})`,
-                  transition: isDragging
-                    ? "none"
-                    : "opacity 400ms ease, transform 400ms ease, box-shadow 400ms ease",
-                  zIndex: isRevealed ? 40 : isDragging ? 30 : showAsActive ? 20 : 10,
-                  opacity: isDimmed ? 0.5 : 1,
-                  touchAction: "none",
-                }}
-              >
-                <div
-                  className="relative flex h-full w-full items-center justify-center rounded-full border border-white/20"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
-                    boxShadow: isDragging
-                      ? "0 22px 34px rgba(0,0,0,0.32), 0 0 24px rgba(255,255,255,0.08)"
-                      : showAsActive
-                        ? `0 0 28px #${body.color}88, 0 0 70px #${body.color}44, 0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)`
-                        : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
-                    backdropFilter: "blur(14px)",
-                    WebkitBackdropFilter: "blur(14px)",
-                    filter: isDragging ? "brightness(1.06)" : "none",
-                  }}
-                >
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 rounded-full"
+                return (
+                  <button
+                    key={tool.slug}
+                    type="button"
+                    aria-label={tool.name}
+                    onPointerEnter={() => onDomeToolHover?.(tool.slug)}
+                    onPointerLeave={() => onDomeToolHover?.(null)}
+                    className="flex shrink-0 items-center justify-center rounded-full border border-white/20 outline-none"
                     style={{
+                      width: tokenSize,
+                      height: tokenSize,
                       background:
-                        "linear-gradient(135deg, rgba(255,255,255,0.14), transparent 34%, transparent 62%, rgba(255,255,255,0.06))",
-                    }}
-                  />
-                  <span
-                    className="relative grid shrink-0 place-items-center overflow-hidden rounded-lg border border-white/14"
-                    style={{
-                      width: 40,
-                      height: 40,
-                      background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
-                      boxShadow: showAsActive
-                        ? `0 0 24px #${body.color}88, 0 0 70px #${body.color}44, 0 0 18px rgba(255,255,255,0.08)`
-                        : "0 0 18px rgba(255,255,255,0.08)",
-                      transition: "box-shadow 400ms ease",
+                        "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
+                      opacity: isDimmed ? 0.5 : 1,
+                      transition: "opacity 400ms ease",
                     }}
                   >
-                    <ToolLogo
-                      slug={body.slug}
-                      name={body.name}
-                      color={body.color}
-                      isActive={showAsActive}
-                    />
-                  </span>
-
-                  {isRevealed ? (
                     <span
-                      className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/15 bg-[#1a1b1d] px-2.5 py-1 text-[11px] font-medium text-white shadow-xl"
+                      className="relative grid shrink-0 place-items-center overflow-hidden rounded-lg border border-white/14"
                       style={{
-                        backdropFilter: "blur(12px)",
+                        width: iconSize,
+                        height: iconSize,
+                        background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
                       }}
                     >
-                      {body.name}
+                      <ToolLogo slug={tool.slug} name={tool.name} color={tool.color} isActive={showAsActive} />
                     </span>
-                  ) : null}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="absolute inset-[7%] overflow-hidden rounded-full">
+            {bodies.map((body) => {
+              const isDragging = dragRef.current?.id === body.id;
+              const isRevealed = revealedId === body.id;
+
+              const startLongPress = () => {
+                if (longPressTimer.current) clearTimeout(longPressTimer.current);
+                longPressTimer.current = setTimeout(() => {
+                  setRevealedId(body.id);
+                }, 400);
+              };
+
+              const cancelLongPress = () => {
+                if (longPressTimer.current) {
+                  clearTimeout(longPressTimer.current);
+                  longPressTimer.current = null;
+                }
+                setRevealedId(null);
+              };
+
+              const hasActiveCategory = activeCategory !== null;
+              const hasActiveTool = !!activeToolSlug;
+              const isInCategory = activeCategory === body.category;
+              const isActiveTool = activeToolSlug === body.slug;
+
+              const showAsActive = hasActiveCategory
+                ? isInCategory
+                : hasActiveTool
+                  ? isActiveTool
+                  : false;
+              const isDimmed = (hasActiveCategory || hasActiveTool) && !showAsActive;
+
+              return (
+                <button
+                  key={body.id}
+                  type="button"
+                  aria-label={`${body.name} tool`}
+                  onPointerDown={(event) => {
+                    const local = getLocalPoint(event.clientX, event.clientY, containerRef.current);
+                    if (!local) return;
+
+                    event.currentTarget.setPointerCapture(event.pointerId);
+                    dragRef.current = {
+                      id: body.id,
+                      offsetX: local.x - body.x,
+                      offsetY: local.y - body.y,
+                      lastX: body.x,
+                      lastY: body.y,
+                      lastTime: performance.now(),
+                    };
+                    body.asleep = false;
+                    startLongPress();
+                  }}
+                  onPointerUp={() => {
+                    cancelLongPress();
+                  }}
+                  onPointerLeave={(event) => {
+                    cancelLongPress();
+                    if (onDomeToolHover && dragRef.current?.id !== body.id) {
+                      onDomeToolHover(null);
+                    }
+                  }}
+                  onPointerEnter={() => {
+                    if (onDomeToolHover && !dragRef.current) {
+                      onDomeToolHover(body.slug);
+                    }
+                  }}
+                  className="absolute left-1/2 top-1/2 cursor-grab rounded-full outline-none active:cursor-grabbing"
+                  style={{
+                    width: body.width,
+                    height: body.height,
+                    transform: `translate3d(${body.x - body.width / 2}px, ${body.y - body.height / 2}px, 0) rotate(${body.angle}rad) scale(${showAsActive ? 1.1 : 1})`,
+                    transition: isDragging
+                      ? "none"
+                      : "opacity 400ms ease, transform 400ms ease, box-shadow 400ms ease",
+                    zIndex: isRevealed ? 40 : isDragging ? 30 : showAsActive ? 20 : 10,
+                    opacity: isDimmed ? 0.5 : 1,
+                    touchAction: "none",
+                  }}
+                >
+                  <div
+                    className="relative flex h-full w-full items-center justify-center rounded-full border border-white/20"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08)), linear-gradient(135deg, rgba(20,22,24,0.9), rgba(44,45,47,0.58))",
+                      boxShadow: isDragging
+                        ? "0 22px 34px rgba(0,0,0,0.32), 0 0 24px rgba(255,255,255,0.08)"
+                        : showAsActive
+                          ? `0 0 28px #${body.color}88, 0 0 70px #${body.color}44, 0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)`
+                          : "0 14px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.16)",
+                      backdropFilter: "blur(14px)",
+                      WebkitBackdropFilter: "blur(14px)",
+                      filter: isDragging ? "brightness(1.06)" : "none",
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-full"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(255,255,255,0.14), transparent 34%, transparent 62%, rgba(255,255,255,0.06))",
+                      }}
+                    />
+                    <span
+                      className="relative grid shrink-0 place-items-center overflow-hidden rounded-lg border border-white/14"
+                      style={{
+                        width: iconSize,
+                        height: iconSize,
+                        background: "linear-gradient(180deg, rgba(6,7,8,0.78), rgba(38,39,41,0.54))",
+                        boxShadow: showAsActive
+                          ? `0 0 24px #${body.color}88, 0 0 70px #${body.color}44, 0 0 18px rgba(255,255,255,0.08)`
+                          : "0 0 18px rgba(255,255,255,0.08)",
+                        transition: "box-shadow 400ms ease",
+                      }}
+                    >
+                      <ToolLogo
+                        slug={body.slug}
+                        name={body.name}
+                        color={body.color}
+                        isActive={showAsActive}
+                      />
+                    </span>
+
+                    {isRevealed ? (
+                      <span
+                        className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/15 bg-[#1a1b1d] px-2.5 py-1 text-[11px] font-medium text-white shadow-xl"
+                        style={{
+                          backdropFilter: "blur(12px)",
+                        }}
+                      >
+                        {body.name}
+                      </span>
+                    ) : null}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
 import { MetallicPage } from "@/components/site/MetallicPage";
-import logoFe from "@/assets/logo-fe.png";
+import logoFe from "@/assets/logo.webp";
 import {
   buildPersonSchema,
   buildWebsiteSchema,

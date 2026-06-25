@@ -5,6 +5,7 @@ import { BrushedMetalBackground } from "@/components/site/BrushedMetalBackground
 import { LinkButton } from "@/components/site/LinkButton";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { SectionHeader } from "@/components/site/SectionHeader";
+import { AccentText } from "@/components/site/HeadingAccent";
 import { featuredSlugs } from "@/data/home";
 import { projects, type Project } from "@/data/projects";
 
@@ -18,12 +19,21 @@ function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
 
+function FeaturedProjectsTitle() {
+  return (
+    <span className="inline-flex items-baseline whitespace-nowrap [text-wrap:nowrap]">
+      <span>Featured&nbsp;</span>
+      <AccentText>Projects</AccentText>
+    </span>
+  );
+}
+
 export function ProcessPreviewSection() {
   const containerRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const procWidth = useRef(1);
 
@@ -31,19 +41,23 @@ export function ProcessPreviewSection() {
   const smoothProgress = useSpring(rawProgress, { stiffness: 35, damping: 20, mass: 0.8 });
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsCompact(window.innerWidth < 1024);
     check();
     window.addEventListener("resize", check, { passive: true });
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const reduce = prefersReducedMotion || isMobile;
+  const reduce = prefersReducedMotion || isCompact;
 
   /* ── scroll tracking ── */
   useEffect(() => {
-    if (reduce) return;
     const el = containerRef.current;
     if (!el) return;
+
+    if (reduce) {
+      el.style.height = "";
+      return;
+    }
 
     el.style.height = "200vh";
 
@@ -80,7 +94,9 @@ export function ProcessPreviewSection() {
 
     return () => {
       cancelAnimationFrame(frame);
+      el.style.height = "";
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, [reduce, rawProgress]);
 
@@ -97,7 +113,7 @@ export function ProcessPreviewSection() {
   return (
     <section ref={containerRef} className="relative">
       {/* Mobile / reduced-motion fallback */}
-      <div className={reduce ? "block" : "md:hidden"}>
+      <div className={reduce ? "block" : "lg:hidden"}>
         <div className="relative overflow-hidden px-6 py-20">
           <div className="absolute inset-0 z-0 bg-[#141516]" />
           <div className="absolute inset-0 z-0 opacity-40">
@@ -106,15 +122,18 @@ export function ProcessPreviewSection() {
           <div className="relative z-10 mx-auto max-w-2xl">
             <SectionHeader
               eyebrow="Selected Work"
-              title="Featured projects"
-              description="A selection of products, platforms, and digital experiences spanning UI/UX, development, branding, and research."
+              title={<FeaturedProjectsTitle />}
+              description="Selected product, UI, and brand work."
+              titleClassName="whitespace-nowrap [text-wrap:nowrap]"
+              descriptionClassName="max-w-none whitespace-nowrap [text-wrap:nowrap] text-[0.78rem] leading-5 sm:text-[0.88rem] sm:leading-6"
               className="mb-10"
+              contentClassName="max-w-full overflow-visible"
             />
           </div>
-          <div className="mobile-thin-x-scrollbar relative z-10 -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4">
+          <div className="relative z-10 mx-auto grid max-w-2xl gap-8">
             {featuredProjects.map((project, i) => (
-              <div key={project.slug} className="w-[82vw] shrink-0 snap-center">
-                <ProjectCard project={project} />
+              <div key={project.slug}>
+                <ProjectCard project={project} imageFit="cover" />
               </div>
             ))}
           </div>
@@ -131,7 +150,7 @@ export function ProcessPreviewSection() {
         className={
           reduce
             ? "hidden"
-            : "hidden md:block sticky top-0 z-50 h-screen flex-col overflow-hidden"
+            : "hidden lg:block sticky top-0 z-50 h-screen flex-col overflow-hidden"
         }
       >
         <div className="absolute inset-0 z-0 bg-[#141516]" />
@@ -144,11 +163,13 @@ export function ProcessPreviewSection() {
             <div className="flex items-end justify-between gap-8">
               <SectionHeader
                 eyebrow="Selected Work"
-                title="Featured projects"
-                description="A selection of products, platforms, and digital experiences spanning UI/UX, development, branding, and research."
+                title={<FeaturedProjectsTitle />}
+                description="Selected product, UI, and brand work across design and development."
+                titleClassName="whitespace-nowrap [text-wrap:nowrap]"
+                descriptionClassName="max-w-none whitespace-nowrap [text-wrap:nowrap] text-[0.55rem] leading-6"
                 className="mb-0"
-                contentClassName="max-w-xl"
-              />
+                contentClassName="max-w-none overflow-visible"
+              />  
               <LinkButton
                 to="/works"
                 variant="text"
@@ -188,7 +209,7 @@ export function ProcessPreviewSection() {
                   key={project.slug}
                   className="h-[clamp(24rem,62vh,38rem)] w-[min(62vw,32rem)] shrink-0 lg:w-[min(48vw,36rem)] xl:w-[min(42vw,38rem)]"
                 >
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} imageFit="cover" />
                 </div>
               ))}
             </motion.div>

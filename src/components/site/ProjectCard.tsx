@@ -9,13 +9,15 @@ import {
   type ProjectFilter,
 } from "@/data/projects";
 import { getRouteCategoryForProject } from "@/features/case-study/templates/templateRegistry";
+import { cn } from "@/lib/utils";
 
 type ProjectCardProps = {
   project: Project;
   activeCategory?: ProjectFilter;
+  imageFit?: "contain" | "cover";
 };
 
-export function ProjectCard({ project, activeCategory = project.cat }: ProjectCardProps) {
+export function ProjectCard({ project, activeCategory = project.cat, imageFit = "contain" }: ProjectCardProps) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, activeCategory);
   const pill = getProjectCategoryLabel(project, activeCategory);
@@ -33,7 +35,10 @@ export function ProjectCard({ project, activeCategory = project.cat }: ProjectCa
             <img
               src={coverImage}
               alt={`${title} cover`}
-              className="absolute inset-0 h-full w-full object-contain p-2 transition-transform duration-700 group-hover:scale-[1.02]"
+              className={cn(
+                "absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-[1.02]",
+                imageFit === "cover" ? "object-cover" : "object-contain p-2",
+              )}
               loading="lazy"
             />
           ) : null}

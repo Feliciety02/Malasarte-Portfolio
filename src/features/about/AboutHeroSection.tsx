@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import aboutFeImage from "@/assets/about/about-fe.png";
+import aboutFeImage from "@/assets/about/about-fe.webp";
 import { PortfolioStats } from "@/components/about/PortfolioStats";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { Reveal } from "@/components/site/Reveal";

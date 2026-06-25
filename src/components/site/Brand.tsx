@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useRef } from "react";
-import logoFe from "@/assets/logo-fe.png";
+import logoFe from "@/assets/logo.webp";
 import { cn } from "@/lib/utils";
 
 type BrandProps = {

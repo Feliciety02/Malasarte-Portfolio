@@ -1,4 +1,4 @@
-import socialPreviewImage from "@/assets/social-preview.png";
+import socialPreviewImage from "@/assets/seo-preview.webp";
 import type { Project } from "@/data/projects";
 import { socialLinks } from "@/data/site";
 import { getProjectPath } from "@/features/case-study/routes/getProjectPath";

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import logoFe from "@/assets/logo-fe.png";
+import logoFe from "@/assets/logo.webp";
 import { footerExploreLinks, socialLinks } from "@/data/site";
 
 export function Footer() {

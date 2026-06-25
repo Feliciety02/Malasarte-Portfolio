@@ -12,12 +12,12 @@ type GalleryImageRef = {
 };
 
 const projectCoverImages = import.meta.glob<string>(
-  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.png", "../assets/projects/covers/*.jpg", "../assets/projects/covers/*.jpeg"],
+  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.webp", "../assets/projects/covers/*.png", "../assets/projects/covers/*.jpg", "../assets/projects/covers/*.jpeg"],
   { eager: true, import: "default" },
 );
 
 const projectGalleryImages = import.meta.glob<string>(
-  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.png", "../assets/projects/gallery/*.jpg", "../assets/projects/gallery/*.jpeg"],
+  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.webp", "../assets/projects/gallery/*.png", "../assets/projects/gallery/*.jpg", "../assets/projects/gallery/*.jpeg"],
   {
     eager: true,
     import: "default",
@@ -37,32 +37,53 @@ const socialMediaImages = import.meta.glob<string>(
 
 const getImageTitle = (project: ProjectImageRef) => project.imageTitle ?? project.title;
 
+const normalizePath = (path: string) =>
+  path.toLowerCase().replace(/\s+/g, "-").replace(/['()_,–—]+/g, "").replace(/-+/g, "-").replace(/-\./g, ".");
+
 const getAsset = (assets: Record<string, string>, path: string) =>
   assets[`${path}.svg`] ??
+  assets[`${path}.webp`] ??
   assets[`${path}.png`] ??
   assets[`${path}.jpg`] ??
-  assets[`${path}.jpeg`] ??
-  assets[`${path}.webp`];
+  assets[`${path}.jpeg`];
+
+const tryGetAsset = (assets: Record<string, string>, path: string) => {
+  const result = getAsset(assets, path);
+  if (result) return result;
+  const normalizedPath = normalizePath(path);
+  if (normalizedPath !== path) return getAsset(assets, normalizedPath);
+  return undefined;
+};
 
 export const getProjectCoverImage = (project: ProjectImageRef) =>
-  getAsset(projectCoverImages, `../assets/projects/covers/${getImageTitle(project)}`);
+  tryGetAsset(projectCoverImages, `../assets/projects/covers/${getImageTitle(project)}`);
 
 export const getProjectGalleryImage = (project: ProjectImageRef, item: GalleryImageRef) =>
   item.imageUrl ??
   (item.assetPath
-    ? getAsset(socialMediaImages, `../assets/social/${item.assetPath}`)
+    ? tryGetAsset(socialMediaImages, `../assets/social/${item.assetPath}`)
     : undefined) ??
-  getAsset(
+  tryGetAsset(
     projectGalleryImages,
     `../assets/projects/gallery/${item.imageTitle ?? getImageTitle(project)} - ${
       item.imageLabel ?? item.label
     }`,
   );
 
-export const getSocialMediaProjectImages = (slug: string) =>
-  Object.entries(socialMediaImages)
+export const getSocialMediaProjectImages = (slug: string) => {
+  const seen = new Map<string, string>();
+  const entries = Object.entries(socialMediaImages)
     .filter(([path]) => path.includes(`/social/${slug}/`))
     .sort(([pathA], [pathB]) =>
       pathA.localeCompare(pathB, undefined, { numeric: true, sensitivity: "base" }),
-    )
-    .map(([, image]) => image);
+    );
+
+  for (const [path, image] of entries) {
+    const basePath = path.replace(/\.(webp|png|jpg|jpeg|svg)$/i, "");
+    if (!seen.has(basePath) || path.endsWith(".webp")) {
+      seen.set(basePath, image);
+    }
+  }
+
+  return Array.from(seen.values());
+};

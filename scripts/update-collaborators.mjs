@@ -13,23 +13,20 @@ const UPDATES = [
   {
     slug: "pietyl-digilpg-web",
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | Fullstack Developer | /assets/collaborators/fe-anne-malasarte.webp",
       "Jorge Macabenta | Backend Developer | | https://portfolio-school-fawn.vercel.app/#projects",
     ],
   },
   {
     slug: "umunity",
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
   },
   {
     slug: "umunity-web",
     collaborators: [
-      "Joevan Capote | Quality Assurance Engineer | /placeholders/collaborators/collab-01.svg",
-      "Fe Anne Malasarte | Fullstack Developer | /placeholders/collaborators/collab-02.png",
+      "Fe Anne Malasarte | Fullstack Developer | /assets/collaborators/fe-anne-malasarte.webp",
     ],
   },
 ];

@@ -9,19 +9,21 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.png";
-import credentialDatabases from "@/assets/about/badges/it-specialist-databases.png";
-import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.png";
-import cceCsgLogo from "@/assets/about/CCE CSG.svg";
-import dostAgilasAssociationLogo from "@/assets/about/DOST Agilas Association.svg";
-import notreDameOfEsperanzaLogo from "@/assets/about/Notre Dame of Esperanza.svg";
-import umsdcLogo from "@/assets/about/UM Student Developers Community (UMSDC).svg";
-import universityOfMindanaoLogo from "@/assets/about/University of Mindanao.svg";
+import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.webp";
+import credentialDatabases from "@/assets/about/badges/it-specialist-databases.webp";
+import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.webp";
+import credentialCloudSIEM from "@/assets/about/badges/cloud-security-engineer-cloud-siem-learning-path.png";
+import cceCsgLogo from "@/assets/about/org-logos/cce-csg.svg";
+import dostAgilasAssociationLogo from "@/assets/about/org-logos/dost-agilas-association.svg";
+import notreDameOfEsperanzaLogo from "@/assets/about/org-logos/notre-dame-of-esperanza.svg";
+import umsdcLogo from "@/assets/about/org-logos/um-student-developers-community-umsdc.svg";
+import universityOfMindanaoLogo from "@/assets/about/org-logos/university-of-mindanao.svg";
 import { GlassDome } from "@/components/site/GlassDome";
 import { GitHubContributions } from "@/components/site/GitHubContributions";
 import { Reveal } from "@/components/site/Reveal";
 import { accentLastWord } from "@/components/site/HeadingAccent";
 import { tools, type ToolCategory } from "@/data/home";
+import { useContainerSize } from "@/hooks/useContainerSize";
 
 type AboutHubSectionProps = {
   reducedMotion: boolean;
@@ -82,7 +84,7 @@ const aboutItems: AboutItem[] = [
     id: "certifications",
     label: "Certifications",
     summary: "3 Credentials",
-    blurb: "Technical credentials in databases, cybersecurity, and AI skills.",
+    blurb: "Technical credentials in databases, cybersecurity, and cloud security.",
     icon: BadgeCheck,
   },
 ];
@@ -160,11 +162,6 @@ const educationGroups = [
 
 const certificationCards = [
   {
-    title: "AI Skills Fest 2026",
-    href: "https://www.credly.com/badges/f3f47c04-f607-4740-9b08-1131f9c2a77f/public_url",
-    image: credentialAiSkillsFest,
-  },
-  {
     title: "IT Specialist - Databases",
     href: "https://www.credly.com/badges/b0b94a15-957c-4196-99cc-e3cfbf9cf462/public_url",
     image: credentialDatabases,
@@ -173,6 +170,11 @@ const certificationCards = [
     title: "IT Specialist - Cybersecurity",
     href: "https://www.credly.com/badges/1f4a95a9-9918-44e9-9073-f81501ed452b/public_url",
     image: credentialCybersecurity,
+  },
+  {
+    title: "Cloud Security Engineer - Cloud SIEM Learning Path",
+    href: "https://www.credly.com/badges/41c3cad3-a398-4640-8cd1-754255583d8e/public_url",
+    image: credentialCloudSIEM,
   },
 ];
 
@@ -330,6 +332,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
   const [clickedCategory, setClickedCategory] = useState<ToolCategory | null>(null);
   const [hoveredCategory, setHoveredCategory] = useState<ToolCategory | null>(null);
   const [hoveredToolSlug, setHoveredToolSlug] = useState<string | null>(null);
+  const [githubSectionRef, githubSectionSize] = useContainerSize<HTMLDivElement>();
   const activeCategory = hoveredCategory ?? clickedCategory;
   const activeToolSlug = hoveredCategory || clickedCategory ? null : hoveredToolSlug;
 
@@ -440,7 +443,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
               ["10+", "Projects Built"],
               ["3+", "Years Designing"],
               ["5+", "Organizations Led"],
-              ["2", "Industry Certifications"],
+              ["3", "Industry Certifications"],
             ].map(([value, label]) => (
               <div
                 key={label}
@@ -573,24 +576,33 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
         <div className="mt-20 pt-8">
           <div className="grid gap-24">
             <Reveal>
-              <span className="metal-kicker">GitHub</span>
-              <h2 className="section-title mt-4 font-medium text-foreground">{accentLastWord("Code Activity")}</h2>
-              <div className="mt-8">
-                <GitHubContributions username="Feliciety02" />
+              <div
+                ref={githubSectionRef}
+                className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center overflow-hidden text-center"
+              >
+                <span className="metal-kicker">GitHub</span>
+                <h2 className="section-title mt-4 font-medium text-foreground">{accentLastWord("Code Activity")}</h2>
+                <div className="mt-8 w-full min-w-0">
+                  <GitHubContributions username="Feliciety02" containerWidth={githubSectionSize.width} />
+                </div>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="grid gap-8 lg:grid-cols-5 lg:items-center">
-                <div className="lg:col-span-3">
-                  <GlassDome
-                    tools={tools}
-                    reducedMotion={reducedMotion}
-                    activeCategory={activeCategory}
-                    activeToolSlug={activeToolSlug}
-                    onDomeToolHover={handleDomeToolHover}
-                  />
+              <div
+                className="mx-auto grid w-full max-w-6xl min-w-0 gap-[clamp(1.5rem,4vw,3rem)] overflow-hidden text-center lg:grid-cols-[minmax(0,3fr)_minmax(16rem,2fr)] lg:items-center lg:text-left"
+              >
+                <div className="mx-auto w-full min-w-0 px-[clamp(0.75rem,4vw,2rem)] lg:px-[clamp(0.5rem,2vw,2rem)]">
+                  <div className="mx-auto w-full max-w-[min(100%,42rem)] lg:max-w-[44rem]">
+                    <GlassDome
+                      tools={tools}
+                      reducedMotion={reducedMotion}
+                      activeCategory={activeCategory}
+                      activeToolSlug={activeToolSlug}
+                      onDomeToolHover={handleDomeToolHover}
+                    />
+                  </div>
                 </div>
-                <div className="lg:col-span-2">
+                <div className="relative z-10 mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:max-w-none">
                   <span className="metal-kicker">Tools I use</span>
                   <h2 className="section-title mt-4 font-medium text-foreground">
                     {accentLastWord("Tech Stack")}
@@ -610,7 +622,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                               setHoveredToolSlug(null);
                             }}
                             onMouseLeave={() => setHoveredCategory(null)}
-                            className="flex items-center gap-2 text-left"
+                            className="mx-auto flex items-center gap-2 text-center lg:mx-0 lg:text-left"
                           >
                             <span
                               className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wider transition-all duration-300"
@@ -626,7 +638,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                             </span>
                           </button>
                           <div
-                            className="mt-2 flex flex-wrap gap-x-3.5 gap-y-1 pl-1 transition-all duration-300"
+                            className="mt-2 flex flex-wrap justify-center gap-x-3.5 gap-y-1 transition-all duration-300 lg:justify-start"
                             style={{ opacity: isActive ? 1 : 0.5 }}
                           >
                             {categoryTools.map((tool) => {

@@ -37,11 +37,18 @@ const MONTH_NAMES = [
 ];
 
 // Gap between cells (px) — fixed, cell size is derived dynamically
-const GAP = 3;
-// Width of the day-label column (px) + the flex gap between it and the grid
-const DAY_COL = 26;
-const DAY_GAP = 8;
 const FALLBACK_DAYS = 365;
+
+type GraphMetrics = {
+  cell: number;
+  gap: number;
+  dayCol: number;
+  dayGap: number;
+};
+
+function clampNumber(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
 
 const getCacheKey = (username: string) => `github-contributions:${username}`;
 
@@ -127,10 +134,16 @@ function getMonthLabels(weeks: (Contribution | null)[][]) {
   return labels;
 }
 
-export function GitHubContributions({ username }: { username: string }) {
+export function GitHubContributions({
+  username,
+  containerWidth = 0,
+}: {
+  username: string;
+  containerWidth?: number;
+}) {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [status, setStatus] = useState<"loading" | "ok" | "fallback">("loading");
-  const [cell, setCell] = useState(14);
+  const [metrics, setMetrics] = useState<GraphMetrics>({ cell: 14, gap: 3, dayCol: 26, dayGap: 8 });
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -167,28 +180,43 @@ export function GitHubContributions({ username }: { username: string }) {
     if (!containerRef.current || !nWeeks) return;
     const el = containerRef.current;
     const compute = () => {
-      const available = el.offsetWidth - DAY_COL - DAY_GAP;
-      const size = Math.floor((available - GAP * (nWeeks - 1)) / nWeeks);
-      setCell(Math.max(10, size));
+      const width = Math.max(0, el.clientWidth || containerWidth);
+      const gap = width < 380 ? 1 : width < 640 ? 2 : 3;
+      const dayCol = width < 420 ? 0 : width < 640 ? 18 : 26;
+      const dayGap = dayCol === 0 ? 0 : width < 640 ? 5 : 8;
+      const minCell = width < 380 ? 4 : width < 480 ? 5 : width < 640 ? 6 : 8;
+      const maxCell = width < 380 ? 7 : width < 480 ? 8 : width < 760 ? 11 : 14;
+      const available = Math.max(0, width - dayCol - dayGap);
+      const size = Math.floor((available - gap * (nWeeks - 1)) / nWeeks);
+      setMetrics({ cell: clampNumber(size, minCell, maxCell), gap, dayCol, dayGap });
     };
     compute();
     const ro = new ResizeObserver(compute);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [nWeeks]);
+  }, [containerWidth, nWeeks]);
 
   if (status === "loading") return <Skeleton />;
   if (!data) return null;
 
   const monthLabels = getMonthLabels(weeks);
   const total = Object.values(data.total).reduce((a, b) => a + b, 0);
-  const step = cell + GAP;
+  const { cell, gap, dayCol, dayGap } = metrics;
+  const step = cell + gap;
   const isFallback = status === "fallback";
+  let lastMonthLeft = -Infinity;
+  const monthMinDistance = cell < 6 ? 42 : cell < 8 ? 36 : 34;
+  const visibleMonthLabels = monthLabels.filter(({ col }) => {
+    const left = col * step;
+    if (left - lastMonthLeft < monthMinDistance) return false;
+    lastMonthLeft = left;
+    return true;
+  });
 
   return (
-    <div className="metal-panel p-6">
+    <div className="metal-panel w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-1">
+      <div className="mb-1 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
         <p className="text-sm text-foreground/80">
           {isFallback ? (
             <span className="font-display text-lg font-bold text-gradient">Contribution grid</span>
@@ -205,51 +233,53 @@ export function GitHubContributions({ username }: { username: string }) {
           href={`https://github.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/70 transition-colors"
+          className="flex items-center gap-1.5 text-xs text-primary transition-colors hover:text-primary/70"
         >
           <Github size={13} />@{username}
         </a>
       </div>
 
       {/* Grid — ref here so ResizeObserver gets the full available width */}
-      <div ref={containerRef} className="mt-4 overflow-x-auto pb-1 scrollbar-contrib">
-        <div className="flex" style={{ gap: DAY_GAP }}>
+      <div ref={containerRef} className="scrollbar-contrib mt-4 max-w-full overflow-x-auto overscroll-x-contain pb-1">
+        <div className="flex min-w-0" style={{ gap: dayGap }}>
           {/* Day labels */}
-          <div className="flex flex-col pt-[22px]" style={{ gap: GAP }}>
-            {DAY_LABELS.map((label, i) => (
-              <div
-                key={i}
-                style={{ height: cell, width: DAY_COL, fontSize: 10, lineHeight: `${cell}px` }}
-                className="text-muted-foreground text-right select-none"
-              >
-                {label}
-              </div>
-            ))}
-          </div>
+          {dayCol > 0 ? (
+            <div className="flex shrink-0 flex-col pt-[22px]" style={{ gap }}>
+              {DAY_LABELS.map((label, i) => (
+                <div
+                  key={i}
+                  style={{ height: cell, width: dayCol, fontSize: cell < 8 ? 8 : 10, lineHeight: `${cell}px` }}
+                  className="select-none text-right text-muted-foreground"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+          ) : null}
 
           {/* Weeks */}
-          <div style={{ position: "relative", width: nWeeks * step - GAP }}>
+          <div style={{ position: "relative", width: nWeeks * step - gap }}>
             {/* Month labels */}
             <div style={{ height: 18, position: "relative", marginBottom: 4 }}>
-              {monthLabels.map(({ label, col }) => (
+              {visibleMonthLabels.map(({ label, col }) => (
                 <span
                   key={col}
                   style={{
                     position: "absolute",
                     left: col * step,
-                    fontSize: 10,
+                    fontSize: cell < 8 ? 8 : 10,
                     lineHeight: "18px",
                   }}
-                  className="text-muted-foreground select-none"
+                  className="select-none text-muted-foreground"
                 >
                   {label}
                 </span>
               ))}
             </div>
 
-            <div className="flex" style={{ gap: GAP }}>
+            <div className="flex" style={{ gap }}>
               {weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col" style={{ gap: GAP }}>
+                <div key={wi} className="flex flex-col" style={{ gap }}>
                   {week.map((day, di) => (
                     <div
                       key={di}
@@ -289,7 +319,7 @@ export function GitHubContributions({ username }: { username: string }) {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-end gap-1.5 mt-4">
+      <div className="mt-4 flex flex-wrap items-center justify-end gap-1.5">
         <span className="text-[9px] text-muted-foreground select-none">Less</span>
         {[0, 1, 2, 3, 4].map((level) => (
           <div
