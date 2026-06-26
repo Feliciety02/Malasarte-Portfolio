@@ -1,12 +1,12 @@
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
-import credentialIntroAI from "@/assets/about/badges/introduction-to-modern-ai.png";
+import credentialIntroAI from "@/assets/about/badges/introduction-to-modern-ai.webp";
 import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.webp";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.webp";
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.webp";
-import credentialMspAcademy from "@/assets/about/badges/msp-academy-starting-an-msp-breaking-free-from-the-.png";
-import credentialCloudSIEM from "@/assets/about/badges/cloud-security-engineer-cloud-siem-learning-path.png";
-import credentialBackendEngineer from "@/assets/about/badges/backend-engineer-learning-path.png";
+import credentialMspAcademy from "@/assets/about/badges/msp-academy-starting-an-msp-breaking-free-from-the-.webp";
+import credentialCloudSIEM from "@/assets/about/badges/cloud-security-engineer-cloud-siem-learning-path.webp";
+import credentialBackendEngineer from "@/assets/about/badges/backend-engineer-learning-path.webp";
 
 export function CredentialsSection() {
   return (

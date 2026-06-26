@@ -33,9 +33,11 @@ export function FeaturedProject({
   const isCoverFit =
     project.cat === "UI/UX Design" || project.cat === "Software Development";
   const aspect = isBranding ? "aspect-square" : featuredImageAspect[project.cardSize ?? "medium"];
-  const isSocial =
+  const isGalleryCategory =
     project.cat === "Social Media Graphics" ||
-    project.categories?.includes("Social Media Graphics");
+    project.cat === "Creative Assets" ||
+    project.categories?.includes("Social Media Graphics") ||
+    project.categories?.includes("Creative Assets");
   const liveUrl = project.vercelLiveUrl?.trim();
 
   return (
@@ -53,7 +55,7 @@ export function FeaturedProject({
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            {isSocial && onSocialClick ? (
+            {isGalleryCategory && onSocialClick ? (
               <button
                 type="button"
                 onClick={() => onSocialClick(project.slug)}
@@ -97,13 +99,13 @@ export function FeaturedProject({
         <div
           className={cn(
             "metal-card group relative overflow-hidden rounded-2xl",
-            !isSocial && "p-5 sm:p-6",
+            !isGalleryCategory && "p-5 sm:p-6",
             isBranding && "bg-white",
             aspect,
           )}
           style={isBranding ? { background: "#fff" } : undefined}
         >
-          {isSocial ? (
+          {isGalleryCategory ? (
             <SocialMediaBentoPreview
               project={project}
               fallbackImage={coverImage}

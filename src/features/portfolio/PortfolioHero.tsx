@@ -34,7 +34,9 @@ function FeaturedCard({
   const isBranding = activeCategory === "Logo & Branding";
   const isSocial =
     project.cat === "Social Media Graphics" ||
-    project.categories?.includes("Social Media Graphics");
+    project.categories?.includes("Social Media Graphics") ||
+    project.cat === "Creative Assets" ||
+    project.categories?.includes("Creative Assets");
   const liveUrl = project.vercelLiveUrl?.trim();
 
   const cardContent = (

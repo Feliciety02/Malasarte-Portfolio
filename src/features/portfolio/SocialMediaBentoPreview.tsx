@@ -1,6 +1,7 @@
 import { getSocialMediaProjectImages } from "@/data/projectImages";
 import type { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
+import { SmartCroppedImage } from "./SmartCroppedImage";
 
 type SocialMediaBentoPreviewProps = {
   project: Project;
@@ -15,50 +16,22 @@ export function SocialMediaBentoPreview({
 }: SocialMediaBentoPreviewProps) {
   const images = getSocialMediaProjectImages(project.slug).slice(0, 3);
 
-  if (images.length < 2) {
-    const image = images[0] ?? fallbackImage;
+  const displayImages =
+    images.length > 0 ? images.slice(0, 3) : fallbackImage ? [fallbackImage] : [];
 
-    return image ? (
-      <img
-        src={image}
-        alt={`${project.title} preview`}
-        className={cn(
-          "h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]",
-          className,
-        )}
-        loading="lazy"
-      />
-    ) : null;
-  }
+  if (displayImages.length === 0) return null;
 
   return (
-    <div className={cn("grid h-full grid-cols-[1.35fr_0.65fr] gap-1.5 bg-black p-1.5", className)}>
-      <div className="overflow-hidden rounded-xl">
-        <img
-          src={images[0]}
-          alt={`${project.title} preview 1`}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-          loading="lazy"
-        />
-      </div>
-
-      <div className="grid grid-rows-2 gap-1.5">
-        {images.slice(1).map((image, index) => (
-          <div key={image} className="overflow-hidden rounded-lg">
-            <img
-              src={image}
-              alt={`${project.title} preview ${index + 2}`}
-              className={cn(
-                "h-full w-full object-cover transition-transform duration-700",
-                index === 0
-                  ? "group-hover:-translate-x-0.5 group-hover:scale-[1.03]"
-                  : "group-hover:translate-x-0.5 group-hover:scale-[1.03]",
-              )}
-              loading="lazy"
-            />
-          </div>
-        ))}
-      </div>
+    <div className={cn("flex h-full gap-2 bg-black p-2", className)}>
+      {displayImages.map((image, index) => (
+        <div key={image} className="flex-1 overflow-hidden rounded-lg">
+          <SmartCroppedImage
+            src={image}
+            alt={`${project.title} preview ${index + 1}`}
+            className="transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        </div>
+      ))}
     </div>
   );
 }

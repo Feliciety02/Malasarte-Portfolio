@@ -38,6 +38,23 @@ const collaboratorImageMap: Record<string, string> = {
   "jay-lao-iii.webp": jayLaoIiiImg,
 };
 
+const UMSDC_CREATIVE_ASSET_IDS = [
+  5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 30,
+  31, 33, 35, 36, 37, 38, 41, 44,
+] as const;
+
+const ENIGMA_CREATIVE_ASSET_NAMES = [
+  "group-224",
+  "group-225",
+  "group-226",
+  "group-227",
+  "group-229",
+  "group-231",
+  "group-407",
+  "group-408",
+  "original-galaxy-default",
+] as const;
+
 function resolveCollaboratorImageUrl(imageUrl: string | undefined): string | undefined {
   if (!imageUrl) return undefined;
   const filename = imageUrl.split("/").pop();
@@ -1522,7 +1539,8 @@ export const projects: Project[] = [
       { value: "30+", label: "Years of business legacy" },
     ],
     collaborators: [
-      "Fe Anne Malasarte | Fullstack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
       "Jorge Macabenta | Backend Developer | | https://portfolio-school-fawn.vercel.app/#projects",
     ],
     focusAreas: [
@@ -1746,6 +1764,10 @@ export const projects: Project[] = [
       { value: "1", label: "Digital product platform" },
       { value: "100%", label: "Responsive experience" },
       { value: "Secure", label: "Protected PDF access" },
+    ],
+    collaborators: [
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
     ],
     focusAreas: [
       {
@@ -1982,7 +2004,8 @@ export const projects: Project[] = [
       { value: "100%", label: "Responsive coverage" },
     ],
     collaborators: [
-      "Fe Anne Malasarte | UI/UX Designer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
     ],
     focusAreas: [
       {
@@ -2080,20 +2103,19 @@ export const projects: Project[] = [
     cardSize: "medium",
     directoryTitle: "UMSDC",
     cat: "Social Media Graphics",
-    categories: ["Creative Assets"],
     kind: "gallery",
-    tag: "Social Media Asset System",
+    tag: "Publication Materials",
     color: "from-pink-500/50 to-orange-400/30",
-    desc: "Social media graphics and creative assets for UMSDC.",
+    desc: "Publication materials and social media graphics for UMSDC.",
     role: "Social Media Graphic Designer",
     tools: ["Figma", "Photoshop", "Canva"],
-    year: "2024",
+    year: "2024-2025",
     client: "UMSDC",
     overview:
-      "UMSDC Social Media Graphics and Creative Assets gathers social posts, organization graphics, event visuals, and campaign-ready assets under one reusable visual system.",
+      "UMSDC Publication Materials gathers social posts, organization graphics, and recurring publication materials under one reusable visual system.",
     goals: [
       "Support organization communication with clear and cohesive social media graphics.",
-      "Create reusable assets for recurring announcements and campaigns.",
+      "Create reusable publication materials for recurring announcements and campaigns.",
       "Keep the materials flexible enough for fast student-organization workflows.",
     ],
     impact: [
@@ -2157,7 +2179,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      "UMSDC now has a cleaner, more reusable social media graphics system for organization materials and digital assets.",
+      "UMSDC now has a cleaner, more reusable publication materials system for organization communications.",
     gallery: [
       {
         color: "from-pink-500/50 to-orange-400/30",
@@ -2188,6 +2210,99 @@ export const projects: Project[] = [
         note: "Interactive weekly quiz template for community engagement.",
       },
     ],
+    nextProjectSlug: "umsdc-creative-assets",
+  },
+  {
+    slug: "umsdc-creative-assets",
+    title: "UMSDC Creative Assets",
+    cardSize: "medium",
+    directoryTitle: "UMSDC Creative Assets",
+    cat: "Creative Assets",
+    kind: "gallery",
+    tag: "Creative Asset Pack",
+    color: "from-cyan-500/45 to-blue-500/30",
+    desc: "Reusable creative assets and digital elements for UMSDC.",
+    role: "Creative Designer",
+    tools: ["Figma", "Photoshop", "Canva"],
+    year: "2024-2025",
+    client: "UMSDC",
+    overview:
+      "UMSDC Creative Assets collects reusable digital elements, decorative graphics, and support visuals prepared for fast campaign assembly and organization-led content creation.",
+    goals: [
+      "Create a dedicated creative asset library separate from publication materials.",
+      "Prepare reusable digital elements that can be mixed into future org campaigns.",
+      "Keep the asset pack organized for faster design production and handoff.",
+    ],
+    impact: [
+      { value: `${UMSDC_CREATIVE_ASSET_IDS.length}`, label: "Creative assets" },
+      { value: "1", label: "Asset library" },
+      { value: "1", label: "Reusable pack" },
+    ],
+    focusAreas: [
+      {
+        title: "Asset System",
+        text: "Grouped reusable decorative and support visuals into a dedicated library for future UMSDC layouts.",
+      },
+      {
+        title: "Consistency",
+        text: "Kept the visual treatment aligned with the broader UMSDC design direction without mixing it into publication outputs.",
+      },
+      {
+        title: "Flexibility",
+        text: "Prepared assets that can be dropped into multiple campaign formats, event graphics, and social compositions.",
+      },
+      {
+        title: "Organization",
+        text: "Separated the creative asset pack from publication materials so each project stays clear and easier to maintain.",
+      },
+      {
+        title: "Reuse",
+        text: "Built a cleaner resource set for faster design iteration across upcoming UMSDC initiatives.",
+      },
+    ],
+    process: [
+      {
+        title: "Collect",
+        text: "Gathered the supporting visual elements prepared for the UMSDC asset library.",
+      },
+      {
+        title: "Refine",
+        text: "Cleaned and standardized the asset set for consistent reuse across future designs.",
+      },
+      {
+        title: "Organize",
+        text: "Separated the library from publication materials and structured it as its own creative asset set.",
+      },
+      {
+        title: "Deliver",
+        text: "Packaged the outputs into a dedicated folder for easier browsing, reuse, and portfolio presentation.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Project Separation",
+        challenge:
+          "Creative elements were at risk of getting mixed into the publication materials set, making the portfolio grouping unclear.",
+        solution:
+          "Split the asset pack into its own project and isolated the files inside a dedicated creative-assets folder.",
+      },
+      {
+        title: "Reusable Structure",
+        challenge:
+          "The assets needed to stay flexible enough for different future layouts without being tied to one publication format.",
+        solution:
+          "Organized the pack as standalone design elements that can be reused across multiple visual directions.",
+      },
+    ],
+    outcome:
+      "UMSDC now has a separate creative asset library that stays distinct from publication materials and is easier to reuse across future designs.",
+    gallery: UMSDC_CREATIVE_ASSET_IDS.map((assetId, index) => ({
+      color: "from-cyan-500/45 to-blue-500/30",
+      label: `Creative Asset ${index + 1}`,
+      assetPath: `umsdc-creative-assets/umsdc-${assetId}`,
+      ratio: "square" as const,
+      note: "Reusable creative element prepared for the UMSDC digital asset library.",
+    })),
     nextProjectSlug: "eat-well-live-well-nutrition-ebook",
   },
   {
@@ -2533,7 +2648,6 @@ export const projects: Project[] = [
     cardSize: "medium",
     cat: "Social Media Graphics",
     kind: "gallery",
-    categories: ["Creative Assets"],
     tag: "Digital Income Series",
     color: "from-amber-400/45 to-green-500/30",
     desc: "Digital income themed social media graphics and layouts.",
@@ -2773,7 +2887,6 @@ export const projects: Project[] = [
     slug: "enigma",
     title: "ENIGMA",
     cat: "Social Media Graphics",
-    categories: ["Creative Assets"],
     tag: "Social Media Graphics",
     desc: "Social media graphics and creative assets for ENIGMA.",
     role: "Creative Designer",
@@ -2811,7 +2924,101 @@ export const projects: Project[] = [
         note: "Program schedule for the Figma Portfolio Masterclass.",
       },
     ],
+    nextProjectSlug: "enigma-creative-assets",
   }),
+  {
+    slug: "enigma-creative-assets",
+    title: "ENIGMA Creative Assets",
+    cardSize: "medium",
+    directoryTitle: "ENIGMA Creative Assets",
+    cat: "Creative Assets",
+    kind: "gallery",
+    tag: "Creative Asset Pack",
+    color: "from-purple-500/50 to-pink-500/30",
+    desc: "Reusable creative assets and digital elements for ENIGMA.",
+    role: "Creative Designer",
+    tools: ["Figma", "Canva", "Photoshop"],
+    year: "2024",
+    client: "ENIGMA",
+    overview:
+      "ENIGMA Creative Assets collects reusable digital elements, decorative graphics, and support visuals prepared for fast campaign assembly and event content creation.",
+    goals: [
+      "Create a dedicated creative asset library separate from social media posts.",
+      "Prepare reusable digital elements that can be mixed into future campaigns.",
+      "Keep the asset pack organized for faster design production and handoff.",
+    ],
+    impact: [
+      { value: `${ENIGMA_CREATIVE_ASSET_NAMES.length}`, label: "Creative assets" },
+      { value: "1", label: "Asset library" },
+      { value: "1", label: "Reusable pack" },
+    ],
+    focusAreas: [
+      {
+        title: "Asset System",
+        text: "Grouped reusable decorative and support visuals into a dedicated library for future ENIGMA layouts.",
+      },
+      {
+        title: "Consistency",
+        text: "Kept the visual treatment aligned with the broader ENIGMA design direction without mixing it into social outputs.",
+      },
+      {
+        title: "Flexibility",
+        text: "Prepared assets that can be dropped into multiple campaign formats, event graphics, and social compositions.",
+      },
+      {
+        title: "Organization",
+        text: "Separated the creative asset pack from social media posts so each project stays clear and easier to maintain.",
+      },
+      {
+        title: "Reuse",
+        text: "Built a cleaner resource set for faster design iteration across upcoming ENIGMA initiatives.",
+      },
+    ],
+    process: [
+      {
+        title: "Collect",
+        text: "Gathered the supporting visual elements prepared for the ENIGMA asset library.",
+      },
+      {
+        title: "Refine",
+        text: "Cleaned and standardized the asset set for consistent reuse across future designs.",
+      },
+      {
+        title: "Organize",
+        text: "Separated the library from social media posts and structured it as its own creative asset set.",
+      },
+      {
+        title: "Deliver",
+        text: "Packaged the outputs into a dedicated folder for easier browsing, reuse, and portfolio presentation.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Project Separation",
+        challenge:
+          "Creative elements were at risk of getting mixed into the social media set, making the portfolio grouping unclear.",
+        solution:
+          "Split the asset pack into its own project and isolated the files inside a dedicated creative-assets folder.",
+      },
+      {
+        title: "Reusable Structure",
+        challenge:
+          "The assets needed to stay flexible enough for different future layouts without being tied to one event format.",
+        solution:
+          "Organized the pack as standalone design elements that can be reused across multiple visual directions.",
+      },
+    ],
+    outcome:
+      "ENIGMA now has a separate creative asset library that stays distinct from social media posts and is easier to reuse across future designs.",
+    gallery: ENIGMA_CREATIVE_ASSET_NAMES.map((name, index) => ({
+      color: "from-purple-500/50 to-pink-500/30",
+      label: `Creative Asset ${index + 1}`,
+      assetPath: `enigma-creative-assets/${name}`,
+      ratio: "square" as const,
+      note: "Reusable creative element prepared for the ENIGMA digital asset library.",
+    })),
+    nextProjectSlug: "salin-salin",
+  },
   {
     slug: "salin-salin",
     title: "Salin-Salin",
@@ -2831,6 +3038,10 @@ export const projects: Project[] = [
     impact: [
       { value: "1", label: "Web build" },
       { value: "100%", label: "Responsive coverage" },
+    ],
+    collaborators: [
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
     ],
     focusAreas: [],
     process: [],
@@ -2879,6 +3090,8 @@ export const projects: Project[] = [
       { value: "100%", label: "Order visibility" },
     ],
     collaborators: [
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
       "Jay Lao III | Backend Developer | /assets/collaborators/jay-lao-iii.webp | https://blackhole-jay.vercel.app",
     ],
     focusAreas: [
@@ -2934,21 +3147,57 @@ export const projects: Project[] = [
     gallery: [
       {
         color: "from-amber-500/45 to-red-500/30",
-        label: "Dashboard",
+        label: "Landing Page",
         ratio: "wide",
-        note: "Overview screen for order counts, current workload, and tailoring progress.",
+        note: "Public-facing landing page introducing the tailoring shop software and its core workflow.",
       },
       {
         color: "from-orange-500/40 to-amber-500/30",
-        label: "Customer Records",
+        label: "Sign In",
         ratio: "square",
-        note: "Customer information and measurement management for repeat tailoring transactions.",
+        note: "Authentication screen for staff access to tailoring operations, records, and order management.",
       },
       {
         color: "from-rose-500/40 to-orange-500/30",
-        label: "Job Orders",
+        label: "Admin Dashboard",
         ratio: "square",
-        note: "Tailoring order management with fitting dates, status updates, and release tracking.",
+        note: "Administrative overview showing business activity, workload summaries, and key operational metrics.",
+      },
+      {
+        color: "from-cyan-500/40 to-blue-500/30",
+        label: "Customer Dashboard",
+        ratio: "square",
+        note: "Customer-facing dashboard for reviewing records, active tailoring requests, and order progress.",
+      },
+      {
+        color: "from-emerald-500/40 to-teal-500/30",
+        label: "Inventory Overview",
+        ratio: "square",
+        note: "Inventory module tracking available fabrics, materials, and stock levels for shop operations.",
+      },
+      {
+        color: "from-orange-400/40 to-yellow-500/30",
+        label: "Place New Order",
+        ratio: "square",
+        note: "Order creation flow for entering customer details, garment requests, and tailoring requirements.",
+      },
+      {
+        color: "from-violet-500/40 to-fuchsia-500/30",
+        label: "Production Board",
+        ratio: "square",
+        note: "Production tracking board for monitoring tailoring jobs across active workflow stages.",
+      },
+      {
+        color: "from-sky-500/40 to-cyan-500/30",
+        label: "QC Dashboard",
+        ratio: "square",
+        note: "Quality control dashboard for reviewing completed garments and tracking inspection status.",
+      },
+      {
+        color: "from-red-500/40 to-orange-500/30",
+        label: "AQL Lot Inspection",
+        ratio: "square",
+        note: "Inspection interface for acceptance quality limit checks and final release review.",
       },
     ],
     hideLiveWorkspace: true,
@@ -2978,6 +3227,10 @@ export const projects: Project[] = [
       { value: "1", label: "Desktop application" },
       { value: "5+", label: "Core features" },
       { value: "1", label: "Database system" },
+    ],
+    collaborators: [
+      "Fe Anne Malasarte | Full Stack Developer | /assets/collaborators/fe-anne-malasarte.webp",
+      "Joevan Capote | Project Manager | /assets/collaborators/joevan-capote.svg",
     ],
     focusAreas: [
       {
@@ -3127,7 +3380,7 @@ const categoryProjectOrder: Partial<Record<ProjectCategory, string[]>> = {
     "umsdc-publication-materials-and-assets",
     "enigma",
   ],
-  "Creative Assets": ["enigma", "umsdc-publication-materials-and-assets"],
+  "Creative Assets": ["enigma-creative-assets", "umsdc-creative-assets"],
   "Writing / VA": ["eat-well-live-well-nutrition-ebook", "thriving-mind-mental-wellness-ebook"],
 };
 
@@ -3149,7 +3402,9 @@ const directoryTitleOrder = [
   "Tech Nexus DevCon Philippines",
   "PyConF Mini Davao 2024",
   "UMSDC",
+  "UMSDC Creative Assets",
   "ENIGMA",
+  "ENIGMA Creative Assets",
   "Eat Well, Live Well: Your Complete Food & Nutrition Guide",
   "Thriving Minds: Understanding Your Mental Health Journey",
   "Salin-Salin",

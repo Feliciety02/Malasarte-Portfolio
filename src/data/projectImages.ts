@@ -12,12 +12,12 @@ type GalleryImageRef = {
 };
 
 const projectCoverImages = import.meta.glob<string>(
-  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.webp", "../assets/projects/covers/*.png", "../assets/projects/covers/*.jpg", "../assets/projects/covers/*.jpeg"],
+  ["../assets/projects/covers/*.svg", "../assets/projects/covers/*.webp"],
   { eager: true, import: "default" },
 );
 
 const projectGalleryImages = import.meta.glob<string>(
-  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.webp", "../assets/projects/gallery/*.png", "../assets/projects/gallery/*.jpg", "../assets/projects/gallery/*.jpeg"],
+  ["../assets/projects/gallery/*.svg", "../assets/projects/gallery/*.webp"],
   {
     eager: true,
     import: "default",
@@ -27,9 +27,6 @@ const projectGalleryImages = import.meta.glob<string>(
 const socialMediaImages = import.meta.glob<string>(
   [
     "../assets/social/**/*.svg",
-    "../assets/social/**/*.png",
-    "../assets/social/**/*.jpg",
-    "../assets/social/**/*.jpeg",
     "../assets/social/**/*.webp",
   ],
   { eager: true, import: "default" },
@@ -42,10 +39,7 @@ const normalizePath = (path: string) =>
 
 const getAsset = (assets: Record<string, string>, path: string) =>
   assets[`${path}.svg`] ??
-  assets[`${path}.webp`] ??
-  assets[`${path}.png`] ??
-  assets[`${path}.jpg`] ??
-  assets[`${path}.jpeg`];
+  assets[`${path}.webp`];
 
 const tryGetAsset = (assets: Record<string, string>, path: string) => {
   const result = getAsset(assets, path);

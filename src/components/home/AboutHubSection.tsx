@@ -12,7 +12,7 @@ import {
 import credentialCybersecurity from "@/assets/about/badges/it-specialist-cybersecurity.webp";
 import credentialDatabases from "@/assets/about/badges/it-specialist-databases.webp";
 import credentialAiSkillsFest from "@/assets/about/badges/ai-skills-fest-2026.webp";
-import credentialCloudSIEM from "@/assets/about/badges/cloud-security-engineer-cloud-siem-learning-path.png";
+import credentialCloudSIEM from "@/assets/about/badges/cloud-security-engineer-cloud-siem-learning-path.webp";
 import cceCsgLogo from "@/assets/about/org-logos/cce-csg.svg";
 import dostAgilasAssociationLogo from "@/assets/about/org-logos/dost-agilas-association.svg";
 import notreDameOfEsperanzaLogo from "@/assets/about/org-logos/notre-dame-of-esperanza.svg";

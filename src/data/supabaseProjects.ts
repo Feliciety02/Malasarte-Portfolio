@@ -80,8 +80,16 @@ const hiddenProjectSlugs = new Set([
   "cosmic-remedies-by-sia-logo",
   "pietyl-management-system-logo",
 ]);
-const localIdentitySlugs = new Set(["pietyl-lpg"]);
-const localGallerySlugs = new Set(["enigma", "umsdc-publication-materials-and-assets"]);
+const localIdentitySlugs = new Set([
+  "pietyl-lpg",
+  "umsdc-publication-materials-and-assets",
+  "umsdc-creative-assets",
+]);
+const localGallerySlugs = new Set([
+  "enigma",
+  "umsdc-publication-materials-and-assets",
+  "umsdc-creative-assets",
+]);
 
 function canReadPortfolioFromSupabase() {
   return import.meta.env.SSR && isSupabaseConfigured;
@@ -129,7 +137,14 @@ function mapProject(row: PortfolioProjectRow): Project {
   const categoryRows = sortBySortOrder(row.portfolio_project_categories ?? []);
   const secondaryCategories = categoryRows
     .map((item) => item.category)
-    .filter((category) => category !== row.primary_category);
+    .filter((category) => category !== row.primary_category)
+    .filter(
+      (category) =>
+        !(
+          row.slug === "umsdc-publication-materials-and-assets" &&
+          category === "Creative Assets"
+        ),
+    );
   const categoryLabels = Object.fromEntries(
     categoryRows.map((item) => [item.category, item.pill_label]),
   ) as Partial<Record<ProjectCategory, string>>;
@@ -161,7 +176,7 @@ function mapProject(row: PortfolioProjectRow): Project {
     role: row.role ?? base.role,
     collaborators: row.collaborators ?? base.collaborators,
     tools: row.tools ?? base.tools,
-    year: row.year ?? base.year,
+    year: useLocalIdentity ? base.year : (row.year ?? base.year),
     client: useLocalIdentity ? base.client : (row.client ?? base.client),
     overview: useLocalIdentity ? base.overview : (row.overview ?? base.overview),
     outcome: useLocalIdentity ? base.outcome : (row.outcome ?? base.outcome),

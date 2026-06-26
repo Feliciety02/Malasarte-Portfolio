@@ -9,7 +9,7 @@
       "client": "Concept Project",
       "year": "2025",
       "tools": ["Figma", "FigJam", "Notion"],
-      "tags": ["UI/UX", "App Design", "Prototyping", "Full-Stack"],
+      "tags": ["UI/UX", "App Design", "Prototyping"],
       "goals": [
         "Design a friendlier adoption experience that feels safe and organized.",
         "Simplify the path from browsing to inquiry and follow-through.",
@@ -26,13 +26,13 @@
     {
       "slug": "dost-laon",
       "title": "DOST Laon",
-      "desc": "Crop disease detection dashboard and field reporting system.",
-      "overview": "A mobile-first dashboard that helps farmers identify crop diseases through image recognition and get real-time recommendations.",
+      "desc": "UI/UX work for a DOST-centered digital platform concept.",
+      "overview": "A structured and accessible digital experience concept around information, programs, and public-facing services tied to the DOST context.",
       "role": "UI/UX Designer",
       "client": "DOST",
       "year": "2025",
-      "tools": ["Figma", "React", "Python"],
-      "tags": ["UI/UX", "Full-Stack", "Dashboard"],
+      "tools": ["Figma", "FigJam", "Miro"],
+      "tags": ["UI/UX", "Dashboard", "Platform Design"],
       "goals": [
         "Create an intuitive disease reporting flow for field use.",
         "Design a dashboard that surfaces actionable insights quickly.",
@@ -49,13 +49,13 @@
     {
       "slug": "umunity",
       "title": "UMunity",
-      "desc": "University community platform connecting students, orgs, and events.",
-      "overview": "A campus-focused social platform designed to centralize event discovery, organization management, and student engagement.",
-      "role": "Product Designer",
+      "desc": "Product design system for a school organization management platform covering events, communication, records, and coordination.",
+      "overview": "UMunity is a product design concept focused on school organization management through dashboards, events, records, announcements, and communication flows for both student members and organization officers.",
+      "role": "UI/UX Designer",
       "client": "University of Mindanao",
       "year": "2025",
-      "tools": ["Figma", "React", "Node.js", "PostgreSQL"],
-      "tags": ["UI/UX", "Full-Stack", "Social", "Animations"],
+      "tools": ["Figma", "FigJam", "Miro", "Notion"],
+      "tags": ["UI/UX", "Product Design", "Dashboard", "School Platform"],
       "goals": [
         "Centralize campus event listings and organization directories.",
         "Create a seamless onboarding flow for students and organizations.",
@@ -70,14 +70,37 @@
       "screenshots": []
     },
     {
+      "slug": "pietyl-management-system",
+      "title": "Pietyl Management System",
+      "desc": "Product design system for Pietyl DigiLPG's internal management dashboard covering records, workflow, and operations monitoring.",
+      "overview": "A management dashboard design system for Pietyl DigiLPG focused on records, workflow tracking, and operations monitoring in a cleaner, more scalable interface.",
+      "role": "Product Designer",
+      "client": "Pietyl DigiLPG",
+      "year": "2025",
+      "tools": ["Figma", "FigJam"],
+      "tags": ["UI/UX", "Dashboard", "Management System", "Product Design"],
+      "goals": [
+        "Design a management dashboard that simplifies complex operational data.",
+        "Create intuitive navigation for records, workflow, and monitoring modules.",
+        "Build a scalable interface system that adapts to future business needs."
+      ],
+      "timeline": [
+        { "phase": "Research", "date": "Oct 2024", "description": "Reviewed internal workflows and information hierarchy." },
+        { "phase": "Wireframing", "date": "Nov 2024", "description": "Mapped core modules and dashboard structure." },
+        { "phase": "UI Design", "date": "Dec 2024", "description": "Built the interface system and reusable component patterns." },
+        { "phase": "Presentation", "date": "Jan 2025", "description": "Prepared the system for case study and implementation handoff." }
+      ],
+      "screenshots": []
+    },
+    {
       "slug": "cosmic-remedies-by-sia",
       "title": "Cosmic Remedies by Sia",
-      "desc": "E-commerce storefront for herbal wellness products.",
-      "overview": "A modern e-commerce experience for a herbal remedies brand, featuring product catalogs, wellness guides, and a streamlined checkout flow.",
+      "desc": "A digital product platform and web experience for selling, managing, and securely delivering e-book content.",
+      "overview": "A responsive digital product platform built to present, sell, and securely deliver e-book content through a calm, customer-friendly web experience.",
       "role": "Full-Stack Developer",
       "client": "Cosmic Remedies by Sia",
       "year": "2025",
-      "tools": ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
+      "tools": ["React", "Tailwind CSS", "Supabase", "Vercel"],
       "tags": ["Full-Stack", "Software Development", "E-Commerce", "Animations"],
       "goals": [
         "Build a performant e-commerce platform with modern UX.",
@@ -93,25 +116,48 @@
       "screenshots": []
     },
     {
-      "slug": "pietyl-management-system",
-      "title": "Pietyl Management System",
-      "desc": "LPG distribution management platform with real-time tracking.",
-      "overview": "An enterprise management system for LPG distribution including inventory, delivery tracking, and customer management modules.",
+      "slug": "umunity-web",
+      "title": "UMunity Web",
+      "desc": "Responsive web implementation of the UMunity school organization management system with dashboard, modules, and reusable screen patterns.",
+      "overview": "A responsive front-end implementation of the UMunity product design system using React, Tailwind CSS, and TypeScript across dashboard, events, records, announcements, and communication modules.",
+      "role": "Web Developer",
+      "client": "UMunity",
+      "year": "2025",
+      "tools": ["React", "Tailwind CSS", "TypeScript"],
+      "tags": ["Software Development", "Frontend", "Dashboard", "School Platform"],
+      "goals": [
+        "Translate the approved Figma system into a responsive web implementation.",
+        "Build reusable components for dashboard, events, records, and communication modules.",
+        "Ensure the interface is usable across desktop and mobile breakpoints."
+      ],
+      "timeline": [
+        { "phase": "Setup", "date": "Jan 2025", "description": "Prepared the responsive front-end structure and component architecture." },
+        { "phase": "Implementation", "date": "Feb 2025", "description": "Built the dashboard, records, event, and communication screens." },
+        { "phase": "Refinement", "date": "Mar 2025", "description": "Improved responsiveness, interaction states, and component consistency." },
+        { "phase": "Presentation", "date": "Apr 2025", "description": "Prepared the implementation for portfolio presentation." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "pietyl-digilpg-web",
+      "title": "Pietyl DigiLPG Web",
+      "desc": "Full-stack implementation of Pietyl DigiLPG's landing page and management system, built with Laravel, React, and MySQL.",
+      "overview": "A full-stack build combining a public-facing landing page with a working internal management system for LPG operations, records, and workflow monitoring.",
       "role": "Full-Stack Developer",
       "client": "Pietyl DigiLPG",
       "year": "2025",
-      "tools": ["React", "Node.js", "MySQL", "Express"],
-      "tags": ["Full-Stack", "Software Development", "Enterprise", "Dashboard"],
+      "tools": ["PHP 8.2", "Laravel 12", "React 18", "Inertia.js", "Tailwind CSS 4", "Vite 7", "MySQL", "Pest"],
+      "tags": ["Software Development", "Full-Stack", "Management System", "Laravel"],
       "goals": [
-        "Digitize LPG distribution workflows from order to delivery.",
-        "Provide real-time inventory and fleet tracking.",
-        "Build role-based dashboards for admins, riders, and customers."
+        "Build a simple, professional landing page for a long-standing LPG business.",
+        "Develop a functional management system for internal workflow and records.",
+        "Support multiple user roles including admin, accountant, cashier, rider, and customer."
       ],
       "timeline": [
-        { "phase": "Analysis", "date": "Oct 2024", "description": "Business process analysis and system design." },
-        { "phase": "Development", "date": "Nov 2024", "description": "Core modules development and database design." },
-        { "phase": "Testing", "date": "Jan 2025", "description": "QA testing and user acceptance testing." },
-        { "phase": "Deployment", "date": "Feb 2025", "description": "Production rollout and training." }
+        { "phase": "Planning", "date": "Oct 2024", "description": "Mapped the public site needs and internal operational workflows." },
+        { "phase": "Development", "date": "Nov 2024", "description": "Built the landing page and core management modules with Laravel, React, and MySQL." },
+        { "phase": "Testing", "date": "Jan 2025", "description": "Checked dashboard flows, role-based access, and record handling." },
+        { "phase": "Deployment", "date": "Feb 2025", "description": "Prepared the system for production rollout and portfolio presentation." }
       ],
       "screenshots": []
     },
@@ -124,7 +170,7 @@
       "client": "Cultural Project",
       "year": "2025",
       "tools": ["React", "Node.js", "MongoDB", "Framer Motion"],
-      "tags": ["Full-Stack", "Animations", "Software Development", "UI/UX"],
+      "tags": ["Software Development", "Full-Stack", "Animations", "Cultural Platform"],
       "goals": [
         "Create immersive storytelling experiences with rich media.",
         "Build a community-contribution model for cultural preservation.",
@@ -139,25 +185,48 @@
       "screenshots": []
     },
     {
-      "slug": "handyman",
-      "title": "HandyMan",
-      "desc": "On-demand home services marketplace mobile app.",
-      "overview": "A mobile marketplace connecting homeowners with vetted service professionals for repairs, maintenance, and home improvement.",
-      "role": "Full-Stack Developer",
-      "client": "Startup Project",
+      "slug": "sakuragi-tailoring-shop-management-system",
+      "title": "Sakuragi Tailoring Shop Management System",
+      "desc": "Management system for tailoring shop operations, customer records, job orders, and production tracking.",
+      "overview": "A tailoring shop management system designed to organize customer information, measurements, job orders, fitting schedules, and production tracking in one place.",
+      "role": "Software Developer",
+      "client": "Sakuragi Tailoring Shop",
       "year": "2025",
-      "tools": ["React Native", "Node.js", "PostgreSQL", "Firebase"],
-      "tags": ["Full-Stack", "Mobile", "UI/UX", "Marketplace"],
+      "tools": ["Java", "JavaFX", "MySQL", "Scene Builder", "XAMPP"],
+      "tags": ["Software Development", "Desktop App", "Management System", "Java"],
       "goals": [
-        "Build a seamless booking and payment experience.",
-        "Implement real-time tracking and status updates.",
-        "Create a trust system with reviews and vetting workflows."
+        "Centralize tailoring shop records, measurements, and active job orders.",
+        "Make order tracking easier for staff from intake through release.",
+        "Reduce manual errors in scheduling, customer lookup, and production monitoring."
       ],
       "timeline": [
-        { "phase": "Research", "date": "Oct 2024", "description": "Market research and competitor analysis." },
-        { "phase": "Design", "date": "Nov 2024", "description": "UX design and prototyping for mobile-first experience." },
-        { "phase": "Development", "date": "Dec 2024", "description": "Full-stack mobile app development." },
-        { "phase": "Launch", "date": "Feb 2025", "description": "Beta testing and marketplace launch." }
+        { "phase": "Planning", "date": "Jan 2025", "description": "Defined the shop workflow around customers, measurements, orders, and fittings." },
+        { "phase": "System Design", "date": "Feb 2025", "description": "Mapped the screens and database structure for daily tailoring operations." },
+        { "phase": "Development", "date": "Mar 2025", "description": "Built the JavaFX application and integrated the MySQL-backed modules." },
+        { "phase": "Refinement", "date": "Apr 2025", "description": "Adjusted search, status updates, and monitoring flows for staff use." }
+      ],
+      "screenshots": []
+    },
+    {
+      "slug": "handyman",
+      "title": "HandyMan",
+      "desc": "Java desktop application for booking services, hiring skilled workers, and renting tools.",
+      "overview": "A Java-based desktop application designed to streamline service booking, worker hiring, and tool rental through a rich JavaFX interface and database-backed workflow.",
+      "role": "Java Developer",
+      "client": "HandyMan",
+      "year": "2025",
+      "tools": ["Java", "JavaFX", "MySQL", "XAMPP", "Maven"],
+      "tags": ["Software Development", "Desktop App", "Java", "Marketplace"],
+      "goals": [
+        "Streamline service booking and tool rental processes.",
+        "Provide a rich desktop UI experience with JavaFX.",
+        "Manage user profiles, payments, and order history."
+      ],
+      "timeline": [
+        { "phase": "Planning", "date": "Oct 2024", "description": "Defined the booking, directory, cart, and receipt workflows." },
+        { "phase": "Design", "date": "Nov 2024", "description": "Planned the desktop application screens and database structure." },
+        { "phase": "Development", "date": "Dec 2024", "description": "Built the JavaFX application and integrated the MySQL-backed features." },
+        { "phase": "Delivery", "date": "Feb 2025", "description": "Prepared the project for presentation with setup instructions and demo screens." }
       ],
       "screenshots": []
     }

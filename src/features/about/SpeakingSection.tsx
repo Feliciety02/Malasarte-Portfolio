@@ -1,6 +1,6 @@
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal } from "@/components/site/Reveal";
-import umsdcTraining from "@/assets/Events/UMSDC Internal Training – Basics of Figma.jpg";
+import umsdcTraining from "@/assets/Events/UMSDC Internal Training – Basics of Figma.webp";
 
 export function SpeakingSection() {
   return (
@@ -22,7 +22,7 @@ export function SpeakingSection() {
               January 24, 2025
             </span>
             <h3 className="mt-2 font-display text-lg font-bold">
-              UMSDC Internal Training – Basics of Figma
+              UMSDC Internal Training â€“ Basics of Figma
             </h3>
             <p className="mt-1 text-base font-medium text-primary">Speaker</p>
             <p className="mt-3 text-base leading-relaxed text-muted-foreground">

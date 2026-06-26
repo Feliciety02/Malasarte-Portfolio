@@ -48,9 +48,11 @@ export function PortfolioProjectCard({
   const displayTools = isBranding
     ? project.tools.filter((t) => !brandingExcluded.includes(t))
     : project.tools;
-  const isSocial =
+  const isSocialOrCreative =
     project.cat === "Social Media Graphics" ||
-    project.categories?.includes("Social Media Graphics");
+    project.cat === "Creative Assets" ||
+    project.categories?.includes("Social Media Graphics") ||
+    project.categories?.includes("Creative Assets");
   const isWebDev =
     project.cat === "Software Development" || activeCategory === "Software Development";
   const liveUrl = project.vercelLiveUrl?.trim();
@@ -165,7 +167,7 @@ export function PortfolioProjectCard({
       ) : (
         <div className="flex h-full flex-col">
           <div className="relative overflow-hidden">
-            <div className={cn("aspect-video w-full", isBranding && "bg-white")}>
+            <div className={cn("w-full", isSocialOrCreative ? "aspect-[3/1]" : "aspect-video", isBranding && "bg-white")}>
               {coverImage ? (
                 <div
                   className={cn(
@@ -265,10 +267,10 @@ export function PortfolioProjectCard({
 
   return (
     <div className={cn(sizeClasses[size], isBrandingRecommendation && "aspect-square")}>
-      {isSocial && onSocialClick ? (
+      {isSocialOrCreative ? (
         <button
           type="button"
-          onClick={() => onSocialClick(project.slug)}
+          onClick={() => onSocialClick?.(project.slug)}
           className="block h-full w-full text-left"
         >
           {cardContent}

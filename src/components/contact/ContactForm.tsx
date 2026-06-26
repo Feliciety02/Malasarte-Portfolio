@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { CheckCircle2, SendHorizonal } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
@@ -18,6 +18,13 @@ export function ContactForm() {
   const [sent, setSent] = useState(false);
   const [projectType, setProjectType] = useState("");
   const [message, setMessage] = useState("");
+  const resetSentTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetSentTimerRef.current) clearTimeout(resetSentTimerRef.current);
+    };
+  }, []);
 
   return (
     <Reveal delay={0.1}>
@@ -26,7 +33,8 @@ export function ContactForm() {
           onSubmit={(event) => {
             event.preventDefault();
             setSent(true);
-            setTimeout(() => setSent(false), 4000);
+            if (resetSentTimerRef.current) clearTimeout(resetSentTimerRef.current);
+            resetSentTimerRef.current = setTimeout(() => setSent(false), 4000);
             event.currentTarget.reset();
             setProjectType("");
             setMessage("");

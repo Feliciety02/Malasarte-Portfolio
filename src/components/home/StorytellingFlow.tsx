@@ -300,21 +300,20 @@ export function StorytellingFlow({ reducedMotion }: Props) {
       if (!frame) frame = requestAnimationFrame(tick);
     };
 
+    const handleResize = () => {
+      updateHeight();
+      schedule();
+    };
+
     updateHeight();
     tick();
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener(
-      "resize",
-      () => {
-        updateHeight();
-        schedule();
-      },
-      { passive: true },
-    );
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", handleResize);
     };
   }, [reduce, rawProgress]);
 

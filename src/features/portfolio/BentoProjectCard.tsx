@@ -14,6 +14,8 @@ type BentoProjectCardProps = {
   project: Project;
   type: BentoCardType;
   onSocialClick?: (slug: string) => void;
+  isSelected?: boolean;
+  className?: string;
 };
 
 const spanClasses: Record<BentoCardType, string> = {
@@ -63,17 +65,19 @@ function ProjectPreview({
   );
 }
 
-export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectCardProps) {
+export function BentoProjectCard({ project, type, onSocialClick, isSelected, className }: BentoProjectCardProps) {
   const coverImage = getProjectCoverImage(project);
   const title = getProjectDisplayTitle(project, "All");
   const category = getProjectCategoryLabel(project, "All");
   const isSocial =
     project.cat === "Social Media Graphics" ||
-    project.categories?.includes("Social Media Graphics");
+    project.cat === "Creative Assets" ||
+    project.categories?.includes("Social Media Graphics") ||
+    project.categories?.includes("Creative Assets");
   const isBranding = project.cat === "Logo & Branding";
 
   const cardContent = (
-    <PortfolioAccentCardFrame category={project.cat}>
+    <PortfolioAccentCardFrame category={project.cat} isActive={isSelected}>
       {isBranding ? (
         <div className="flex h-full flex-col">
           <div className="relative h-[65%] shrink-0 overflow-hidden bg-white">
@@ -190,7 +194,14 @@ export function BentoProjectCard({ project, type, onSocialClick }: BentoProjectC
   );
 
   return (
-    <article className={spanClasses[type]}>
+    <article
+      data-project-slug={project.slug}
+      className={cn(
+        spanClasses[type],
+        className,
+        type === "gallery" && "rounded-[1.75rem] transition-all duration-200",
+      )}
+    >
       {isSocial && onSocialClick ? (
         <button
           type="button"

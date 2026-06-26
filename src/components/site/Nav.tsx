@@ -104,8 +104,10 @@ export function Nav() {
                 >
                   {linkIsActive ? (
                     <motion.span
-                      layoutId="desktop-nav-active"
                       className="absolute inset-0 rounded-full border border-primary/20 bg-primary/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_22px_-10px_hsl(var(--primary))]"
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   ) : null}
@@ -189,8 +191,10 @@ export function Nav() {
                     >
                       {linkIsActive ? (
                         <motion.span
-                          layoutId="mobile-nav-active"
                           className="absolute inset-0 rounded-lg border border-primary/15 bg-primary/12"
+                          initial={{ opacity: 0, scale: 0.98 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.98 }}
                           transition={{ type: "spring", stiffness: 380, damping: 32 }}
                         />
                       ) : null}

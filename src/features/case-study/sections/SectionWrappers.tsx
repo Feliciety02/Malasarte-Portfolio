@@ -104,8 +104,11 @@ export function StickyTOC({ sections }: { sections: SectionDef[] }) {
                 <span>{s.label}</span>
                 {active === s.id && (
                   <motion.span
-                    layoutId="toc-dot"
                     className="ml-auto h-1.5 w-1.5 rounded-full bg-primary"
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
                   />
                 )}
               </a>

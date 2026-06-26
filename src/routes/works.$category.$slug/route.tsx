@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useNavigate, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { MetallicPage } from "@/components/site/MetallicPage";
 import { getProjectBySlugAndCategory } from "@/data/projects";
 import { fetchPortfolioProjectFromSupabase } from "@/data/supabaseProjects";
@@ -41,8 +41,14 @@ export const Route = createFileRoute("/works/$category/$slug")({
     const { category, slug } = params;
 
     if (!isValidRouteCategory(category)) {
-      const template = getTemplateByRouteCategory(category as RouteCategory);
       throw notFound();
+    }
+
+    if (category === "gallery") {
+      throw redirect({
+        to: "/works",
+        search: { category: slug === "umsdc-creative-assets" || slug === "enigma" ? "Creative Assets" : "Social Media Graphics", slug },
+      });
     }
 
     const supabaseProject = await fetchPortfolioProjectFromSupabase(slug);

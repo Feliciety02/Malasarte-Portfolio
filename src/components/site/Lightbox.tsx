@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export type LightboxItem = {
   color: string;
@@ -60,7 +59,7 @@ export function Lightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] grid place-items-center bg-background/85 p-4 backdrop-blur-xl md:p-10"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/80 px-4 py-6 md:px-10 md:py-8"
           onClick={onClose}
           role="dialog"
           aria-modal="true"
@@ -104,53 +103,26 @@ export function Lightbox({
           </button>
 
           <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              onClick={(event) => event.stopPropagation()}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.25}
-              onDragEnd={(_, info) => {
-                if (info.offset.x < -80 || info.velocity.x < -500) next();
-                else if (info.offset.x > 80 || info.velocity.x > 500) prev();
-              }}
-              className="metal-panel relative w-full max-w-5xl overflow-hidden shadow-card"
-            >
-              <div className={cn("relative aspect-[16/10] bg-gradient-to-br", current.color)}>
-                {current.src ? (
-                  <img
-                    src={current.src}
-                    alt={current.label}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : null}
-                <div
-                  aria-hidden
-                  className={cn(
-                    "absolute inset-0 bg-gradient-to-br",
-                    current.color,
-                    current.src ? "opacity-20 mix-blend-overlay" : "opacity-100",
-                  )}
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.026)_42%,rgba(0,0,0,0.42))]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-display text-xl font-semibold">{current.label}</span>
-                    <span className="hidden text-xs uppercase tracking-wider text-muted-foreground md:block">
-                      Use arrow keys / esc to close
-                    </span>
-                  </div>
-                  {current.note ? (
-                    <p className="mt-3 max-w-2xl text-sm text-muted-foreground">{current.note}</p>
-                  ) : null}
-                </div>
-              </div>
-            </motion.div>
+            {current.src ? (
+              <motion.img
+                key={index}
+                src={current.src}
+                alt={current.label}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                onClick={(event) => event.stopPropagation()}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -80 || info.velocity.x < -500) next();
+                  else if (info.offset.x > 80 || info.velocity.x > 500) prev();
+                }}
+                className="block h-auto w-auto max-h-[calc(100vh-5rem)] max-w-[calc(100vw-7rem)] object-contain object-center md:max-h-[calc(100vh-6rem)] md:max-w-[calc(100vw-10rem)]"
+              />
+            ) : null}
           </AnimatePresence>
         </motion.div>
       )}

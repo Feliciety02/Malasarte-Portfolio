@@ -83,6 +83,7 @@ const featuredProjectSlugs: Partial<Record<ProjectCategory, string>> = {
   "UI/UX Design": "adoptify",
   "Logo & Branding": "trichomend-plus",
   "Social Media Graphics": "umsdc-publication-materials-and-assets",
+  "Creative Assets": "umsdc-creative-assets",
 };
 
 function computePortfolioStats(projects: Project[]) {
@@ -129,8 +130,25 @@ function Works() {
     requestId: number;
   } | null>(null);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("category") as FilterCategory | null;
+    const slug = params.get("slug");
+    if (cat && slug && (cat === "Social Media Graphics" || cat === "Creative Assets")) {
+      setActive(cat);
+      setSocialSelectionRequest({ slug, requestId: 1 });
+    }
+  }, []);
+
   const handleSocialClick = (slug: string) => {
-    setActive("Social Media Graphics");
+    const clickedProject = sourceProjects.find((project) => project.slug === slug);
+    const targetCategory =
+      clickedProject?.cat === "Creative Assets" ||
+      clickedProject?.categories?.includes("Creative Assets")
+        ? "Creative Assets"
+        : "Social Media Graphics";
+
+    setActive(targetCategory);
     setSocialSelectionRequest((current) => ({
       slug,
       requestId: (current?.requestId ?? 0) + 1,
@@ -236,7 +254,9 @@ function Works() {
           active={active}
           onChange={(category) => {
             setActive(category);
-            if (category !== "Social Media Graphics") setSocialSelectionRequest(null);
+            if (category !== "Social Media Graphics" && category !== "Creative Assets") {
+              setSocialSelectionRequest(null);
+            }
           }}
           onHover={setHoveredCategory}
           search={search}
@@ -249,7 +269,7 @@ function Works() {
             activeCategory="All"
             onSocialClick={handleSocialClick}
           />
-        ) : active === "Social Media Graphics" ? (
+        ) : active === "Social Media Graphics" || active === "Creative Assets" ? (
           <SocialMediaGraphicsShowcase
             projects={filtered}
             requestedSlug={socialSelectionRequest?.slug}

@@ -18,6 +18,7 @@ import {
   DEFAULT_DESCRIPTION,
   SITE_NAME,
 } from "@/lib/seo";
+import { installDomMutationGuards } from "@/lib/domMutationGuards";
 // WebGL background removed in favour of a clean monochrome canvas.
 
 function NotFoundComponent() {
@@ -99,6 +100,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  installDomMutationGuards();
+
   return (
     <>
       <LoadingScreen />
