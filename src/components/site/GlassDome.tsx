@@ -32,8 +32,7 @@ type DragState = {
   lastTime: number;
 };
 
-const MAX_TOKEN_SIZE = 64;
-const MIN_TOKEN_SIZE = 44;
+
 const GLOBE_PADDING = 14;
 const COLLISION_PADDING = 2;
 const POSITION_ITERATIONS = 12;
@@ -90,9 +89,9 @@ export function GlassDome({
   }, []);
 
   const globeRadius = size * GLOBE_RADIUS_RATIO;
-  const isCompact = size < 680;
-  const tokenSize = clamp(size * 0.1, MIN_TOKEN_SIZE, MAX_TOKEN_SIZE);
-  const iconSize = clamp(tokenSize * 0.62, 28, 40);
+  const isCompact = size < 480;
+  const tokenSize = Math.max(size * 0.1, 28);
+  const iconSize = Math.max(tokenSize * 0.62, 20);
 
   const baseBodies = useMemo<Body[]>(
     () =>

@@ -574,106 +574,110 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
         </div>
 
         <div className="mt-20 pt-8">
-          <div className="grid gap-24">
-            <Reveal>
-              <div
-                ref={githubSectionRef}
-                className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center overflow-hidden text-center"
-              >
-                <span className="metal-kicker">GitHub</span>
-                <h2 className="section-title mt-4 font-medium text-foreground">{accentLastWord("Code Activity")}</h2>
-                <div className="mt-8 w-full min-w-0">
-                  <GitHubContributions username="Feliciety02" containerWidth={githubSectionSize.width} />
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div
-                className="mx-auto grid w-full max-w-6xl min-w-0 gap-[clamp(1.5rem,4vw,3rem)] overflow-hidden text-center lg:grid-cols-[minmax(0,3fr)_minmax(16rem,2fr)] lg:items-center lg:text-left"
-              >
-                <div className="mx-auto w-full min-w-0 px-[clamp(0.75rem,4vw,2rem)] lg:px-[clamp(0.5rem,2vw,2rem)]">
-                  <div className="mx-auto w-full max-w-[min(100%,42rem)] lg:max-w-[44rem]">
-                    <GlassDome
-                      tools={tools}
-                      reducedMotion={reducedMotion}
-                      activeCategory={activeCategory}
-                      activeToolSlug={activeToolSlug}
-                      onDomeToolHover={handleDomeToolHover}
-                    />
+          <div className="flex flex-col gap-24 lg:flex-row lg:items-stretch lg:gap-12">
+            <div className="flex-1 min-w-0">
+              <Reveal>
+                <div
+                  ref={githubSectionRef}
+                  className="flex h-full w-full flex-col items-center overflow-hidden text-center"
+                >
+                  <span className="metal-kicker">GitHub</span>
+                  <h2 className="section-title mt-4 font-medium text-foreground">{accentLastWord("Code Activity")}</h2>
+                  <div className="mt-8 w-full min-w-0 flex-1">
+                    <GitHubContributions username="Feliciety02" containerWidth={githubSectionSize.width} />
                   </div>
                 </div>
-                <div className="relative z-10 mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:max-w-none">
-                  <span className="metal-kicker">Tools I use</span>
-                  <h2 className="section-title mt-4 font-medium text-foreground">
-                    {accentLastWord("Tech Stack")}
-                  </h2>
-                  <div className="mt-6 space-y-5">
-                    {categoryInfo.map((cat) => {
-                      const categoryTools = tools.filter((t) => t.category === cat.key);
-                      const isActive = activeCategory === cat.key;
+              </Reveal>
+            </div>
+            <div className="flex-1 min-w-0">
+              <Reveal delay={0.1}>
+                <div
+                  className="grid w-full min-w-0 gap-[clamp(1.5rem,4vw,3rem)] overflow-hidden text-center lg:grid-cols-[minmax(0,3fr)_minmax(16rem,2fr)] lg:items-center lg:text-left"
+                >
+                  <div className="mx-auto w-full min-w-0 px-[clamp(0.75rem,4vw,2rem)] lg:px-[clamp(0.5rem,2vw,2rem)] lg:max-w-none">
+                    <div className="mx-auto w-full max-w-[min(100%,32rem)] lg:max-w-[36rem]">
+                      <GlassDome
+                        tools={tools}
+                        reducedMotion={reducedMotion}
+                        activeCategory={activeCategory}
+                        activeToolSlug={activeToolSlug}
+                        onDomeToolHover={handleDomeToolHover}
+                      />
+                    </div>
+                  </div>
+                  <div className="relative z-10 mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:max-w-none">
+                    <span className="metal-kicker">Tools I use</span>
+                    <h2 className="section-title mt-4 font-medium text-foreground">
+                      {accentLastWord("Tech Stack")}
+                    </h2>
+                    <div className="mt-6 space-y-5">
+                      {categoryInfo.map((cat) => {
+                        const categoryTools = tools.filter((t) => t.category === cat.key);
+                        const isActive = activeCategory === cat.key;
 
-                      return (
-                        <div key={cat.key}>
-                          <button
-                            type="button"
-                            onClick={() => setClickedCategory(clickedCategory === cat.key ? null : cat.key)}
-                            onMouseEnter={() => {
-                              setHoveredCategory(cat.key);
-                              setHoveredToolSlug(null);
-                            }}
-                            onMouseLeave={() => setHoveredCategory(null)}
-                            className="mx-auto flex items-center gap-2 text-center lg:mx-0 lg:text-left"
-                          >
-                            <span
-                              className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wider transition-all duration-300"
-                              style={{
-                                background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
-                                color: isActive ? "white" : "rgba(255,255,255,0.5)",
-                                border: isActive
-                                  ? "1px solid rgba(255,255,255,0.25)"
-                                  : "1px solid rgba(255,255,255,0.08)",
+                        return (
+                          <div key={cat.key}>
+                            <button
+                              type="button"
+                              onClick={() => setClickedCategory(clickedCategory === cat.key ? null : cat.key)}
+                              onMouseEnter={() => {
+                                setHoveredCategory(cat.key);
+                                setHoveredToolSlug(null);
                               }}
+                              onMouseLeave={() => setHoveredCategory(null)}
+                              className="mx-auto flex items-center gap-2 text-center lg:mx-0 lg:text-left"
                             >
-                              {cat.label}
-                            </span>
-                          </button>
-                          <div
-                            className="mt-2 flex flex-wrap justify-center gap-x-3.5 gap-y-1 transition-all duration-300 lg:justify-start"
-                            style={{ opacity: isActive ? 1 : 0.5 }}
-                          >
-                            {categoryTools.map((tool) => {
-                              const isToolHighlighted = hoveredToolSlug === tool.slug;
-                              return (
-                                <span
-                                  key={tool.slug}
-                                  onMouseEnter={() => {
-                                    setHoveredToolSlug(tool.slug);
-                                    setHoveredCategory(null);
-                                  }}
-                                  onMouseLeave={() => setHoveredToolSlug(null)}
-                                  className="cursor-default text-sm transition-all duration-300"
-                                  style={{
-                                    color: isToolHighlighted ? "white" : "rgba(255,255,255,0.5)",
-                                    textShadow: isToolHighlighted ? "0 0 12px rgba(255,255,255,0.25)" : "none",
-                                  }}
-                                >
-                                  {tool.name}
-                                </span>
-                              );
-                            })}
+                              <span
+                                className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wider transition-all duration-300"
+                                style={{
+                                  background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
+                                  color: isActive ? "white" : "rgba(255,255,255,0.5)",
+                                  border: isActive
+                                    ? "1px solid rgba(255,255,255,0.25)"
+                                    : "1px solid rgba(255,255,255,0.08)",
+                                }}
+                              >
+                                {cat.label}
+                              </span>
+                            </button>
+                            <div
+                              className="mt-2 flex flex-wrap justify-center gap-x-3.5 gap-y-1 transition-all duration-300 lg:justify-start"
+                              style={{ opacity: isActive ? 1 : 0.5 }}
+                            >
+                              {categoryTools.map((tool) => {
+                                const isToolHighlighted = hoveredToolSlug === tool.slug;
+                                return (
+                                  <span
+                                    key={tool.slug}
+                                    onMouseEnter={() => {
+                                      setHoveredToolSlug(tool.slug);
+                                      setHoveredCategory(null);
+                                    }}
+                                    onMouseLeave={() => setHoveredToolSlug(null)}
+                                    className="cursor-default text-sm transition-all duration-300"
+                                    style={{
+                                      color: isToolHighlighted ? "white" : "rgba(255,255,255,0.5)",
+                                      textShadow: isToolHighlighted ? "0 0 12px rgba(255,255,255,0.25)" : "none",
+                                    }}
+                                  >
+                                    {tool.name}
+                                  </span>
+                                );
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <ul aria-label="Design tools I use every day" className="sr-only">
-                {tools.map((tool) => (
-                  <li key={tool.slug}>{tool.name}</li>
-                ))}
-              </ul>
-            </Reveal>
+                <ul aria-label="Design tools I use every day" className="sr-only">
+                  {tools.map((tool) => (
+                    <li key={tool.slug}>{tool.name}</li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
           </div>
         </div>
       </div>
