@@ -90,8 +90,12 @@ export function GlassDome({
 
   const globeRadius = size * GLOBE_RADIUS_RATIO;
   const isCompact = size < 480;
-  const tokenSize = Math.max(size * 0.1, 28);
-  const iconSize = Math.max(tokenSize * 0.62, 20);
+  const tokenSize = isCompact
+    ? Math.max(size * 0.1, 28)
+    : clamp(size * 0.1, 44, 64);
+  const iconSize = isCompact
+    ? Math.max(tokenSize * 0.62, 20)
+    : clamp(tokenSize * 0.62, 28, 40);
 
   const baseBodies = useMemo<Body[]>(
     () =>

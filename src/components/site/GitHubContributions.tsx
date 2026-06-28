@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Github } from "lucide-react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { ChevronRight, Github } from "lucide-react";
 
 interface Contribution {
   date: string;
@@ -22,21 +22,10 @@ const LEVEL_COLORS: Record<number, string> = {
 
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
 const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-// Gap between cells (px) — fixed, cell size is derived dynamically
 const FALLBACK_DAYS = 365;
 
 type GraphMetrics = {
@@ -134,6 +123,28 @@ function getMonthLabels(weeks: (Contribution | null)[][]) {
   return labels;
 }
 
+function groupByMonth(contribs: Contribution[]) {
+  const months: { month: number; days: Contribution[] }[] = [];
+  let current: Contribution[] = [];
+  let currentMonth = -1;
+  for (const c of contribs) {
+    const m = new Date(c.date + "T00:00:00").getMonth();
+    if (m !== currentMonth) {
+      if (current.length > 0) months.push({ month: currentMonth, days: current });
+      current = [];
+      currentMonth = m;
+    }
+    current.push(c);
+  }
+  if (current.length > 0) months.push({ month: currentMonth, days: current });
+  return months;
+}
+
+function formatCount(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return String(n);
+}
+
 export function GitHubContributions({
   username,
   containerWidth = 0,
@@ -144,7 +155,9 @@ export function GitHubContributions({
   const [data, setData] = useState<ApiResponse | null>(null);
   const [status, setStatus] = useState<"loading" | "ok" | "fallback">("loading");
   const [metrics, setMetrics] = useState<GraphMetrics>({ cell: 14, gap: 3, dayCol: 26, dayGap: 8 });
+  const [expandedMonth, setExpandedMonth] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -175,7 +188,7 @@ export function GitHubContributions({
   const weeks = data ? groupByWeek(data.contributions) : [];
   const nWeeks = weeks.length;
 
-  // Recompute cell size whenever the container resizes or data arrives
+  // Desktop/tablet metrics
   useEffect(() => {
     if (!containerRef.current || !nWeeks) return;
     const el = containerRef.current;
@@ -196,6 +209,25 @@ export function GitHubContributions({
     return () => ro.disconnect();
   }, [containerWidth, nWeeks]);
 
+  const containerWidthActual = containerRef.current?.clientWidth ?? containerWidth;
+  const isMobileLayout = containerWidthActual > 0 && containerWidthActual < 480;
+  const isTabletLayout = containerWidthActual >= 480 && containerWidthActual < 768;
+
+  const months = useMemo(
+    () => (data ? groupByMonth(data.contributions) : []),
+    [data],
+  );
+
+  // Count contributions per month
+  const monthlyTotals = useMemo(() => {
+    const totals: Record<number, number> = {};
+    for (const c of data?.contributions ?? []) {
+      const m = new Date(c.date + "T00:00:00").getMonth();
+      totals[m] = (totals[m] ?? 0) + c.count;
+    }
+    return totals;
+  }, [data]);
+
   if (status === "loading") return <Skeleton />;
   if (!data) return null;
 
@@ -213,36 +245,222 @@ export function GitHubContributions({
     return true;
   });
 
+  const sharedHeader = (
+    <div className="mb-1 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
+      <p className="text-sm text-foreground/80">
+        {isFallback ? (
+          <span className="font-display text-lg font-bold text-gradient">Contribution grid</span>
+        ) : (
+          <>
+            <span className="font-display text-lg font-bold text-gradient">
+              {total.toLocaleString()}
+            </span>{" "}
+            contributions in the last year
+          </>
+        )}
+      </p>
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1.5 text-xs text-primary transition-colors hover:text-primary/70"
+      >
+        <Github size={13} />@{username}
+      </a>
+    </div>
+  );
+
+  const sharedLegend = (
+    <div className="mt-4 flex flex-wrap items-center justify-end gap-1.5">
+      <span className="text-[9px] text-muted-foreground select-none">Less</span>
+      {[0, 1, 2, 3, 4].map((level) => (
+        <div
+          key={level}
+          style={{
+            width: cell,
+            height: cell,
+            borderRadius: 3,
+            background: LEVEL_COLORS[level],
+            border: level > 0 ? "1px solid oklch(1 0 0 / 10%)" : "1px solid oklch(1 0 0 / 4%)",
+          }}
+        />
+      ))}
+      <span className="text-[9px] text-muted-foreground select-none">More</span>
+    </div>
+  );
+
+  // ---------- MOBILE MONTHLY STACK ----------
+  if (isMobileLayout) {
+    return (
+      <div className="metal-panel w-full min-w-0 max-w-full overflow-hidden p-4">
+        {sharedHeader}
+
+        <div ref={containerRef} className="mt-4 space-y-3">
+          {months.map(({ month, days }) => {
+            const isExpanded = expandedMonth === month;
+            const monthTotal = monthlyTotals[month] ?? 0;
+            const monthName = MONTH_NAMES[month];
+
+            // Lay out days in a compact per-week grid
+            const daySize = 7;
+            const dayGap = 2;
+
+            return (
+              <div key={month} className="overflow-hidden rounded-lg border border-white/6 bg-white/[0.02]">
+                <button
+                  type="button"
+                  onClick={() => setExpandedMonth(isExpanded ? null : month)}
+                  className="flex w-full items-center justify-between px-3 py-2 text-left transition-colors hover:bg-white/[0.03]"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-display text-sm font-semibold text-white/90">{monthName}</span>
+                    <span className="font-mono text-[10px] text-white/40">{days.length} days</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[11px] text-primary/80">{formatCount(monthTotal)}</span>
+                    <ChevronRight
+                      size={12}
+                      className="text-white/30 transition-transform duration-200"
+                      style={{ transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)" }}
+                    />
+                  </div>
+                </button>
+
+                {isExpanded && (
+                  <div className="border-t border-white/6 px-3 pb-3 pt-2">
+                    <div className="flex flex-wrap gap-[3px]">
+                      {days.map((day) => (
+                        <div
+                          key={day.date}
+                          title={`${day.count} contribution${day.count !== 1 ? "s" : ""} on ${day.date}`}
+                          style={{
+                            width: daySize,
+                            height: daySize,
+                            borderRadius: 2,
+                            background: LEVEL_COLORS[day.level],
+                            border: day.level > 0
+                              ? "1px solid oklch(1 0 0 / 10%)"
+                              : "1px solid oklch(1 0 0 / 4%)",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {sharedLegend}
+      </div>
+    );
+  }
+
+  // ---------- TABLET SWIPEABLE TIMELINE ----------
+  if (isTabletLayout) {
+    return (
+      <div className="metal-panel w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-5">
+        {sharedHeader}
+
+        <div ref={containerRef} className="relative mt-4">
+          <div
+            ref={scrollRef}
+            className="scrollbar-contrib max-w-full overflow-x-auto overscroll-x-contain pb-2"
+          >
+            <div className="flex min-w-0" style={{ gap: dayGap }}>
+              {dayCol > 0 ? (
+                <div className="flex shrink-0 flex-col pt-[18px]" style={{ gap }}>
+                  {DAY_LABELS.map((label, i) => (
+                    <div
+                      key={i}
+                      style={{ height: cell, width: dayCol, fontSize: cell < 8 ? 8 : 10, lineHeight: `${cell}px` }}
+                      className="select-none text-right text-muted-foreground"
+                    >
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+
+              <div style={{ position: "relative", width: nWeeks * step - gap }}>
+                <div style={{ height: 16, position: "relative", marginBottom: 4 }}>
+                  {visibleMonthLabels.map(({ label, col }) => (
+                    <span
+                      key={col}
+                      style={{
+                        position: "absolute",
+                        left: col * step,
+                        fontSize: cell < 8 ? 8 : 10,
+                        lineHeight: "16px",
+                      }}
+                      className="select-none text-muted-foreground"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex" style={{ gap }}>
+                  {weeks.map((week, wi) => (
+                    <div key={wi} className="flex flex-col" style={{ gap }}>
+                      {week.map((day, di) => (
+                        <div
+                          key={di}
+                          title={
+                            day
+                              ? `${day.count} contribution${day.count !== 1 ? "s" : ""} on ${day.date}`
+                              : undefined
+                          }
+                          style={{
+                            width: cell,
+                            height: cell,
+                            borderRadius: 3,
+                            background: day !== null ? LEVEL_COLORS[day.level] : "transparent",
+                            border:
+                              day !== null && day.level > 0
+                                ? "1px solid oklch(1 0 0 / 10%)"
+                                : day !== null
+                                  ? "1px solid oklch(1 0 0 / 4%)"
+                                  : "none",
+                            transition: "filter 0.12s",
+                          }}
+                          onMouseEnter={(e) => {
+                            if (day !== null && day.level > 0)
+                              (e.currentTarget as HTMLDivElement).style.filter =
+                                "brightness(1.4) saturate(1.2)";
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLDivElement).style.filter = "";
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Fade hint at right edge */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0f1011] to-transparent" />
+          <div className="pointer-events-none absolute bottom-1 right-2 text-[9px] text-white/20 select-none">
+            Swipe &rarr;
+          </div>
+        </div>
+
+        {sharedLegend}
+      </div>
+    );
+  }
+
+  // ---------- FULL DESKTOP LAYOUT ----------
   return (
     <div className="metal-panel w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6">
-      {/* Header */}
-      <div className="mb-1 flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
-        <p className="text-sm text-foreground/80">
-          {isFallback ? (
-            <span className="font-display text-lg font-bold text-gradient">Contribution grid</span>
-          ) : (
-            <>
-              <span className="font-display text-lg font-bold text-gradient">
-                {total.toLocaleString()}
-              </span>{" "}
-              contributions in the last year
-            </>
-          )}
-        </p>
-        <a
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-xs text-primary transition-colors hover:text-primary/70"
-        >
-          <Github size={13} />@{username}
-        </a>
-      </div>
+      {sharedHeader}
 
-      {/* Grid — ref here so ResizeObserver gets the full available width */}
       <div ref={containerRef} className="scrollbar-contrib mt-4 max-w-full overflow-x-auto overscroll-x-contain pb-1">
         <div className="flex min-w-0" style={{ gap: dayGap }}>
-          {/* Day labels */}
           {dayCol > 0 ? (
             <div className="flex shrink-0 flex-col pt-[22px]" style={{ gap }}>
               {DAY_LABELS.map((label, i) => (
@@ -257,9 +475,7 @@ export function GitHubContributions({
             </div>
           ) : null}
 
-          {/* Weeks */}
           <div style={{ position: "relative", width: nWeeks * step - gap }}>
-            {/* Month labels */}
             <div style={{ height: 18, position: "relative", marginBottom: 4 }}>
               {visibleMonthLabels.map(({ label, col }) => (
                 <span
@@ -318,23 +534,7 @@ export function GitHubContributions({
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="mt-4 flex flex-wrap items-center justify-end gap-1.5">
-        <span className="text-[9px] text-muted-foreground select-none">Less</span>
-        {[0, 1, 2, 3, 4].map((level) => (
-          <div
-            key={level}
-            style={{
-              width: cell,
-              height: cell,
-              borderRadius: 3,
-              background: LEVEL_COLORS[level],
-              border: level > 0 ? "1px solid oklch(1 0 0 / 10%)" : "1px solid oklch(1 0 0 / 4%)",
-            }}
-          />
-        ))}
-        <span className="text-[9px] text-muted-foreground select-none">More</span>
-      </div>
+      {sharedLegend}
     </div>
   );
 }

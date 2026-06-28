@@ -574,8 +574,8 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
         </div>
 
         <div className="mt-20 pt-8">
-          <div className="flex flex-col gap-24 lg:flex-row lg:items-stretch lg:gap-12">
-            <div className="flex-1 min-w-0">
+          <div className="flex flex-col gap-24">
+            <div className="min-w-0 lg:mx-auto lg:w-full lg:max-w-6xl">
               <Reveal>
                 <div
                   ref={githubSectionRef}
@@ -589,13 +589,13 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                 </div>
               </Reveal>
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="min-w-0 lg:mx-auto lg:w-full lg:max-w-6xl">
               <Reveal delay={0.1}>
                 <div
-                  className="grid w-full min-w-0 gap-[clamp(1.5rem,4vw,3rem)] overflow-hidden text-center lg:grid-cols-[minmax(0,3fr)_minmax(16rem,2fr)] lg:items-center lg:text-left"
+                  className="grid w-full min-w-0 gap-[clamp(1.5rem,4vw,3rem)] text-center lg:grid-cols-[minmax(0,3fr)_minmax(16rem,2fr)] lg:items-center lg:text-left"
                 >
                   <div className="mx-auto w-full min-w-0 px-[clamp(0.75rem,4vw,2rem)] lg:px-[clamp(0.5rem,2vw,2rem)] lg:max-w-none">
-                    <div className="mx-auto w-full max-w-[min(100%,32rem)] lg:max-w-[36rem]">
+                    <div className="mx-auto w-full max-w-[min(100%,42rem)] lg:max-w-[44rem]">
                       <GlassDome
                         tools={tools}
                         reducedMotion={reducedMotion}
@@ -605,7 +605,7 @@ export function AboutHubSection({ reducedMotion }: AboutHubSectionProps) {
                       />
                     </div>
                   </div>
-                  <div className="relative z-10 mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:max-w-none">
+                  <div className="mx-auto w-full min-w-0 max-w-3xl lg:mx-0 lg:max-w-none">
                     <span className="metal-kicker">Tools I use</span>
                     <h2 className="section-title mt-4 font-medium text-foreground">
                       {accentLastWord("Tech Stack")}
