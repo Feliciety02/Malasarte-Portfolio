@@ -30,7 +30,7 @@ export function ProjectCard({ project, activeCategory = project.cat, imageFit = 
         aria-label={`Open ${title} work`}
         className="group relative flex h-full flex-col"
       >
-        <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-white/[0.06] to-white/[0.01]">
+        <div className="relative overflow-hidden bg-gradient-to-br from-white/[0.06] to-white/[0.01]" style={{ paddingBottom: "62.5%" }}>
           {coverImage ? (
             <img
               src={coverImage}
