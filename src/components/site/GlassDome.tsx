@@ -283,8 +283,7 @@ export function GlassDome({
             aria-hidden
             className="absolute inset-0 rounded-full"
             style={{
-              background:
-                "conic-gradient(from 110deg, transparent 0deg, rgba(255,255,255,0.08) 42deg, transparent 110deg, rgba(255,255,255,0.06) 180deg, transparent 240deg, rgba(255,255,255,0.07) 310deg, transparent 360deg)",
+              background: "transparent",
               mixBlendMode: "screen",
             }}
           />
